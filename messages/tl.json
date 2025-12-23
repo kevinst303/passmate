@@ -1,0 +1,39 @@
+{
+    "HomePage": {
+        "hero": {
+            "trusted": "Pinagkakatiwalaan ng mahigit 5,000+ Future-Citizens",
+            "title": "Ang iyong {mate} para matulungan kang maging Australian.",
+            "mate": "Mate",
+            "subtitle": "Ipasa ang Australian Citizenship Test nang may kumpiyansa. Gamified na pag-aaral, AI voice tutoring, at personalized na paghahanda na parang naglalaro lang.",
+            "cta1": "Magsimulang Mag-aral Ngayon",
+            "cta2": "Tignan ang Sample Test"
+        },
+        "features": {
+            "title": "Bakit PassMate?",
+            "subtitle": "Ginawa naming isang nakakaadik at gamified na paglalakbay ang boring at nakaka-anxiety na paghahanda sa test.",
+            "f1": {
+                "title": "Daily Streaks",
+                "desc": "Manatiling motivated sa daily streaks at huwag palampasin ang anumang araw ng pag-aaral."
+            },
+            "f2": {
+                "title": "Weekly Leagues",
+                "desc": "Makipagkumpitensya sa ibang mga mag-aaral at umakyat mula Bronze hanggang Diamond."
+            },
+            "f3": {
+                "title": "Mock Exam Simulator",
+                "desc": "Totoong 45-minutong may oras na mga exam na may mga opisyal na passing score."
+            },
+            "f4": {
+                "title": "80% Pass Guarantee",
+                "desc": "Sobrang tiwala kami sa aming paraan kaya ginagarantiya namin ang iyong tagumpay."
+            }
+        }
+    },
+    "Common": {
+        "koalaName": "Ollie the Koala",
+        "dashboard": "Dashboard",
+        "login": "Login",
+        "getStarted": "Magsimula Na",
+        "footer": "© 2025 PassMate. Hindi kaanib sa Australian Department of Home Affairs."
+    }
+}

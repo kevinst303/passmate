@@ -1,0 +1,39 @@
+{
+    "HomePage": {
+        "hero": {
+            "trusted": "Được tin tưởng bởi hơn 5.000 công dân tương lai",
+            "title": "Người {mate} giúp bạn trở thành công dân Úc.",
+            "mate": "bạn đồng hành",
+            "subtitle": "Tự tin vượt qua kỳ thi Quốc tịch Úc. Học tập theo hình thức trò chơi, gia sư giọng nói AI và sự chuẩn bị cá nhân hóa tạo cảm giác như đang chơi game.",
+            "cta1": "Bắt đầu học ngay",
+            "cta2": "Xem bài thi mẫu"
+        },
+        "features": {
+            "title": "Tại sao chọn PassMate?",
+            "subtitle": "Chúng tôi đã biến quá trình chuẩn bị thi khô khan, gây lo lắng thành một hành trình học tập thú vị, mang tính trò chơi.",
+            "f1": {
+                "title": "Chuỗi ngày học tập",
+                "desc": "Luôn giữ động lực với chuỗi ngày học tập và không bao giờ bỏ lỡ một ngày học nào."
+            },
+            "f2": {
+                "title": "Giải đấu hàng tuần",
+                "desc": "Cạnh tranh với những người học khác và leo từ hạng Đồng lên Kim cương."
+            },
+            "f3": {
+                "title": "Giả lập kỳ thi thử",
+                "desc": "Các kỳ thi tính giờ 45 phút thực tế với điểm số đạt chuẩn chính thức."
+            },
+            "f4": {
+                "title": "Cam kết đạt 80%",
+                "desc": "Chúng tôi tự tin vào phương pháp của mình đến mức cam kết mang lại thành công cho bạn."
+            }
+        }
+    },
+    "Common": {
+        "koalaName": "Gấu Koala Ollie",
+        "dashboard": "Bảng điều khiển",
+        "login": "Đăng nhập",
+        "getStarted": "Bắt đầu",
+        "footer": "© 2025 PassMate. Không liên kết với Bộ Nội vụ Úc."
+    }
+}

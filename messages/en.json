@@ -1,0 +1,39 @@
+{
+    "HomePage": {
+        "hero": {
+            "trusted": "Trusted by 5,000+ Future-Citizens",
+            "title": "Your {mate} Helping You Become Australian.",
+            "mate": "Mate",
+            "subtitle": "Pass the Australian Citizenship Test with confidence. Gamified learning, AI voice tutoring, and personalized prep that feels like playing a game.",
+            "cta1": "Start Learning Now",
+            "cta2": "View Sample Test"
+        },
+        "features": {
+            "title": "Why PassMate?",
+            "subtitle": "We've transformed the dry, anxiety-inducing test preparation process into an addictive, gamified learning journey.",
+            "f1": {
+                "title": "Daily Streaks",
+                "desc": "Stay motivated with daily streaks and never miss a day of learning."
+            },
+            "f2": {
+                "title": "Weekly Leagues",
+                "desc": "Compete with other learners and climb from Bronze to Diamond."
+            },
+            "f3": {
+                "title": "Mock Exam Simulator",
+                "desc": "Real 45-minute timed exams with official passing scores."
+            },
+            "f4": {
+                "title": "80% Pass Guarantee",
+                "desc": "We are so confident in our method that we guarantee your success."
+            }
+        }
+    },
+    "Common": {
+        "koalaName": "Ollie the Koala",
+        "dashboard": "Dashboard",
+        "login": "Login",
+        "getStarted": "Get Started",
+        "footer": "© 2025 PassMate. Not affiliated with the Australian Department of Home Affairs."
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "HomePage": {
+        "hero": {
+            "trusted": "Scelto da oltre 5.000 futuri cittadini",
+            "title": "Il tuo {mate} che ti aiuta a diventare australiano.",
+            "mate": "compagno",
+            "subtitle": "Supera il test di cittadinanza australiana con sicurezza. Apprendimento gamificato, tutoring vocale AI e preparazione personalizzata che sembra un gioco.",
+            "cta1": "Inizia a imparare ora",
+            "cta2": "Visualizza test di esempio"
+        },
+        "features": {
+            "title": "Perché PassMate?",
+            "subtitle": "Abbiamo trasformato il processo di preparazione al test, spesso arido e fonte di ansia, in un viaggio di apprendimento coinvolgente e gamificato.",
+            "f1": {
+                "title": "Strisce giornaliere",
+                "desc": "Rimani motivato con le strisce giornaliere e non perdere mai un giorno di apprendimento."
+            },
+            "f2": {
+                "title": "Leghe settimanali",
+                "desc": "Competi con altri studenti e sali dal Bronzo al Diamante."
+            },
+            "f3": {
+                "title": "Simulatore di esame",
+                "desc": "Esami a tempo reali di 45 minuti con punteggi di superamento ufficiali."
+            },
+            "f4": {
+                "title": "Garanzia di superamento dell'80%",
+                "desc": "Siamo così fiduciosi nel nostro metodo che garantiamo il tuo successo."
+            }
+        }
+    },
+    "Common": {
+        "koalaName": "Ollie il Koala",
+        "dashboard": "Dashboard",
+        "login": "Accedi",
+        "getStarted": "Inizia",
+        "footer": "© 2025 PassMate. Non affiliato al Dipartimento degli Affari Interni australiano."
+    }
+}

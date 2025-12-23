@@ -1,0 +1,73 @@
+{
+    "name": "PassMate - Australian Citizenship Mate",
+    "short_name": "PassMate",
+    "description": "Your Australian Citizenship Mate - Gamified test preparation with Ollie the Koala!",
+    "start_url": "/dashboard",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#FEFEF8",
+    "theme_color": "#1B9B8F",
+    "orientation": "portrait-primary",
+    "categories": [
+        "education",
+        "productivity"
+    ],
+    "lang": "en-AU",
+    "dir": "ltr",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "apple touch icon"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "PassMate Dashboard"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Quick Quiz",
+            "short_name": "Quiz",
+            "description": "Start a quick practice quiz",
+            "url": "/dashboard",
+            "icons": [
+                {
+                    "src": "/icon-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "AI Tutor",
+            "short_name": "Ollie",
+            "description": "Chat with Ollie the Koala",
+            "url": "/ai-tutor",
+            "icons": [
+                {
+                    "src": "/icon-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ]
+}
