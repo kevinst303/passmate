@@ -4,7 +4,7 @@ import { getFriendsData } from "@/app/actions/friends";
 import { getDashboardData } from "@/app/actions/dashboard";
 import { getChallengesData } from "@/app/actions/challenges";
 import { redirect } from "next/navigation";
-import FriendsClient from "@/app/friends/FriendsClient";
+import FriendsClient from "./FriendsClient";
 
 export default async function FriendsPage() {
     const dashboardData = await getDashboardData();

@@ -2,7 +2,8 @@ export const dynamic = 'force-dynamic';
 
 import { getDashboardData } from "@/app/actions/dashboard";
 import DashboardClient from "./DashboardClient";
-import { redirect, Link } from "@/i18n/routing";
+import { redirect } from "next/navigation";
+import { Link } from "@/i18n/routing";
 
 export default async function DashboardPage() {
     const data = await getDashboardData();
