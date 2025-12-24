@@ -58,7 +58,7 @@ function PremiumBanners() {
                 <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
-                    className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border-b-2 border-primary/20 p-6 md:p-8"
+                    className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border-b-2 border-primary/20 p-4 md:p-8"
                 >
                     <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
                         <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-4xl shadow-lg shrink-0">
@@ -73,9 +73,15 @@ function PremiumBanners() {
                             </p>
                         </div>
                         <div className="shrink-0">
-                            <span className="inline-block bg-primary text-white px-4 py-2 rounded-xl font-black text-sm">
+                            <button
+                                onClick={() => {
+                                    const targetId = (redirectReason === 'ai_tutor' || redirectReason === 'mock_test') ? 'plan-ready' : 'plan-achiever';
+                                    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }}
+                                className="inline-block bg-primary text-white px-4 py-2 rounded-xl font-black text-sm hover:bg-primary/90 transition-transform active:scale-95 cursor-pointer shadow-md"
+                            >
                                 {t("requires", { feature: redirectReason === 'ai_tutor' || redirectReason === 'mock_test' ? 'Test Ready' : 'Citizenship Achiever' })}
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </motion.div>
@@ -199,21 +205,24 @@ export default function PremiumPage() {
     };
 
     return (
-        <div className="min-h-screen bg-muted/30 pb-24 md:pb-24 md:pl-20 overflow-x-hidden">
+        <div className="min-h-screen bg-muted/30 pb-24 md:pb-0 md:pl-20 overflow-x-hidden">
             <header className="bg-white/80 backdrop-blur-md border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 z-50">
                 <Link href="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                     <ArrowLeft className="w-5 h-5" /> <span className="font-bold">{t("backDashboard")}</span>
                 </Link>
-                <div className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-4 py-1.5 rounded-full font-bold text-sm shadow-sm">
+                <button
+                    onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-4 py-1.5 rounded-full font-bold text-sm shadow-sm hover:bg-yellow-200 transition-colors cursor-pointer"
+                >
                     <Sparkles className="w-4 h-4 fill-yellow-600 animate-pulse" /> {t("goPremium")}
-                </div>
+                </button>
             </header>
 
             <Suspense fallback={null}>
                 <PremiumBanners />
             </Suspense>
 
-            <main className="max-w-6xl mx-auto p-6 md:p-12">
+            <main className="max-w-6xl mx-auto p-4 md:p-12">
                 {/* Hero Section */}
                 <div className="text-center mb-20">
                     <motion.div
@@ -223,7 +232,7 @@ export default function PremiumPage() {
                     >
                         <Zap className="w-10 h-10 text-primary fill-primary" />
                     </motion.div>
-                    <h1 className="text-5xl md:text-7xl font-display font-black mb-6 tracking-tight">
+                    <h1 className="text-4xl md:text-7xl font-display font-black mb-6 tracking-tight">
                         {t.rich("heroTitle", {
                             italic: (chunks) => <span className="text-primary italic">{chunks}</span>
                         })}
@@ -234,16 +243,17 @@ export default function PremiumPage() {
                 </div>
 
                 {/* Pricing Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
+                <div id="pricing" className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32 scroll-mt-24">
                     {PLANS.map((plan, i) => (
                         <motion.div
                             key={plan.name}
+                            id={i === 1 ? 'plan-ready' : i === 2 ? 'plan-achiever' : 'plan-free'}
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: i * 0.1 }}
                             className={cn(
-                                "relative bg-white p-8 rounded-[3.5rem] border-2 flex flex-col shadow-sm transition-all hover:shadow-2xl hover:scale-[1.02]",
-                                plan.popular ? "border-primary ring-8 ring-primary/5 mt-[-10px] mb-[-10px] scale-105 z-10" : "border-border"
+                                "relative bg-white p-6 md:p-8 rounded-[3.5rem] border-2 flex flex-col shadow-sm transition-all hover:shadow-2xl hover:scale-[1.02]",
+                                plan.popular ? "border-primary ring-8 ring-primary/5 md:mt-[-10px] md:mb-[-10px] md:scale-105 z-10" : "border-border"
                             )}
                         >
                             {plan.popular && (
@@ -301,23 +311,23 @@ export default function PremiumPage() {
                             <table className="w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-muted/50">
-                                        <th className="p-8 text-xl font-black border-b border-border">{t("comparison.feature")}</th>
-                                        <th className="p-8 text-center text-lg font-black border-b border-border">{t("comparison.free")}</th>
-                                        <th className="p-8 text-center text-lg font-black border-b border-border text-primary">{t("comparison.ready")}</th>
-                                        <th className="p-8 text-center text-lg font-black border-b border-border text-accent">{t("comparison.achiever")}</th>
+                                        <th className="p-4 md:p-8 text-xl font-black border-b border-border">{t("comparison.feature")}</th>
+                                        <th className="p-4 md:p-8 text-center text-lg font-black border-b border-border">{t("comparison.free")}</th>
+                                        <th className="p-4 md:p-8 text-center text-lg font-black border-b border-border text-primary">{t("comparison.ready")}</th>
+                                        <th className="p-4 md:p-8 text-center text-lg font-black border-b border-border text-accent">{t("comparison.achiever")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {COMPARISON.map((row, i) => (
                                         <tr key={row.feature} className={i % 2 === 0 ? "bg-white" : "bg-muted/20"}>
-                                            <td className="p-6 font-bold text-muted-foreground border-b border-border pl-8">{row.feature}</td>
-                                            <td className="p-6 text-center border-b border-border">
+                                            <td className="p-4 md:p-6 font-bold text-muted-foreground border-b border-border pl-4 md:pl-8">{row.feature}</td>
+                                            <td className="p-4 md:p-6 text-center border-b border-border">
                                                 {row.free ? <Check className="w-6 h-6 text-green-500 mx-auto stroke-[3px]" /> : <div className="w-1.5 h-1.5 bg-muted rounded-full mx-auto" />}
                                             </td>
-                                            <td className="p-6 text-center border-b border-border bg-primary/5">
+                                            <td className="p-4 md:p-6 text-center border-b border-border bg-primary/5">
                                                 {row.ready ? <Check className="w-6 h-6 text-primary mx-auto stroke-[3px]" /> : <div className="w-1.5 h-1.5 bg-muted rounded-full mx-auto" />}
                                             </td>
-                                            <td className="p-6 text-center border-b border-border">
+                                            <td className="p-4 md:p-6 text-center border-b border-border">
                                                 {row.achiever ? <Check className="w-6 h-6 text-accent mx-auto stroke-[3px]" /> : <div className="w-1.5 h-1.5 bg-muted rounded-full mx-auto" />}
                                             </td>
                                         </tr>
@@ -331,7 +341,7 @@ export default function PremiumPage() {
                 {/* Testimonials */}
                 <section className="mb-32">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-display font-black mb-4 flex items-center justify-center gap-3">
+                        <h2 className="text-4xl font-display font-black mb-4 flex flex-col md:flex-row items-center justify-center gap-3">
                             <MessageSquare className="w-8 h-8 text-primary" /> {t("testimonials.title")}
                         </h2>
                         <p className="text-muted-foreground font-bold">{t("testimonials.subtitle")}</p>
@@ -365,7 +375,7 @@ export default function PremiumPage() {
                 {/* FAQ */}
                 <section className="mb-32 max-w-3xl mx-auto">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-display font-black mb-4 flex items-center justify-center gap-3">
+                        <h2 className="text-4xl font-display font-black mb-4 flex flex-col md:flex-row items-center justify-center gap-3">
                             <HelpCircle className="w-8 h-8 text-primary" /> {t("faqs.title")}
                         </h2>
                     </div>

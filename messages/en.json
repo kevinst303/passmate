@@ -4,7 +4,7 @@
             "trusted": "Trusted by 5,000+ Future-Citizens",
             "title": "Your <mate>Mate</mate> Helping You Become Australian.",
             "mate": "Mate",
-            "subtitle": "Pass the Australian Citizenship Test with confidence. Gamified learning, AI voice tutoring, and personalized prep that feels like playing a game.",
+            "subtitle": "Pass the Australian Citizenship Test with confidence. Gamified learning, AI voice tutoring, and personalised prep that feels like playing a game.",
             "cta1": "Start Learning Now",
             "cta2": "View Sample Test"
         },
@@ -82,8 +82,8 @@
         "streakDesc": "Keep your streak alive!",
         "proMateDesc": "You're a Pro Mate! Enjoy your unlimited learning journey.",
         "doingGreat": "You're doing great! Complete today's quests to keep your streak alive.",
-        "startPracticing": "Start Practicing",
-        "review": "Personalized Review",
+        "startPracticing": "Start Practising",
+        "review": "Personalised Review",
         "reviewDesc": "Practice what you missed",
         "talkToOllie": "Talk to Ollie",
         "ollieDesc": "AI Citizenship Tutor",
@@ -153,7 +153,7 @@
         "perfect": "PERFECT!",
         "score100": "100% Score",
         "complete": "Quiz Complete!",
-        "keepPracticing": "Keep Practicing!",
+        "keepPracticing": "Keep Practising!",
         "waitingOpponent": "You've finished your round. Waiting for your opponent to play!",
         "finalScore": "Final Score: {score} - {opponentScore}",
         "outOfLivesResult": "You ran out of hearts. Don't worry, they'll grow back soon!",
@@ -234,7 +234,7 @@
         "mockTestDesc": "Ready to prove your knowledge? Pass this test to earn the {badge} badge!",
         "mockBadge": "\"Mock Master\"",
         "takeTest": "Take the Test",
-        "proTip": "Pro tip: Complete topics in order to unlock new content and maximize your learning!"
+        "proTip": "Pro tip: Complete topics in order to unlock new content and maximise your learning!"
     },
     "AITutor": {
         "welcomeMistakes": "G'day mate! I see you've been working hard but had a few tricky questions lately. Want me to explain some of these?",
@@ -307,7 +307,7 @@
         "mysteryAwaits": "Mystery Awaits"
     },
     "Review": {
-        "title": "Personalized Review",
+        "title": "Personalised Review",
         "clearTitle": "You're All Clear!",
         "clearDesc": "No mistakes to review at the moment. You're a citizenship master, mate!",
         "introDesc": "Ollie has identified {count} tricky questions you've missed lately. Let's master them!",
@@ -404,7 +404,7 @@
     "Support": {
         "backProfile": "Back to Profile",
         "title": "How can we help, mate?",
-        "subtitle": "Search our help center or browse categories below to find what you need.",
+        "subtitle": "Search our help centre or browse categories below to find what you need.",
         "searchPlaceholder": "Search for answers...",
         "categories": {
             "study": {
@@ -608,7 +608,7 @@
             "r1": "500 XP Bonus",
             "r2": "1,000 XP + Rare Badge",
             "r3": "1 Month Premium Free",
-            "b1": "Friendly Neighbor",
+            "b1": "Friendly Neighbour",
             "b2": "Community Leader",
             "b3": "National Icon"
         }
@@ -616,14 +616,14 @@
     "Premium": {
         "backDashboard": "Dashboard",
         "goPremium": "Go Premium",
-        "heroTitle": "Master Your <1>Aussie</1> Journey",
+        "heroTitle": "Master Your <italic>Aussie</italic> Journey",
         "heroSubtitle": "Join 10,000+ mates who passed their citizenship test on the first try with PassMate Premium.",
         "banners": {
             "cancelled": "Checkout was cancelled. No worries, Ollie is still here for ya!",
             "requires": "Requires {feature}",
             "ai_tutor": {
                 "title": "Unlock Ollie the AI Tutor!",
-                "desc": "Get personalized explanations for any citizenship question. Ollie is ready to help you master every topic!"
+                "desc": "Get personalised explanations for any citizenship question. Ollie is ready to help you master every topic!"
             },
             "masterclass": {
                 "title": "Access the Citizenship Masterclass!",
@@ -664,7 +664,7 @@
                 "unlimitedHearts": "Unlimited Hearts ❤️",
                 "aiTutor": "AI Tutor Support (Ollie)",
                 "mockExam": "Official Mock Exam Simulator",
-                "aiReview": "Personalized AI Review",
+                "aiReview": "Personalised AI Review",
                 "adFree": "Ad-free Experience",
                 "masterclass": "Australian Values Masterclass",
                 "certificate": "Digital Certificate of Readiness",
@@ -715,7 +715,7 @@
             "title": "Frequently Asked Questions",
             "q1": {
                 "q": "How do Unlimited Hearts work?",
-                "a": "With a premium plan, you never have to wait for hearts to refill. If you get a question wrong, you can keep practicing without any interruptions. Perfect for intense study sessions!"
+                "a": "With a premium plan, you never have to wait for hearts to refill. If you get a question wrong, you can keep practising without any interruptions. Perfect for intense study sessions!"
             },
             "q2": {
                 "q": "Is the payment a subscription?",

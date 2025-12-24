@@ -78,13 +78,15 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-5">
               <Link href="/login" className="w-full sm:w-auto">
-                <Button size="lg" className="btn-primary w-full h-16 text-lg shadow-[0_4px_0_#147a71]">
-                  {t("hero.cta1")} <ChevronRight className="w-5 h-5 ml-1" />
+                <Button size="lg" className="btn-primary w-full h-16 text-xl shadow-[0_6px_0_#147a71] hover:shadow-[0_4px_0_#147a71] hover:translate-y-[2px] active:shadow-none active:translate-y-[6px] transition-all px-8 rounded-2xl group">
+                  {t("hero.cta1")} <ChevronRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="w-full sm:w-auto h-16 text-lg border-2 hover:bg-muted/50 rounded-2xl font-bold">
-                {t("hero.cta2")}
-              </Button>
+              <Link href="/dashboard/mock-test" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full h-16 text-lg border-2 hover:bg-muted/50 rounded-2xl font-bold">
+                  {t("hero.cta2")}
+                </Button>
+              </Link>
             </div>
 
             <div className="mt-12 flex items-center gap-4">

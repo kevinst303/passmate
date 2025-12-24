@@ -5,9 +5,13 @@ import { createClient } from "@/utils/supabase/server";
 export async function getAdminStats() {
     const supabase = await createClient();
 
-    // Check if user is admin (you might want a 'role' field in profiles, for now we just check if authenticated)
+    // Check if user is admin via metadata
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Unauthorized");
+
+    // Allow looking at admin stats if role is admin
+    const isAdmin = user.user_metadata?.role === 'admin' || user.user_metadata?.role === 'super_admin';
+    if (!isAdmin) throw new Error("Unauthorized: Admin access required");
 
     // Total Users
     const { count: totalUsers } = await supabase
@@ -248,4 +252,18 @@ export async function updateSystemConfig(config: { key: string; value: unknown; 
 
     if (error) return { success: false, error: error.message };
     return { success: true, data };
+}
+
+export async function claimSuperAdmin() {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) return { success: false, error: "Not authenticated" };
+
+    const { data, error } = await supabase.auth.updateUser({
+        data: { role: 'super_admin' }
+    });
+
+    if (error) return { success: false, error: error.message };
+    return { success: true, message: "You are now a Super Admin!" };
 }

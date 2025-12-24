@@ -200,7 +200,7 @@ export default function AdminClient() {
     ];
 
     return (
-        <div className="min-h-screen bg-[#F8FAFC] pb-24 md:pb-12 md:pl-28 pr-6 pt-6 font-sans selection:bg-primary/10">
+        <div className="min-h-screen bg-[#F8FAFC] p-4 pb-24 md:pb-12 md:pl-28 md:pr-6 md:pt-6 font-sans selection:bg-primary/10">
             <main className="max-w-6xl mx-auto space-y-10">
                 {/* Modern Header */}
                 <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-4 border-b border-slate-200">
@@ -217,7 +217,7 @@ export default function AdminClient() {
                         <p className="text-slate-500 font-bold mt-2 text-lg">Manage PassMate infrastructure and user experience</p>
                     </div>
 
-                    <div className="flex items-center gap-1 p-1.5 bg-white/80 backdrop-blur-md rounded-[1.5rem] border-2 border-slate-200/60 shadow-xl shadow-slate-200/50">
+                    <div className="flex items-center gap-1 p-1.5 bg-white/80 backdrop-blur-md rounded-[1.5rem] border-2 border-slate-200/60 shadow-xl shadow-slate-200/50 overflow-x-auto w-full lg:w-auto scrollbar-hide">
                         {navItems.map((item) => (
                             <button
                                 key={item.id}
@@ -225,7 +225,7 @@ export default function AdminClient() {
                                 className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-black transition-all duration-300 ${activeTab === item.id
                                     ? 'bg-primary text-white shadow-lg shadow-primary/25 scale-[1.02]'
                                     : 'hover:bg-slate-100 text-slate-500 hover:text-slate-900'
-                                    }`}
+                                    } shrink-0`}
                             >
                                 <item.icon className={`w-4 h-4 transition-transform ${activeTab === item.id ? 'scale-110' : ''}`} />
                                 {item.label}
@@ -482,7 +482,7 @@ export default function AdminClient() {
                             exit={{ opacity: 0, y: -10 }}
                             className="space-y-8"
                         >
-                            <div className="flex items-center justify-between">
+                            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                                 <div>
                                     <h3 className="text-3xl font-black font-display flex items-center gap-4 text-slate-900">
                                         <div className="w-12 h-12 rounded-2xl bg-rose-100 flex items-center justify-center">
@@ -494,7 +494,7 @@ export default function AdminClient() {
                                 </div>
                                 <Button
                                     onClick={() => setIsEditing({ topic: 'History', question_text: '', options: ['', '', '', ''], correct_index: 0, difficulty: 'medium' })}
-                                    className="bg-primary text-white font-black px-8 h-16 rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] flex items-center gap-3 transition-all"
+                                    className="w-full md:w-auto bg-primary text-white font-black px-8 h-16 rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] flex items-center justify-center gap-3 transition-all"
                                 >
                                     <Plus className="w-6 h-6" /> Initialize New Question
                                 </Button>
@@ -518,8 +518,8 @@ export default function AdminClient() {
                                     {questions
                                         .filter(q => q.question_text?.toLowerCase().includes(searchQuery.toLowerCase()))
                                         .map((q) => (
-                                            <div key={q.id} className="p-10 hover:bg-slate-50/80 transition-colors group relative overflow-hidden">
-                                                <div className="flex gap-10">
+                                            <div key={q.id} className="p-6 md:p-10 hover:bg-slate-50/80 transition-colors group relative overflow-hidden">
+                                                <div className="flex flex-col md:flex-row gap-6 md:gap-10">
                                                     <div className="flex-1">
                                                         <div className="flex items-center gap-3 mb-4">
                                                             <span className="bg-rose-100 text-rose-600 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border border-rose-200/50">{q.topic}</span>
@@ -582,7 +582,7 @@ export default function AdminClient() {
                             exit={{ opacity: 0, y: -10 }}
                             className="space-y-8"
                         >
-                            <div className="flex items-center justify-between">
+                            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                                 <div>
                                     <h3 className="text-3xl font-black font-display flex items-center gap-4 text-slate-900">
                                         <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
@@ -594,7 +594,7 @@ export default function AdminClient() {
                                 </div>
                                 <Button
                                     onClick={() => setIsEditing({ name: '', description: '', xp_reward: 100, secret: false })}
-                                    className="bg-primary text-white font-black px-8 h-16 rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] flex items-center gap-3 transition-all"
+                                    className="w-full md:w-auto bg-primary text-white font-black px-8 h-16 rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] flex items-center justify-center gap-3 transition-all"
                                 >
                                     <Plus className="w-6 h-6" /> Craft New Badge
                                 </Button>
@@ -649,7 +649,7 @@ export default function AdminClient() {
                             exit={{ opacity: 0, y: -10 }}
                             className="space-y-8"
                         >
-                            <div className="flex items-center justify-between">
+                            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                                 <div>
                                     <h3 className="text-3xl font-black font-display flex items-center gap-4 text-slate-900">
                                         <div className="w-12 h-12 rounded-2xl bg-teal-100 flex items-center justify-center">
@@ -661,7 +661,7 @@ export default function AdminClient() {
                                 </div>
                                 <Button
                                     onClick={() => setIsEditing({ title: '', description: '', xp_reward: 50, type: 'quiz_complete', requirement_value: 1 })}
-                                    className="bg-primary text-white font-black px-8 h-16 rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] flex items-center gap-3 transition-all"
+                                    className="w-full md:w-auto bg-primary text-white font-black px-8 h-16 rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] flex items-center justify-center gap-3 transition-all"
                                 >
                                     <Plus className="w-6 h-6" /> Deploy New Mission
                                 </Button>

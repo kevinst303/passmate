@@ -117,6 +117,9 @@ export default function DashboardClient({ data }: DashboardClientProps) {
         { id: '2', quests: { title: t("defaultQuests.q2"), xp_reward: 100 }, progress: 0, requirement_value: 1, is_completed: false },
     ];
 
+    const completedQuests = displayQuests.filter(q => q.is_completed).length;
+    const totalQuests = displayQuests.length;
+
     const xpToNextLevel = profile.level * 1000;
     const progressPercentage = (profile.current_xp / xpToNextLevel) * 100;
 
@@ -276,7 +279,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                 </motion.section>
 
                 {/* Quick Actions */}
-                <section className="grid grid-cols-2 gap-3 sm:gap-4">
+                <section className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <Link href="/dashboard/review" className="block">
                         <motion.div
                             whileHover={{ scale: 1.02 }}
@@ -383,13 +386,21 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                     {/* Quests */}
                     <section className="space-y-3 sm:space-y-4">
                         <div className="flex items-center justify-between px-1 sm:px-2">
-                            <h3 className="text-lg sm:text-xl font-display font-bold flex items-center gap-2">
-                                <Target className="w-4 h-4 sm:w-5 sm:h-5 text-accent" aria-hidden="true" />
-                                <span>{t("dailyQuests")}</span>
-                            </h3>
-                            <span className="text-xs sm:text-sm font-bold text-muted-foreground">{t("resetIn", { time: "8h" })}</span>
+                            <div className="flex items-center gap-3">
+                                <h3 className="text-lg sm:text-xl font-display font-bold flex items-center gap-2">
+                                    <Target className="w-4 h-4 sm:w-5 sm:h-5 text-accent" aria-hidden="true" />
+                                    <span>{t("dailyQuests")}</span>
+                                </h3>
+                                <span className="bg-muted text-muted-foreground px-2 py-0.5 rounded-full text-xs font-black">
+                                    {completedQuests}/{totalQuests}
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <span className="hidden sm:inline text-xs sm:text-sm font-bold text-muted-foreground">{t("resetIn", { time: "8h" })}</span>
+                                <Link href="/quests" className="text-xs sm:text-sm font-bold text-primary hover:underline">{t("viewAll")}</Link>
+                            </div>
                         </div>
-                        <div className="space-y-2 sm:space-y-3 max-h-64 sm:max-h-72 overflow-y-auto pr-1">
+                        <div className="space-y-2 sm:space-y-3 max-h-64 sm:max-h-72 overflow-y-auto pr-1 [mask-image:linear-gradient(to_bottom,transparent,black_20px,black_calc(100%_-_20px),transparent)]">
                             {displayQuests.map((userQuest) => (
                                 <motion.div
                                     key={userQuest.id}
