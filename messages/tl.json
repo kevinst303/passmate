@@ -55,6 +55,7 @@
         "premium": "Premium",
         "profile": "Profile",
         "settings": "Settings",
+        "blog": "Blog",
         "more": "Iba pa",
         "moreOptions": "Higit pang mga Opsyon",
         "myProfile": "Aking Profile",
@@ -72,7 +73,8 @@
             "achievements": "Mga badge at rewards",
             "premium": "I-unlock ang full access",
             "profile": "Iyong account",
-            "settings": "Mga preference sa app"
+            "settings": "Mga preference sa app",
+            "blog": "Pagsusuri at Pananaw"
         }
     },
     "Dashboard": {
@@ -128,7 +130,8 @@
         "nextIn": "Susunod sa {time}m",
         "streak": "Streak",
         "xp": "XP",
-        "days": "mga araw"
+        "days": "mga araw",
+        "blog": "Blog"
     },
     "Quiz": {
         "loading": "Nangongolekta ng mga study material...",

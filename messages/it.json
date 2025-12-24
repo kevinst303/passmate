@@ -55,6 +55,7 @@
         "premium": "Premium",
         "profile": "Profilo",
         "settings": "Impostazioni",
+        "blog": "Blog",
         "more": "Altro",
         "moreOptions": "Altre Opzioni",
         "myProfile": "Mio Profilo",
@@ -72,7 +73,8 @@
             "achievements": "Distintivi e premi",
             "premium": "Sblocca l'accesso completo",
             "profile": "Il tuo account",
-            "settings": "Preferenze app"
+            "settings": "Preferenze app",
+            "blog": "Analisi e Approfondimenti"
         }
     },
     "Dashboard": {
@@ -128,7 +130,8 @@
         "nextIn": "Prossimo in {time}m",
         "streak": "Serie",
         "xp": "XP",
-        "days": "giorni"
+        "days": "giorni",
+        "blog": "Blog"
     },
     "Quiz": {
         "loading": "Raccolta materiali di studio...",

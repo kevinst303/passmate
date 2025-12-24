@@ -55,6 +55,7 @@
         "premium": "Cao cấp",
         "profile": "Hồ sơ",
         "settings": "Cài đặt",
+        "blog": "Blog",
         "more": "Thêm",
         "moreOptions": "Tùy chọn thêm",
         "myProfile": "Hồ sơ của tôi",
@@ -72,7 +73,8 @@
             "achievements": "Huy hiệu và phần thưởng",
             "premium": "Mở khóa toàn bộ quyền truy cập",
             "profile": "Tài khoản của bạn",
-            "settings": "Tùy chỉnh ứng dụng"
+            "settings": "Tùy chỉnh ứng dụng",
+            "blog": "Phân tích và Thông tin chi tiết"
         }
     },
     "Dashboard": {
@@ -128,7 +130,8 @@
         "nextIn": "Tiếp theo sau {time}p",
         "streak": "Chuỗi",
         "xp": "XP",
-        "days": "ngày"
+        "days": "ngày",
+        "blog": "Blog"
     },
     "Quiz": {
         "loading": "Đang thu thập tài liệu học tập...",

@@ -203,7 +203,7 @@ export default function ProfileClient({ data, achievementsData }: ProfileClientP
                                 <h3 className="text-2xl font-display font-black flex items-center gap-3">
                                     <Award className="w-6 h-6 text-yellow-500" /> {t("recentBadges")}
                                 </h3>
-                                <Link href="/achievements" className="text-sm font-black text-primary hover:underline flex items-center gap-1 group">
+                                <Link href="/achievements" className="text-sm font-black text-primary hover:underline flex items-center gap-1 group whitespace-nowrap">
                                     {t("viewCollection")} <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                             </div>

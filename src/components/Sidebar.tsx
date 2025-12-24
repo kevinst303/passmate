@@ -98,6 +98,12 @@ export const Sidebar = () => {
                 description: t("desc.profile")
             },
             {
+                href: "/blog",
+                icon: BookOpen, // Or another icon like FileText
+                label: t("blog"),
+                description: t("desc.blog")
+            },
+            {
                 href: "/settings",
                 icon: Settings,
                 label: t("settings"),

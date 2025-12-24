@@ -16,7 +16,11 @@ import {
     Sparkles,
     Clock,
     Menu,
-    X
+    X,
+    MoreHorizontal,
+    Settings,
+    GraduationCap,
+    BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Link } from "@/i18n/routing";
@@ -506,6 +510,44 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                         <span className="text-[120px] sm:text-[200px]">🇦🇺</span>
                     </div>
                 </motion.section>
+
+                {/* Latest Insights - Blog Section */}
+                <section className="space-y-4 sm:space-y-6">
+                    <div className="flex items-center justify-between px-1 sm:px-2">
+                        <h3 className="text-lg sm:text-xl font-display font-bold flex items-center gap-2">
+                            <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-primary" aria-hidden="true" />
+                            <span>{nav("blog")}</span>
+                        </h3>
+                        <Link href="/blog" className="text-xs sm:text-sm font-bold text-primary hover:underline">{t("viewAll")}</Link>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {require("@/data/blogPosts").blogPosts.slice(0, 2).map((post: any) => (
+                            <Link key={post.slug} href={`/blog/${post.slug}`}>
+                                <motion.div
+                                    whileHover={{ y: -4, boxShadow: "0 10px 25px -10px rgba(0,0,0,0.1)" }}
+                                    className="bg-white rounded-3xl border border-border p-4 flex gap-4 items-center group transition-all h-full"
+                                >
+                                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-muted rounded-2xl overflow-hidden shrink-0 relative">
+                                        <div className="absolute inset-0 bg-primary/10 group-hover:bg-primary/20 transition-colors" />
+                                        <div className="absolute inset-0 flex items-center justify-center text-2xl">
+                                            {post.category === "Citizenship" ? "🇦🇺" : post.category === "Visas" ? "🛂" : "🌏"}
+                                        </div>
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className="text-[10px] font-black text-primary uppercase tracking-wider">{post.category}</span>
+                                            <span className="text-[10px] text-muted-foreground">• {post.readTime}</span>
+                                        </div>
+                                        <h4 className="font-bold text-sm sm:text-base leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                                            {post.title}
+                                        </h4>
+                                    </div>
+                                </motion.div>
+                            </Link>
+                        ))}
+                    </div>
+                </section>
 
                 {/* Global Activity Feed */}
                 <section className="space-y-4 sm:space-y-6">

@@ -55,6 +55,7 @@
         "premium": "高级版",
         "profile": "个人资料",
         "settings": "设置",
+        "blog": "博客",
         "more": "更多",
         "moreOptions": "更多选项",
         "myProfile": "我的资料",
@@ -72,7 +73,8 @@
             "achievements": "徽章与奖励",
             "premium": "解锁完整访问",
             "profile": "您的账户",
-            "settings": "应用偏好"
+            "settings": "应用偏好",
+            "blog": "分析与见解"
         }
     },
     "Dashboard": {
@@ -128,7 +130,8 @@
         "nextIn": "{time} 分钟后获得下一个",
         "streak": "连胜",
         "xp": "经验值",
-        "days": "天"
+        "days": "天",
+        "blog": "博客"
     },
     "Quiz": {
         "loading": "正在收集学习资料...",

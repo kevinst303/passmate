@@ -29,7 +29,7 @@ export const Button = ({
     return (
         <button
             className={cn(
-                "rounded-2xl font-bold transition-all disabled:opacity-50 disabled:pointer-events-none",
+                "rounded-2xl font-bold transition-all disabled:opacity-50 disabled:pointer-events-none inline-flex items-center justify-center whitespace-nowrap",
                 variant !== "outline" ? variants[variant] : variants.outline,
                 sizes[size],
                 className

@@ -55,6 +55,7 @@
         "premium": "Premium",
         "profile": "Profile",
         "settings": "Settings",
+        "blog": "Blog",
         "more": "More",
         "moreOptions": "More Options",
         "myProfile": "My Profile",
@@ -72,7 +73,8 @@
             "achievements": "Badges & rewards",
             "premium": "Unlock full access",
             "profile": "Your account",
-            "settings": "App preferences"
+            "settings": "App preferences",
+            "blog": "Analysis & Insights"
         }
     },
     "Dashboard": {
@@ -129,7 +131,8 @@
         "nextIn": "Next in {time}m",
         "streak": "Streak",
         "xp": "XP",
-        "days": "days"
+        "days": "days",
+        "blog": "Blog"
     },
     "Quiz": {
         "loading": "Gathering study materials...",
@@ -737,6 +740,25 @@
             "ratingDesc": "Trusted by thousands of new Aussie citizens every year.",
             "refund": "Money-Back Period",
             "refundDesc": "Don't pass? Get a full refund on your premium plan. No questions asked."
+        },
+        "About": {
+            "title": "About PassMate",
+            "subtitle": "Empowering future Australians through technology and community.",
+            "mission": "Our Mission",
+            "missionText": "PassMate was born out of a simple observation: the journey to Australian citizenship can be daunting. Our mission is to make this journey accessible, engaging, and successful for every aspiring Australian. We believe that technology should serve people, especially when they are making life-changing commitments to their new home.",
+            "story": "The PassMate Story",
+            "storyText": "Started by a team of immigrants and tech enthusiasts in Melbourne, PassMate combines advanced AI with a deep respect for Australian values. We noticed that existing study tools were often outdated or lacked the personal touch needed to truly understand the 'Fair Go' spirit.",
+            "ollie": "Meet Ollie",
+            "ollieText": "Ollie isn't just a mascot; he's your study buddy. Designed to be friendly, encouraging, and incredibly knowledgeable, Ollie represents the welcoming spirit of Australia. He's here to yarn about history, explain the rule of law, and cheer you on as you master the Aussie way of life.",
+            "whyTitle": "Why choose PassMate?",
+            "why1": "AI-Powered Learning",
+            "why1Desc": "Ask Ollie anything, anytime. Personalized feedback that helps you learn from mistakes.",
+            "why2": "Up-to-Date Content",
+            "why2Desc": "Our question bank is constantly updated to reflect the latest 2024/2025 test standard.",
+            "why3": "Pass Guarantee",
+            "why3Desc": "We're so confident in our platform that we offer a full refund if you don't pass.",
+            "join": "Ready to join the family?",
+            "getStarted": "Get Started Today"
         }
     }
 }

@@ -114,7 +114,7 @@ export default function SupportClient({ data: _data }: SupportClientProps) {
                                 </details>
                             ))}
                         </div>
-                        <Link href="/contact" className="inline-flex items-center gap-2 text-primary font-black mt-8 hover:underline">
+                        <Link href="/contact" className="inline-flex items-center gap-2 text-primary font-black mt-8 hover:underline whitespace-nowrap">
                             {t("viewAllFaqs")} <ChevronRight className="w-4 h-4" />
                         </Link>
                     </section>
