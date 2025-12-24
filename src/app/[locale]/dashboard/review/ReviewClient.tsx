@@ -4,34 +4,39 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     X,
-    Heart,
-    CheckCircle2,
-    XCircle,
-    ChevronRight,
-    Trophy,
-    Flame,
-    Zap,
     Brain
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import confetti from "canvas-confetti";
 import { cn } from "@/lib/utils";
-import { updateUserProgress } from "@/app/actions/progress";
 import { resolveMistake } from "@/app/actions/quiz";
+import { useTranslations } from "next-intl";
 
-interface ReviewClientProps {
-    mistakes: any[];
+interface Question {
+    id: string;
+    question_text: string;
+    options: string[];
+    correct_index: number;
+    explanation: string;
 }
 
-export default function ReviewClient({ mistakes: initialMistakes }: ReviewClientProps) {
-    const [mistakes, setMistakes] = useState(initialMistakes);
+interface Mistake {
+    id: string;
+    questions: Question;
+}
+
+interface ReviewClientProps {
+    mistakes: Mistake[];
+}
+
+export default function ReviewClient({ mistakes }: ReviewClientProps) {
+    const t = useTranslations("Review");
     const [currentStep, setCurrentStep] = useState(0); // 0: Start, 1: Quiz, 2: Results
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [isAnswered, setIsAnswered] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
-    const [solvedCount, setSolvedCount] = useState(0);
     const [score, setScore] = useState(0);
     const router = useRouter();
 
@@ -39,11 +44,11 @@ export default function ReviewClient({ mistakes: initialMistakes }: ReviewClient
         return (
             <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
                 <div className="text-8xl mb-6">✅</div>
-                <h1 className="text-4xl font-display font-black mb-4">You're All Clear!</h1>
+                <h1 className="text-4xl font-display font-black mb-4">{t("clearTitle")}</h1>
                 <p className="text-muted-foreground text-lg mb-8 max-w-sm">
-                    No mistakes to review at the moment. You're a citizenship master, mate!
+                    {t("clearDesc")}
                 </p>
-                <Button size="lg" onClick={() => router.push("/dashboard")}>Back to Dashboard</Button>
+                <Button size="lg" onClick={() => router.push("/dashboard")}>{t("finish")}</Button>
             </div>
         );
     }
@@ -60,7 +65,6 @@ export default function ReviewClient({ mistakes: initialMistakes }: ReviewClient
 
         if (correct) {
             setScore(s => s + 1);
-            setSolvedCount(c => c + 1);
             // Mark as resolved in DB
             await resolveMistake(currentMistake.id);
         }
@@ -92,16 +96,16 @@ export default function ReviewClient({ mistakes: initialMistakes }: ReviewClient
                     className="max-w-md w-full"
                 >
                     <div className="w-24 h-24 bg-orange-100 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-8">🧠</div>
-                    <h1 className="text-4xl font-display font-black mb-4">Personalized Review</h1>
+                    <h1 className="text-4xl font-display font-black mb-4">{t("title")}</h1>
                     <p className="text-muted-foreground text-lg mb-10">
-                        Ollie has identified <span className="text-foreground font-black">{mistakes.length} tricky questions</span> you've missed lately. Let's master them!
+                        {t("introDesc", { count: mistakes.length })}
                     </p>
                     <div className="space-y-4">
                         <Button size="lg" className="w-full py-6 text-xl" onClick={() => setCurrentStep(1)}>
-                            Start Review
+                            {t("startReview")}
                         </Button>
                         <Button variant="outline" size="lg" className="w-full" onClick={() => router.back()}>
-                            Maybe Later
+                            {t("maybeLater")}
                         </Button>
                     </div>
                 </motion.div>
@@ -118,22 +122,22 @@ export default function ReviewClient({ mistakes: initialMistakes }: ReviewClient
                     className="max-w-md w-full bg-white p-10 rounded-[3.5rem] border-2 border-border shadow-xl"
                 >
                     <div className="text-7xl mb-6">{score === mistakes.length ? "🎓" : "💪"}</div>
-                    <h1 className="text-4xl font-display font-black mb-4">Review Complete!</h1>
+                    <h1 className="text-4xl font-display font-black mb-4">{t("completeTitle")}</h1>
                     <p className="text-muted-foreground font-medium mb-10">
-                        You've conquered <span className="text-primary font-black">{score}</span> of those tricky questions. Your brain is getting stronger!
+                        {t("completeDesc", { count: score })}
                     </p>
                     <div className="grid grid-cols-2 gap-4 mb-10">
                         <div className="bg-orange-50 p-6 rounded-3xl border border-orange-100">
-                            <div className="text-sm font-black text-orange-600 mb-1 uppercase tracking-wider">Solved</div>
+                            <div className="text-sm font-black text-orange-600 mb-1 uppercase tracking-wider">{t("solved")}</div>
                             <div className="text-4xl font-display font-black text-orange-700">{score}</div>
                         </div>
                         <div className="bg-blue-50 p-6 rounded-3xl border border-blue-100">
-                            <div className="text-sm font-black text-blue-600 mb-1 uppercase tracking-wider">XP Earned</div>
+                            <div className="text-sm font-black text-blue-600 mb-1 uppercase tracking-wider">{t("xpEarned")}</div>
                             <div className="text-4xl font-display font-black text-blue-700">+{score * 10}</div>
                         </div>
                     </div>
                     <Button size="lg" className="w-full py-5 text-xl" onClick={() => router.push("/dashboard")}>
-                        Back to Dashboard
+                        {t("finish")}
                     </Button>
                 </motion.div>
             </div>
@@ -168,7 +172,7 @@ export default function ReviewClient({ mistakes: initialMistakes }: ReviewClient
                         className="flex-1"
                     >
                         <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-700 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-200">
-                            <Brain className="w-3.5 h-3.5" /> Tricky Question
+                            <Brain className="w-3.5 h-3.5" /> {t("trickyQuestion")}
                         </div>
                         <h2 className="text-3xl font-display font-black mb-10 leading-tight">
                             {currentQuestion?.question_text}
@@ -216,7 +220,7 @@ export default function ReviewClient({ mistakes: initialMistakes }: ReviewClient
                                 disabled={selectedOption === null}
                                 onClick={handleCheck}
                             >
-                                Check
+                                {t("check")}
                             </Button>
                         </div>
                     </div>
@@ -238,7 +242,7 @@ export default function ReviewClient({ mistakes: initialMistakes }: ReviewClient
                             </div>
                             <div className="flex-1 text-center md:text-left">
                                 <h3 className="text-2xl font-black mb-1">
-                                    {isCorrect ? "Well done!" : "Not quite, mate"}
+                                    {isCorrect ? t("wellDone") : t("notQuite")}
                                 </h3>
                                 <p className="font-bold opacity-80">{currentQuestion.explanation}</p>
                             </div>
@@ -250,7 +254,7 @@ export default function ReviewClient({ mistakes: initialMistakes }: ReviewClient
                                 )}
                                 onClick={handleContinue}
                             >
-                                {currentIndex === mistakes.length - 1 ? "Finish" : "Next"}
+                                {currentIndex === mistakes.length - 1 ? t("finish") : t("next")}
                             </Button>
                         </div>
                     </motion.div>

@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
+import { updateUserProgress } from './progress';
 
 export async function getQuestions(topic?: string, limit: number = 5) {
     const supabase = await createClient();
@@ -124,8 +125,5 @@ export async function submitQuizResults(score: number, totalQuestions: number, t
 
     const xpGained = score * 20;
 
-    // This uses the existing updateUserProgress action logic internally
-    // but we can just call it or implement it here.
-    // For now, let's keep it simple and assume updateUserProgress is called from the client
-    // or we can move it here.
+    return await updateUserProgress(user.id, xpGained, score, totalQuestions, 0, topic);
 }

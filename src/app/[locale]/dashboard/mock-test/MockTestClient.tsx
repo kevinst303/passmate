@@ -17,19 +17,21 @@ import {
     Shield
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import confetti from "canvas-confetti";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/utils/supabase/client";
 import { updateUserProgress } from "@/app/actions/progress";
 import { getRandomQuestions, logQuizMistake } from "@/app/actions/quiz";
 import { checkAndUnlockAchievements } from "@/app/actions/achievements";
+import { useTranslations } from "next-intl";
 
 interface MockTestClientProps {
     profile: any;
 }
 
 export default function MockTestClient({ profile }: MockTestClientProps) {
+    const t = useTranslations("MockTest");
     const [currentStep, setCurrentStep] = useState(0); // 0: Start, 1: Quiz, 2: Results
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -155,7 +157,7 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
         return (
             <div className="min-h-screen bg-[#FEFEF8] flex flex-col items-center justify-center p-6">
                 <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4" />
-                <p className="font-display font-black text-primary italic">Preparing official mock test...</p>
+                <p className="font-display font-black text-primary italic">{t("preparing")}</p>
             </div>
         );
     }
@@ -169,45 +171,45 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                     className="max-w-2xl w-full bg-white p-10 rounded-[4rem] border-2 border-border shadow-xl text-center"
                 >
                     <div className="w-24 h-24 bg-primary/10 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-8">🇦🇺</div>
-                    <h1 className="text-4xl font-display font-black mb-6">Official Mock Test</h1>
+                    <h1 className="text-4xl font-display font-black mb-6">{t("title")}</h1>
 
                     <div className="grid grid-cols-2 gap-6 mb-10 text-left">
                         <div className="bg-muted/50 p-6 rounded-3xl border border-border">
                             <div className="flex items-center gap-3 mb-2">
                                 <Shield className="w-5 h-5 text-primary" />
-                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">Requirements</p>
+                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">{t("requirements")}</p>
                             </div>
-                            <p className="font-bold">Score at least 75% to pass the test.</p>
+                            <p className="font-bold">{t("passMark")}</p>
                         </div>
                         <div className="bg-muted/50 p-6 rounded-3xl border border-border">
                             <div className="flex items-center gap-3 mb-2">
                                 <AlertTriangle className="w-5 h-5 text-accent" />
-                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">Mandatory</p>
+                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">{t("mandatory")}</p>
                             </div>
-                            <p className="font-bold text-accent">Must answer all Democratic Beliefs questions correctly.</p>
+                            <p className="font-bold text-accent">{t("mandatoryDesc")}</p>
                         </div>
                         <div className="bg-muted/50 p-6 rounded-3xl border border-border">
                             <div className="flex items-center gap-3 mb-2">
                                 <Timer className="w-5 h-5 text-blue-500" />
-                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">Timer</p>
+                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">{t("timer")}</p>
                             </div>
-                            <p className="font-bold">45 Minutes full duration.</p>
+                            <p className="font-bold">{t("duration")}</p>
                         </div>
                         <div className="bg-muted/50 p-6 rounded-3xl border border-border">
                             <div className="flex items-center gap-3 mb-2">
                                 <Zap className="w-5 h-5 text-yellow-500" />
-                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">Reward</p>
+                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">{t("reward")}</p>
                             </div>
-                            <p className="font-bold">Earn up to 500 XP and a certificate!</p>
+                            <p className="font-bold">{t("rewardDesc")}</p>
                         </div>
                     </div>
 
                     <div className="space-y-4">
                         <Button size="lg" className="w-full py-6 text-xl" onClick={() => setCurrentStep(1)}>
-                            Start Official Test
+                            {t("startTest")}
                         </Button>
                         <Button variant="outline" size="lg" className="w-full" onClick={() => router.back()}>
-                            Back to Dashboard
+                            {t("backDashboard")}
                         </Button>
                     </div>
                 </motion.div>
@@ -232,25 +234,25 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                     )}
                     <div className="text-8xl mb-6">{hasPassed ? "🐨🎉" : "🐨💡"}</div>
                     <h1 className="text-4xl font-display font-black mb-4">
-                        {hasPassed ? "You're a Legend!" : "Almost There, Mate!"}
+                        {hasPassed ? t("legend") : t("almost")}
                     </h1>
                     <p className="text-muted-foreground text-lg font-medium mb-10 max-w-sm mx-auto">
                         {hasPassed
-                            ? "You've successfully passed the official mock test. You're ready for the real thing!"
+                            ? t("passDesc")
                             : !passedMandatory
-                                ? "You missed some mandatory questions about Democratic Beliefs. These are critical for the test!"
-                                : `You scored ${score}/${questions.length}, which is just below the 75% pass mark.`}
+                                ? t("mandatoryFailDesc")
+                                : t("failScoreDesc", { score, total: questions.length })}
                     </p>
 
                     <div className="grid grid-cols-2 gap-4 mb-8">
                         <div className="bg-muted/30 p-6 rounded-[2rem] border border-border">
-                            <p className="text-xs font-black text-muted-foreground uppercase mb-1">Overall Score</p>
+                            <p className="text-xs font-black text-muted-foreground uppercase mb-1">{t("overallScore")}</p>
                             <p className={cn("text-3xl font-display font-black", hasPassed ? "text-primary" : "text-accent")}>
                                 {Math.round((score / questions.length) * 100)}%
                             </p>
                         </div>
                         <div className="bg-muted/30 p-6 rounded-[2rem] border border-border">
-                            <p className="text-xs font-black text-muted-foreground uppercase mb-1">Mandatory</p>
+                            <p className="text-xs font-black text-muted-foreground uppercase mb-1">{t("mandatoryLabel")}</p>
                             <p className={cn("text-3xl font-display font-black", passedMandatory ? "text-primary" : "text-accent")}>
                                 {mandatoryCorrect}/{mandatoryQuestions}
                             </p>
@@ -262,8 +264,8 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                             <div className="flex items-center gap-4 text-left">
                                 <div className="w-14 h-14 bg-yellow-400 rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:rotate-12 transition-transform">📜</div>
                                 <div className="flex-1">
-                                    <h4 className="font-black text-yellow-900 text-lg">Citizenship Certificate</h4>
-                                    <p className="text-sm font-bold text-yellow-800/70">Unlocked for Citizenship Achievers!</p>
+                                    <h4 className="font-black text-yellow-900 text-lg">{t("certificateTitle")}</h4>
+                                    <p className="text-sm font-bold text-yellow-800/70">{t("certificateUnlocked")}</p>
                                 </div>
                                 <Button
                                     size="lg"
@@ -271,14 +273,14 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                                     className="ml-auto bg-white text-yellow-700 hover:bg-yellow-100 px-8 rounded-2xl shadow-sm"
                                     onClick={() => router.push(`/certificate/${attemptId}`)}
                                 >
-                                    View
+                                    {t("view")}
                                 </Button>
                             </div>
                         </div>
                     )}
 
                     <Button size="lg" className="w-full py-5 text-xl" onClick={() => router.push("/dashboard")} disabled={isSaving}>
-                        {isSaving ? "Saving Results..." : "Return Home"}
+                        {isSaving ? t("saving") : t("returnHome")}
                     </Button>
                 </motion.div>
             </div>
@@ -312,11 +314,11 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                 <div className="mb-12">
                     <div className="flex items-center justify-between mb-4">
                         <span className="text-xs font-black text-primary uppercase tracking-[0.2em]">
-                            Question {currentQuestionIndex + 1} of {questions.length}
+                            {t("questionCount", { current: currentQuestionIndex + 1, total: questions.length })}
                         </span>
                         {currentQuestion?.topic === "Democratic beliefs, rights and liberties" && (
                             <span className="bg-accent/10 text-accent text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 uppercase">
-                                <AlertTriangle className="w-3 h-3" /> Mandatory Question
+                                <AlertTriangle className="w-3 h-3" /> {t("mandatoryBadge")}
                             </span>
                         )}
                     </div>
@@ -358,7 +360,7 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
             <footer className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-border p-6 md:p-10 z-20">
                 <div className="max-w-3xl mx-auto flex justify-between items-center">
                     <div className="hidden md:block">
-                        <p className="text-sm font-bold text-muted-foreground italic">Take your time, mate. Official test rules apply.</p>
+                        <p className="text-sm font-bold text-muted-foreground italic">{t("rulesTip")}</p>
                     </div>
                     <Button
                         size="lg"
@@ -366,7 +368,7 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                         disabled={selectedOption === null && !isAnswered}
                         onClick={isAnswered ? handleContinue : handleCheck}
                     >
-                        {isAnswered ? (currentQuestionIndex === questions.length - 1 ? "Finish Test" : "Next Question") : "Check Answer"}
+                        {isAnswered ? (currentQuestionIndex === questions.length - 1 ? t("finishTest") : t("nextQuestion")) : t("checkAnswer")}
                     </Button>
                 </div>
             </footer>

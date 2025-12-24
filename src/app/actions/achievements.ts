@@ -57,15 +57,25 @@ export async function getAchievementsData() {
     };
 }
 
+interface AchievementMeta {
+    score?: number;
+    totalQuestions?: number;
+    streak?: number;
+    won?: boolean;
+    level?: number;
+    passed?: boolean;
+    currentTotalXp?: number;
+}
+
 export async function checkAndUnlockAchievements(
     userId: string,
     type: 'quiz' | 'streak' | 'friend' | 'battle' | 'level' | 'mock_test' | 'topic_complete',
-    meta?: any
+    meta?: AchievementMeta
 ) {
     const supabase = await createClient();
 
     // specific achievement names to look for based on type
-    const potentialUnlocks = [];
+    const potentialUnlocks: string[] = [];
 
     if (type === 'quiz') {
         // Check "First Step"
@@ -77,7 +87,7 @@ export async function checkAndUnlockAchievements(
         if (quizCount && quizCount >= 1) potentialUnlocks.push('First Step');
 
         // Check "Perfect Score"
-        if (meta?.score && meta?.totalQuestions && meta.score === meta.totalQuestions) {
+        if (meta?.score !== undefined && meta?.totalQuestions !== undefined && meta.score === meta.totalQuestions && meta.totalQuestions > 0) {
             potentialUnlocks.push('Perfect Score');
         }
 

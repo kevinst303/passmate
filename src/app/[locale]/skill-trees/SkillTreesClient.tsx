@@ -15,20 +15,43 @@ import {
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+
+interface Topic {
+    id: string;
+    title: string;
+    lessons: number;
+    icon: string;
+    status: string;
+    progress: number;
+    completed: boolean;
+}
+
+interface ProfileData {
+    daily_streak: number;
+    total_xp: number;
+}
 
 interface SkillTreesClientProps {
-    data: any;
-    skillTreeData: any;
+    data: {
+        profile: ProfileData;
+        error?: string;
+    };
+    skillTreeData: {
+        topics: Topic[];
+        error?: string;
+    };
 }
 
 export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClientProps) {
+    const t = useTranslations("SkillTrees");
     const { profile } = data;
     const TOPICS = skillTreeData.topics || [];
 
     // Calculate overall progress
-    const completedTopics = TOPICS.filter((t: any) => t.completed).length;
+    const completedTopics = TOPICS.filter((t) => t.completed).length;
     const totalTopics = TOPICS.length;
     const overallProgress = totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0;
 
@@ -42,12 +65,12 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                         <Link
                             href="/dashboard"
                             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-all font-bold group text-sm min-h-[44px]"
-                            aria-label="Back to Dashboard"
+                            aria-label={t("backDashboard")}
                         >
                             <div className="bg-white p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all shadow-sm">
                                 <ArrowLeft className="w-4 h-4" />
                             </div>
-                            <span className="hidden sm:inline">Back to Dashboard</span>
+                            <span className="hidden sm:inline">{t("backDashboard")}</span>
                         </Link>
 
                         <div className="flex items-center gap-2">
@@ -69,10 +92,10 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                         </div>
                         <div className="flex-1 min-w-0">
                             <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-black text-foreground tracking-tight">
-                                Study Course
+                                {t("studyCourse")}
                             </h1>
                             <p className="text-xs sm:text-sm text-muted-foreground font-bold italic truncate">
-                                Your path to Australian Citizenship.
+                                {t("pathDesc")}
                             </p>
                         </div>
                     </div>
@@ -80,8 +103,8 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                     {/* Progress Overview - Mobile */}
                     <div className="mt-4 p-4 bg-white rounded-2xl border border-border shadow-sm md:hidden">
                         <div className="flex items-center justify-between mb-2">
-                            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Course Progress</span>
-                            <span className="text-sm font-black text-primary">{completedTopics}/{totalTopics} Topics</span>
+                            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{t("courseProgress")}</span>
+                            <span className="text-sm font-black text-primary">{t("topicsCount", { completed: completedTopics, total: totalTopics })}</span>
                         </div>
                         <div className="h-2.5 w-full bg-muted rounded-full overflow-hidden">
                             <motion.div
@@ -103,8 +126,8 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                             <Sparkles className="w-7 h-7 text-primary" />
                         </div>
                         <div>
-                            <p className="text-sm font-bold text-muted-foreground">Course Progress</p>
-                            <p className="text-2xl font-display font-black">{overallProgress}% Complete</p>
+                            <p className="text-sm font-bold text-muted-foreground">{t("courseProgress")}</p>
+                            <p className="text-2xl font-display font-black">{t("percentComplete", { percent: overallProgress })}</p>
                         </div>
                     </div>
                     <div className="flex-1 max-w-md mx-8">
@@ -117,12 +140,12 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                             />
                         </div>
                     </div>
-                    <p className="text-lg font-black text-foreground">{completedTopics} of {totalTopics} Topics</p>
+                    <p className="text-lg font-black text-foreground">{t("topicsMastered", { completed: completedTopics, total: totalTopics })}</p>
                 </div>
 
                 {/* Topics List */}
                 <div className="space-y-3 md:space-y-0 relative" role="list" aria-label="Study topics">
-                    {TOPICS.map((topic: any, i: number) => {
+                    {TOPICS.map((topic, i) => {
                         const isLocked = topic.status === "locked";
                         const isCompleted = topic.completed;
                         const isInProgress = !isLocked && !isCompleted && topic.progress > 0;
@@ -217,17 +240,17 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                                             </h3>
                                                             {isCompleted && (
                                                                 <span className="bg-green-100 text-green-700 text-[10px] font-bold uppercase px-2 py-0.5 rounded-md">
-                                                                    Mastered
+                                                                    {t("mastered")}
                                                                 </span>
                                                             )}
                                                             {isInProgress && (
                                                                 <span className="bg-primary/10 text-primary text-[10px] font-bold uppercase px-2 py-0.5 rounded-md">
-                                                                    In Progress
+                                                                    {t("inProgress")}
                                                                 </span>
                                                             )}
                                                         </div>
                                                         <p className="text-sm text-muted-foreground">
-                                                            {topic.lessons} Lessons • {isCompleted ? "100%" : `${topic.progress}%`} Complete
+                                                            {topic.lessons} {t("lessons")} • {isCompleted ? "100%" : `${topic.progress}%`} {t("percentComplete", { percent: "" }).replace("%", "")}
                                                         </p>
                                                     </div>
 
@@ -255,12 +278,12 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                                         {isLocked ? (
                                                             <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-muted rounded-lg text-muted-foreground font-semibold text-xs uppercase tracking-wide">
                                                                 <Lock className="w-3.5 h-3.5" />
-                                                                <span>Locked</span>
+                                                                <span>{t("locked")}</span>
                                                             </div>
                                                         ) : (
                                                             <Link
                                                                 href={`/dashboard/quiz?topic=${encodeURIComponent(topic.title)}`}
-                                                                aria-label={`${isCompleted ? 'Review' : topic.progress > 0 ? 'Continue' : 'Start'} ${topic.title}`}
+                                                                aria-label={`${isCompleted ? t('review') : topic.progress > 0 ? t('continue') : t('start')} ${topic.title}`}
                                                             >
                                                                 <Button
                                                                     className={cn(
@@ -271,7 +294,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                                                     )}
                                                                 >
                                                                     {isCompleted ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <PlayCircle className="w-4 h-4 shrink-0" />}
-                                                                    <span>{isCompleted ? "Review" : topic.progress > 0 ? "Continue" : "Start"}</span>
+                                                                    <span>{isCompleted ? t("review") : topic.progress > 0 ? t("continue") : t("start")}</span>
                                                                     <ChevronRight className="w-4 h-4 shrink-0" />
                                                                 </Button>
                                                             </Link>
@@ -309,14 +332,14 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                                     {topic.title}
                                                 </h3>
                                                 <p className="text-xs text-muted-foreground mt-0.5">
-                                                    {topic.lessons} Lessons
+                                                    {topic.lessons} {t("lessons")}
                                                 </p>
                                             </div>
 
                                             {/* Status badge */}
                                             {isCompleted && (
                                                 <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded-lg shrink-0">
-                                                    ✓ Done
+                                                    ✓ {t("mastered")}
                                                 </span>
                                             )}
                                             {isInProgress && (
@@ -349,13 +372,13 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                         {isLocked ? (
                                             <div className="flex items-center justify-center gap-2 py-3 bg-muted/50 rounded-xl text-muted-foreground text-sm font-semibold">
                                                 <Lock className="w-4 h-4" />
-                                                <span>Locked</span>
+                                                <span>{t("locked")}</span>
                                             </div>
                                         ) : (
                                             <Link
                                                 href={`/dashboard/quiz?topic=${encodeURIComponent(topic.title)}`}
                                                 className="block"
-                                                aria-label={`${isCompleted ? 'Review' : topic.progress > 0 ? 'Continue' : 'Start'} ${topic.title}`}
+                                                aria-label={`${isCompleted ? t('review') : topic.progress > 0 ? t('continue') : t('start')} ${topic.title}`}
                                             >
                                                 <Button
                                                     className={cn(
@@ -366,7 +389,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                                     )}
                                                 >
                                                     {isCompleted ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <PlayCircle className="w-4 h-4 shrink-0" />}
-                                                    <span className="whitespace-nowrap">{isCompleted ? "Review Topic" : topic.progress > 0 ? "Continue" : "Start Learning"}</span>
+                                                    <span className="whitespace-nowrap">{isCompleted ? t("reviewTopic") : topic.progress > 0 ? t("continue") : t("startLearning")}</span>
                                                     <ChevronRight className="w-4 h-4 shrink-0" />
                                                 </Button>
                                             </Link>
@@ -393,11 +416,12 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                         {/* Content */}
                         <div className="flex-1">
                             <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-black mb-2 sm:mb-3">
-                                The Official Mock Test
+                                {t("mockTestTitle")}
                             </h2>
                             <p className="text-white/60 font-semibold text-sm sm:text-base md:text-lg leading-relaxed max-w-lg mx-auto md:mx-0">
-                                Ready to prove your knowledge? Pass this test to earn the{" "}
-                                <span className="text-primary font-bold italic">"Mock Master"</span> badge!
+                                {t.rich("mockTestDesc", {
+                                    badge: () => <span className="text-primary font-bold italic">{t("mockBadge")}</span>
+                                })}
                             </p>
                         </div>
 
@@ -409,7 +433,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                 className="w-full sm:w-auto min-h-[52px] px-6 sm:px-8 md:px-10 text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 sm:gap-3"
                             >
                                 <Trophy className="w-5 h-5 sm:w-6 sm:h-6" />
-                                <span>Take the Test</span>
+                                <span>{t("takeTest")}</span>
                             </Button>
                         </Link>
                     </div>
@@ -422,7 +446,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                     </div>
                     <div>
                         <p className="text-sm font-semibold text-blue-900">
-                            Pro tip: Complete topics in order to unlock new content and maximize your learning!
+                            {t("proTip")}
                         </p>
                     </div>
                 </div>

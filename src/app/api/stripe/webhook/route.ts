@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2024-12-18.acacia" as any,
+    apiVersion: "2024-12-18.acacia" as Stripe.StripeConfig["apiVersion"],
 });
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -25,12 +25,12 @@ export async function POST(req: Request) {
             }
             // In dev, if we don't have secret, we can't verify. 
             // We'll just parse body if we want to test manually, but Stripe usually sends verified events.
-            event = JSON.parse(body);
+            event = JSON.parse(body) as Stripe.Event;
         } else {
             event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
         }
-    } catch (err: any) {
-        console.error(`Webhook signature verification failed: ${err.message}`);
+    } catch (err: unknown) {
+        console.error(`Webhook signature verification failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
         return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 

@@ -5,10 +5,11 @@ import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
 import { LogIn, UserPlus, Mail, Lock, Loader2, ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export default function AuthPage() {
+    const t = useTranslations("Auth");
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -39,7 +40,7 @@ export default function AuthPage() {
             if (isLogin) {
                 router.push("/dashboard");
             } else {
-                setError("Check your email for the confirmation link!");
+                setError(t("checkEmail"));
                 setLoading(false);
             }
         }
@@ -48,7 +49,7 @@ export default function AuthPage() {
     return (
         <div className="min-h-screen bg-muted/30 flex flex-col justify-center items-center px-4">
             <Link href="/" className="mb-8 flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Back to Home
+                <ArrowLeft className="w-4 h-4" /> {t("backHome")}
             </Link>
 
             <motion.div
@@ -59,10 +60,10 @@ export default function AuthPage() {
                 <div className="text-center mb-10">
                     <div className="text-5xl mb-4">🐨</div>
                     <h1 className="text-3xl font-display font-bold text-foreground">
-                        {isLogin ? "Welcome Back!" : "Join the Squad!"}
+                        {isLogin ? t("welcomeBack") : t("joinSquad")}
                     </h1>
                     <p className="text-muted-foreground mt-2">
-                        {isLogin ? "Your Australian journey continues." : "Start your path to citizenship today."}
+                        {isLogin ? t("journeyContinue") : t("startPath")}
                     </p>
                 </div>
 
@@ -71,19 +72,19 @@ export default function AuthPage() {
                         onClick={() => setIsLogin(true)}
                         className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold transition-all ${isLogin ? "bg-white shadow-sm text-primary" : "text-muted-foreground"}`}
                     >
-                        <LogIn className="w-4 h-4" /> Login
+                        <LogIn className="w-4 h-4" /> {t("login")}
                     </button>
                     <button
                         onClick={() => setIsLogin(false)}
                         className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold transition-all ${!isLogin ? "bg-white shadow-sm text-primary" : "text-muted-foreground"}`}
                     >
-                        <UserPlus className="w-4 h-4" /> Signup
+                        <UserPlus className="w-4 h-4" /> {t("signup")}
                     </button>
                 </div>
 
                 <form onSubmit={handleAuth} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-bold mb-1.5 ml-1">Email Address</label>
+                        <label className="block text-sm font-bold mb-1.5 ml-1">{t("email")}</label>
                         <div className="relative">
                             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                             <input
@@ -98,7 +99,7 @@ export default function AuthPage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold mb-1.5 ml-1">Password</label>
+                        <label className="block text-sm font-bold mb-1.5 ml-1">{t("password")}</label>
                         <div className="relative">
                             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                             <input
@@ -122,13 +123,13 @@ export default function AuthPage() {
                         disabled={loading}
                         className="w-full py-4 text-lg mt-4 flex items-center justify-center gap-2"
                     >
-                        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (isLogin ? "Let's Go!" : "Create Account")}
+                        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (isLogin ? t("letsGo") : t("createAccount"))}
                     </Button>
                 </form>
 
                 <div className="mt-8 text-center text-sm text-muted-foreground font-medium">
-                    By continuing, you agree to PassMate's <br />
-                    <Link href="/terms" className="text-primary hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+                    {t("agree")} <br />
+                    <Link href="/terms" className="text-primary hover:underline">{t("terms")}</Link> and <Link href="/privacy" className="text-primary hover:underline">{t("privacy")}</Link>.
                 </div>
             </motion.div>
         </div>

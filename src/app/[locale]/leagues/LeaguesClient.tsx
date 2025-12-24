@@ -8,31 +8,33 @@ import {
     TrendingUp,
     TrendingDown,
     ArrowLeft,
-    Info,
     Clock,
     Target
 } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/Sidebar";
+import { useTranslations } from "next-intl";
 
 interface LeaguesClientProps {
     data: any;
 }
 
 export default function LeaguesClient({ data }: LeaguesClientProps) {
+    const t = useTranslations("Leagues");
+    const nav = useTranslations("Navigation");
     const { profile, standing, topPlayers } = data;
 
     const LEAGUES = [
-        { name: "Bronze", rank: 1, icon: "🥉", color: "from-amber-600 to-amber-800", bg: "bg-amber-100", shadow: "shadow-amber-200" },
-        { name: "Silver", rank: 2, icon: "🥈", color: "from-slate-400 to-slate-600", bg: "bg-slate-100", shadow: "shadow-slate-200" },
-        { name: "Gold", rank: 3, icon: "🥇", color: "from-yellow-400 to-yellow-600", bg: "bg-yellow-100", shadow: "shadow-yellow-200" },
-        { name: "Diamond", rank: 4, icon: "💎", color: "from-blue-400 to-blue-600", bg: "bg-blue-100", shadow: "shadow-blue-200" },
+        { id: "Bronze", name: t("leagueNames.Bronze"), rank: 1, icon: "🥉", color: "from-amber-600 to-amber-800", bg: "bg-amber-100", shadow: "shadow-amber-200" },
+        { id: "Silver", name: t("leagueNames.Silver"), rank: 2, icon: "🥈", color: "from-slate-400 to-slate-600", bg: "bg-slate-100", shadow: "shadow-slate-200" },
+        { id: "Gold", name: t("leagueNames.Gold"), rank: 3, icon: "🥇", color: "from-yellow-400 to-yellow-600", bg: "bg-yellow-100", shadow: "shadow-yellow-200" },
+        { id: "Diamond", name: t("leagueNames.Diamond"), rank: 4, icon: "💎", color: "from-blue-400 to-blue-600", bg: "bg-blue-100", shadow: "shadow-blue-200" },
     ];
 
     const currentLeagueName = standing?.leagues?.name || "Bronze";
-    const currentLeague = LEAGUES.find(l => l.name === currentLeagueName) || LEAGUES[0];
+    const currentLeague = LEAGUES.find(l => l.id === currentLeagueName) || LEAGUES[0];
 
     return (
         <div className="min-h-screen bg-[#FDFCFB] pb-24 md:pb-8 md:pl-28 md:pr-8">
@@ -43,15 +45,15 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                         <div className="bg-white p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
                             <ArrowLeft className="w-4 h-4" />
                         </div>
-                        <span>Back to Dashboard</span>
+                        <span>{t("backDashboard")}</span>
                     </Link>
                     <div className="flex items-center gap-4">
                         <div className={cn("w-20 h-20 bg-gradient-to-br rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl", currentLeague.color, currentLeague.shadow)}>
                             <Trophy className="w-10 h-10 fill-white" />
                         </div>
                         <div>
-                            <h1 className="text-4xl font-display font-black text-foreground tracking-tight">{currentLeague.name} League</h1>
-                            <p className="text-muted-foreground font-bold italic">Competing for promotion this week!</p>
+                            <h1 className="text-4xl font-display font-black text-foreground tracking-tight">{currentLeague.name} {nav("leagues")}</h1>
+                            <p className="text-muted-foreground font-bold italic">{t("competingDesc")}</p>
                         </div>
                     </div>
                 </div>
@@ -76,34 +78,34 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                             </div>
 
                             <div className="relative z-10">
-                                <p className="text-[10px] uppercase font-black text-muted-foreground tracking-[0.2em] mb-4">Your Position</p>
+                                <p className="text-[10px] uppercase font-black text-muted-foreground tracking-[0.2em] mb-4">{t("yourPosition")}</p>
                                 <div className="text-6xl font-display font-black text-primary mb-2">#{standing?.current_rank || '10+'}</div>
                                 <div className="bg-primary/5 text-primary text-xs font-black py-2 px-4 rounded-full inline-block mb-8">
-                                    {standing?.weekly_xp} Weekly XP
+                                    {t("weeklyXpLabel", { xp: standing?.weekly_xp || 0 })}
                                 </div>
 
                                 <div className="space-y-4">
                                     <div className="flex items-center justify-between text-sm py-3 border-t border-border">
                                         <div className="flex items-center gap-2 text-muted-foreground font-bold italic">
-                                            <Clock className="w-4 h-4" /> Ends in
+                                            <Clock className="w-4 h-4" /> {t("endsIn")}
                                         </div>
                                         <span className="font-black">4d 12h</span>
                                     </div>
                                     <div className="flex items-center justify-between text-sm py-3 border-t border-border">
                                         <div className="flex items-center gap-2 text-muted-foreground font-bold italic">
-                                            <TrendingUp className="w-4 h-4 text-green-500" /> Status
+                                            <TrendingUp className="w-4 h-4 text-green-500" /> {t("status")}
                                         </div>
-                                        <span className="font-black text-green-600">PROMOTION ZONE</span>
+                                        <span className="font-black text-green-600">{t("promotionZone")}</span>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
                         <section className="bg-gradient-to-br from-primary to-primary-light p-8 rounded-[3rem] text-white shadow-xl shadow-primary/20">
-                            <h3 className="text-xl font-display font-black mb-2">Boost Your Rank!</h3>
-                            <p className="text-primary-foreground/80 font-bold text-sm mb-6">Complete quizzes and win battles to climb the leaderboard.</p>
+                            <h3 className="text-xl font-display font-black mb-2">{t("boostRank")}</h3>
+                            <p className="text-primary-foreground/80 font-bold text-sm mb-6">{t("boostRankDesc")}</p>
                             <Link href="/dashboard/quiz">
-                                <Button variant="secondary" className="w-full bg-white text-primary hover:bg-white/90">Get more XP</Button>
+                                <Button variant="secondary" className="w-full bg-white text-primary hover:bg-white/90">{t("getMoreXP")}</Button>
                             </Link>
                         </section>
                     </div>
@@ -114,10 +116,10 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                             <div className="p-8 border-b-2 border-border flex justify-between items-center bg-muted/5">
                                 <div className="flex items-center gap-3">
                                     <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                                    <h3 className="text-2xl font-display font-black">Top Performers</h3>
+                                    <h3 className="text-2xl font-display font-black">{t("topPerformers")}</h3>
                                 </div>
                                 <div className="flex items-center gap-1.5 bg-blue-100 text-blue-700 font-black text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">
-                                    <Zap className="w-3 h-3 fill-blue-700" /> Weekly Standings
+                                    <Zap className="w-3 h-3 fill-blue-700" /> {t("weeklyStandings")}
                                 </div>
                             </div>
 
@@ -157,19 +159,19 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                                                     <div className="flex-1">
                                                         <div className="flex items-center gap-2">
                                                             <p className={cn("font-black text-lg", isUser ? "text-primary" : "text-foreground")}>
-                                                                {isUser ? "You" : (player.profiles?.username || "Anonymous")}
+                                                                {isUser ? t("you") : (player.profiles?.username || "Anonymous")}
                                                             </p>
                                                             {isUser && <span className="bg-primary/10 text-primary text-[10px] uppercase font-black px-2 py-0.5 rounded-full ring-1 ring-primary/20">Mate</span>}
                                                         </div>
                                                         <div className="flex items-center gap-2 mt-0.5">
                                                             {pos <= 3 && (
                                                                 <span className="flex items-center gap-1 text-[8px] uppercase font-black text-green-600 bg-green-50 px-2 py-0.5 rounded-full border border-green-100">
-                                                                    <TrendingUp className="w-2.5 h-2.5" /> Promotion
+                                                                    <TrendingUp className="w-2.5 h-2.5" /> {t("promotion")}
                                                                 </span>
                                                             )}
                                                             {pos > 7 && (
                                                                 <span className="flex items-center gap-1 text-[8px] uppercase font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-100">
-                                                                    <TrendingDown className="w-2.5 h-2.5" /> Relegation
+                                                                    <TrendingDown className="w-2.5 h-2.5" /> {t("relegation")}
                                                                 </span>
                                                             )}
                                                         </div>
@@ -179,7 +181,7 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                                                         <div className="flex items-center gap-1.5 font-display font-black text-xl text-foreground">
                                                             <Zap className="w-5 h-5 fill-blue-500 text-blue-500" /> {player.weekly_xp}
                                                         </div>
-                                                        <p className="text-[10px] uppercase font-black text-muted-foreground/60 tracking-tighter">TOTAL XP</p>
+                                                        <p className="text-[10px] uppercase font-black text-muted-foreground/60 tracking-tighter">{t("totalXpLabel")}</p>
                                                     </div>
                                                 </motion.div>
                                             );
@@ -188,13 +190,13 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                                 ) : (
                                     <div className="p-20 text-center flex flex-col items-center gap-4">
                                         <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center text-4xl grayscale opacity-20">🏆</div>
-                                        <p className="text-muted-foreground font-bold italic">No rankings yet. Start a quiz to claim the throne!</p>
+                                        <p className="text-muted-foreground font-bold italic">{t("noRankings")}</p>
                                     </div>
                                 )}
                             </div>
 
                             <div className="p-6 bg-muted/20 border-t-2 border-border text-center">
-                                <p className="text-xs font-bold text-muted-foreground">League resets every Sunday at 11:59 PM</p>
+                                <p className="text-xs font-bold text-muted-foreground">{t("resetInfo")}</p>
                             </div>
                         </section>
                     </div>

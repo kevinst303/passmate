@@ -14,17 +14,19 @@ import {
     Gem,
     Zap
 } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/Button";
 import { Sidebar } from "@/components/Sidebar";
 import { useState } from "react";
 import { createPortalSession } from "@/app/actions/stripe";
+import { useTranslations } from "next-intl";
 
 interface BillingClientProps {
     data: any;
 }
 
 export default function BillingClient({ data }: BillingClientProps) {
+    const t = useTranslations("Billing");
     const { profile } = data;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -36,7 +38,7 @@ export default function BillingClient({ data }: BillingClientProps) {
                 window.location.href = result.url;
             } else if ('error' in result) {
                 // @ts-ignore
-                alert(result.error || "Could not open billing portal");
+                alert(result.error || t("na"));
             }
         } catch (error) {
             console.error(error);
@@ -48,27 +50,27 @@ export default function BillingClient({ data }: BillingClientProps) {
 
     const plans = [
         {
-            name: "Free",
+            name: t("freePlan"),
             price: "$0",
             current: !profile.is_premium,
             features: [
-                "Basic Study Modules",
-                "Daily Practice Questions",
-                "Community Support",
-                "Standard Learning Path"
+                t("plans.free.f1"),
+                t("plans.free.f2"),
+                t("plans.free.f3"),
+                t("plans.free.f4")
             ]
         },
         {
-            name: "Premium",
+            name: t("premiumPlan"),
             price: "$24.99",
             current: profile.is_premium,
             bestValue: true,
             features: [
-                "Unlimited Mock Tests",
-                "24/7 AI Tutor Access",
-                "Masterclass Series",
-                "Official Certificate",
-                "Ad-free Experience"
+                t("plans.premium.f1"),
+                t("plans.premium.f2"),
+                t("plans.premium.f3"),
+                t("plans.premium.f4"),
+                t("plans.premium.f5")
             ]
         }
     ];
@@ -80,13 +82,13 @@ export default function BillingClient({ data }: BillingClientProps) {
                     href="/profile"
                     className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-bold mb-8"
                 >
-                    <ArrowLeft className="w-4 h-4" /> Back to Profile
+                    <ArrowLeft className="w-4 h-4" /> {t("backProfile")}
                 </Link>
 
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                     <div>
-                        <h1 className="text-4xl font-display font-black tracking-tight mb-2">Billing & Subscription</h1>
-                        <p className="text-muted-foreground font-bold">Manage your plan, payments and billing history.</p>
+                        <h1 className="text-4xl font-display font-black tracking-tight mb-2">{t("title")}</h1>
+                        <p className="text-muted-foreground font-bold">{t("subtitle")}</p>
                     </div>
                 </div>
 
@@ -103,14 +105,14 @@ export default function BillingClient({ data }: BillingClientProps) {
                                             {profile.is_premium ? <Gem className="w-6 h-6 text-primary" /> : <Zap className="w-6 h-6 text-primary" />}
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">Current Plan</p>
-                                            <h2 className="text-2xl font-display font-black">{profile.is_premium ? "Premium Achiever" : "Free Explorer"}</h2>
+                                            <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">{t("currentPlan")}</p>
+                                            <h2 className="text-2xl font-display font-black">{profile.is_premium ? t("premiumPlan") : t("freePlan")}</h2>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-2 text-green-600 font-bold bg-green-50 px-4 py-2 rounded-xl w-fit">
                                         <CheckCircle2 className="w-4 h-4" />
-                                        Active Account
+                                        {t("activeAccount")}
                                     </div>
                                 </div>
 
@@ -122,12 +124,12 @@ export default function BillingClient({ data }: BillingClientProps) {
                                             onClick={handleManageBilling}
                                             disabled={isLoading}
                                         >
-                                            {isLoading ? "Loading..." : <><CreditCard className="w-5 h-5 mr-2" /> Manage Payments</>}
+                                            {isLoading ? t("loading") : <><CreditCard className="w-5 h-5 mr-2" /> {t("managePayments")}</>}
                                         </Button>
                                     ) : (
                                         <Link href="/premium">
                                             <Button className="h-14 px-8 rounded-2xl font-black text-lg shadow-lg">
-                                                Upgrade to Premium
+                                                {t("upgradePremium")}
                                             </Button>
                                         </Link>
                                     )}
@@ -138,7 +140,7 @@ export default function BillingClient({ data }: BillingClientProps) {
                                 <div className="grid sm:grid-cols-2 gap-8">
                                     <div className="space-y-4">
                                         <h3 className="font-black text-sm uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                                            <ShieldCheck className="w-4 h-4" /> Your Benefits
+                                            <ShieldCheck className="w-4 h-4" /> {t("yourBenefits")}
                                         </h3>
                                         <ul className="space-y-3">
                                             {(profile.is_premium ? plans[1].features : plans[0].features).map((feat, i) => (
@@ -154,17 +156,17 @@ export default function BillingClient({ data }: BillingClientProps) {
 
                                     <div className="bg-muted/30 rounded-3xl p-6 space-y-4">
                                         <h3 className="font-black text-sm uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                                            <Clock className="w-4 h-4" /> Next Billing
+                                            <Clock className="w-4 h-4" /> {t("nextBilling")}
                                         </h3>
                                         {profile.is_premium ? (
                                             <div>
-                                                <p className="text-xl font-black">Lifetime Access</p>
-                                                <p className="text-sm text-muted-foreground font-bold italic">You've got the full deck, mate! No more payments.</p>
+                                                <p className="text-xl font-black">{t("lifetimeAccess")}</p>
+                                                <p className="text-sm text-muted-foreground font-bold italic">{t("lifetimeDesc")}</p>
                                             </div>
                                         ) : (
                                             <div>
-                                                <p className="text-xl font-black">N/A</p>
-                                                <p className="text-sm text-muted-foreground font-bold italic">Upgrade to unlock full features.</p>
+                                                <p className="text-xl font-black">{t("na")}</p>
+                                                <p className="text-sm text-muted-foreground font-bold italic">{t("upgradeUnlock")}</p>
                                             </div>
                                         )}
                                     </div>
@@ -177,23 +179,23 @@ export default function BillingClient({ data }: BillingClientProps) {
                     <div className="grid md:grid-cols-2 gap-8">
                         <section className="bg-white rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
                             <h3 className="text-xl font-display font-black mb-6 flex items-center gap-3">
-                                <Receipt className="w-5 h-5 text-primary" /> Recent Invoices
+                                <Receipt className="w-5 h-5 text-primary" /> {t("recentInvoices")}
                             </h3>
 
                             {profile.is_premium ? (
                                 <div className="space-y-4">
                                     <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
                                         <div>
-                                            <p className="font-black">PassMate Premium</p>
-                                            <p className="text-xs text-muted-foreground font-bold">One-time Payment</p>
+                                            <p className="font-black">{t("passmatePremium")}</p>
+                                            <p className="text-xs text-muted-foreground font-bold">{t("oneTimePayment")}</p>
                                         </div>
                                         <div className="text-right font-black">
                                             <p>$24.99</p>
-                                            <Link href="#" className="text-[10px] text-primary hover:underline uppercase tracking-widest">Download PDF</Link>
+                                            <Link href="#" className="text-[10px] text-primary hover:underline uppercase tracking-widest">{t("downloadPdf")}</Link>
                                         </div>
                                     </div>
                                     <p className="text-center text-xs text-muted-foreground font-bold italic pt-2">
-                                        Need more history? Use the <button onClick={handleManageBilling} className="text-primary hover:underline">Billing Portal</button>
+                                        {t("needMoreHistory")} <button onClick={handleManageBilling} className="text-primary hover:underline">{t("billingPortal")}</button>
                                     </p>
                                 </div>
                             ) : (
@@ -201,21 +203,21 @@ export default function BillingClient({ data }: BillingClientProps) {
                                     <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4 opacity-40">
                                         <Receipt className="w-8 h-8" />
                                     </div>
-                                    <p className="font-bold text-muted-foreground">No invoices yet.</p>
+                                    <p className="font-bold text-muted-foreground">{t("noInvoices")}</p>
                                 </div>
                             )}
                         </section>
 
                         <section className="bg-white rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
                             <h3 className="text-xl font-display font-black mb-6 flex items-center gap-3">
-                                <ExternalLink className="w-5 h-5 text-primary" /> Helpful Links
+                                <ExternalLink className="w-5 h-5 text-primary" /> {t("helpfulLinks")}
                             </h3>
                             <div className="space-y-3">
                                 {[
-                                    { label: "Pricing Details", href: "/premium" },
-                                    { label: "Refund Policy", href: "/terms#refund" },
-                                    { label: "Subscription FAQ", href: "/contact" },
-                                    { label: "Contact Support", href: "/contact" }
+                                    { label: t("pricingDetails"), href: "/premium" },
+                                    { label: t("refundPolicy"), href: "/terms#refund" },
+                                    { label: t("subscriptionFaq"), href: "/contact" },
+                                    { label: t("contactSupport"), href: "/contact" }
                                 ].map((link, i) => (
                                     <Link
                                         key={i}

@@ -4,63 +4,42 @@ import { motion } from "framer-motion";
 import {
     Check,
     Zap,
-    Heart,
-    Infinity as InfinityIcon,
-    ShieldCheck,
     ArrowLeft,
     Sparkles,
     Star,
     Trophy,
     ChevronDown,
     MessageSquare,
-    HelpCircle
+    HelpCircle,
+    ShieldCheck
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { createCheckoutSession } from "@/app/actions/stripe";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 // Separate component that uses useSearchParams
 function PremiumBanners() {
+    const t = useTranslations("Premium.banners");
     const searchParams = useSearchParams();
     const [paymentStatus, setPaymentStatus] = useState<string | null>(null);
     const [redirectReason, setRedirectReason] = useState<string | null>(null);
 
-    const REDIRECT_MESSAGES: Record<string, { title: string; description: string; feature: string }> = {
-        ai_tutor: {
-            title: "🐨 Unlock Ollie the AI Tutor!",
-            description: "Get personalized explanations for any citizenship question. Ollie is ready to help you master every topic!",
-            feature: "Test Ready"
-        },
-        masterclass: {
-            title: "🎓 Access the Citizenship Masterclass!",
-            description: "Deep-dive video lessons covering Australian history, values, and the democratic system.",
-            feature: "Citizenship Achiever"
-        },
-        mock_test: {
-            title: "📝 Take the Official Mock Exam!",
-            description: "Simulate the real citizenship test experience with timed questions and instant feedback.",
-            feature: "Test Ready"
-        },
-        certificate: {
-            title: "🏆 Get Your Readiness Certificate!",
-            description: "Prove your preparation with an official PassMate certificate you can share.",
-            feature: "Citizenship Achiever"
-        }
-    };
-
     useEffect(() => {
         const payment = searchParams.get("payment");
         const reason = searchParams.get("reason");
-        if (payment === "cancelled") {
-            setPaymentStatus("cancelled");
-        }
-        if (reason && REDIRECT_MESSAGES[reason]) {
-            setRedirectReason(reason);
-        }
+        requestAnimationFrame(() => {
+            if (payment === "cancelled") {
+                setPaymentStatus("cancelled");
+            }
+            if (reason) {
+                setRedirectReason(reason);
+            }
+        });
     }, [searchParams]);
 
     return (
@@ -71,11 +50,11 @@ function PremiumBanners() {
                     animate={{ height: "auto", opacity: 1 }}
                     className="bg-red-50 border-b border-red-100 p-4 text-center text-red-700 font-bold"
                 >
-                    Checkout was cancelled. No worries, Ollie is still here for ya!
+                    {t("cancelled")}
                 </motion.div>
             )}
 
-            {redirectReason && REDIRECT_MESSAGES[redirectReason] && (
+            {redirectReason && (
                 <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
@@ -83,19 +62,19 @@ function PremiumBanners() {
                 >
                     <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
                         <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-4xl shadow-lg shrink-0">
-                            {REDIRECT_MESSAGES[redirectReason].title.split(' ')[0]}
+                            {redirectReason === 'ai_tutor' ? "🐨" : redirectReason === 'masterclass' ? "🎓" : redirectReason === 'mock_test' ? "📝" : "🏆"}
                         </div>
                         <div className="flex-1">
                             <h3 className="text-xl font-display font-black text-foreground mb-1">
-                                {REDIRECT_MESSAGES[redirectReason].title.replace(/^[^\s]+\s/, '')}
+                                {t(`${redirectReason as 'ai_tutor' | 'masterclass' | 'mock_test'}.title`)}
                             </h3>
                             <p className="text-muted-foreground font-bold">
-                                {REDIRECT_MESSAGES[redirectReason].description}
+                                {t(`${redirectReason as 'ai_tutor' | 'masterclass' | 'mock_test'}.desc`)}
                             </p>
                         </div>
                         <div className="shrink-0">
                             <span className="inline-block bg-primary text-white px-4 py-2 rounded-xl font-black text-sm">
-                                Requires {REDIRECT_MESSAGES[redirectReason].feature}
+                                {t("requires", { feature: redirectReason === 'ai_tutor' || redirectReason === 'mock_test' ? 'Test Ready' : 'Citizenship Achiever' })}
                             </span>
                         </div>
                     </div>
@@ -106,81 +85,92 @@ function PremiumBanners() {
 }
 
 export default function PremiumPage() {
+    const t = useTranslations("Premium");
+
     const PLANS = [
         {
-            name: "Free Mate",
+            name: t("plans.free.name"),
             price: "$0",
             features: [
-                "Daily Citizenship Quests",
-                "Official 2024 Question Bank",
-                "Community Leauges",
-                "5 Hearts per day"
+                t("plans.features.quests"),
+                t("plans.features.bank"),
+                t("plans.features.leagues"),
+                t("plans.features.hearts5")
             ],
-            cta: "Current Plan",
+            cta: t("plans.free.cta"),
             variant: "outline",
             popular: false
         },
         {
-            name: "Test Ready",
+            name: t("plans.ready.name"),
             price: "$9.99",
-            duration: "/one-time",
+            duration: t("plans.ready.duration"),
             features: [
-                "Unlimited Hearts ❤️",
-                "AI Tutor Support (Ollie)",
-                "Official Mock Exam Simulator",
-                "Personalized AI Review",
-                "Ad-free Experience"
+                t("plans.features.unlimitedHearts"),
+                t("plans.features.aiTutor"),
+                t("plans.features.mockExam"),
+                t("plans.features.aiReview"),
+                t("plans.features.adFree")
             ],
-            cta: "Get Test Ready",
+            cta: t("plans.ready.cta"),
             variant: "primary",
             popular: true
         },
         {
-            name: "Citizenship Achiever",
+            name: t("plans.achiever.name"),
             price: "$24.99",
-            duration: "/lifetime",
+            duration: t("plans.achiever.duration"),
             features: [
-                "Everything in Test Ready",
-                "Australian Values Masterclass",
-                "Digital Certificate of Readiness",
-                "Lifetime Updates",
-                "VIP Discord Access"
+                t("plans.features.unlimitedHearts"),
+                t("plans.features.masterclass"),
+                t("plans.features.certificate"),
+                t("plans.features.updates"),
+                t("plans.features.discord")
             ],
-            cta: "Go Unlimited",
+            cta: t("plans.achiever.cta"),
             variant: "accent",
             popular: false
         }
     ];
 
     const COMPARISON = [
-        { feature: "Daily Quests", free: true, ready: true, achiever: true },
-        { feature: "Question Bank", free: true, ready: true, achiever: true },
-        { feature: "Unlimited Hearts", free: false, ready: true, achiever: true },
-        { feature: "AI Tutor (Ollie)", free: false, ready: true, achiever: true },
-        { feature: "Mock Exam Simulator", free: false, ready: true, achiever: true },
-        { feature: "AI Performance Review", free: false, ready: true, achiever: true },
-        { feature: "Ad-free Experience", free: false, ready: true, achiever: true },
-        { feature: "Values Masterclass", free: false, ready: false, achiever: true },
-        { feature: "Readiness Certificate", free: false, ready: false, achiever: true },
-        { feature: "VIP Community", free: false, ready: false, achiever: true },
+        { feature: t("comparison.rows.quests"), free: true, ready: true, achiever: true },
+        { feature: t("comparison.rows.bank"), free: true, ready: true, achiever: true },
+        { feature: t("comparison.rows.unlimitedHearts"), free: false, ready: true, achiever: true },
+        { feature: t("comparison.rows.aiTutor"), free: false, ready: true, achiever: true },
+        { feature: t("comparison.rows.mockExam"), free: false, ready: true, achiever: true },
+        { feature: t("comparison.rows.aiReview"), free: false, ready: true, achiever: true },
+        { feature: t("comparison.rows.adFree"), free: false, ready: true, achiever: true },
+        { feature: t("comparison.rows.masterclass"), free: false, ready: false, achiever: true },
+        { feature: t("comparison.rows.certificate"), free: false, ready: false, achiever: true },
+        { feature: t("comparison.rows.vip"), free: false, ready: false, achiever: true },
     ];
 
     const FAQS = [
+        { q: t("faqs.q1.q"), a: t("faqs.q1.a") },
+        { q: t("faqs.q2.q"), a: t("faqs.q2.a") },
+        { q: t("faqs.q3.q"), a: t("faqs.q3.a") },
+        { q: t("faqs.q4.q"), a: t("faqs.q4.a") }
+    ];
+
+    const TESTIMONIALS = [
         {
-            q: "How do Unlimited Hearts work?",
-            a: "With a premium plan, you never have to wait for hearts to refill. If you get a question wrong, you can keep practicing without any interruptions. Perfect for intense study sessions!"
+            name: t("testimonials.t1.name"),
+            city: t("testimonials.t1.city"),
+            text: t("testimonials.t1.text"),
+            rating: 5
         },
         {
-            q: "Is the payment a subscription?",
-            a: "No! All our premium plans are one-time payments. You pay once and get access for the specified duration (or lifetime). No hidden fees or recurring charges."
+            name: t("testimonials.t2.name"),
+            city: t("testimonials.t2.city"),
+            text: t("testimonials.t2.text"),
+            rating: 5
         },
         {
-            q: "What is the AI Tutor (Ollie)?",
-            a: "Ollie is our advanced AI mascot who can explain complex Australian history, values, and law in simple terms. You can ask Ollie anything while taking a practice test."
-        },
-        {
-            q: "Can I get a refund if I don't pass?",
-            a: "Absolutely. We are so confident in PassMate that if you complete a premium study path and don't pass your official test, we'll refund your payment in full."
+            name: t("testimonials.t3.name"),
+            city: t("testimonials.t3.city"),
+            text: t("testimonials.t3.text"),
+            rating: 5
         }
     ];
 
@@ -188,13 +178,13 @@ export default function PremiumPage() {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
 
     const handleCheckout = async (tier: string) => {
-        if (tier === "Free Mate") return;
+        if (tier === t("plans.free.name")) return;
 
-        const tierKey = tier === "Test Ready" ? "test_ready" : "citizenship_achiever";
+        const tierKey = tier === t("plans.ready.name") ? "test_ready" : "citizenship_achiever";
         setLoading(tier);
 
         try {
-            const result = await createCheckoutSession(tierKey as any);
+            const result = await createCheckoutSession(tierKey as 'test_ready' | 'citizenship_achiever');
             if (result.url) {
                 window.location.href = result.url;
             } else {
@@ -212,10 +202,10 @@ export default function PremiumPage() {
         <div className="min-h-screen bg-muted/30 pb-24 md:pb-24 md:pl-20 overflow-x-hidden">
             <header className="bg-white/80 backdrop-blur-md border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 z-50">
                 <Link href="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                    <ArrowLeft className="w-5 h-5" /> <span className="font-bold">Dashboard</span>
+                    <ArrowLeft className="w-5 h-5" /> <span className="font-bold">{t("backDashboard")}</span>
                 </Link>
                 <div className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-4 py-1.5 rounded-full font-bold text-sm shadow-sm">
-                    <Sparkles className="w-4 h-4 fill-yellow-600 animate-pulse" /> Go Premium
+                    <Sparkles className="w-4 h-4 fill-yellow-600 animate-pulse" /> {t("goPremium")}
                 </div>
             </header>
 
@@ -234,10 +224,12 @@ export default function PremiumPage() {
                         <Zap className="w-10 h-10 text-primary fill-primary" />
                     </motion.div>
                     <h1 className="text-5xl md:text-7xl font-display font-black mb-6 tracking-tight">
-                        Master Your <span className="text-primary italic">Aussie</span> Journey
+                        {t.rich("heroTitle", {
+                            italic: (chunks) => <span className="text-primary italic">{chunks}</span>
+                        })}
                     </h1>
                     <p className="text-xl md:text-2xl text-muted-foreground font-bold max-w-2xl mx-auto leading-relaxed">
-                        Join 10,000+ mates who passed their citizenship test on the first try with PassMate Premium.
+                        {t("heroSubtitle")}
                     </p>
                 </div>
 
@@ -256,7 +248,7 @@ export default function PremiumPage() {
                         >
                             {plan.popular && (
                                 <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-primary text-white px-8 py-1.5 rounded-full text-xs font-black uppercase tracking-widest whitespace-nowrap shadow-xl border-4 border-white">
-                                    Most Popular
+                                    {t("plans.popular")}
                                 </div>
                             )}
 
@@ -280,16 +272,16 @@ export default function PremiumPage() {
                             </ul>
 
                             <Button
-                                variant={plan.variant as any}
+                                variant={plan.variant as "primary" | "secondary" | "accent" | "outline" | "ghost"}
                                 size="lg"
                                 className="w-full py-7 rounded-3xl text-xl font-black shadow-xl hover:shadow-primary/20 transition-all active:scale-95"
-                                disabled={plan.name === "Free Mate" || loading !== null}
+                                disabled={plan.name === t("plans.free.name") || loading !== null}
                                 onClick={() => handleCheckout(plan.name)}
                             >
                                 {loading === plan.name ? (
                                     <div className="flex items-center gap-2">
                                         <div className="w-5 h-5 border-4 border-white/30 border-t-white rounded-full animate-spin" />
-                                        <span>Just a sec...</span>
+                                        <span>{t("plans.loading")}</span>
                                     </div>
                                 ) : plan.cta}
                             </Button>
@@ -300,8 +292,8 @@ export default function PremiumPage() {
                 {/* Comparison Section */}
                 <section className="mb-32">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-display font-black mb-4">Compare Plans</h2>
-                        <p className="text-muted-foreground font-bold">Pick the right mate for your journey.</p>
+                        <h2 className="text-4xl font-display font-black mb-4">{t("comparison.title")}</h2>
+                        <p className="text-muted-foreground font-bold">{t("comparison.subtitle")}</p>
                     </div>
 
                     <div className="bg-white rounded-[3rem] border-2 border-border overflow-hidden shadow-xl">
@@ -309,10 +301,10 @@ export default function PremiumPage() {
                             <table className="w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-muted/50">
-                                        <th className="p-8 text-xl font-black border-b border-border">Feature</th>
-                                        <th className="p-8 text-center text-lg font-black border-b border-border">Free</th>
-                                        <th className="p-8 text-center text-lg font-black border-b border-border text-primary">Test Ready</th>
-                                        <th className="p-8 text-center text-lg font-black border-b border-border text-accent">Achiever</th>
+                                        <th className="p-8 text-xl font-black border-b border-border">{t("comparison.feature")}</th>
+                                        <th className="p-8 text-center text-lg font-black border-b border-border">{t("comparison.free")}</th>
+                                        <th className="p-8 text-center text-lg font-black border-b border-border text-primary">{t("comparison.ready")}</th>
+                                        <th className="p-8 text-center text-lg font-black border-b border-border text-accent">{t("comparison.achiever")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -340,17 +332,13 @@ export default function PremiumPage() {
                 <section className="mb-32">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl font-display font-black mb-4 flex items-center justify-center gap-3">
-                            <MessageSquare className="w-8 h-8 text-primary" /> Hear From Our Mates
+                            <MessageSquare className="w-8 h-8 text-primary" /> {t("testimonials.title")}
                         </h2>
-                        <p className="text-muted-foreground font-bold">Real stories from real users across Australia.</p>
+                        <p className="text-muted-foreground font-bold">{t("testimonials.subtitle")}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                        {[
-                            { name: "Sarah J.", city: "Sydney", text: "PassMate was a game changer! The mock tests were exactly like the real thing. Highly recommend the Test Ready plan.", rating: 5 },
-                            { name: "Ahmed K.", city: "Melbourne", text: "The AI Tutor (Ollie) helped me understand the Australian values section so much better. I passed on my first try!", rating: 5 },
-                            { name: "Li W.", city: "Brisbane", text: "Lifetime access is totally worth it. The certificate of readiness gave me the confidence to finally book my test.", rating: 5 }
-                        ].map((t, i) => (
+                        {TESTIMONIALS.map((t, i) => (
                             <motion.div
                                 key={i}
                                 whileHover={{ y: -5 }}
@@ -359,7 +347,7 @@ export default function PremiumPage() {
                                 <div className="flex gap-1 mb-4 text-yellow-500">
                                     {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
                                 </div>
-                                <p className="font-bold text-muted-foreground mb-6 leading-relaxed italic">"{t.text}"</p>
+                                <p className="font-bold text-muted-foreground mb-6 leading-relaxed italic">&quot;{t.text}&quot;</p>
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center font-black text-primary text-xl">
                                         {t.name[0]}
@@ -378,7 +366,7 @@ export default function PremiumPage() {
                 <section className="mb-32 max-w-3xl mx-auto">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl font-display font-black mb-4 flex items-center justify-center gap-3">
-                            <HelpCircle className="w-8 h-8 text-primary" /> Frequently Asked Questions
+                            <HelpCircle className="w-8 h-8 text-primary" /> {t("faqs.title")}
                         </h2>
                     </div>
 
@@ -415,22 +403,22 @@ export default function PremiumPage() {
                         <div className="w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
                             <ShieldCheck className="w-8 h-8 text-primary" />
                         </div>
-                        <h4 className="font-extrabold text-xl mb-3">Safe & Secure</h4>
-                        <p className="text-muted-foreground font-bold text-sm">Stripe-encrypted payments. We never store your card details.</p>
+                        <h4 className="font-extrabold text-xl mb-3">{t("trust.secure")}</h4>
+                        <p className="text-muted-foreground font-bold text-sm">{t("trust.secureDesc")}</p>
                     </div>
                     <div>
                         <div className="w-16 h-16 bg-yellow-100 rounded-3xl flex items-center justify-center mx-auto mb-6">
                             <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
                         </div>
-                        <h4 className="font-extrabold text-xl mb-3">4.9/5 Rating</h4>
-                        <p className="text-muted-foreground font-bold text-sm">Trusted by thousands of new Aussie citizens every year.</p>
+                        <h4 className="font-extrabold text-xl mb-3">{t("trust.rating")}</h4>
+                        <p className="text-muted-foreground font-bold text-sm">{t("trust.ratingDesc")}</p>
                     </div>
                     <div>
                         <div className="w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
                             <Trophy className="w-8 h-8 text-primary" />
                         </div>
-                        <h4 className="font-extrabold text-xl mb-3">Money-Back Period</h4>
-                        <p className="text-muted-foreground font-bold text-sm">Don't pass? Get a full refund on your premium plan. No questions asked.</p>
+                        <h4 className="font-extrabold text-xl mb-3">{t("trust.refund")}</h4>
+                        <p className="text-muted-foreground font-bold text-sm">{t("trust.refundDesc")}</p>
                     </div>
                 </section>
             </main>

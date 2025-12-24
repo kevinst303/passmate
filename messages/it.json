@@ -2,7 +2,7 @@
     "HomePage": {
         "hero": {
             "trusted": "Scelto da oltre 5.000 futuri cittadini",
-            "title": "Il tuo {mate} che ti aiuta a diventare australiano.",
+            "title": "Il tuo <mate>compagno</mate> che ti aiuta a diventare australiano.",
             "mate": "compagno",
             "subtitle": "Supera il test di cittadinanza australiana con sicurezza. Apprendimento gamificato, tutoring vocale AI e preparazione personalizzata che sembra un gioco.",
             "cta1": "Inizia a imparare ora",
@@ -12,8 +12,8 @@
             "title": "Perché PassMate?",
             "subtitle": "Abbiamo trasformato il processo di preparazione al test, spesso arido e fonte di ansia, in un viaggio di apprendimento coinvolgente e gamificato.",
             "f1": {
-                "title": "Strisce giornaliere",
-                "desc": "Rimani motivato con le strisce giornaliere e non perdere mai un giorno di apprendimento."
+                "title": "Serie giornaliere",
+                "desc": "Rimani motivato con le serie giornaliere e non perdere mai un giorno di apprendimento."
             },
             "f2": {
                 "title": "Leghe settimanali",
@@ -24,9 +24,94 @@
                 "desc": "Esami a tempo reali di 45 minuti con punteggi di superamento ufficiali."
             },
             "f4": {
-                "title": "Garanzia di superamento dell'80%",
+                "title": "Garanzia di successo",
                 "desc": "Siamo così fiduciosi nel nostro metodo che garantiamo il tuo successo."
             }
+        },
+        "stats": {
+            "trained": "Compagni Addestrati",
+            "passRate": "Tasso di Superamento al Primo Colpo",
+            "questions": "Domande di Pratica",
+            "rating": "Valutazione Utente"
+        },
+        "testimonials": {
+            "title": "Amato dai Nuovi Aussie",
+            "subtitle": "Storie vere di persone che sono diventate cittadini australiani con PassMate."
+        },
+        "cta": {
+            "title": "Pronto a diventare australiano?",
+            "subtitle": "Unisciti a migliaia di utenti che hanno superato il test al primo colpo con PassMate.",
+            "button": "Inizia Gratis"
+        }
+    },
+    "Navigation": {
+        "home": "Home",
+        "learn": "Impara",
+        "ollie": "Ollie",
+        "masterclass": "Masterclass",
+        "leagues": "Leghe",
+        "friends": "Amici",
+        "achievements": "Obiettivi",
+        "premium": "Premium",
+        "profile": "Profilo",
+        "settings": "Impostazioni",
+        "more": "Altro",
+        "moreOptions": "Altre Opzioni",
+        "myProfile": "Mio Profilo",
+        "viewAccount": "Visualizza Account",
+        "goPremium": "Passa a Premium",
+        "premiumDesc": "Sblocca l'accesso illimitato, rimuovi la pubblicità e ottieni il tutor AI!",
+        "upgradeNow": "Aggiorna Ora",
+        "desc": {
+            "home": "Dashboard e quiz",
+            "learn": "Percorso di studio e argomenti",
+            "ollie": "Assistente di studio AI",
+            "masterclass": "Lezioni video degli esperti",
+            "leagues": "Classifiche e competizioni",
+            "friends": "Connettiti con i compagni",
+            "achievements": "Distintivi e premi",
+            "premium": "Sblocca l'accesso completo",
+            "profile": "Il tuo account",
+            "settings": "Preferenze app"
+        }
+    },
+    "Dashboard": {
+        "welcome": "Ciao, {name}!",
+        "pro": "Pro",
+        "proDesc": "Divertiti con l'apprendimento illimitato!",
+        "streakDesc": "Mantieni viva la tua serie!",
+        "proMateDesc": "Sei un compagno Pro! Goditi il tuo viaggio verso l'apprendimento illimitato.",
+        "doingGreat": "Stai andando alla grande! Completa le missioni di oggi per mantenere la tua serie.",
+        "startPracticing": "Inizia a Praticare",
+        "review": "Revisione Personalizzata",
+        "reviewDesc": "Pratica ciò che hai sbagliato",
+        "talkToOllie": "Parla con Ollie",
+        "ollieDesc": "Tutor AI per la cittadinanza",
+        "course": "Corso di Cittadinanza",
+        "topicsMastered": "{completed} di {total} Argomenti Superati",
+        "resumePath": "Riprendi Percorso",
+        "level": "Livello {level}",
+        "rank": {
+            "beginner": "Principiante",
+            "journeyman": "Esperto",
+            "expert": "Professionista"
+        },
+        "dailyQuests": "Missioni Giornaliere",
+        "resetIn": "Reset tra {time}",
+        "yourRank": "Tua Posizione",
+        "keepItUp": "Continua così!",
+        "viewAll": "Vedi Tutti",
+        "noPlayers": "Ancora nessun giocatore in questa lega.",
+        "mockTest": "Simulazione d'Esame",
+        "mockTestDesc": "20 domande, 45 minuti. Punteggio minimo: 75%.",
+        "attemptNow": "Prova Ora",
+        "recentActivity": "Attività Recente",
+        "live": "Dal vivo",
+        "scored": "Punteggio {score}/{total} nel quiz",
+        "quietOutback": "Mattinata tranquilla nell'Outback... Inizia un quiz per rompere il silenzio!",
+        "defaultQuests": {
+            "q1": "Completa 3 quiz",
+            "q2": "Punteggio perfetto in Storia"
         }
     },
     "Common": {
@@ -34,6 +119,601 @@
         "dashboard": "Dashboard",
         "login": "Accedi",
         "getStarted": "Inizia",
-        "footer": "© 2025 PassMate. Non affiliato al Dipartimento degli Affari Interni australiano."
+        "footer": "© 2025 PassMate. Non affiliato al Dipartimento degli Affari Interni australiano.",
+        "privacy": "Privacy",
+        "terms": "Termini",
+        "contact": "Contatto",
+        "hearts": "Cuori",
+        "unlimited": "Illimitati",
+        "nextIn": "Prossimo in {time}m",
+        "streak": "Serie",
+        "xp": "XP",
+        "days": "giorni"
+    },
+    "Quiz": {
+        "loading": "Raccolta materiali di studio...",
+        "error": "Ah, peccato!",
+        "ready": "Pronto per una sfida?",
+        "battleMode": "Modalità Battaglia!",
+        "outOfLives": "Hai finito i cuori, amico!",
+        "battleDesc": "Stai combattendo contro {opponent}. Dai il massimo!",
+        "studyDesc": "Padroneggia \"{topic}\" per guadagnare {xp} XP e mantenere la serie!",
+        "outOfLivesDesc": "Aspetta che i tuoi cuori si rigenerino o passa a Premium!",
+        "nextHeartIn": "Prossimo cuore in {time}",
+        "heartsRegen": "I cuori si rigenerano ogni 3 ore.",
+        "start": "Cominciamo!",
+        "commenceBattle": "INIZIA BATTAGLIA",
+        "restUp": "Riposati",
+        "maybeLater": "Forse più tardi",
+        "victorious": "Vittoria!",
+        "draw": "Pareggio!",
+        "part1Complete": "Parte 1 Completata!",
+        "defeated": "Sconfitto, ma non mollare amico!",
+        "perfect": "PERFETTO!",
+        "score100": "Punteggio 100%",
+        "complete": "Quiz Completato!",
+        "keepPracticing": "Continua a praticare!",
+        "waitingOpponent": "Hai finito il tuo turno. In attesa del tuo avversario!",
+        "finalScore": "Punteggio Finale: {score} - {opponentScore}",
+        "outOfLivesResult": "Hai finito i cuori. Non preoccuparti, torneranno presto!",
+        "passedDesc": "Hai risposto a {score} domande correttamente e guadagnato {xp} XP.",
+        "failedDesc": "Ci sei quasi! Rivedi le risposte e riprova.",
+        "newBadge": "Nuovo Distintivo Sbloccato!",
+        "saving": "Salvataggio Progressi...",
+        "backToMates": "Torna ai Compagni",
+        "backToDashboard": "Torna alla Dashboard",
+        "check": "Verifica",
+        "correct": "Corretto!",
+        "incorrect": "Sbagliato",
+        "correctAnswer": "Risposta corretta: {answer}",
+        "finish": "Finito",
+        "continue": "Continua"
+    },
+    "Auth": {
+        "backHome": "Torna alla Home",
+        "welcomeBack": "Bentornato!",
+        "joinSquad": "Unisciti alla Squadra!",
+        "journeyContinue": "Il tuo viaggio australiano continua.",
+        "startPath": "Inizia oggi il tuo percorso verso la cittadinanza.",
+        "login": "Accedi",
+        "signup": "Registrati",
+        "email": "Indirizzo Email",
+        "password": "Password",
+        "checkEmail": "Controlla la tua email per il link di conferma!",
+        "letsGo": "Andiamo!",
+        "createAccount": "Crea Account",
+        "agree": "Continuando, accetti i PassMate's",
+        "terms": "Termini di Servizio",
+        "privacy": "Informativa sulla Privacy"
+    },
+    "Leagues": {
+        "backDashboard": "Torna alla Dashboard",
+        "competingDesc": "In competizione per la promozione questa settimana!",
+        "yourPosition": "Tua Posizione",
+        "endsIn": "Finisce tra",
+        "status": "Stato",
+        "promotionZone": "ZONA PROMOZIONE",
+        "boostRank": "Aumenta il tuo Grado!",
+        "boostRankDesc": "Completa i quiz e vinci battaglie per scalare la classifica.",
+        "getMoreXP": "Ottieni più XP",
+        "topPerformers": "Migliori Prestazioni",
+        "weeklyStandings": "Classifiche Settimanali",
+        "noRankings": "Nessuna classifica ancora. Inizia un quiz per conquistare il trono!",
+        "resetInfo": "La lega resetta ogni domenica alle 23:59",
+        "promotion": "Promozione",
+        "relegation": "Retrocessione",
+        "you": "Tu"
+    },
+    "SkillTrees": {
+        "backDashboard": "Torna alla Dashboard",
+        "studyCourse": "Corso di Studio",
+        "pathDesc": "Il tuo percorso verso la cittadinanza australiana.",
+        "courseProgress": "Progresso del Corso",
+        "topicsCount": "{completed}/{total} Argomenti",
+        "topicsMastered": "{completed} di {total} Argomenti Superati",
+        "percentComplete": "{percent}% Completato",
+        "mastered": "Superato",
+        "inProgress": "In Corso",
+        "lessons": "Lezioni",
+        "locked": "Bloccato",
+        "review": "Ripeti",
+        "continue": "Continua",
+        "start": "Inizia",
+        "reviewTopic": "Ripeti Argomento",
+        "startLearning": "Inizia a Imparare",
+        "mockTestTitle": "Il Simulatore d'Esame Ufficiale",
+        "mockTestDesc": "Pronto a dimostrare le tue conoscenze? Supera questo test per ottenere il distintivo {badge}!",
+        "mockBadge": "\"Maestro del Test\"",
+        "takeTest": "Fai il Test",
+        "proTip": "Consiglio: Completa gli argomenti in ordine per sbloccare nuovi contenuti e massimizzare il tuo apprendimento!"
+    },
+    "AITutor": {
+        "welcomeMistakes": "Ciao amico! Vedo che hai lavorato sodo ma hai avuto qualche domanda difficile ultimamente. Vuoi che te ne spieghi alcune?",
+        "welcomeDefault": "Ciao amico! Sono Ollie, il tuo tutor per la cittadinanza. Se vuoi interrogarmi sulla storia australiana o semplicemente fare due chiacchiere sulla vita sotto il sole, sono qui per te! Cosa hai in mente?",
+        "errorConnecting": "Scusa amico, ho qualche problema a connettermi alla rete. Riprova tra un secondo!",
+        "activeNow": "Attivo Ora",
+        "dayStreak": "STRISCIA DI GIORNI",
+        "chatPlaceholder": "Chatta con Ollie...",
+        "ollieHearing": "Ollie ti sta ascoltando!",
+        "speakNaturally": "Parla naturalmente, amico...",
+        "listening": "In ascolto",
+        "cancel": "Annulla",
+        "suggestions": {
+            "constitution": "Spiega \"La Costituzione\"",
+            "trialTest": "Test di Prova",
+            "aussieSlang": "Slang Australiano",
+            "oath": "Giuramento di Cittadinanza"
+        }
+    },
+    "Masterclass": {
+        "backDashboard": "Torna alla Dashboard",
+        "title": "Masterclass di Cittadinanza",
+        "exclusive": "Esclusivo per chi ha ottenuto la cittadinanza",
+        "yourProgress": "Tuo Progresso",
+        "percentComplete": "{percent}% Completato",
+        "nextUp": "Prossimo",
+        "courseCompleted": "Corso Completato!",
+        "heroDesc": "Esplora il cuore della democrazia australiana e il tuo ruolo in essa.",
+        "resumeModule": "Riprendi Modulo",
+        "curriculum": "Curriculum",
+        "video": "Video",
+        "xpReward": "Premio di {xp} XP",
+        "watchAgain": "Guarda di nuovo",
+        "startVideo": "Inizia Video",
+        "nowPlaying": "In Esecuzione",
+        "tip": "Suggerimento: presta molta attenzione alla sezione sulla Costituzione australiana, poiché è un'area comune per le domande del test!",
+        "completeEarn": "Completa e Guadagna {xp} XP",
+        "modules": {
+            "m1": {
+                "title": "Modulo 1: Le fondamenta dell'Australia",
+                "desc": "Un'immersione profonda nella storia antica e nel percorso verso la Federazione."
+            },
+            "m2": {
+                "title": "Modulo 2: Il sistema democratico",
+                "desc": "Capire i tre livelli di governo e come funziona il voto."
+            },
+            "m3": {
+                "title": "Modulo 3: Valori e Diritti",
+                "desc": "Cosa significa essere un cittadino australiano nel mondo moderno."
+            },
+            "m4": {
+                "title": "Modulo 4: Preparazione finale al test",
+                "desc": "Strategie per superare l'esame con il 100% di sicurezza."
+            }
+        }
+    },
+    "Achievements": {
+        "backDashboard": "Torna alla Dashboard",
+        "title": "Obiettivi",
+        "subtitle": "Sblocca i distintivi per mostrare la tua esperienza sulla cittadinanza!",
+        "yourStats": "Le tue statistiche",
+        "completionProgress": "Progresso completamento",
+        "unlockedCount": "Hai ottenuto {unlocked} distintivi su {total}",
+        "badges": "Distintivi",
+        "rewardXp": "XP premio",
+        "collectionTitle": "La tua collezione di distintivi",
+        "earned": "Ottenuto il {date}",
+        "secretTitle": "Distintivi segreti",
+        "secretDesc": "Ci sono obiettivi nascosti che aspettano di essere scoperti. Continua a esplorare, interagisci con i compagni e raggiungi nuove vette per svelarli!",
+        "mysteryAwaits": "Il mistero attende"
+    },
+    "Review": {
+        "title": "Revisione Personalizzata",
+        "clearTitle": "Sei a posto!",
+        "clearDesc": "Nessun errore da rivedere al momento. Sei un maestro della cittadinanza, amico!",
+        "introDesc": "Ollie ha identificato {count} domande difficili che hai sbagliato di recente. Padroneggiamole!",
+        "startReview": "Inizia Revisione",
+        "maybeLater": "Forse più tardi",
+        "completeTitle": "Revisione completata!",
+        "completeDesc": "Hai superato quelle {count} domande difficili. La tua mente sta diventando più forte!",
+        "solved": "Risolto",
+        "xpEarned": "XP guadagnati",
+        "trickyQuestion": "Domanda difficile",
+        "wellDone": "Ben fatto!",
+        "notQuite": "Non proprio, amico",
+        "check": "Verifica",
+        "next": "Avanti",
+        "finish": "Fine"
+    },
+    "MockTest": {
+        "preparing": "Preparazione del simulatore d'esame ufficiale...",
+        "title": "Simulatore d'Esame Ufficiale",
+        "requirements": "Requisiti",
+        "passMark": "Punteggio almeno del 75% per superare il test.",
+        "mandatory": "Obbligatorio",
+        "mandatoryDesc": "Deve rispondere correttamente a tutte le domande sulle convinzioni democratiche.",
+        "timer": "Timer",
+        "duration": "Durata completa di 45 minuti.",
+        "reward": "Premio",
+        "rewardDesc": "Guadagna fino a 500 XP e un certificato!",
+        "startTest": "Inizia Esame Ufficiale",
+        "backDashboard": "Torna alla Dashboard",
+        "legend": "Sei una leggenda!",
+        "almost": "Ci sei quasi, amico!",
+        "passDesc": "Hai superato con successo il simulatore d'esame ufficiale. Sei pronto per la cosa reale!",
+        "mandatoryFailDesc": "Hai sbagliato alcune domande obbligatorie sulle convinzioni democratiche. Queste sono cruciali per il test!",
+        "failScoreDesc": "Hai ottenuto {score}/{total}, appena sotto il punteggio di superamento del 75%.",
+        "overallScore": "Punteggio complessivo",
+        "mandatoryLabel": "Obbligatorio",
+        "certificateTitle": "Certificato di Cittadinanza",
+        "certificateUnlocked": "Sbloccato per chi ottiene la cittadinanza!",
+        "view": "Visualizza",
+        "saving": "Salvataggio risultati...",
+        "returnHome": "Torna alla Home",
+        "questionCount": "Domanda {current} di {total}",
+        "mandatoryBadge": "DOMANDA OBBLIGATORIA",
+        "rulesTip": "Prenditi il tuo tempo, amico. Si applicano le regole dell'esame ufficiale.",
+        "finishTest": "Finisci Test",
+        "nextQuestion": "Prossima Domanda",
+        "checkAnswer": "Verifica Risposta"
+    },
+    "Profile": {
+        "title": "Profilo",
+        "settings": "Impostazioni",
+        "signOut": "Esci",
+        "level": "Livello {level}",
+        "pro": "PRO",
+        "joined": "Iscritto il {date}",
+        "dayStreak": "{count} giorni di serie",
+        "totalXp": "{count} XP totali",
+        "yourStats": "Le tue statistiche",
+        "currentXp": "XP attuali",
+        "streak": "Serie",
+        "quizzes": "Quiz",
+        "badges": "Distintivi",
+        "recentBadges": "Distintivi recenti",
+        "viewCollection": "Vedi Collezione",
+        "startLearning": "Inizia a imparare per avviare il tuo viaggio!",
+        "legendTitle": "Sei una Leggenda di PassMate",
+        "goldTitle": "PassMate Gold ti aspetta",
+        "legendDesc": "Stai utilizzando tutte le funzionalità premium. Continua a imparare con l'aiuto di Ollie!",
+        "goldDesc": "Sblocca cuori illimitati, tutor vocale AI e masterclass esclusive.",
+        "manageSub": "Gestisci Abbonamento",
+        "goPremium": "Passa a Premium"
+    },
+    "Settings": {
+        "title": "Impostazioni Account",
+        "backProfile": "Torna al Profilo",
+        "profilePicture": "Immagine del Profilo",
+        "personalDetails": "Dettagli Personali",
+        "fullName": "Nome Completo",
+        "username": "Nome Utente",
+        "email": "Email",
+        "saveChanges": "Salva Modifiche",
+        "saving": "Salvataggio...",
+        "success": "Profilo aggiornato con successo!",
+        "avatars": {
+            "ollie1": "Ollie Classico",
+            "ollie2": "Ollie Intelligente",
+            "ollie3": "Ollie Cool",
+            "ollie4": "Ollie Party",
+            "ollie5": "Ollie Sportivo",
+            "ollie6": "Ollie Yoga"
+        },
+        "placeholders": {
+            "fullName": "Inserisci il tuo nome completo",
+            "username": "@nomeutente"
+        }
+    },
+    "Security": {
+        "title": "Privacy e Sicurezza",
+        "subtitle": "Gestisci i dati del tuo account e i metodi di accesso.",
+        "backProfile": "Torna al Profilo",
+        "changePassword": "Cambia Password",
+        "newPassword": "Nuova Password",
+        "confirmPassword": "Conferma Password",
+        "placeholder": "••••••••",
+        "updatePassword": "Aggiorna Password",
+        "updating": "Aggiornamento...",
+        "passwordMinLength": "La password deve essere di almeno 8 caratteri",
+        "passwordsMismatch": "Le password non corrispondono",
+        "success": "Password aggiornata con successo!",
+        "twoFactor": {
+            "title": "Autenticazione a due fattori",
+            "soon": "Prossimamente",
+            "desc": "Aggiungi un ulteriore livello di sicurezza al tuo account.",
+            "enable": "Attiva 2FA"
+        },
+        "recentActivity": {
+            "title": "Attività Recente",
+            "currentSession": "Sessione attiva corrente",
+            "loggedIn": "Ultimo accesso effettuato",
+            "ago": "{time} fa",
+            "signOutAll": "Esci da tutti i dispositivi"
+        },
+        "dataPrivacy": {
+            "title": "Dati e Privacy",
+            "desc": "La tua privacy è la nostra massima priorità. Hai il pieno controllo sui tuoi dati.",
+            "policy": "Privacy Policy",
+            "terms": "Termini di Servizio",
+            "downloadTitle": "Scarica i tuoi dati",
+            "downloadDesc": "Ottieni una copia di tutti i tuoi dati personali, progressi e attività.",
+            "requestExport": "Richiedi Esportazione"
+        },
+        "dangerZone": {
+            "title": "Zona Pericolosa",
+            "desc": "Una volta eliminato il tuo account, non si può tornare indietro. Per favore, fai attenzione.",
+            "delete": "Elimina account permanentemente"
+        }
+    },
+    "Referral": {
+        "title": "Invita Amici",
+        "backProfile": "Torna al Profilo",
+        "heroTitle": "Porta i compagni,\nottieni premi!",
+        "heroDesc": "Invita i tuoi amici su PassMate e preparatevi insieme per la cittadinanza australiana. Loro si iscrivono, e voi entrambi ottenete grandi premi!",
+        "yourLink": "Il tuo link di invito personale",
+        "copyLink": "Copia Link",
+        "copied": "Copiato!",
+        "performance": "Le tue prestazioni di invito",
+        "topReferrer": "Miglior Referente",
+        "climbLeaderboard": "Porta più compagni per scalare la classifica!",
+        "quickShare": "Condivisione rapida",
+        "milestonesTitle": "Traguardi di invito",
+        "friendsCount": "{count} amici",
+        "unlockBadge": "Sblocca il distintivo \"{name}\"",
+        "howItWorks": {
+            "title": "Come funziona?",
+            "desc": "Quando il tuo amico si iscrive usando il tuo link, entrambi ottenete XP bonus. Man mano che inviti più amici, sblocchi distintivi esclusivi e sconti premium!"
+        },
+        "stats": {
+            "friends": "Amici invitati",
+            "xp": "XP Bonus guadagnati",
+            "badges": "Distintivi di invito"
+        },
+        "rewards": {
+            "r1": "500 XP Bonus",
+            "r2": "1 mese di sconto su Premium",
+            "r3": "Distintivo esclusivo Mate Gold",
+            "b1": "Koala Amichevole",
+            "b2": "Capo del Party",
+            "b3": "Pilastro della Comunità"
+        },
+        "social": {
+            "meta": "Facebook",
+            "x": "X / Twitter",
+            "whatsapp": "Condividi su WhatsApp"
+        }
+    },
+    "Premium": {
+        "title": "PassMate Premium",
+        "backDashboard": "Torna alla Dashboard",
+        "goPremium": "Passa a Premium",
+        "heroTitle": "Il modo {italic}più veloce{italic} per diventare australiano",
+        "heroSubtitle": "Unisciti a migliaia di nuovi cittadini che hanno superato il test con le nostre esclusive funzionalità basate sull'IA.",
+        "plans": {
+            "popular": "Il più popolare",
+            "loading": "Elaborazione...",
+            "free": {
+                "name": "Gratis",
+                "cta": "Piano Attuale"
+            },
+            "ready": {
+                "name": "Test Ready",
+                "duration": "/anno",
+                "cta": "Diventa Test Ready"
+            },
+            "achiever": {
+                "name": "Cittadino Achiever",
+                "duration": "/illimitato",
+                "cta": "Diventa un Achiever"
+            },
+            "features": {
+                "quests": "Missioni giornaliere e serie",
+                "bank": "Banca dati di 500+ domande",
+                "leagues": "Leghe settimanali",
+                "hearts5": "5 cuori (rigenerano)",
+                "unlimitedHearts": "Cuori illimitati",
+                "aiTutor": "Ollie: Tutor vocale AI",
+                "mockExam": "Simulatore d'esame completo",
+                "aiReview": "Revisione errori basata sull'IA",
+                "adFree": "Esperienza 100% senza pubblicità",
+                "masterclass": "Masterclass esclusiva sulla cittadinanza",
+                "certificate": "Certificato di preparazione ufficiale",
+                "updates": "Aggiornamenti domande illimitati",
+                "discord": "Accesso alla comunità VIP Discord"
+            }
+        },
+        "comparison": {
+            "title": "Confronta il tuo piano",
+            "subtitle": "Scegli il livello più adatto al tuo stile di apprendimento e ai tuoi obiettivi.",
+            "feature": "Funzionalità",
+            "free": "Gratis",
+            "ready": "Test Ready",
+            "achiever": "Achiever",
+            "rows": {
+                "quests": "Missioni giornaliere",
+                "bank": "Banca domande",
+                "unlimitedHearts": "Cuori illimitati",
+                "aiTutor": "Tutor vocale AI",
+                "mockExam": "Simulatore d'esame",
+                "aiReview": "Revisione errori",
+                "adFree": "Senza pubblicità",
+                "masterclass": "Masterclass",
+                "certificate": "Certificato",
+                "vip": "Comunità VIP"
+            }
+        },
+        "testimonials": {
+            "title": "Esperienze Utente",
+            "subtitle": "Ascolta da chi ha superato il test con PassMate Premium.",
+            "t1": {
+                "name": "Priya S.",
+                "city": "Sydney",
+                "text": "Il tutor AI è stato una svolta. Parlare con Ollie mi ha fatto sentire molto sicura delle mie conoscenze."
+            },
+            "t2": {
+                "name": "Mohamed A.",
+                "city": "Melbourne",
+                "text": "I simulatori d'esame erano esattamente come il test reale. Sapevo cosa aspettarmi quando sono andato al centro esami."
+            },
+            "t3": {
+                "name": "Linda W.",
+                "city": "Brisbane",
+                "text": "Le Masterclass hanno spiegato tutto così bene. Ne è valsa assolutamente la pena per il piano Achiever."
+            }
+        },
+        "faqs": {
+            "title": "Domande Frequenti",
+            "q1": {
+                "q": "Posso annullare il mio abbonamento in qualsiasi momento?",
+                "a": "Sì, puoi annullare il tuo abbonamento in qualsiasi momento dalle impostazioni del tuo account. Avrai ancora accesso alle funzionalità premium fino alla fine del periodo di fatturazione."
+            },
+            "q2": {
+                "q": "Qual è la differenza tra i piani Test Ready e Achiever?",
+                "a": "Test Ready è un piano annuale focalizzato sulle principali funzionalità premium. Achiever è un piano a vita che include bonus esclusivi come le Masterclass video e il certificato di preparazione."
+            },
+            "q3": {
+                "q": "Come funzionano i cuori illimitati?",
+                "a": "Con Premium, non vieni penalizzato per le risposte sbagliate. Puoi praticare tutte le volte che vuoi senza interruzioni."
+            },
+            "q4": {
+                "q": "Posso cambiare idea dopo il pagamento?",
+                "a": "Offriamo una garanzia di rimborso di 30 giorni. Se non sei soddisfatto della tua esperienza, faccelo sapere e ti rimborseremo completamente."
+            }
+        },
+        "trust": {
+            "secure": "Pagamenti Sicuri",
+            "secureDesc": "Crittografia sicura a 256 bit gestita da Stripe.",
+            "rating": "Valutazione 4.9/5 stelle",
+            "ratingDesc": "Scelto da oltre 5.000 cittadini australiani di successo.",
+            "refund": "Garanzia di rimborso",
+            "refundDesc": "Rimborso entro 30 giorni, senza domande."
+        },
+        "banners": {
+            "cancelled": "Pagamento annullato. Puoi riprovare quando sei pronto!",
+            "ai_tutor": {
+                "title": "Vuoi parlare con Ollie?",
+                "desc": "Preparati in modo più intelligente con il nostro tutor vocale AI. Disponibile con i piani Test Ready o Achiever."
+            },
+            "masterclass": {
+                "title": "Sblocca le Masterclass",
+                "desc": "Approfondisci con il nostro corso video completo. Esclusivamente per i Cittadini Achievers."
+            },
+            "mock_test": {
+                "title": "Simulazioni d'esame illimitate",
+                "desc": "Pratica tutte le volte che vuoi e impara dagli errori con i cuori illimitati."
+            },
+            "requires": "Richiede {feature}"
+        }
+    },
+    "Billing": {
+        "backProfile": "Torna al Profilo",
+        "title": "Fatturazione e Abbonamento",
+        "subtitle": "Gestisci il tuo piano, i pagamenti e la cronologia di fatturazione.",
+        "currentPlan": "Piano Attuale",
+        "premiumPlan": "Premium Achiever",
+        "freePlan": "Free Explorer",
+        "activeAccount": "Account Attivo",
+        "loading": "Caricamento...",
+        "managePayments": "Gestisci Pagamenti",
+        "upgradePremium": "Passa a Premium",
+        "yourBenefits": "I tuoi vantaggi",
+        "nextBilling": "Prossima fatturazione",
+        "lifetimeAccess": "Accesso a Vita",
+        "lifetimeDesc": "Hai tutto il mazzo, amico! Niente più pagamenti.",
+        "na": "N/A",
+        "upgradeUnlock": "Aggiorna per sbloccare tutte le funzionalità.",
+        "recentInvoices": "Fatture Recenti",
+        "passmatePremium": "PassMate Premium",
+        "oneTimePayment": "Pagamento Una Tantum",
+        "downloadPdf": "Scarica PDF",
+        "needMoreHistory": "Serve più cronologia? Usa il",
+        "billingPortal": "Portale di Fatturazione",
+        "noInvoices": "Ancora nessuna fattura.",
+        "helpfulLinks": "Link Utili",
+        "pricingDetails": "Dettagli Prezzi",
+        "refundPolicy": "Politica di Rimborso",
+        "subscriptionFaq": "FAQ Abbonamento",
+        "contactSupport": "Contatta il Supporto",
+        "plans": {
+            "free": {
+                "f1": "Moduli di studio base",
+                "f2": "Domande di pratica giornaliere",
+                "f3": "Supporto della comunità",
+                "f4": "Percorso di apprendimento standard"
+            },
+            "premium": {
+                "f1": "Simulazioni d'esame illimitate",
+                "f2": "Accesso 24/7 al Tutor AI",
+                "f3": "Serie Masterclass",
+                "f4": "Certificato Ufficiale",
+                "f5": "Esperienza senza pubblicità"
+            }
+        }
+    },
+    "Support": {
+        "backProfile": "Torna al Profilo",
+        "title": "Come possiamo aiutare, amico?",
+        "subtitle": "Cerca nel nostro centro assistenza o sfoglia le categorie qui sotto per trovare ciò di cui hai bisogno.",
+        "searchPlaceholder": "Cerca risposte...",
+        "categories": {
+            "study": {
+                "title": "Guida allo studio",
+                "desc": "Scopri come usare l'app in modo efficace."
+            },
+            "account": {
+                "title": "Account e Fatturazione",
+                "desc": "Gestisci il tuo abbonamento e il tuo profilo."
+            },
+            "test": {
+                "title": "Informazioni sul Test",
+                "desc": "Dettagli sull'esame ufficiale di cittadinanza."
+            },
+            "feedback": {
+                "title": "Invia Feedback",
+                "desc": "Aiutaci a rendere PassMate ancora migliore."
+            }
+        },
+        "faqsTitle": "Domande frequenti",
+        "viewAllFaqs": "Visualizza tutte le FAQ",
+        "stillNeedHelp": "Serve ancora aiuto?",
+        "supportDesc": "Il nostro team di supporto amichevole risponde solitamente entro 24 ore. Torniamo allo studio!",
+        "messageUs": "Scrivici",
+        "liveChat": "Live Chat",
+        "monFri": "Lun - Ven",
+        "support24h": "Supporto 24h",
+        "resourcesTitle": "Risorse Utili",
+        "resources": {
+            "book": "Libro di risorse ufficiale (PDF)",
+            "videos": "Serie di video di studio",
+            "forum": "Forum della comunità",
+            "booking": "Prenota il tuo test"
+        },
+        "faqs": {
+            "q1": "Questa app è aggiornata per il 2025/2026?",
+            "a1": "Sì, i nostri contenuti sono costantemente aggiornati per riflettere l'ultima versione di 'Our Common Bond' e i modelli ufficiali del test.",
+            "q2": "Come funziona il Tutor AI?",
+            "a2": "Il nostro Tutor AI è addestrato sulle risorse ufficiali della cittadinanza australiana per rispondere alle tue domande specifiche 24/7."
+        },
+        "form": {
+            "labelName": "Il Tuo Nome",
+            "labelEmail": "Indirizzo Email",
+            "labelSubject": "Oggetto",
+            "labelMessage": "Messaggio",
+            "placeholderName": "Steve Irwin",
+            "placeholderEmail": "mate@example.com",
+            "placeholderMessage": "Dicci cosa hai in mente...",
+            "placeholderSubject": "Seleziona un argomento...",
+            "subjects": {
+                "general": "Richiesta Generale",
+                "technical": "Supporto Tecnico",
+                "billing": "Domanda di Fatturazione",
+                "refund": "Richiesta di Rimborso",
+                "partnership": "Opportunità di Partnership",
+                "feedback": "Feedback / Suggerimento"
+            },
+            "send": "Invia Messaggio",
+            "sending": "Invio in corso...",
+            "sent": "Messaggio Inviato!",
+            "success": "Grazie per averci contattato. Ti risponderemo entro 24 ore."
+        },
+        "contactInfo": {
+            "title": "Informazioni di Contatto",
+            "email": "Email",
+            "responseTime": "Tempo di Risposta",
+            "responseValue": "Entro 24 ore (Lun-Ven)",
+            "location": "Posizione",
+            "locationValue": "Sydney, Australia 🇦🇺"
+        }
     }
 }

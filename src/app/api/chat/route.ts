@@ -3,9 +3,14 @@ import { NextResponse } from "next/server";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY || "");
 
+interface Message {
+    role: 'user' | 'assistant';
+    content: string;
+}
+
 export async function POST(req: Request) {
     try {
-        const { messages } = await req.json();
+        const { messages } = await req.json() as { messages: Message[] };
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
         const prompt = `
@@ -18,7 +23,7 @@ export async function POST(req: Request) {
         - If asked about citizenship, refer to official "Australian Citizenship: Our Common Bond" material.
         
         Current conversation:
-        ${messages.map((m: any) => `${m.role === 'user' ? 'User' : 'Ollie'}: ${m.content}`).join('\n')}
+        ${messages.map((m: Message) => `${m.role === 'user' ? 'User' : 'Ollie'}: ${m.content}`).join('\n')}
         Ollie:`;
 
         const result = await model.generateContent(prompt);

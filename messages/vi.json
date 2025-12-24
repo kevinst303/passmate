@@ -2,8 +2,8 @@
     "HomePage": {
         "hero": {
             "trusted": "Được tin tưởng bởi hơn 5.000 công dân tương lai",
-            "title": "Người {mate} giúp bạn trở thành công dân Úc.",
-            "mate": "bạn đồng hành",
+            "title": "người <mate>bạn</mate> giúp bạn trở thành công dân Úc.",
+            "mate": "bạn",
             "subtitle": "Tự tin vượt qua kỳ thi Quốc tịch Úc. Học tập theo hình thức trò chơi, gia sư giọng nói AI và sự chuẩn bị cá nhân hóa tạo cảm giác như đang chơi game.",
             "cta1": "Bắt đầu học ngay",
             "cta2": "Xem bài thi mẫu"
@@ -13,11 +13,11 @@
             "subtitle": "Chúng tôi đã biến quá trình chuẩn bị thi khô khan, gây lo lắng thành một hành trình học tập thú vị, mang tính trò chơi.",
             "f1": {
                 "title": "Chuỗi ngày học tập",
-                "desc": "Luôn giữ động lực với chuỗi ngày học tập và không bao giờ bỏ lỡ một ngày học nào."
+                "desc": "Luôn giữ động lực with chuỗi ngày học tập và không bao giờ bỏ lỡ một ngày học nào."
             },
             "f2": {
                 "title": "Giải đấu hàng tuần",
-                "desc": "Cạnh tranh với những người học khác và leo từ hạng Đồng lên Kim cương."
+                "desc": "Cạnh tranh with những người học khác và leo từ hạng Đồng lên Kim cương."
             },
             "f3": {
                 "title": "Giả lập kỳ thi thử",
@@ -27,6 +27,91 @@
                 "title": "Cam kết đạt 80%",
                 "desc": "Chúng tôi tự tin vào phương pháp của mình đến mức cam kết mang lại thành công cho bạn."
             }
+        },
+        "stats": {
+            "trained": "Bạn đồng hành đã được đào tạo",
+            "passRate": "Tỷ lệ vượt qua lần đầu",
+            "questions": "Câu hỏi thực hành",
+            "rating": "Đánh giá của người dùng"
+        },
+        "testimonials": {
+            "title": "Được yêu thích bởi các công dân Úc mới",
+            "subtitle": "Câu chuyện thực từ những người đã trở thành công dân Úc cùng PassMate."
+        },
+        "cta": {
+            "title": "Sẵn sàng trở thành người Úc?",
+            "subtitle": "Tham gia cùng hàng ngàn người dùng thành công đã vượt qua kỳ thi ngay lần đầu cùng PassMate.",
+            "button": "Bắt đầu miễn phí"
+        }
+    },
+    "Navigation": {
+        "home": "Trang chủ",
+        "learn": "Học tập",
+        "ollie": "Ollie",
+        "masterclass": "Lớp học chuyên gia",
+        "leagues": "Giải đấu",
+        "friends": "Bạn bè",
+        "achievements": "Thành tựu",
+        "premium": "Cao cấp",
+        "profile": "Hồ sơ",
+        "settings": "Cài đặt",
+        "more": "Thêm",
+        "moreOptions": "Tùy chọn thêm",
+        "myProfile": "Hồ sơ của tôi",
+        "viewAccount": "Xem tài khoản",
+        "goPremium": "Nâng cấp Cao cấp",
+        "premiumDesc": "Mở khóa quyền truy cập không giới hạn, xóa quảng cáo và nhận gia sư AI!",
+        "upgradeNow": "Nâng cấp ngay",
+        "desc": {
+            "home": "Bảng điều khiển và câu đố",
+            "learn": "Lộ trình học và chủ đề",
+            "ollie": "Trợ lý học tập AI",
+            "masterclass": "Bài học video từ chuyên gia",
+            "leagues": "Bảng xếp hạng và cạnh tranh",
+            "friends": "Kết nối with bạn bè",
+            "achievements": "Huy hiệu và phần thưởng",
+            "premium": "Mở khóa toàn bộ quyền truy cập",
+            "profile": "Tài khoản của bạn",
+            "settings": "Tùy chỉnh ứng dụng"
+        }
+    },
+    "Dashboard": {
+        "welcome": "Chào bạn, {name}!",
+        "pro": "Pro",
+        "proDesc": "Tận hưởng việc học không giới hạn!",
+        "streakDesc": "Duy trì chuỗi ngày của bạn!",
+        "proMateDesc": "Bạn là một người bạn Pro! Hãy tận hưởng hành trình học tập không giới hạn.",
+        "doingGreat": "Bạn đang làm rất tốt! Hoàn thành các nhiệm vụ hôm nay để duy trì chuỗi ngày.",
+        "startPracticing": "Bắt đầu thực hành",
+        "review": "Ôn tập cá nhân hóa",
+        "reviewDesc": "Thực hành những gì bạn đã bỏ lỡ",
+        "talkToOllie": "Nói chuyện với Ollie",
+        "ollieDesc": "Gia sư Quốc tịch AI",
+        "course": "Khóa học Quốc tịch",
+        "topicsMastered": "Đã nắm vững {completed} trên {total} chủ đề",
+        "resumePath": "Tiếp tục lộ trình",
+        "level": "Cấp độ {level}",
+        "rank": {
+            "beginner": "Sơ cấp",
+            "journeyman": "Trung cấp",
+            "expert": "Chuyên gia"
+        },
+        "dailyQuests": "Nhiệm vụ hàng ngày",
+        "resetIn": "Đặt lại sau {time}",
+        "yourRank": "Thứ hạng của bạn",
+        "keepItUp": "Hãy tiếp tục phát huy!",
+        "viewAll": "Xem tất cả",
+        "noPlayers": "Chưa có người chơi nào trong giải đấu này.",
+        "mockTest": "Thi thử đầy đủ",
+        "mockTestDesc": "20 câu hỏi, 45 phút. Phải đạt 75% để vượt qua.",
+        "attemptNow": "Thử ngay",
+        "recentActivity": "Hoạt động gần đây",
+        "live": "Trực tiếp",
+        "scored": "Đạt {score}/{total} trong câu đố",
+        "quietOutback": "Một buổi sáng yên tĩnh tại Outback... Hãy bắt đầu một câu đố để phá vỡ sự im lặng!",
+        "defaultQuests": {
+            "q1": "Hoàn thành 3 bài kiểm tra",
+            "q2": "Điểm tuyệt đối môn Lịch sử"
         }
     },
     "Common": {
@@ -34,6 +119,601 @@
         "dashboard": "Bảng điều khiển",
         "login": "Đăng nhập",
         "getStarted": "Bắt đầu",
-        "footer": "© 2025 PassMate. Không liên kết với Bộ Nội vụ Úc."
+        "footer": "© 2025 PassMate. Không liên kết với Bộ Nội vụ Úc.",
+        "privacy": "Bảo mật",
+        "terms": "Điều khoản",
+        "contact": "Liên hệ",
+        "hearts": "Trái tim",
+        "unlimited": "Không giới hạn",
+        "nextIn": "Tiếp theo sau {time}p",
+        "streak": "Chuỗi",
+        "xp": "XP",
+        "days": "ngày"
+    },
+    "Quiz": {
+        "loading": "Đang thu thập tài liệu học tập...",
+        "error": "Ôi, hỏng rồi!",
+        "ready": "Sẵn sàng cho thử thách?",
+        "battleMode": "Chế độ Đối đầu!",
+        "outOfLives": "Bạn đã hết trái tim rồi, bạn ơi!",
+        "battleDesc": "Bạn đang đối đầu với {opponent}. Hãy cố gắng hết sức!",
+        "studyDesc": "Nắm vững \"{topic}\" để nhận {xp} XP và duy trì chuỗi ngày!",
+        "outOfLivesDesc": "Chờ trái tim hồi phục hoặc nâng cấp lên Cao cấp để chơi không giới hạn!",
+        "nextHeartIn": "Trái tim tiếp theo sau {time}",
+        "heartsRegen": "Trái tim hồi phục sau mỗi 3 giờ.",
+        "start": "Bắt đầu thôi!",
+        "commenceBattle": "BẮT ĐẦU ĐỐI ĐẦU",
+        "restUp": "Nghỉ ngơi",
+        "maybeLater": "Để sau vậy",
+        "victorious": "Chiến thắng!",
+        "draw": "Hòa!",
+        "part1Complete": "Hoàn thành Phần 1!",
+        "defeated": "Thất bại!",
+        "perfect": "HOÀN HẢO!",
+        "score100": "Điểm tuyệt đối 100%",
+        "complete": "Hoàn thành câu đố!",
+        "keepPracticing": "Tiếp tục thực hành!",
+        "waitingOpponent": "Bạn đã hoàn thành lượt chơi. Đang đợi đối thủ của bạn!",
+        "finalScore": "Điểm số cuối cùng: {score} - {opponentScore}",
+        "outOfLivesResult": "Bạn đã hết trái tim. Đừng lo, chúng sẽ sớm hồi phục thôi!",
+        "passedDesc": "Bạn đã trả lời đúng {score} câu hỏi và nhận được {xp} XP.",
+        "failedDesc": "Bạn sắp đạt được rồi! Hãy xem lại câu trả lời và thử lại.",
+        "newBadge": "Đã mở khóa huy hiệu mới!",
+        "saving": "Đang lưu tiến trình...",
+        "backToMates": "Quay lại với bạn bè",
+        "backToDashboard": "Quay lại Bảng điều khiển",
+        "check": "Kiểm tra",
+        "correct": "Chính xác!",
+        "incorrect": "Chưa chính xác",
+        "correctAnswer": "Câu trả lời đúng: {answer}",
+        "finish": "Kết thúc",
+        "continue": "Tiếp tục"
+    },
+    "Auth": {
+        "backHome": "Quay lại trang chủ",
+        "welcomeBack": "Chào mừng quay trở lại!",
+        "joinSquad": "Tham gia đội ngũ!",
+        "journeyContinue": "Hành trình trở thành người Úc của bạn tiếp tục.",
+        "startPath": "Bắt đầu lộ trình công dân của bạn ngay hôm nay.",
+        "login": "Đăng nhập",
+        "signup": "Đăng ký",
+        "email": "Địa chỉ Email",
+        "password": "Mật khẩu",
+        "checkEmail": "Kiểm tra email để nhận liên kết xác nhận!",
+        "letsGo": "Bắt đầu thôi!",
+        "createAccount": "Tạo tài khoản",
+        "agree": "Bằng cách tiếp tục, bạn đồng ý với",
+        "terms": "Điều khoản dịch vụ",
+        "privacy": "Chính sách bảo mật của PassMate"
+    },
+    "Leagues": {
+        "backDashboard": "Quay lại Bảng điều khiển",
+        "competingDesc": "Đang tranh tài để thăng hạng tuần này!",
+        "yourPosition": "Vị trí của bạn",
+        "endsIn": "Kết thúc sau",
+        "status": "Trạng thái",
+        "promotionZone": "VÙNG THĂNG HẠNG",
+        "boostRank": "Tăng thứ hạng!",
+        "boostRankDesc": "Hoàn thành các câu đố và chiến thắng đối đầu để leo lên bảng xếp hạng.",
+        "getMoreXP": "Nhận thêm XP",
+        "topPerformers": "Người dẫn đầu",
+        "weeklyStandings": "Xếp hạng tuần",
+        "noRankings": "Chưa có xếp hạng. Hãy bắt đầu giải câu đố để chiếm ngôi vương!",
+        "resetInfo": "Giải đấu đặt lại vào mỗi Chủ nhật lúc 11:59 CH",
+        "promotion": "Thăng hạng",
+        "relegation": "Xuống hạng",
+        "you": "Bạn"
+    },
+    "SkillTrees": {
+        "backDashboard": "Quay lại Bảng điều khiển",
+        "studyCourse": "Khóa Học",
+        "pathDesc": "Lộ trình trở thành công dân Úc của bạn.",
+        "courseProgress": "Tiến Trình Khóa Học",
+        "topicsCount": "{completed}/{total} Chủ Đề",
+        "topicsMastered": "Đã nắm vững {completed} trên {total} chủ đề",
+        "percentComplete": "{percent}% Hoàn Thành",
+        "mastered": "Đã Nắm Vững",
+        "inProgress": "Đang Thực Hiện",
+        "lessons": "Bài Học",
+        "locked": "Đã Khóa",
+        "review": "Ôn Tập",
+        "continue": "Tiếp Tục",
+        "start": "Bắt Đầu",
+        "reviewTopic": "Ôn Tập Chủ Đề",
+        "startLearning": "Bắt Đầu Học",
+        "mockTestTitle": "Kỳ Thi Thử Chính Thức",
+        "mockTestDesc": "Sẵn sàng chứng minh kiến thức của bạn? Vượt qua bài kiểm tra này để nhận huy hiệu {badge}!",
+        "mockBadge": "\"Bậc Thầy Thi Thử\"",
+        "takeTest": "Làm Bài Kiểm Tra",
+        "proTip": "Mẹo nhỏ: Hoàn thành các chủ đề theo thứ tự để mở khóa nội dung mới và tối đa hóa việc học của bạn!"
+    },
+    "AITutor": {
+        "welcomeMistakes": "Chào bạn! Tôi thấy bạn đã học rất chăm chỉ nhưng gặp phải một số câu hỏi khó gần đây. Bạn có muốn tôi giải thích một vài câu không?",
+        "welcomeDefault": "Chào bạn! Tôi là Ollie, gia sư quốc tịch của bạn. Dù bạn muốn hỏi tôi về lịch sử Úc hay chỉ muốn trò chuyện về cuộc sống nơi đây, tôi luôn sẵn sàng! Bạn đang nghĩ gì thế?",
+        "errorConnecting": "Xin lỗi bạn, tôi đang gặp chút vấn đề khi kết nối mạng. Hãy thử lại trong giây lát nhé!",
+        "activeNow": "Đang hoạt động",
+        "dayStreak": "CHUỖI NGÀY",
+        "chatPlaceholder": "Trò chuyện với Ollie...",
+        "ollieHearing": "Ollie đang nghe đây!",
+        "speakNaturally": "Cứ nói tự nhiên nhé bạn...",
+        "listening": "Đang lắng nghe",
+        "cancel": "Hủy bỏ",
+        "suggestions": {
+            "constitution": "Giải thích \"Hiến pháp\"",
+            "trialTest": "Bài thi thử",
+            "aussieSlang": "Tiếng lóng Úc",
+            "oath": "Lời thề Quốc tịch"
+        }
+    },
+    "Masterclass": {
+        "backDashboard": "Quay lại Bảng điều khiển",
+        "title": "Lớp Học Chuyên Gia Quốc Tịch",
+        "exclusive": "Dành riêng cho những người đạt được Quốc tịch",
+        "yourProgress": "Tiến Trình Của Bạn",
+        "percentComplete": "{percent}% Hoàn Thành",
+        "nextUp": "Tiếp Theo",
+        "courseCompleted": "Khóa Học Đã Hoàn Thành!",
+        "heroDesc": "Khám phá cốt lõi của nền dân chủ Úc và vai trò của bạn trong đó.",
+        "resumeModule": "Tiếp Tục Học Phần",
+        "curriculum": "Chương Trình Giảng Dạy",
+        "video": "Video",
+        "xpReward": "Phần thưởng {xp} XP",
+        "watchAgain": "Xem lại",
+        "startVideo": "Bắt đầu Video",
+        "nowPlaying": "Đang phát",
+        "tip": "Mẹo: Hãy chú ý kỹ đến phần về Hiến pháp Úc, vì đây là nội dung thường xuất hiện trong các câu hỏi thi!",
+        "completeEarn": "Hoàn thành & Nhận {xp} XP",
+        "modules": {
+            "m1": {
+                "title": "Học phần 1: Nền tảng của nước Úc",
+                "desc": "Tìm hiểu sâu về lịch sử sơ khai và con đường dẫn đến Liên bang."
+            },
+            "m2": {
+                "title": "Học phần 2: Hệ thống dân chủ",
+                "desc": "Hiểu ba cấp chính quyền và cách thức bỏ phiếu hoạt động."
+            },
+            "m3": {
+                "title": "Học phần 3: Các giá trị & quyền lợi",
+                "desc": "Ý nghĩa của việc trở thành công dân Úc trong thế giới hiện đại."
+            },
+            "m4": {
+                "title": "Học phần 4: Chuẩn bị thi cuối khóa",
+                "desc": "Chiến lược để vượt qua kỳ thi với 100% sự tự tin."
+            }
+        }
+    },
+    "Achievements": {
+        "backDashboard": "Quay lại Bảng điều khiển",
+        "title": "Thành tựu",
+        "subtitle": "Mở khóa các huy hiệu để thể hiện chuyên môn quốc tịch của bạn!",
+        "yourStats": "Số liệu của bạn",
+        "completionProgress": "Tiến trình hoàn thành",
+        "unlockedCount": "Bạn đã đạt được {unlocked}/{total} huy hiệu",
+        "badges": "Huy hiệu",
+        "rewardXp": "XP thưởng",
+        "collectionTitle": "Bộ sưu tập huy hiệu của bạn",
+        "earned": "Đạt được vào {date}",
+        "secretTitle": "Huy hiệu bí mật",
+        "secretDesc": "Vẫn còn những thành tựu ẩn đang chờ được khám phá. Hãy tiếp tục tìm tòi, tương tác với bạn bè và đạt đến những tầm cao mới để hé lộ chúng!",
+        "mysteryAwaits": "Điều bí ẩn đang chờ đón"
+    },
+    "Review": {
+        "title": "Ôn tập cá nhân hóa",
+        "clearTitle": "Bạn đã nắm vững rồi!",
+        "clearDesc": "Hiện tại không có lỗi nào cần xem lại. Bạn là một bậc thầy về quốc tịch, bạn ơi!",
+        "introDesc": "Ollie đã xác định được {count} câu hỏi hóc búa mà bạn đã làm sai gần đây. Hãy cùng chinh phục chúng nào!",
+        "startReview": "Bắt đầu ôn tập",
+        "maybeLater": "Để sau vậy",
+        "completeTitle": "Hoàn thành ôn tập!",
+        "completeDesc": "Bạn đã vượt qua được {count} câu hỏi hóc búa đó. Trí óc của bạn đang trở nên nhạy bén hơn!",
+        "solved": "Đã giải quyết",
+        "xpEarned": "XP nhận được",
+        "trickyQuestion": "Câu hỏi hóc búa",
+        "wellDone": "Làm tốt lắm!",
+        "notQuite": "Không hẳn, bạn ơi",
+        "check": "Kiểm tra",
+        "next": "Tiếp theo",
+        "finish": "Kết thúc"
+    },
+    "MockTest": {
+        "preparing": "Đang chuẩn bị mô phỏng kỳ thi chính thức...",
+        "title": "Giả lập Kỳ thi Chính thức",
+        "requirements": "Yêu cầu",
+        "passMark": "Phải đạt tối thiểu 75% để vượt qua bài kiểm tra.",
+        "mandatory": "Bắt buộc",
+        "mandatoryDesc": "Phải trả lời đúng tất cả các câu hỏi về niềm tin dân chủ.",
+        "timer": "Đồng hồ",
+        "duration": "Thời gian đầy đủ là 45 phút.",
+        "reward": "Phần thưởng",
+        "rewardDesc": "Nhận tới 500 XP và một chứng chỉ!",
+        "startTest": "Bắt đầu thi chính thức",
+        "backDashboard": "Quay lại Bảng điều khiển",
+        "legend": "Bạn là một huyền thoại!",
+        "almost": "Gần được rồi, bạn ơi!",
+        "passDesc": "Bạn đã vượt qua thành công bài thi thử chính thức. Bạn đã sẵn sàng cho kỳ thi thật rồi đấy!",
+        "mandatoryFailDesc": "Bạn đã làm sai một số câu hỏi bắt buộc về niềm tin dân chủ. Những câu này cực kỳ quan trọng cho kỳ thi!",
+        "failScoreDesc": "Bạn đạt {score}/{total}, thấp hơn một chút so với mức đạt 75%.",
+        "overallScore": "Điểm tổng quát",
+        "mandatoryLabel": "Bắt buộc",
+        "certificateTitle": "Chứng chỉ Quốc tịch",
+        "certificateUnlocked": "Dành riêng cho những người vượt qua kỳ thi!",
+        "view": "Xem",
+        "saving": "Đang lưu kết quả...",
+        "returnHome": "Quay lại trang chủ",
+        "questionCount": "Câu {current}/{total}",
+        "mandatoryBadge": "CÂU HỎI BẬT BUỘC",
+        "rulesTip": "Cứ bình tĩnh nhé. Các quy tắc thi chính thức được áp dụng.",
+        "finishTest": "Kết thúc bài thi",
+        "nextQuestion": "Câu tiếp theo",
+        "checkAnswer": "Kiểm tra đáp án"
+    },
+    "Profile": {
+        "title": "Hồ sơ",
+        "settings": "Cài đặt",
+        "signOut": "Đăng xuất",
+        "level": "Cấp độ {level}",
+        "pro": "PRO",
+        "joined": "Tham gia vào {date}",
+        "dayStreak": "{count} ngày chuỗi",
+        "totalXp": "Tổng {count} XP",
+        "yourStats": "Số liệu của bạn",
+        "currentXp": "XP hiện tại",
+        "streak": "Chuỗi",
+        "quizzes": "Câu đố",
+        "badges": "Huy hiệu",
+        "recentBadges": "Huy hiệu gần đây",
+        "viewCollection": "Xem bộ sưu tập",
+        "startLearning": "Bắt đầu học để khởi động hành trình của bạn!",
+        "legendTitle": "Bạn là huyền thoại PassMate",
+        "goldTitle": "PassMate Gold đang chờ bạn",
+        "legendDesc": "Bạn đang sử dụng tất cả các tính năng cao cấp. Hãy tiếp tục học tập với sự giúp đỡ của Ollie nhé!",
+        "goldDesc": "Mở khóa trái tim không giới hạn, gia sư giọng nói AI và các lớp học chuyên gia độc quyền.",
+        "manageSub": "Quản lý đăng ký",
+        "goPremium": "Nâng cấp Cao cấp"
+    },
+    "Settings": {
+        "title": "Cài đặt Tài khoản",
+        "backProfile": "Quay lại Hồ sơ",
+        "profilePicture": "Ảnh hồ sơ",
+        "personalDetails": "Thông tin cá nhân",
+        "fullName": "Họ và tên",
+        "username": "Tên người dùng",
+        "email": "Email",
+        "saveChanges": "Lưu thay đổi",
+        "saving": "Đang lưu...",
+        "success": "Hồ sơ đã được cập nhật thành công!",
+        "avatars": {
+            "ollie1": "Ollie cổ điển",
+            "ollie2": "Ollie thông thái",
+            "ollie3": "Ollie cực ngầu",
+            "ollie4": "Ollie tiệc tùng",
+            "ollie5": "Ollie thể thao",
+            "ollie6": "Ollie yoga"
+        },
+        "placeholders": {
+            "fullName": "Nhập họ tên của bạn",
+            "username": "@tennguoidung"
+        }
+    },
+    "Security": {
+        "title": "Quyền riêng tư & Bảo mật",
+        "subtitle": "Quản lý dữ liệu tài khoản và phương thức đăng nhập của bạn.",
+        "backProfile": "Quay lại Hồ sơ",
+        "changePassword": "Đổi mật khẩu",
+        "newPassword": "Mật khẩu mới",
+        "confirmPassword": "Xác nhận mật khẩu",
+        "placeholder": "••••••••",
+        "updatePassword": "Cập nhật mật khẩu",
+        "updating": "Đang cập nhật...",
+        "passwordMinLength": "Mật khẩu phải có ít nhất 8 ký tự",
+        "passwordsMismatch": "Mật khẩu không khớp",
+        "success": "Mật khẩu đã được cập nhật thành công!",
+        "twoFactor": {
+            "title": "Xác thực hai yếu tố",
+            "soon": "Sắp ra mắt",
+            "desc": "Thêm một lớp bảo mật bổ sung cho tài khoản của bạn.",
+            "enable": "Bật 2FA"
+        },
+        "recentActivity": {
+            "title": "Hoạt động gần đây",
+            "currentSession": "Phiên hoạt động hiện tại",
+            "loggedIn": "Lần đăng nhập cuối cùng",
+            "ago": "{time} trước",
+            "signOutAll": "Đăng xuất khỏi tất cả thiết bị"
+        },
+        "dataPrivacy": {
+            "title": "Dữ liệu & Quyền riêng tư",
+            "desc": "Quyền riêng tư của bạn là ưu tiên hàng đầu của chúng tôi. Bạn có toàn quyền kiểm soát dữ liệu của mình.",
+            "policy": "Chính sách bảo mật",
+            "terms": "Điều khoản dịch vụ",
+            "downloadTitle": "Tải dữ liệu của bạn",
+            "downloadDesc": "Nhận một bản sao của tất cả dữ liệu cá nhân, tiến trình và hoạt động của bạn.",
+            "requestExport": "Yêu cầu xuất dữ liệu"
+        },
+        "dangerZone": {
+            "title": "Vùng nguy hiểm",
+            "desc": "Một khi bạn xóa tài khoản, sẽ không thể hoàn tác. Vui lòng cẩn trọng.",
+            "delete": "Xóa tài khoản vĩnh viễn"
+        }
+    },
+    "Referral": {
+        "title": "Giới thiệu bạn bè",
+        "backProfile": "Quay lại Hồ sơ",
+        "heroTitle": "Mời bạn bè,\nNhận phần thưởng!",
+        "heroDesc": "Mời bạn bè tham gia PassMate và cùng nhau chuẩn bị cho quốc tịch Úc. Khi họ đăng ký, cả hai đều nhận được những phần thưởng tuyệt vời!",
+        "yourLink": "Liên kết giới thiệu cá nhân của bạn",
+        "copyLink": "Sao chép liên kết",
+        "copied": "Đã sao chép!",
+        "performance": "Hiệu quả giới thiệu của bạn",
+        "topReferrer": "Người giới thiệu hàng đầu",
+        "climbLeaderboard": "Mời thêm nhiều bạn để leo lên bảng xếp hạng!",
+        "quickShare": "Chia sẻ nhanh",
+        "milestonesTitle": "Cột mốc giới thiệu",
+        "friendsCount": "{count} bạn bè",
+        "unlockBadge": "Mở khóa huy hiệu \"{name}\"",
+        "howItWorks": {
+            "title": "Nó hoạt động như thế nào?",
+            "desc": "Khi bạn của bạn đăng ký bằng liên kết của bạn, cả hai đều nhận được XP thưởng. Khi bạn mời được nhiều bạn hơn, bạn sẽ mở khóa được các huy hiệu độc quyền và ưu đãi Cao cấp!"
+        },
+        "stats": {
+            "friends": "Bạn bè đã mời",
+            "xp": "XP thưởng đã nhận",
+            "badges": "Huy hiệu giới thiệu"
+        },
+        "rewards": {
+            "r1": "500 XP thưởng",
+            "r2": "Giảm giá 1 tháng Cao cấp",
+            "r3": "Huy hiệu Mate Gold độc quyền",
+            "b1": "Gấu Koala thân thiện",
+            "b2": "Trưởng nhóm tiệc tùng",
+            "b3": "Trụ cột cộng đồng"
+        },
+        "social": {
+            "meta": "Facebook",
+            "x": "X / Twitter",
+            "whatsapp": "Chia sẻ qua WhatsApp"
+        }
+    },
+    "Premium": {
+        "title": "PassMate Cao cấp",
+        "backDashboard": "Quay lại Bảng điều khiền",
+        "goPremium": "Nâng cấp Cao cấp",
+        "heroTitle": "Cách {italic}nhanh nhất{italic} để trở thành người Úc",
+        "heroSubtitle": "Tham gia cùng hàng ngàn công dân mới đã vượt qua kỳ thi với các tính năng AI độc quyền của chúng tôi.",
+        "plans": {
+            "popular": "Phổ biến nhất",
+            "loading": "Đang xử lý...",
+            "free": {
+                "name": "Miễn phí",
+                "cta": "Gói hiện tại"
+            },
+            "ready": {
+                "name": "Sẵn sàng (Test Ready)",
+                "duration": "/năm",
+                "cta": "Trở thành Test Ready"
+            },
+            "achiever": {
+                "name": "Thành tựu (Achiever)",
+                "duration": "/trọn đời",
+                "cta": "Trở thành Achiever"
+            },
+            "features": {
+                "quests": "Nhiệm vụ hàng ngày & Chuỗi ngày",
+                "bank": "Kho 500+ câu hỏi",
+                "leagues": "Giải đấu hàng tuần",
+                "hearts5": "5 trái tim (có hồi phục)",
+                "unlimitedHearts": "Trái tim không giới hạn",
+                "aiTutor": "Ollie: Gia sư giọng nói AI",
+                "mockExam": "Giả lập kỳ thi đầy đủ",
+                "aiReview": "Ôn tập lỗi sai bằng AI",
+                "adFree": "Trải nghiệm 100% không quảng cáo",
+                "masterclass": "Lớp học chuyên gia độc quyền",
+                "certificate": "Chứng chỉ chuẩn bị chính thức",
+                "updates": "Cập nhật câu hỏi trọn đời",
+                "discord": "Truy cập cộng đồng VIP Discord"
+            }
+        },
+        "comparison": {
+            "title": "So sánh các gói",
+            "subtitle": "Chọn cấp độ phù hợp nhất với phong cách học tập và mục tiêu của bạn.",
+            "feature": "Tính năng",
+            "free": "Miễn phí",
+            "ready": "Test Ready",
+            "achiever": "Achiever",
+            "rows": {
+                "quests": "Nhiệm vụ hàng ngày",
+                "bank": "Kho câu hỏi",
+                "unlimitedHearts": "Trái tim không giới hạn",
+                "aiTutor": "Gia sư giọng nói",
+                "mockExam": "Thi thử",
+                "aiReview": "Ôn tập lỗi sai",
+                "adFree": "Không quảng cáo",
+                "masterclass": "Masterclass",
+                "certificate": "Chứng chỉ",
+                "vip": "Cộng đồng VIP"
+            }
+        },
+        "testimonials": {
+            "title": "Trải nghiệm người dùng",
+            "subtitle": "Lắng nghe từ những người đã vượt qua kỳ thi cùng PassMate Cao cấp.",
+            "t1": {
+                "name": "Priya S.",
+                "city": "Sydney",
+                "text": "Gia sư AI là một bước ngoặt lớn. Trò chuyện với Ollie khiến tôi cảm thấy vô cùng tự tin vào kiến thức của mình."
+            },
+            "t2": {
+                "name": "Mohamed A.",
+                "city": "Melbourne",
+                "text": "Kỳ thi thử hoàn toàn giống với bài thi thật. Tôi biết chính xác những gì cần chuẩn bị khi bước vào trung tâm khảo thí."
+            },
+            "t3": {
+                "name": "Linda W.",
+                "city": "Brisbane",
+                "text": "Các bài Masterclass giải thích mọi thứ rất rõ ràng. Nó hoàn toàn xứng đáng với gói Achiever."
+            }
+        },
+        "faqs": {
+            "title": "Câu hỏi thường gặp",
+            "q1": {
+                "q": "Tôi có thể hủy đăng ký bất cứ lúc nào không?",
+                "a": "Có, bạn có thể hủy đăng ký bất kỳ lúc nào từ cài đặt tài khoản của mình. Bạn vẫn sẽ có quyền truy nhập các tính năng cao cấp cho đến hết chu kỳ thanh toán."
+            },
+            "q2": {
+                "q": "Sự khác biệt giữa gói Test Ready và Achiever là gì?",
+                "a": "Test Ready là gói hàng năm tập trung vào các tính năng cao cấp cốt lõi. Achiever là gói trọn đời bao gồm các đặc quyền độc quyền như video lớp học chuyên gia và chứng chỉ chuẩn bị."
+            },
+            "q3": {
+                "q": "Trái tim không giới hạn hoạt động như thế nào?",
+                "a": "Với gói Cao cấp, bạn sẽ không bị phạt khi trả lời sai. Bạn có thể thực hành bao nhiêu tùy thích mà không bị gián đoạn."
+            },
+            "q4": {
+                "q": "Tôi có thể đổi ý sau khi thanh toán không?",
+                "a": "Chúng tôi cung cấp cam kết hoàn tiền trong 30 ngày. Nếu bạn không hài lòng với trải nghiệm, hãy cho chúng tôi biết và chúng tôi sẽ hoàn tiền đầy đủ cho bạn."
+            }
+        },
+        "trust": {
+            "secure": "Thanh toán an toàn",
+            "secureDesc": "Mã hóa 256-bit an toàn được hỗ trợ bởi Stripe.",
+            "rating": "Đánh giá 4.9/5 sao",
+            "ratingDesc": "Được tin dùng bởi hơn 5.000 công dân Úc thành công.",
+            "refund": "Cam kết hoàn tiền",
+            "refundDesc": "Hoàn tiền trong 30 ngày, không thắc mắc."
+        },
+        "banners": {
+            "cancelled": "Thanh toán đã bị hủy. Bạn có thể thử lại khi sẵn sàng!",
+            "ai_tutor": {
+                "title": "Bạn muốn trò chuyện với Ollie?",
+                "desc": "Chuẩn bị thông minh hơn với gia sư giọng nói AI của chúng tôi. Có sẵn trong gói Test Ready hoặc Achiever."
+            },
+            "masterclass": {
+                "title": "Mở khóa Lớp học chuyên gia",
+                "desc": "Tìm hiểu sâu hơn với khóa học video toàn diện của chúng tôi. Dành riêng cho Thành tựu (Achiever)."
+            },
+            "mock_test": {
+                "title": "Thi thử không giới hạn",
+                "desc": "Thực hành bao nhiêu tùy thích và học hỏi từ những lỗi sai với số trái tim không giới hạn."
+            },
+            "requires": "Yêu cầu {feature}"
+        }
+    },
+    "Billing": {
+        "backProfile": "Quay lại Hồ sơ",
+        "title": "Thanh toán & Đăng ký",
+        "subtitle": "Quản lý gói học, thanh toán và lịch sử hóa đơn của bạn.",
+        "currentPlan": "Gói Hiện Tại",
+        "premiumPlan": "Achiever Cao Cấp",
+        "freePlan": "Người Khám Phá Miễn Phí",
+        "activeAccount": "Tài khoản đang hoạt động",
+        "loading": "Đang tải...",
+        "managePayments": "Quản Lý Thanh Toán",
+        "upgradePremium": "Nâng Cấp Cao Cấp",
+        "yourBenefits": "Quyền lợi của bạn",
+        "nextBilling": "Kỳ thanh toán tới",
+        "lifetimeAccess": "Truy Cập Trọn Đời",
+        "lifetimeDesc": "Bạn đã có tất cả rồi, bạn nhé! Không cần thanh toán thêm.",
+        "na": "N/A",
+        "upgradeUnlock": "Nâng cấp để mở khóa toàn bộ tính năng.",
+        "recentInvoices": "Hóa đơn gần đây",
+        "passmatePremium": "PassMate Cao Cấp",
+        "oneTimePayment": "Thanh toán một lần",
+        "downloadPdf": "Tải xuống PDF",
+        "needMoreHistory": "Cần thêm lịch sử? Hãy sử dụng",
+        "billingPortal": "Cổng Thanh Toán",
+        "noInvoices": "Chưa có hóa đơn nào.",
+        "helpfulLinks": "Liên Kết Hữu Ích",
+        "pricingDetails": "Chi Tiết Giá Cả",
+        "refundPolicy": "Chính Sách Hoàn Tiền",
+        "subscriptionFaq": "Câu hỏi về đăng ký",
+        "contactSupport": "Liên Hệ Hỗ Trợ",
+        "plans": {
+            "free": {
+                "f1": "Các học phân học tập cơ bản",
+                "f2": "Câu hỏi thực hành hàng ngày",
+                "f3": "Hỗ trợ từ cộng đồng",
+                "f4": "Lộ trình học tập tiêu chuẩn"
+            },
+            "premium": {
+                "f1": "Thi thử không giới hạn",
+                "f2": "Truy cập Gia sư AI 24/7",
+                "f3": "Chuỗi bài giảng Chuyên gia",
+                "f4": "Chứng chỉ chính thức",
+                "f5": "Trải nghiệm không quảng cáo"
+            }
+        }
+    },
+    "Support": {
+        "backProfile": "Quay lại Hồ sơ",
+        "title": "Chúng tôi có thể giúp gì cho bạn?",
+        "subtitle": "Tìm kiếm trong trung tâm hỗ trợ hoặc duyệt qua các danh mục bên dưới để tìm thấy điều bạn cần.",
+        "searchPlaceholder": "Tìm kiếm câu trả lời...",
+        "categories": {
+            "study": {
+                "title": "Hướng dẫn học tập",
+                "desc": "Tìm hiểu cách sử dụng ứng dụng hiệu quả."
+            },
+            "account": {
+                "title": "Tài khoản & Thanh toán",
+                "desc": "Quản lý đăng ký và hồ sơ của bạn."
+            },
+            "test": {
+                "title": "Thông tin kỳ thi",
+                "desc": "Chi tiết về kỳ thi Quốc tịch chính thức."
+            },
+            "feedback": {
+                "title": "Gửi phản hồi",
+                "desc": "Giúp chúng tôi cải thiện PassMate tốt hơn nữa."
+            }
+        },
+        "faqsTitle": "Các câu hỏi thường gặp",
+        "viewAllFaqs": "Xem tất cả câu hỏi thường gặp",
+        "stillNeedHelp": "Vẫn cần giúp đỡ?",
+        "supportDesc": "Đội ngũ hỗ trợ thân thiện của chúng tôi thường phản hồi trong vòng 24 giờ. Cùng quay lại việc học nào!",
+        "messageUs": "Gửi tin nhắn cho chúng tôi",
+        "liveChat": "Chat trực tiếp",
+        "monFri": "Thứ 2 - Thứ 6",
+        "support24h": "Hỗ trợ 24 giờ",
+        "resourcesTitle": "Tài nguyên hữu ích",
+        "resources": {
+            "book": "Sách tài nguyên chính thức (PDF)",
+            "videos": "Chuỗi video học tập",
+            "forum": "Diễn đàn cộng đồng",
+            "booking": "Đặt lịch thi của bạn"
+        },
+        "faqs": {
+            "q1": "Ứng dụng này có được cập nhật cho năm 2025/2026 không?",
+            "a1": "Có, nội dung của chúng tôi được cập nhật liên tục để phản ánh phiên bản 'Our Common Bond' mới nhất và cấu trúc bài thi chính thức.",
+            "q2": "Gia sư AI hoạt động như thế nào?",
+            "a2": "Gia sư AI của chúng tôi được đào tạo dựa trên các tài nguyên quốc tịch Úc chính thức để trả lời các câu hỏi cụ thể của bạn 24/7."
+        },
+        "form": {
+            "labelName": "Tên của bạn",
+            "labelEmail": "Địa chỉ Email",
+            "labelSubject": "Chủ đề",
+            "labelMessage": "Tin nhắn",
+            "placeholderName": "Steve Irwin",
+            "placeholderEmail": "mate@example.com",
+            "placeholderMessage": "Hãy cho chúng tôi biết suy nghĩ của bạn...",
+            "placeholderSubject": "Chọn một chủ đề...",
+            "subjects": {
+                "general": "Yêu cầu chung",
+                "technical": "Hỗ trợ kỹ thuật",
+                "billing": "Câu hỏi về thanh toán",
+                "refund": "Yêu cầu hoàn tiền",
+                "partnership": "Cơ hội hợp tác",
+                "feedback": "Phản hồi / Góp ý"
+            },
+            "send": "Gửi tin nhắn",
+            "sending": "Đang gửi...",
+            "sent": "Đã gửi tin nhắn!",
+            "success": "Cảm ơn bạn đã liên hệ. Chúng tôi sẽ trả lời bạn trong vòng 24 giờ."
+        },
+        "contactInfo": {
+            "title": "Thông tin liên hệ",
+            "email": "Email",
+            "responseTime": "Thời gian phản hồi",
+            "responseValue": "Trong vòng 24 giờ (Thứ 2 - Thứ 6)",
+            "location": "Địa điểm",
+            "locationValue": "Sydney, Australia 🇦🇺"
+        }
     }
 }

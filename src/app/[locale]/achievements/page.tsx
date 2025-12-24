@@ -3,15 +3,16 @@ export const dynamic = 'force-dynamic';
 
 import { getAchievementsData } from "@/app/actions/achievements";
 import { getDashboardData } from "@/app/actions/dashboard";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import AchievementsClient from "./AchievementsClient";
 
-export default async function AchievementsPage() {
+export default async function AchievementsPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const dashboardData = await getDashboardData();
     const achievementsData = await getAchievementsData();
 
     if (dashboardData.error === 'Not authenticated') {
-        redirect('/login');
+        redirect({ href: '/login', locale });
     }
 
     if (achievementsData.error) {
@@ -27,8 +28,8 @@ export default async function AchievementsPage() {
 
     return (
         <AchievementsClient
-            achievementsData={achievementsData}
-            profile={dashboardData.profile}
+            achievementsData={achievementsData as any}
+            profile={dashboardData.profile as any}
         />
     );
 }

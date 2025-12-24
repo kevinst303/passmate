@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Send, Mail, MessageSquare, HelpCircle, Loader2, Check, MapPin, Clock } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/Button";
+import { useTranslations } from "next-intl";
 
 export default function ContactPage() {
+    const t = useTranslations("Support");
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -30,16 +32,12 @@ export default function ContactPage() {
 
     const faqs = [
         {
-            q: "How accurate are the practice questions?",
-            a: "Our questions are designed based on the official Australian Citizenship Test resource book. While we don't have access to the actual test questions, our content covers all topics you'll encounter."
+            q: t("faqs.q1"),
+            a: t("faqs.a1")
         },
         {
-            q: "Can I get a refund if I don't pass?",
-            a: "Yes! If you complete our full study curriculum and don't pass the official test within 30 days, we'll refund your premium purchase in full."
-        },
-        {
-            q: "How do I reset my password?",
-            a: "Click 'Forgot Password' on the login page. We'll send a password reset link to your registered email address."
+            q: t("faqs.q2"),
+            a: t("faqs.a2")
         }
     ];
 
@@ -49,8 +47,8 @@ export default function ContactPage() {
 
             <main className="pt-24 pb-20 px-4">
                 <div className="max-w-6xl mx-auto">
-                    <Link href="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8">
-                        <ArrowLeft className="w-4 h-4" /> Back to Home
+                    <Link href="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 font-bold">
+                        <ArrowLeft className="w-4 h-4" /> {t("backProfile")}
                     </Link>
 
                     <motion.div
@@ -61,9 +59,9 @@ export default function ContactPage() {
                             <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
                                 <MessageSquare className="w-10 h-10 text-primary" />
                             </div>
-                            <h1 className="text-5xl font-display font-black mb-4">Get in Touch</h1>
-                            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                                Have a question or feedback? We'd love to hear from you, mate!
+                            <h1 className="text-5xl font-display font-black mb-4">{t("messageUs")}</h1>
+                            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-bold">
+                                {t("subtitle")}
                             </p>
                         </div>
 
@@ -79,44 +77,44 @@ export default function ContactPage() {
                                         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                                             <Check className="w-10 h-10 text-green-600" />
                                         </div>
-                                        <h3 className="text-2xl font-display font-black mb-3">Message Sent!</h3>
+                                        <h3 className="text-2xl font-display font-black mb-3">{t("form.sent")}</h3>
                                         <p className="text-muted-foreground font-bold">
-                                            Thanks for reaching out. We'll get back to you within 24 hours.
+                                            {t("form.success")}
                                         </p>
                                     </motion.div>
                                 ) : (
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div>
                                             <label className="block text-sm font-black text-muted-foreground uppercase tracking-wider mb-2">
-                                                Your Name
+                                                {t("form.labelName")}
                                             </label>
                                             <input
                                                 type="text"
                                                 required
                                                 value={formData.name}
                                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                placeholder="Steve Irwin"
+                                                placeholder={t("form.placeholderName")}
                                                 className="w-full bg-muted/50 border-2 border-border rounded-2xl py-4 px-5 focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all font-bold outline-none"
                                             />
                                         </div>
 
                                         <div>
                                             <label className="block text-sm font-black text-muted-foreground uppercase tracking-wider mb-2">
-                                                Email Address
+                                                {t("form.labelEmail")}
                                             </label>
                                             <input
                                                 type="email"
                                                 required
                                                 value={formData.email}
                                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                placeholder="mate@example.com"
+                                                placeholder={t("form.placeholderEmail")}
                                                 className="w-full bg-muted/50 border-2 border-border rounded-2xl py-4 px-5 focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all font-bold outline-none"
                                             />
                                         </div>
 
                                         <div>
                                             <label className="block text-sm font-black text-muted-foreground uppercase tracking-wider mb-2">
-                                                Subject
+                                                {t("form.labelSubject")}
                                             </label>
                                             <select
                                                 required
@@ -124,26 +122,26 @@ export default function ContactPage() {
                                                 onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                                                 className="w-full bg-muted/50 border-2 border-border rounded-2xl py-4 px-5 focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all font-bold outline-none appearance-none"
                                             >
-                                                <option value="">Select a topic...</option>
-                                                <option value="general">General Inquiry</option>
-                                                <option value="technical">Technical Support</option>
-                                                <option value="billing">Billing Question</option>
-                                                <option value="refund">Refund Request</option>
-                                                <option value="partnership">Partnership Opportunity</option>
-                                                <option value="feedback">Feedback / Suggestion</option>
+                                                <option value="">{t("form.placeholderSubject")}</option>
+                                                <option value="general">{t("form.subjects.general")}</option>
+                                                <option value="technical">{t("form.subjects.technical")}</option>
+                                                <option value="billing">{t("form.subjects.billing")}</option>
+                                                <option value="refund">{t("form.subjects.refund")}</option>
+                                                <option value="partnership">{t("form.subjects.partnership")}</option>
+                                                <option value="feedback">{t("form.subjects.feedback")}</option>
                                             </select>
                                         </div>
 
                                         <div>
                                             <label className="block text-sm font-black text-muted-foreground uppercase tracking-wider mb-2">
-                                                Message
+                                                {t("form.labelMessage")}
                                             </label>
                                             <textarea
                                                 required
                                                 rows={5}
                                                 value={formData.message}
                                                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                                placeholder="Tell us what's on your mind..."
+                                                placeholder={t("form.placeholderMessage")}
                                                 className="w-full bg-muted/50 border-2 border-border rounded-2xl py-4 px-5 focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all font-bold outline-none resize-none"
                                             />
                                         </div>
@@ -155,9 +153,9 @@ export default function ContactPage() {
                                             disabled={isSubmitting}
                                         >
                                             {isSubmitting ? (
-                                                <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Sending...</>
+                                                <><Loader2 className="w-5 h-5 animate-spin mr-2" /> {t("form.sending")}</>
                                             ) : (
-                                                <><Send className="w-5 h-5 mr-2" /> Send Message</>
+                                                <><Send className="w-5 h-5 mr-2" /> {t("form.send")}</>
                                             )}
                                         </Button>
                                     </form>
@@ -169,7 +167,7 @@ export default function ContactPage() {
                                 {/* Contact Info */}
                                 <div className="bg-white rounded-[2.5rem] border-2 border-border p-8">
                                     <h3 className="text-xl font-display font-black mb-6 flex items-center gap-2">
-                                        <Mail className="w-5 h-5 text-primary" /> Contact Information
+                                        <Mail className="w-5 h-5 text-primary" /> {t("contactInfo.title")}
                                     </h3>
                                     <div className="space-y-4">
                                         <div className="flex items-start gap-4">
@@ -177,7 +175,7 @@ export default function ContactPage() {
                                                 <Mail className="w-5 h-5 text-muted-foreground" />
                                             </div>
                                             <div>
-                                                <p className="font-bold">Email</p>
+                                                <p className="font-bold">{t("contactInfo.email")}</p>
                                                 <a href="mailto:support@passmate.com.au" className="text-primary hover:underline">
                                                     support@passmate.com.au
                                                 </a>
@@ -188,8 +186,8 @@ export default function ContactPage() {
                                                 <Clock className="w-5 h-5 text-muted-foreground" />
                                             </div>
                                             <div>
-                                                <p className="font-bold">Response Time</p>
-                                                <p className="text-muted-foreground">Within 24 hours (Mon-Fri)</p>
+                                                <p className="font-bold">{t("contactInfo.responseTime")}</p>
+                                                <p className="text-muted-foreground">{t("contactInfo.responseValue")}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-start gap-4">
@@ -197,8 +195,8 @@ export default function ContactPage() {
                                                 <MapPin className="w-5 h-5 text-muted-foreground" />
                                             </div>
                                             <div>
-                                                <p className="font-bold">Location</p>
-                                                <p className="text-muted-foreground">Sydney, Australia 🇦🇺</p>
+                                                <p className="font-bold">{t("contactInfo.location")}</p>
+                                                <p className="text-muted-foreground">{t("contactInfo.locationValue")}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +205,7 @@ export default function ContactPage() {
                                 {/* FAQ */}
                                 <div className="bg-white rounded-[2.5rem] border-2 border-border p-8">
                                     <h3 className="text-xl font-display font-black mb-6 flex items-center gap-2">
-                                        <HelpCircle className="w-5 h-5 text-primary" /> Frequently Asked Questions
+                                        <HelpCircle className="w-5 h-5 text-primary" /> {t("faqsTitle")}
                                     </h3>
                                     <div className="space-y-6">
                                         {faqs.map((faq, i) => (
@@ -230,8 +228,8 @@ export default function ContactPage() {
                         <span className="text-xl">🐨</span>
                         <span className="text-xl font-display font-bold text-primary">PassMate</span>
                     </div>
-                    <p className="text-muted-foreground text-sm">
-                        © 2025 PassMate. Not affiliated with the Australian Department of Home Affairs.
+                    <p className="text-muted-foreground text-sm font-bold">
+                        {useTranslations("Common")("footer")}
                     </p>
                 </div>
             </footer>

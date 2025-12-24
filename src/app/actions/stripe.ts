@@ -3,10 +3,8 @@
 import Stripe from "stripe";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
-
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2024-12-18.acacia" as any,
+    apiVersion: "2024-12-18.acacia" as Stripe.StripeConfig["apiVersion"],
 });
 
 export async function createCheckoutSession(tier: 'test_ready' | 'citizenship_achiever') {
@@ -19,16 +17,9 @@ export async function createCheckoutSession(tier: 'test_ready' | 'citizenship_ac
 
     const origin = (await headers()).get("origin");
 
-    const priceId = tier === 'test_ready'
-        ? "price_1QU0UjH15nIshCpRE9xY8jF5" // Placeholder, should ideally be from env or dynamically fetched
-        : "price_1QU0V7H15nIshCpRhYqXUqX2"; // Placeholder
-
     // Custom pricing based on the prompt's UI
     // Test Ready: $9.99
     // Citizenship Achiever: $24.99
-
-    // In a real app, you'd fetch these from Stripe or config
-    // For now, I'll use the tier to determine the amount if I were creating a session with line items
 
     try {
         const session = await stripe.checkout.sessions.create({
@@ -55,13 +46,13 @@ export async function createCheckoutSession(tier: 'test_ready' | 'citizenship_ac
                 userId: user.id,
                 tier: tier,
             },
-            customer_email: user.email,
+            customer_email: user.email ?? undefined,
         });
 
         return { url: session.url };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Stripe error:", error);
-        return { error: error.message };
+        return { error: error instanceof Error ? error.message : "An unknown error occurred" };
     }
 }
 
@@ -94,8 +85,8 @@ export async function createPortalSession() {
         });
 
         return { url: session.url };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Stripe Portal error:", error);
-        return { error: error.message };
+        return { error: error instanceof Error ? error.message : "An unknown error occurred" };
     }
 }

@@ -28,14 +28,32 @@ export async function getGlobalActivity() {
         return [];
     }
 
-    return attempts.map((a: any) => ({
-        id: a.id,
-        user: a.profiles?.username || 'Citizen Mate',
-        avatar: a.profiles?.avatar_url,
-        isPremium: a.profiles?.is_premium,
-        score: a.score,
-        total: a.total_questions,
-        xp: a.xp_earned,
-        time: a.completed_at
-    }));
+    interface ActivityAttempt {
+        id: string;
+        score: number;
+        total_questions: number;
+        xp_earned: number;
+        completed_at: string;
+        profiles: {
+            username: string | null;
+            avatar_url: string | null;
+            is_premium: boolean;
+        } | null;
+    }
+
+    const activityData = attempts as unknown as ActivityAttempt[];
+
+    return (activityData || []).map((a: ActivityAttempt) => {
+        const profile = Array.isArray(a.profiles) ? a.profiles[0] : a.profiles;
+        return {
+            id: a.id,
+            user: profile?.username || 'Citizen Mate',
+            avatar: profile?.avatar_url,
+            isPremium: profile?.is_premium,
+            score: a.score,
+            total: a.total_questions,
+            xp: a.xp_earned,
+            time: a.completed_at
+        };
+    });
 }

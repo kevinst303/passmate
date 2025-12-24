@@ -15,11 +15,13 @@ export async function getDashboardData() {
     }
 
     // 1. Fetch Profile
-    let { data: profile, error: profileError } = await supabase
+    const { data: profileResult, error: profileError } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', user.id)
         .single();
+
+    let profile = profileResult;
 
     if (profileError && profileError.code === 'PGRST116') {
         // Profile doesn't exist, create it
@@ -59,7 +61,7 @@ export async function getDashboardData() {
     }
 
     // 2. Fetch Quests
-    const { data: userQuests, error: questsError } = await supabase
+    const { data: userQuests } = await supabase
         .from('user_quests')
         .select('*, quests(*)')
         .eq('user_id', user.id)
@@ -149,7 +151,16 @@ export async function getDashboardData() {
     await seedQuestions();
 
     // 5. Fetch Top Players in the same league
-    let topPlayers: any[] = [];
+    interface Player {
+        user_id: string;
+        weekly_xp: number;
+        profiles: {
+            username: string | null;
+            avatar_url: string | null;
+        } | null;
+    }
+
+    let topPlayers: Player[] = [];
     if (finalStanding) {
         const { data: players } = await supabase
             .from('league_standings')
@@ -158,11 +169,17 @@ export async function getDashboardData() {
             .order('weekly_xp', { ascending: false })
             .limit(10);
 
-        topPlayers = players || [];
+        if (players) {
+            topPlayers = (players as any[]).map(p => ({
+                user_id: p.user_id,
+                weekly_xp: p.weekly_xp,
+                profiles: Array.isArray(p.profiles) ? p.profiles[0] : p.profiles
+            }));
+        }
 
         // If leaderboard is thin, add some synthetic competitors
         if (topPlayers.length < 6) {
-            const mocks = [
+            const mocks: Player[] = [
                 { user_id: 'mock1', weekly_xp: 450, profiles: { username: 'DingoDave', avatar_url: 'https://api.dicebear.com/7.x/bottts/svg?seed=dave' } },
                 { user_id: 'mock2', weekly_xp: 320, profiles: { username: 'SheilaSunshine', avatar_url: 'https://api.dicebear.com/7.x/bottts/svg?seed=sheila' } },
                 { user_id: 'mock3', weekly_xp: 280, profiles: { username: 'JoeyJumper', avatar_url: 'https://api.dicebear.com/7.x/bottts/svg?seed=joe' } },

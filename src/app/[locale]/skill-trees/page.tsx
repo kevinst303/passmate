@@ -2,14 +2,15 @@ export const dynamic = 'force-dynamic';
 
 import { getDashboardData } from "@/app/actions/dashboard";
 import { getSkillTreeData } from "@/app/actions/skills";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import SkillTreesClient from "./SkillTreesClient";
 
-export default async function SkillTreesPage() {
+export default async function SkillTreesPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const data = await getDashboardData();
 
     if (data.error === 'Not authenticated') {
-        redirect('/login');
+        redirect({ href: '/login', locale });
     }
 
     const skillTreeData = await getSkillTreeData();
@@ -25,7 +26,7 @@ export default async function SkillTreesPage() {
         );
     }
 
-    return <SkillTreesClient data={data} skillTreeData={skillTreeData} />;
+    return <SkillTreesClient data={data as any} skillTreeData={skillTreeData as any} />;
 }
 
 

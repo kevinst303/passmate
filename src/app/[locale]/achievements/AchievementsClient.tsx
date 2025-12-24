@@ -12,8 +12,9 @@ import {
     Award
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface AchievementsClientProps {
     achievementsData: any;
@@ -21,6 +22,7 @@ interface AchievementsClientProps {
 }
 
 export default function AchievementsClient({ achievementsData, profile }: AchievementsClientProps) {
+    const t = useTranslations("Achievements");
     const { achievements, stats } = achievementsData;
 
     return (
@@ -32,22 +34,22 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                         <div className="bg-white p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
                             <ArrowLeft className="w-5 h-5" />
                         </div>
-                        <span>Back to Dashboard</span>
+                        <span>{t("backDashboard")}</span>
                     </Link>
                     <div className="flex items-center gap-4">
                         <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl flex items-center justify-center text-white shadow-lg shadow-orange-200">
                             <Trophy className="w-8 h-8 fill-white" />
                         </div>
                         <div>
-                            <h1 className="text-4xl font-display font-black text-foreground tracking-tight">Achievements</h1>
-                            <p className="text-muted-foreground font-bold italic">Unlock badges to show off your citizenship expertise!</p>
+                            <h1 className="text-4xl font-display font-black text-foreground tracking-tight">{t("title")}</h1>
+                            <p className="text-muted-foreground font-bold italic">{t("subtitle")}</p>
                         </div>
                     </div>
                 </div>
 
                 <div className="flex items-center gap-3">
                     <div className="flex flex-col items-end">
-                        <span className="text-[10px] font-black uppercase text-muted-foreground tracking-widest mb-1">Your Stats</span>
+                        <span className="text-[10px] font-black uppercase text-muted-foreground tracking-widest mb-1">{t("yourStats")}</span>
                         <div className="flex items-center gap-3">
                             <div className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-4 py-2 rounded-2xl border-2 border-orange-100 font-black text-sm">
                                 <Flame className="w-4 h-4 fill-orange-600" /> {profile.daily_streak}
@@ -68,8 +70,8 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                         <div className="flex-1 w-full">
                             <div className="flex items-center justify-between mb-4">
                                 <div>
-                                    <h3 className="text-xl font-display font-black text-foreground">Completion Progress</h3>
-                                    <p className="text-sm text-muted-foreground font-bold">You've earned {stats.unlocked} out of {stats.total} total badges</p>
+                                    <h3 className="text-xl font-display font-black text-foreground">{t("completionProgress")}</h3>
+                                    <p className="text-sm text-muted-foreground font-bold">{t("unlockedCount", { unlocked: stats.unlocked, total: stats.total })}</p>
                                 </div>
                                 <div className="text-right">
                                     <span className="text-4xl font-display font-black text-primary">{stats.progress}%</span>
@@ -88,12 +90,12 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                             <div className="bg-muted/30 p-4 rounded-3xl border border-border text-center">
                                 <Award className="w-6 h-6 mx-auto mb-2 text-primary" />
                                 <p className="text-2xl font-display font-black">{stats.unlocked}</p>
-                                <p className="text-[10px] uppercase font-black text-muted-foreground">Badges</p>
+                                <p className="text-[10px] uppercase font-black text-muted-foreground">{t("badges")}</p>
                             </div>
                             <div className="bg-muted/30 p-4 rounded-3xl border border-border text-center">
                                 <Star className="w-6 h-6 mx-auto mb-2 text-yellow-500 fill-yellow-500" />
                                 <p className="text-2xl font-display font-black">{achievements.reduce((acc: number, a: any) => acc + (a.is_unlocked ? a.xp_reward : 0), 0)}</p>
-                                <p className="text-[10px] uppercase font-black text-muted-foreground">Reward XP</p>
+                                <p className="text-[10px] uppercase font-black text-muted-foreground">{t("rewardXp")}</p>
                             </div>
                         </div>
                     </div>
@@ -103,7 +105,7 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                 <div>
                     <div className="flex items-center gap-2 mb-8">
                         <div className="h-1 w-8 bg-primary rounded-full" />
-                        <h2 className="text-2xl font-display font-black tracking-tight">Your Badge Collection</h2>
+                        <h2 className="text-2xl font-display font-black tracking-tight">{t("collectionTitle")}</h2>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -155,7 +157,7 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
 
                                 {achievement.unlocked_at && (
                                     <p className="text-[10px] font-black text-muted-foreground/50 uppercase mt-auto">
-                                        Earned {new Date(achievement.unlocked_at).toLocaleDateString()}
+                                        {t("earned", { date: new Date(achievement.unlocked_at).toLocaleDateString() })}
                                     </p>
                                 )}
                             </motion.div>
@@ -169,14 +171,14 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                     <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
                         <div className="text-6xl group-hover:rotate-12 transition-transform">🤫</div>
                         <div className="text-center md:text-left">
-                            <h2 className="text-3xl font-display font-black mb-2">Secret Badges</h2>
+                            <h2 className="text-3xl font-display font-black mb-2">{t("secretTitle")}</h2>
                             <p className="text-white/60 font-bold max-w-lg">
-                                There are hidden achievements waiting to be discovered. Keep exploring, interact with friends, and reach new heights to uncover them!
+                                {t("secretDesc")}
                             </p>
                         </div>
                         <div className="ml-auto">
                             <div className="bg-white/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/20 font-black text-sm uppercase tracking-widest">
-                                Mystery Awaits
+                                {t("mysteryAwaits")}
                             </div>
                         </div>
                     </div>

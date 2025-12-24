@@ -67,14 +67,9 @@ export async function getSkillTreeData() {
         const userProgress = progressList?.find(p => p.topic_name === meta.title);
 
         // Default logic if no DB entry exists
-        let status = userProgress?.status || meta.defaultStatus;
-        let progress = userProgress?.progress_percentage || 0;
-        let completed = status === 'completed';
-
-        // Auto-unlock first topic if no data
-        if (index === 0 && !userProgress) {
-            status = 'in-progress';
-        }
+        const status = (index === 0 && !userProgress) ? 'in-progress' : (userProgress?.status || meta.defaultStatus);
+        const progress = userProgress?.progress_percentage || 0;
+        const completed = status === 'completed';
 
         return {
             ...meta,

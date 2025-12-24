@@ -1,15 +1,16 @@
 import { createClient } from "@/utils/supabase/server";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+import { redirect, Link } from "@/i18n/routing";
 import { Award, Star, Shield, Calendar, Download, Share2, Printer } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
 
-export default async function CertificatePage({ params }: { params: { id: string } }) {
+export default async function CertificatePage({ params }: { params: Promise<{ id: string; locale: string }> }) {
+    const { id, locale } = await params;
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-        redirect("/login");
+        redirect({ href: "/login", locale });
     }
 
     const { data: attempt } = await supabase
@@ -23,10 +24,10 @@ export default async function CertificatePage({ params }: { params: { id: string
                 premium_tier
             )
         `)
-        .eq("id", params.id)
+        .eq("id", id)
         .single();
 
-    if (!attempt || attempt.user_id !== user.id) {
+    if (!attempt || attempt.user_id !== user!.id) {
         notFound();
     }
 
@@ -35,7 +36,7 @@ export default async function CertificatePage({ params }: { params: { id: string
     const hasPassed = attempt.score >= (attempt.total_questions * 0.75);
 
     if (!hasPassed) {
-        redirect("/dashboard?error=not_passed");
+        redirect({ href: "/dashboard?error=not_passed", locale });
     }
 
     const completedDate = new Date(attempt.completed_at).toLocaleDateString('en-AU', {
@@ -132,7 +133,7 @@ export default async function CertificatePage({ params }: { params: { id: string
                 <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-32 h-32 bg-yellow-400 rounded-full border-8 border-white shadow-2xl flex flex-col items-center justify-center opacity-90 rotate-12 scale-110">
                     < Shield className="w-8 h-8 text-yellow-900 mb-1" />
                     <span className="text-[10px] font-black text-yellow-900 uppercase">Verified</span>
-                    <span className="text-[8px] font-black text-yellow-900/70 tracking-tighter">ID: {params.id.slice(0, 8).toUpperCase()}</span>
+                    <span className="text-[8px] font-black text-yellow-900/70 tracking-tighter">ID: {id.slice(0, 8).toUpperCase()}</span>
                 </div>
             </div>
 

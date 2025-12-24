@@ -1,40 +1,52 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     ArrowLeft,
     Save,
     User,
-    Mail,
-    Shield,
     Check,
     Loader2,
-    Sparkles,
-    Camera
+    Camera,
+    Shield
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { updateProfile } from "@/app/actions/profile";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
-interface SettingsClientProps {
-    profile: any;
-    user: any;
+interface Profile {
+    full_name: string | null;
+    username: string | null;
+    avatar_url: string | null;
 }
 
-const AVATAR_OPTIONS = [
-    { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie1", label: "Classic Ollie" },
-    { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie2", label: "Cool Ollie" },
-    { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie3", label: "Study Ollie" },
-    { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie4", label: "King Ollie" },
-    { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie5", label: "Aussie Ollie" },
-    { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie6", label: "Smarty Ollie" },
-];
+interface UserData {
+    email?: string | null;
+}
+
+interface SettingsClientProps {
+    profile: Profile;
+    user: UserData;
+}
 
 export default function SettingsClient({ profile, user }: SettingsClientProps) {
+    const t = useTranslations("Settings");
+
+    const AVATAR_OPTIONS = [
+        { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie1", label: t("avatars.ollie1") },
+        { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie2", label: t("avatars.ollie2") },
+        { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie3", label: t("avatars.ollie3") },
+        { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie4", label: t("avatars.ollie4") },
+        { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie5", label: t("avatars.ollie5") },
+        { url: "https://api.dicebear.com/7.x/bottts/svg?seed=ollie6", label: t("avatars.ollie6") },
+    ];
+
     const [fullName, setFullName] = useState(profile.full_name || "");
     const [username, setUsername] = useState(profile.username || "");
     const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url || "");
@@ -55,7 +67,7 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
         if (result.error) {
             setStatus({ type: 'error', message: result.error });
         } else {
-            setStatus({ type: 'success', message: "Profile updated successfully, mate!" });
+            setStatus({ type: 'success', message: t("success") });
             router.refresh();
         }
         setIsSaving(false);
@@ -64,7 +76,6 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
         if (!result.error) {
             setTimeout(() => setStatus(null), 3000);
         }
-        setIsSaving(false);
     };
 
     return (
@@ -74,9 +85,9 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
                     <div className="bg-white p-2 rounded-xl border-2 border-border group-hover:border-primary/30 transition-all">
                         <ArrowLeft className="w-4 h-4" />
                     </div>
-                    <span>Back to Profile</span>
+                    <span>{t("backProfile")}</span>
                 </Link>
-                <h1 className="text-xl font-display font-black text-foreground">Account Settings</h1>
+                <h1 className="text-xl font-display font-black text-foreground">{t("title")}</h1>
                 <div className="w-24" /> {/* Spacer */}
             </header>
 
@@ -84,12 +95,19 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
                 {/* Profile Picture Section */}
                 <section className="bg-white p-8 rounded-[3.5rem] border-2 border-border shadow-xl">
                     <h3 className="text-xl font-display font-black mb-8 flex items-center gap-2">
-                        <Camera className="w-5 h-5 text-primary" /> Profile Picture
+                        <Camera className="w-5 h-5 text-primary" /> {t("profilePicture")}
                     </h3>
 
                     <div className="flex flex-col md:flex-row items-center gap-10">
-                        <div className="w-32 h-32 bg-primary/10 rounded-[2.5rem] border-[6px] border-white shadow-2xl flex items-center justify-center text-5xl overflow-hidden shrink-0">
-                            {avatarUrl ? <img src={avatarUrl} className="w-full h-full object-cover" /> : "🐨"}
+                        <div className="w-32 h-32 bg-primary/10 rounded-[2.5rem] border-[6px] border-white shadow-2xl flex items-center justify-center text-5xl overflow-hidden shrink-0 relative">
+                            {avatarUrl ? (
+                                <Image
+                                    src={avatarUrl}
+                                    alt="Profile Avatar"
+                                    fill
+                                    className="object-cover"
+                                />
+                            ) : "🐨"}
                         </div>
 
                         <div className="grid grid-cols-3 sm:grid-cols-6 gap-4 w-full">
@@ -98,11 +116,16 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
                                     key={opt.url}
                                     onClick={() => setAvatarUrl(opt.url)}
                                     className={cn(
-                                        "w-full aspect-square rounded-2xl border-4 transition-all overflow-hidden bg-muted/30 group",
+                                        "w-full aspect-square rounded-2xl border-4 transition-all overflow-hidden bg-muted/30 group relative",
                                         avatarUrl === opt.url ? "border-primary scale-105 shadow-lg" : "border-transparent hover:border-primary/30"
                                     )}
                                 >
-                                    <img src={opt.url} alt={opt.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                                    <Image
+                                        src={opt.url}
+                                        alt={opt.label}
+                                        fill
+                                        className="object-cover group-hover:scale-110 transition-transform"
+                                    />
                                 </button>
                             ))}
                         </div>
@@ -112,34 +135,34 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
                 {/* Account Details */}
                 <section className="bg-white p-8 rounded-[3.5rem] border-2 border-border shadow-xl space-y-8">
                     <h3 className="text-xl font-display font-black flex items-center gap-2">
-                        <User className="w-5 h-5 text-primary" /> Personal Details
+                        <User className="w-5 h-5 text-primary" /> {t("personalDetails")}
                     </h3>
 
                     <div className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-xs font-black text-muted-foreground uppercase tracking-wider ml-2">Full Name</label>
+                            <label className="text-xs font-black text-muted-foreground uppercase tracking-wider ml-2">{t("fullName")}</label>
                             <input
                                 type="text"
                                 value={fullName}
                                 onChange={(e) => setFullName(e.target.value)}
-                                placeholder="e.g. Steve Irwin"
+                                placeholder={t("placeholders.fullName")}
                                 className="w-full bg-muted/30 border-2 border-border rounded-2xl py-4 px-6 focus:ring-4 focus:ring-primary/10 transition-all font-bold outline-none border-transparent hover:border-border/50"
                             />
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-black text-muted-foreground uppercase tracking-wider ml-2">Username</label>
+                            <label className="text-xs font-black text-muted-foreground uppercase tracking-wider ml-2">{t("username")}</label>
                             <input
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                placeholder="citizen_mate"
+                                placeholder={t("placeholders.username")}
                                 className="w-full bg-muted/30 border-2 border-border rounded-2xl py-4 px-6 focus:ring-4 focus:ring-primary/10 transition-all font-bold outline-none border-transparent hover:border-border/50"
                             />
                         </div>
 
                         <div className="space-y-2 opacity-60 grayscale cursor-not-allowed">
-                            <label className="text-xs font-black text-muted-foreground uppercase tracking-wider ml-2">Email (Cannot be changed)</label>
+                            <label className="text-xs font-black text-muted-foreground uppercase tracking-wider ml-2">{t("email")}</label>
                             <div className="w-full bg-muted border-2 border-border rounded-2xl py-4 px-6 flex items-center justify-between font-bold">
                                 {user.email}
                                 <Shield className="w-4 h-4" />
@@ -172,7 +195,7 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
                     disabled={isSaving}
                 >
                     {isSaving ? <Loader2 className="w-6 h-6 animate-spin" /> : <Save className="w-6 h-6" />}
-                    Save Changes
+                    {isSaving ? t("saving") : t("saveChanges")}
                 </Button>
             </main>
 

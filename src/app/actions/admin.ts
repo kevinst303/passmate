@@ -117,7 +117,34 @@ export async function getAllQuestions(topic?: string) {
     return { success: true, data };
 }
 
-export async function upsertQuestion(question: any) {
+interface Question {
+    id?: string;
+    topic: string;
+    question_text: string;
+    options: string[];
+    correct_index: number;
+    explanation?: string;
+    difficulty?: string;
+}
+
+interface Achievement {
+    id?: string;
+    name: string;
+    description: string;
+    badge_url: string;
+    xp_reward: number;
+}
+
+interface Quest {
+    id?: string;
+    title: string;
+    description: string;
+    xp_reward: number;
+    type: string;
+    requirement: number;
+}
+
+export async function upsertQuestion(question: Question) {
     const supabase = await createClient();
     const { data, error } = await supabase
         .from("questions")
@@ -151,7 +178,7 @@ export async function getAllAchievements() {
     return { success: true, data };
 }
 
-export async function upsertAchievement(achievement: any) {
+export async function upsertAchievement(achievement: Achievement) {
     const supabase = await createClient();
     const { data, error } = await supabase
         .from("achievements")
@@ -174,7 +201,7 @@ export async function deleteAchievement(achievementId: string) {
     return { success: true };
 }
 
-export async function upsertQuest(quest: any) {
+export async function upsertQuest(quest: Quest) {
     const supabase = await createClient();
     const { data, error } = await supabase
         .from("quests")
@@ -211,7 +238,7 @@ export async function getSystemConfig() {
     return { success: true, data };
 }
 
-export async function updateSystemConfig(config: { key: string; value: any; description?: string }) {
+export async function updateSystemConfig(config: { key: string; value: unknown; description?: string }) {
     const supabase = await createClient();
     const { data, error } = await supabase
         .from("system_config")

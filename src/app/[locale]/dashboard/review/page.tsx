@@ -1,13 +1,14 @@
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import ReviewClient from "./ReviewClient";
 
-export default async function ReviewPage() {
+export default async function ReviewPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-        redirect("/login");
+        redirect({ href: '/login', locale });
     }
 
     const { data: mistakes } = await supabase
@@ -18,9 +19,14 @@ export default async function ReviewPage() {
             incorrect_attempts,
             questions (*)
         `)
-        .eq("user_id", user.id)
+        .eq("user_id", user!.id)
         .eq("is_resolved", false)
         .order("last_mistake_at", { ascending: false });
 
-    return <ReviewClient mistakes={mistakes || []} />;
+    const formattedMistakes = mistakes?.map((m: any) => ({
+        ...m,
+        questions: Array.isArray(m.questions) ? m.questions[0] : m.questions
+    })) || [];
+
+    return <ReviewClient mistakes={formattedMistakes as any} />;
 }

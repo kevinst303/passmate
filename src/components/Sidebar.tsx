@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { Link, usePathname } from "@/i18n/routing";
+import { useState, useEffect, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Trophy,
@@ -18,96 +18,100 @@ import {
     X,
     Settings,
     Award,
-    HelpCircle,
-    LogOut,
     GraduationCap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Main navigation items (shown on mobile bottom bar - keep to 4)
-const mainNavItems = [
-    {
-        href: "/dashboard",
-        icon: LayoutDashboard,
-        label: "Home",
-        description: "Dashboard & quizzes"
-    },
-    {
-        href: "/skill-trees",
-        icon: BookOpen,
-        label: "Learn",
-        description: "Study path & topics"
-    },
-    {
-        href: "/ai-tutor",
-        icon: MessageCircle,
-        label: "Ollie",
-        description: "AI study assistant"
-    },
-];
-
-// Additional navigation items (shown in "more" menu on mobile)
-const moreNavItems = [
-    {
-        href: "/masterclass",
-        icon: GraduationCap,
-        label: "Masterclass",
-        description: "Expert video lessons"
-    },
-    {
-        href: "/leagues",
-        icon: Trophy,
-        label: "Leagues",
-        description: "Rankings & competitions"
-    },
-    {
-        href: "/friends",
-        icon: Users,
-        label: "Friends",
-        description: "Connect with mates"
-    },
-    {
-        href: "/achievements",
-        icon: Award,
-        label: "Achievements",
-        description: "Badges & rewards"
-    },
-    {
-        href: "/premium",
-        icon: Sparkles,
-        iconClass: "text-yellow-500 fill-yellow-500",
-        label: "Premium",
-        description: "Unlock full access"
-    },
-    {
-        href: "/profile",
-        icon: Shield,
-        label: "Profile",
-        description: "Your account"
-    },
-    {
-        href: "/settings",
-        icon: Settings,
-        label: "Settings",
-        description: "App preferences"
-    },
-];
-
-// All items for desktop sidebar
-const allNavItems = [
-    ...mainNavItems,
-    ...moreNavItems.slice(0, 5), // Include Masterclass, Leagues, Friends, Achievements, Premium
-];
+interface NavItem {
+    href: string;
+    icon: React.ElementType;
+    label: string;
+    description: string;
+    iconClass?: string;
+}
 
 export const Sidebar = () => {
     const pathname = usePathname();
+    const t = useTranslations("Navigation");
     const [isExpanded, setIsExpanded] = useState(false);
     const [showMoreMenu, setShowMoreMenu] = useState(false);
 
-    // Close more menu when route changes
-    useEffect(() => {
-        setShowMoreMenu(false);
-    }, [pathname]);
+    // Navigation items with translations
+    const { mainNavItems, moreNavItems, allNavItems } = useMemo(() => {
+        const main: NavItem[] = [
+            {
+                href: "/dashboard",
+                icon: LayoutDashboard,
+                label: t("home"),
+                description: t("desc.home")
+            },
+            {
+                href: "/skill-trees",
+                icon: BookOpen,
+                label: t("learn"),
+                description: t("desc.learn")
+            },
+            {
+                href: "/ai-tutor",
+                icon: MessageCircle,
+                label: t("ollie"),
+                description: t("desc.ollie")
+            },
+        ];
+
+        const more: NavItem[] = [
+            {
+                href: "/masterclass",
+                icon: GraduationCap,
+                label: t("masterclass"),
+                description: t("desc.masterclass")
+            },
+            {
+                href: "/leagues",
+                icon: Trophy,
+                label: t("leagues"),
+                description: t("desc.leagues")
+            },
+            {
+                href: "/friends",
+                icon: Users,
+                label: t("friends"),
+                description: t("desc.friends")
+            },
+            {
+                href: "/achievements",
+                icon: Award,
+                label: t("achievements"),
+                description: t("desc.achievements")
+            },
+            {
+                href: "/premium",
+                icon: Sparkles,
+                iconClass: "text-yellow-500 fill-yellow-500",
+                label: t("premium"),
+                description: t("desc.premium")
+            },
+            {
+                href: "/profile",
+                icon: Shield,
+                label: t("profile"),
+                description: t("desc.profile")
+            },
+            {
+                href: "/settings",
+                icon: Settings,
+                label: t("settings"),
+                description: t("desc.settings")
+            },
+        ];
+
+        const all: NavItem[] = [
+            ...main,
+            ...more.slice(0, 5),
+        ];
+
+        return { mainNavItems: main, moreNavItems: more, allNavItems: all };
+    }, [t]);
 
     // Close more menu when clicking outside
     useEffect(() => {
@@ -188,7 +192,7 @@ export const Sidebar = () => {
                                     <item.icon
                                         className={cn(
                                             "w-6 h-6 flex-shrink-0 transition-transform group-hover:scale-110",
-                                            (item as any).iconClass
+                                            item.iconClass
                                         )}
                                         aria-hidden="true"
                                     />
@@ -240,8 +244,8 @@ export const Sidebar = () => {
                                     transition={{ duration: 0.15 }}
                                     className="flex flex-col min-w-0"
                                 >
-                                    <span className="font-bold text-sm">My Profile</span>
-                                    <span className="text-xs text-muted-foreground">View account</span>
+                                    <span className="font-bold text-sm">{t("myProfile")}</span>
+                                    <span className="text-xs text-muted-foreground">{t("viewAccount")}</span>
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -294,7 +298,7 @@ export const Sidebar = () => {
                                     <item.icon
                                         className={cn(
                                             "w-6 h-6",
-                                            (item as any).iconClass
+                                            item.iconClass
                                         )}
                                         aria-hidden="true"
                                     />
@@ -326,7 +330,7 @@ export const Sidebar = () => {
                             <MoreHorizontal className="w-6 h-6" />
                         </div>
                         <span className="text-[10px] font-bold uppercase tracking-tight">
-                            More
+                            {t("more")}
                         </span>
                     </button>
                 </div>
@@ -360,7 +364,7 @@ export const Sidebar = () => {
 
                             {/* Header */}
                             <div className="flex items-center justify-between px-6 py-3 border-b border-border">
-                                <h2 className="text-lg font-display font-bold">More Options</h2>
+                                <h2 className="text-lg font-display font-bold">{t("moreOptions")}</h2>
                                 <button
                                     onClick={() => setShowMoreMenu(false)}
                                     className="p-2 rounded-xl hover:bg-muted/50 transition-colors"
@@ -395,7 +399,7 @@ export const Sidebar = () => {
                                                     className={cn(
                                                         "w-6 h-6",
                                                         isActive ? "text-primary" : "text-muted-foreground",
-                                                        (item as any).iconClass
+                                                        item.iconClass
                                                     )}
                                                 />
                                             </div>
@@ -416,17 +420,17 @@ export const Sidebar = () => {
                                 <div className="bg-gradient-to-r from-primary/10 to-yellow-100/50 p-4 rounded-2xl border border-primary/20">
                                     <div className="flex items-center gap-3 mb-3">
                                         <Sparkles className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                                        <span className="font-display font-bold text-primary">Go Premium</span>
+                                        <span className="font-display font-bold text-primary">{t("goPremium")}</span>
                                     </div>
                                     <p className="text-sm text-muted-foreground mb-3">
-                                        Unlock unlimited access, remove ads, and get AI tutoring!
+                                        {t("premiumDesc")}
                                     </p>
                                     <Link
                                         href="/premium"
                                         onClick={() => setShowMoreMenu(false)}
                                         className="block w-full text-center py-3 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-colors"
                                     >
-                                        Upgrade Now
+                                        {t("upgradeNow")}
                                     </Link>
                                 </div>
                             </div>

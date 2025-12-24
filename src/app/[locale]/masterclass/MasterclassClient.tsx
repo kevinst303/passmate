@@ -16,11 +16,13 @@ import {
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { flagMasterclassComplete } from "@/app/actions/masterclass";
+import { useTranslations } from "next-intl";
 
 export default function MasterclassClient({ profile, initialCompleted = [] }: { profile: any, initialCompleted?: string[] }) {
+    const t = useTranslations("Masterclass");
     const [activeVideo, setActiveVideo] = useState<any>(null);
     const [isCompleting, setIsCompleting] = useState(false);
     const [completedModules, setCompletedModules] = useState<string[]>(initialCompleted);
@@ -28,34 +30,34 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
     const modules = [
         {
             id: "m1",
-            title: "Module 1: Australia's Foundation",
+            title: t("modules.m1.title"),
             length: "15:20",
             status: completedModules.includes("m1") ? "completed" : "unlocked",
-            description: "A deep dive into the early history and the path to Federation."
+            description: t("modules.m1.desc")
         },
         {
             id: "m2",
-            title: "Module 2: The Democratic System",
+            title: t("modules.m2.title"),
             length: "22:45",
             status: completedModules.includes("m2") ? "completed" :
                 completedModules.includes("m1") ? "unlocked" : "locked",
-            description: "Understanding the three levels of government and how voting works."
+            description: t("modules.m2.desc")
         },
         {
             id: "m3",
-            title: "Module 3: Values & Rights",
+            title: t("modules.m3.title"),
             length: "18:10",
             status: completedModules.includes("m3") ? "completed" :
                 completedModules.includes("m2") ? "unlocked" : "locked",
-            description: "What it means to be an Australian citizen in the modern world."
+            description: t("modules.m3.desc")
         },
         {
             id: "m4",
-            title: "Module 4: Final Test Preparation",
+            title: t("modules.m4.title"),
             length: "30:00",
             status: completedModules.includes("m4") ? "completed" :
                 completedModules.includes("m3") ? "unlocked" : "locked",
-            description: "Strategies for passing the exam with 100% confidence."
+            description: t("modules.m4.desc")
         }
     ];
 
@@ -80,6 +82,9 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
         }
     };
 
+    const nextModule = modules.find(m => m.status === 'unlocked');
+    const progress = Math.round((completedModules.length / modules.length) * 100);
+
     return (
         <div className="min-h-screen bg-[#FDFCFB] pb-24 md:pb-8 md:pl-28 md:pr-8">
             <header className="max-w-5xl mx-auto pt-8 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -88,16 +93,16 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
                         <div className="bg-white p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
                             <ArrowLeft className="w-4 h-4" />
                         </div>
-                        <span>Back to Dashboard</span>
+                        <span>{t("backDashboard")}</span>
                     </Link>
                     <div className="flex items-center gap-4">
                         <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl shadow-yellow-200">
                             <Trophy className="w-10 h-10 fill-white" />
                         </div>
                         <div>
-                            <h1 className="text-4xl font-display font-black text-foreground tracking-tight">Citizenship Masterclass</h1>
+                            <h1 className="text-4xl font-display font-black text-foreground tracking-tight">{t("title")}</h1>
                             <p className="text-yellow-600 font-bold italic flex items-center gap-2">
-                                <Sparkles className="w-4 h-4" /> Exclusive for Citizenship Achievers
+                                <Sparkles className="w-4 h-4" /> {t("exclusive")}
                             </p>
                         </div>
                     </div>
@@ -106,8 +111,8 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
                 <div className="bg-white p-4 rounded-3xl border-2 border-yellow-200 shadow-sm flex items-center gap-4">
                     <div className="w-12 h-12 bg-yellow-100 rounded-2xl flex items-center justify-center text-xl">🎓</div>
                     <div>
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1">Your Progress</p>
-                        <p className="font-display font-black text-yellow-700">{Math.round((completedModules.length / modules.length) * 100)}% Complete</p>
+                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1">{t("yourProgress")}</p>
+                        <p className="font-display font-black text-yellow-700">{t("percentComplete", { percent: progress })}</p>
                     </div>
                 </div>
             </header>
@@ -123,24 +128,24 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute bottom-12 left-12 right-12 flex flex-col md:flex-row items-end justify-between gap-6">
                         <div className="space-y-2">
-                            <div className="inline-flex bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter mb-2">Next Up</div>
-                            <h2 className="text-white text-4xl font-display font-black">{modules.find(m => m.status === 'unlocked')?.title || "Course Completed!"}</h2>
-                            <p className="text-white/70 font-bold max-w-lg italic">Explore the core of Australian democracy and your role in it.</p>
+                            <div className="inline-flex bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter mb-2">{t("nextUp")}</div>
+                            <h2 className="text-white text-4xl font-display font-black">{nextModule?.title || t("courseCompleted")}</h2>
+                            <p className="text-white/70 font-bold max-w-lg italic">{t("heroDesc")}</p>
                         </div>
                         <Button
                             size="lg"
                             className="h-20 px-10 rounded-[2.5rem] bg-yellow-400 text-yellow-900 hover:bg-yellow-300 font-black text-xl shadow-2xl hover:scale-105 transition-all flex gap-3"
-                            onClick={() => handleWatch(modules.find(m => m.status === 'unlocked'))}
-                            disabled={!modules.find(m => m.status === 'unlocked')}
+                            onClick={() => handleWatch(nextModule)}
+                            disabled={!nextModule}
                         >
-                            <PlayCircle className="w-8 h-8" /> Resume Module
+                            <PlayCircle className="w-8 h-8" /> {t("resumeModule")}
                         </Button>
                     </div>
                 </section>
 
                 {/* Modules Grid */}
                 <section className="space-y-6">
-                    <h3 className="text-2xl font-display font-black px-4">Curriculum</h3>
+                    <h3 className="text-2xl font-display font-black px-4">{t("curriculum")}</h3>
                     <div className="grid grid-cols-1 gap-4">
                         {modules.map((module, i) => (
                             <div
@@ -164,8 +169,8 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
                                     <h4 className="text-xl font-display font-black text-foreground mb-1">{module.title}</h4>
                                     <p className="text-muted-foreground font-bold text-sm mb-2">{module.description}</p>
                                     <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-black text-muted-foreground/60 uppercase tracking-widest">
-                                        <span className="flex items-center gap-1"><BookOpen className="w-3 h-3" /> {module.length} Video</span>
-                                        <span className="flex items-center gap-1"><Star className="w-3 h-3" /> 500 XP Reward</span>
+                                        <span className="flex items-center gap-1"><BookOpen className="w-3 h-3" /> {module.length} {t("video")}</span>
+                                        <span className="flex items-center gap-1"><Star className="w-3 h-3" /> {t("xpReward", { xp: 500 })}</span>
                                     </div>
                                 </div>
                                 {module.status !== 'locked' && (
@@ -174,7 +179,7 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
                                         className="h-14 px-8 rounded-2xl font-black border-2 border-border group-hover:border-yellow-400 group-hover:text-yellow-700 transition-all font-display"
                                         onClick={() => handleWatch(module)}
                                     >
-                                        {module.status === 'completed' ? "Watch Again" : "Start Video"}
+                                        {module.status === 'completed' ? t("watchAgain") : t("startVideo")}
                                     </Button>
                                 )}
                             </div>
@@ -211,7 +216,7 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
                                 </motion.div>
                                 <div className="text-center">
                                     <h2 className="text-white text-3xl font-display font-black mb-2">{activeVideo.title}</h2>
-                                    <p className="text-white/50 font-bold uppercase tracking-widest text-sm">Now Playing • {activeVideo.length}</p>
+                                    <p className="text-white/50 font-bold uppercase tracking-widest text-sm">{t("nowPlaying")} • {activeVideo.length}</p>
                                 </div>
                             </div>
 
@@ -230,7 +235,7 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
 
                         <div className="mt-12 flex flex-col items-center gap-4">
                             <p className="text-white/60 font-medium max-w-lg text-center">
-                                Tip: Pay close attention to the section about the Australian Constitution, as it's a common area for test questions!
+                                {t("tip")}
                             </p>
                             <Button
                                 size="lg"
@@ -239,7 +244,7 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
                                 disabled={isCompleting}
                             >
                                 {isCompleting ? <Loader2 className="w-6 h-6 animate-spin" /> : <CheckCircle2 className="w-6 h-6" />}
-                                Complete & Earn 500 XP
+                                {t("completeEarn", { xp: 500 })}
                             </Button>
                         </div>
                     </motion.div>

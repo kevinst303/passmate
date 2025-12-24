@@ -181,7 +181,12 @@ export async function generateDailyQuests(userId: string) {
     }
 }
 
-export async function updateQuestProgress(userId: string, type: string, increment: number = 1, metadata?: any) {
+interface QuestMetadata {
+    topic?: string;
+    score?: number;
+}
+
+export async function updateQuestProgress(userId: string, type: string, increment: number = 1, metadata?: QuestMetadata) {
     const supabase = await createClient();
 
     // Find active quests for this user of this type

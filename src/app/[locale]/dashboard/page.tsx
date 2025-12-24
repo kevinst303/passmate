@@ -2,14 +2,14 @@ export const dynamic = 'force-dynamic';
 
 import { getDashboardData } from "@/app/actions/dashboard";
 import DashboardClient from "./DashboardClient";
-import { redirect } from "next/navigation";
-import { Link } from "@/i18n/routing";
+import { redirect, Link } from "@/i18n/routing";
 
-export default async function DashboardPage() {
+export default async function DashboardPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const data = await getDashboardData();
 
     if (data.error === 'Not authenticated') {
-        redirect('/login');
+        redirect({ href: '/login', locale });
     }
 
     if (data.error) {
@@ -29,5 +29,5 @@ export default async function DashboardPage() {
         );
     }
 
-    return <DashboardClient data={data} />;
+    return <DashboardClient data={data as any} />;
 }

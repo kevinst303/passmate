@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Home, ArrowLeft, Sparkles } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 // Floating particle component
 const FloatingParticle = ({ delay, duration, x, y, size }: { delay: number; duration: number; x: number; y: number; size: number }) => (

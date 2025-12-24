@@ -2,15 +2,16 @@ export const dynamic = 'force-dynamic';
 
 import { getDashboardData } from "@/app/actions/dashboard";
 import { getAchievementsData } from "@/app/actions/achievements";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import ProfileClient from "./ProfileClient";
 
-export default async function ProfilePage() {
+export default async function ProfilePage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const data = await getDashboardData();
     const achievementsData = await getAchievementsData();
 
     if (data.error === 'Not authenticated') {
-        redirect('/login');
+        redirect({ href: '/login', locale });
     }
 
     if (data.error) {
@@ -24,7 +25,7 @@ export default async function ProfilePage() {
         );
     }
 
-    return <ProfileClient data={data} achievementsData={achievementsData} />;
+    return <ProfileClient data={data as any} achievementsData={achievementsData as any} />;
 }
 
 

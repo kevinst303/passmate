@@ -1,14 +1,15 @@
 export const dynamic = 'force-dynamic';
 
 import { getDashboardData } from "@/app/actions/dashboard";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import LeaguesClient from "./LeaguesClient";
 
-export default async function LeaguesPage() {
+export default async function LeaguesPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const data = await getDashboardData();
 
     if (data.error === 'Not authenticated') {
-        redirect('/login');
+        redirect({ href: '/login', locale });
     }
 
     if (data.error) {
@@ -22,6 +23,6 @@ export default async function LeaguesPage() {
         );
     }
 
-    return <LeaguesClient data={data} />;
+    return <LeaguesClient data={data as any} />;
 }
 

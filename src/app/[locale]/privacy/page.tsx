@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowLeft, Shield, Eye, Lock, Database, Clock, Users, Globe } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Navbar } from "@/components/Navbar";
 
 export default function PrivacyPage() {

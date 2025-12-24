@@ -11,7 +11,6 @@ import {
     MessageCircle,
     ArrowLeft,
     Mail,
-    MoreVertical,
     Check,
     X,
     Loader2,
@@ -20,22 +19,75 @@ import {
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { sendFriendRequest, acceptFriendRequest, rejectFriendRequest, removeFriend, searchUsers } from "@/app/actions/friends";
 import { createChallenge } from "@/app/actions/challenges";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { useEffect } from "react";
+import Image from "next/image";
+
+interface FriendProfile {
+    id: string;
+    username: string;
+    full_name: string | null;
+    avatar_url: string | null;
+    is_premium: boolean;
+    level: number;
+    daily_streak: number;
+    total_xp: number;
+    status: 'online' | 'offline';
+    friendship_id: string;
+}
+
+interface User {
+    id: string;
+    username: string;
+    avatar_url: string | null;
+    is_premium: boolean;
+    level: number;
+}
+
+interface Challenge {
+    id: string;
+    challenger_id: string;
+    challenged_id: string;
+    challenger_score: number | null;
+    challenged_score: number | null;
+    challenger_played: boolean;
+    challenged_played: boolean;
+    winner_id: string | null;
+    challenger?: { username: string; avatar_url: string | null };
+    challenged?: { username: string; avatar_url: string | null };
+}
+
+interface FriendRequest {
+    id: string;
+    user: {
+        username: string;
+        avatar_url: string | null;
+    };
+}
 
 interface FriendsClientProps {
-    initialData: any;
-    profile: any;
+    initialData: {
+        friends: FriendProfile[];
+        pendingReceived: Challenge[];
+        pendingSent: Challenge[];
+        completed: Challenge[];
+        pendingRequests: FriendRequest[];
+    };
+    profile: {
+        daily_streak: number;
+        total_xp: number;
+        id: string;
+    };
 }
 
 export default function FriendsClient({ initialData, profile }: FriendsClientProps) {
-    const { friends, pendingRequests, pendingReceived = [], pendingSent = [], completed = [] } = initialData;
+    const { friends, pendingRequests = [], pendingReceived = [], pendingSent = [], completed = [] } = initialData;
     const [searchQuery, setSearchQuery] = useState("");
-    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [searchResults, setSearchResults] = useState<User[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [isActionLoading, setIsActionLoading] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -165,8 +217,15 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                 {searchResults.map((user) => (
                                     <div key={user.id} className="p-3 hover:bg-muted/50 flex items-center justify-between border-b border-muted last:border-0">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-xl">
-                                                {user.avatar_url ? <img src={user.avatar_url} className="w-full h-full object-cover rounded-xl" /> : "👤"}
+                                            <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-xl overflow-hidden relative">
+                                                {user.avatar_url ? (
+                                                    <Image
+                                                        src={user.avatar_url}
+                                                        alt=""
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                ) : "👤"}
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-1.5">
@@ -223,11 +282,18 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                             <Zap className="w-5 h-5 text-orange-500 fill-orange-500" /> Pending Battles
                         </h3>
                         <div className="grid gap-4">
-                            {pendingReceived.map((challenge: any) => (
+                            {pendingReceived.map((challenge) => (
                                 <div key={challenge.id} className="bg-orange-50 p-5 rounded-[2.5rem] border-2 border-orange-200 flex items-center justify-between shadow-sm">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm">
-                                            {challenge.challenger?.avatar_url ? <img src={challenge.challenger.avatar_url} className="w-full h-full object-cover rounded-2xl" /> : "⚔️"}
+                                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm overflow-hidden relative">
+                                            {challenge.challenger?.avatar_url ? (
+                                                <Image
+                                                    src={challenge.challenger.avatar_url}
+                                                    alt=""
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            ) : "⚔️"}
                                         </div>
                                         <div>
                                             <p className="font-black text-lg">{challenge.challenger?.username}</p>
@@ -256,11 +322,18 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                             <Loader2 className="w-5 h-5" /> Waiting for Mates
                         </h3>
                         <div className="grid gap-4 opacity-75">
-                            {pendingSent.map((challenge: any) => (
+                            {pendingSent.map((challenge) => (
                                 <div key={challenge.id} className="bg-white p-5 rounded-[2.5rem] border-2 border-border flex items-center justify-between shadow-sm">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-muted rounded-2xl flex items-center justify-center text-2xl grayscale">
-                                            {challenge.challenged?.avatar_url ? <img src={challenge.challenged.avatar_url} className="w-full h-full object-cover rounded-2xl" /> : "👤"}
+                                        <div className="w-12 h-12 bg-muted rounded-2xl flex items-center justify-center text-2xl grayscale overflow-hidden relative">
+                                            {challenge.challenged?.avatar_url ? (
+                                                <Image
+                                                    src={challenge.challenged.avatar_url}
+                                                    alt=""
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            ) : "👤"}
                                         </div>
                                         <div>
                                             <p className="font-black text-lg">{challenge.challenged?.username}</p>
@@ -292,7 +365,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                             <Trophy className="w-5 h-5 text-yellow-500 fill-yellow-500" /> Recent Results
                         </h3>
                         <div className="grid gap-4">
-                            {completed.map((battle: any) => {
+                            {completed.map((battle) => {
                                 const isWinner = battle.winner_id === profile.id;
                                 const isDraw = battle.winner_id === null;
                                 const opponent = battle.challenger_id === profile.id ? battle.challenged : battle.challenger;
@@ -334,11 +407,18 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                             <Mail className="w-5 h-5 text-blue-500 fill-blue-500" /> Friend Requests
                         </h3>
                         <div className="grid gap-4">
-                            {pendingRequests.map((req: any) => (
+                            {pendingRequests.map((req) => (
                                 <div key={req.id} className="bg-white p-5 rounded-[2.5rem] border-2 border-border flex items-center justify-between shadow-sm">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl">
-                                            {req.user?.avatar_url ? <img src={req.user.avatar_url} className="w-full h-full object-cover rounded-2xl" /> : "👤"}
+                                        <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl overflow-hidden relative">
+                                            {req.user?.avatar_url ? (
+                                                <Image
+                                                    src={req.user.avatar_url}
+                                                    alt=""
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            ) : "👤"}
                                         </div>
                                         <div>
                                             <p className="font-black text-lg">{req.user?.username}</p>
@@ -382,15 +462,22 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                     </div>
 
                     <div className="grid gap-4">
-                        {friends.map((friend: any) => (
+                        {friends.map((friend) => (
                             <motion.div
                                 key={friend.id}
                                 whileHover={{ y: -2 }}
                                 className="bg-white p-6 rounded-[2.5rem] border-2 border-border shadow-sm flex items-center gap-4 group hover:border-primary/30 transition-all"
                             >
                                 <div className="relative">
-                                    <div className="w-16 h-16 bg-muted rounded-[1.5rem] flex items-center justify-center text-4xl shadow-inner group-hover:bg-primary/5 transition-colors overflow-hidden">
-                                        {friend.avatar_url ? <img src={friend.avatar_url} className="w-full h-full object-cover" /> : "👤"}
+                                    <div className="w-16 h-16 bg-muted rounded-[1.5rem] flex items-center justify-center text-4xl shadow-inner group-hover:bg-primary/5 transition-colors overflow-hidden relative">
+                                        {friend.avatar_url ? (
+                                            <Image
+                                                src={friend.avatar_url}
+                                                alt=""
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        ) : "👤"}
                                     </div>
                                     <div className={cn(
                                         "absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white",

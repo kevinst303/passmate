@@ -132,7 +132,17 @@ export async function updateChallengeScore(challengeId: string, score: number) {
 
     if (!isChallenger && !isChallenged) return { error: 'Not your challenge' };
 
-    const updateData: any = {};
+    interface ChallengeUpdate {
+        challenger_score?: number;
+        challenger_played?: boolean;
+        challenged_score?: number;
+        challenged_played?: boolean;
+        status?: 'pending' | 'accepted' | 'completed';
+        completed_at?: string;
+        winner_id?: string | null;
+    }
+
+    const updateData: ChallengeUpdate = {};
     if (isChallenger) {
         updateData.challenger_score = score;
         updateData.challenger_played = true;

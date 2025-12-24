@@ -15,12 +15,14 @@ export async function getMasterclassProgress() {
         .eq('user_id', user.id)
         .eq('reason', 'masterclass_module');
 
-    // Extract module names from metadata if we stored them, 
-    // or just return unique mod names from this session state for now.
-    // In a real app we'd have a masterclass_progress table.
-    // For now we'll simulate based on XP logs or return a placeholder if not found.
+    interface MasterclassLog {
+        metadata?: {
+            moduleId?: string;
+        } | null;
+    }
+
     return {
-        modules: data?.map((log: any) => log.metadata?.moduleId).filter(Boolean) || []
+        modules: (data as MasterclassLog[] | null)?.map((log) => log.metadata?.moduleId).filter((id): id is string => !!id) || []
     };
 }
 

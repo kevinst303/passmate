@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, Shield, FileText, Mail, Clock } from "lucide-react";
-import Link from "next/link";
+import { ArrowLeft, FileText, Clock } from "lucide-react";
+import { Link } from "@/i18n/routing";
 import { Navbar } from "@/components/Navbar";
 
 export default function TermsPage() {

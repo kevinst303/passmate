@@ -16,7 +16,8 @@ import {
     Award
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/utils/supabase/client";
@@ -24,11 +25,15 @@ import { updateUserProgress } from "@/app/actions/progress";
 import { getQuestions, logQuizMistake } from "@/app/actions/quiz";
 import { updateChallengeScore } from "@/app/actions/challenges";
 import { updateTopicProgress } from "@/app/actions/skills";
+import { useTranslations } from "next-intl";
 
 
 import { Suspense } from 'react';
 
 function QuizContent() {
+    const t = useTranslations("Quiz");
+    const common = useTranslations("Common");
+
     const [currentStep, setCurrentStep] = useState(0); // 0: Start, 1: Quiz, 2: Results
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -91,20 +96,20 @@ function QuizContent() {
                 // Fetch questions
                 const fetchedQuestions = await getQuestions(topic, 5);
                 if (fetchedQuestions.length === 0) {
-                    setError("No questions found for this topic. Try another one!");
+                    setError(t("errorNoQuestions"));
                 } else {
                     setQuestions(fetchedQuestions);
                 }
             } catch (err) {
                 console.error("Load error:", err);
-                setError("Failed to load quiz data.");
+                setError(t("errorLoad"));
             } finally {
                 setIsLoading(false);
             }
         };
 
         loadData();
-    }, [topic, challengeId, isBattle]);
+    }, [topic, challengeId, isBattle, t, router, supabase.auth]);
 
     const currentQuestion = questions[currentQuestionIndex];
 
@@ -154,10 +159,6 @@ function QuizContent() {
 
             // Update Topic Progress
             if (!isBattle && topic) {
-                // Calculate percentage based on score or just mark as complete if passed?
-                // Logic: If score >= 80% (4/5), mark as 100% complete for this topic (or increment mastery)
-                // For now, let's say passing a quiz (3/5 or 60%) gives some progress, but let's just use score percentage for now
-                // Or better: If score >= 4, mark as 100 (completed).
                 const percentage = Math.round((score / questions.length) * 100);
                 await updateTopicProgress(topic, percentage);
             }
@@ -190,7 +191,7 @@ function QuizContent() {
         return (
             <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
                 <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4" />
-                <p className="text-muted-foreground font-bold italic">Gathering study materials...</p>
+                <p className="text-muted-foreground font-bold italic">{t("loading")}</p>
             </div>
         );
     }
@@ -199,9 +200,9 @@ function QuizContent() {
         return (
             <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
                 <div className="text-6xl mb-4">🐨</div>
-                <h1 className="text-3xl font-display font-black mb-4">Ah, crumbs!</h1>
+                <h1 className="text-3xl font-display font-black mb-4">{t("error")}</h1>
                 <p className="text-muted-foreground text-lg mb-8 max-w-sm">{error}</p>
-                <Button size="lg" onClick={() => router.back()}>Go Back</Button>
+                <Button size="lg" onClick={() => router.back()}>{t("back") || "Go Back"}</Button>
             </div>
         );
     }
@@ -218,14 +219,14 @@ function QuizContent() {
                 >
                     <div className="text-8xl mb-6">{isBattle ? "⚔️" : canStart ? "🐨" : "🩹"}</div>
                     <h1 className="text-4xl font-display font-black mb-4">
-                        {isBattle ? "Battle Mode!" : canStart ? "Ready for a challenge?" : "You're out of lives!"}
+                        {isBattle ? t("battleMode") : canStart ? t("ready") : t("outOfLives")}
                     </h1>
                     <p className="text-muted-foreground text-lg mb-8">
                         {isBattle
-                            ? `You're fighting ${challengeData?.challenger_id === user?.id ? challengeData?.challenged?.username : challengeData?.challenger?.username}. Give it your best!`
+                            ? t("battleDesc", { opponent: challengeData?.challenger_id === user?.id ? challengeData?.challenged?.username : challengeData?.challenger?.username })
                             : canStart
-                                ? `Master "${topic || 'Australian Citizenship'}" to earn ${questions.length * 20} XP and keep your streak alive!`
-                                : "Wait for your hearts to regenerate or upgrade to Premium for unlimited lives!"
+                                ? t("studyDesc", { topic: topic || 'Australian Citizenship', xp: questions.length * 20 })
+                                : t("outOfLivesDesc")
                         }
                     </p>
 
@@ -233,8 +234,8 @@ function QuizContent() {
                         <div className="bg-red-50 p-6 rounded-[2rem] border-2 border-red-100 mb-8 flex items-center gap-4 text-left">
                             <Heart className="w-10 h-10 text-red-500 fill-red-500 flex-shrink-0" />
                             <div>
-                                <p className="font-bold text-red-800">Next heart in 2h 45m</p>
-                                <p className="text-sm text-red-700">Hearts regenerate every 3 hours.</p>
+                                <p className="font-bold text-red-800">{t("nextHeartIn", { time: "2h 45m" })}</p>
+                                <p className="text-sm text-red-700">{t("heartsRegen")}</p>
                             </div>
                         </div>
                     )}
@@ -246,10 +247,10 @@ function QuizContent() {
                             onClick={() => setCurrentStep(1)}
                             disabled={!canStart}
                         >
-                            {isBattle ? "COMMENCE BATTLE" : canStart ? "Let's Start!" : "Rest Up"}
+                            {isBattle ? t("commenceBattle") : canStart ? t("start") : t("restUp")}
                         </Button>
                         <Button variant="outline" size="lg" className="w-full" onClick={() => router.back()}>
-                            Maybe Later
+                            {t("maybeLater")}
                         </Button>
                     </div>
                 </motion.div>
@@ -280,7 +281,7 @@ function QuizContent() {
 
                     <h1 className="text-4xl font-display font-black mb-2 text-primary">
                         {isBattle
-                            ? (wonBattle ? "Victorious!" : drewBattle ? "It's a Draw!" : isWaitingBattle ? "Part 1 Complete!" : "Defeated!")
+                            ? (wonBattle ? t("victorious") : drewBattle ? t("draw") : isWaitingBattle ? t("part1Complete") : t("defeated"))
                             : (hasPassed
                                 ? (score === questions.length
                                     ? (
@@ -290,41 +291,41 @@ function QuizContent() {
                                             transition={{ duration: 0.5, ease: "easeOut" }}
                                             className="flex flex-col items-center gap-2"
                                         >
-                                            <span className="text-primary font-black tracking-tighter text-5xl md:text-6xl drop-shadow-sm">PERFECT!</span>
+                                            <span className="text-primary font-black tracking-tighter text-5xl md:text-6xl drop-shadow-sm">{t("perfect")}</span>
                                             <div className="flex items-center gap-2 bg-primary/10 px-4 py-1 rounded-full border border-primary/20">
                                                 <Trophy className="w-5 h-5 text-primary" />
-                                                <span className="text-primary text-sm font-black uppercase tracking-widest">100% Score</span>
+                                                <span className="text-primary text-sm font-black uppercase tracking-widest">{t("score100")}</span>
                                             </div>
                                         </motion.div>
                                     )
-                                    : "Quiz Complete!")
-                                : lives === 0 ? "Out of lives!" : "Keep Practicing!")
+                                    : t("complete"))
+                                : lives === 0 ? t("outOfLives") : t("keepPracticing"))
                         }
                     </h1>
 
                     <p className="text-muted-foreground font-medium mb-8">
                         {isBattle
                             ? (isWaitingBattle
-                                ? "You've finished your round. Waiting for your opponent to play!"
-                                : `Final Score: ${score} - ${challengeData.challenger_id === user.id ? challengeData.challenged_score : challengeData.challenger_score}`)
+                                ? t("waitingOpponent")
+                                : t("finalScore", { score, opponentScore: challengeData.challenger_id === user.id ? challengeData.challenged_score : challengeData.challenger_score }))
                             : (lives === 0
-                                ? "You ran out of hearts. Don't worry, they'll grow back soon!"
+                                ? t("outOfLivesResult")
                                 : hasPassed
-                                    ? `You answered ${score} questions correctly and earned ${score * 20} XP.`
-                                    : "You're getting there! Review the answers and try again.")
+                                    ? t("passedDesc", { score, xp: score * 10 })
+                                    : t("failedDesc"))
                         }
                     </p>
 
                     <div className="grid grid-cols-2 gap-4 mb-8">
                         <div className="bg-orange-50 p-4 rounded-3xl border-2 border-orange-100">
                             <div className="flex items-center justify-center gap-2 text-orange-600 font-black mb-1">
-                                <Flame className="w-5 h-5 fill-orange-600" /> STREAK
+                                <Flame className="w-5 h-5 fill-orange-600" /> {common("streak").toUpperCase()}
                             </div>
-                            <div className="text-2xl font-display font-black text-orange-700">+1 Day</div>
+                            <div className="text-2xl font-display font-black text-orange-700">+1 {common("days")}</div>
                         </div>
                         <div className="bg-blue-50 p-4 rounded-3xl border-2 border-blue-100">
                             <div className="flex items-center justify-center gap-2 text-blue-600 font-black mb-1">
-                                <Zap className="w-5 h-5 fill-blue-600" /> TOTAL XP
+                                <Zap className="w-5 h-5 fill-blue-600" /> {common("xp").toUpperCase()}
                             </div>
                             <div className="text-2xl font-display font-black text-blue-700">+{score * 20}</div>
                         </div>
@@ -339,7 +340,7 @@ function QuizContent() {
                                 className="mb-8 space-y-4"
                             >
                                 <div className="flex items-center justify-center gap-2 text-yellow-600 font-display font-black uppercase tracking-widest text-sm">
-                                    <Award className="w-5 h-5" /> New Badge Unlocked!
+                                    <Award className="w-5 h-5" /> {t("newBadge")}
                                 </div>
                                 <div className="flex flex-wrap justify-center gap-4">
                                     {unlockedAchievements.map((ach: any, idx: number) => (
@@ -367,7 +368,7 @@ function QuizContent() {
                         disabled={isSaving}
                         onClick={() => router.push(isBattle ? "/friends" : "/dashboard")}
                     >
-                        {isSaving ? "Saving Progress..." : isBattle ? "Back to Mates" : "Back to Dashboard"}
+                        {isSaving ? t("saving") : isBattle ? t("backToMates") : t("backToDashboard")}
                     </Button>
                 </motion.div>
             </div>
@@ -455,7 +456,7 @@ function QuizContent() {
                                 disabled={selectedOption === null}
                                 onClick={handleCheck}
                             >
-                                Check
+                                {t("check")}
                             </Button>
                         </div>
                     </motion.div>
@@ -477,11 +478,11 @@ function QuizContent() {
                             </div>
                             <div className="flex-1 text-center md:text-left">
                                 <h3 className={cn("text-2xl font-black mb-1", isCorrect ? "text-green-800" : "text-red-800")}>
-                                    {isCorrect ? "Correct!" : "Incorrect"}
+                                    {isCorrect ? t("correct") : t("incorrect")}
                                 </h3>
                                 <div className={cn("font-medium", isCorrect ? "text-green-700" : "text-red-700")}>
                                     {isAnswered && !isCorrect && (
-                                        <p className="block font-bold mb-1">Correct answer: {currentQuestion.options[currentQuestion.correct_index]}</p>
+                                        <p className="block font-bold mb-1">{t("correctAnswer", { answer: currentQuestion.options[currentQuestion.correct_index] })}</p>
                                     )}
                                     <p>{currentQuestion.explanation}</p>
                                 </div>
@@ -495,7 +496,7 @@ function QuizContent() {
                                 )}
                                 onClick={handleContinue}
                             >
-                                {lives === 0 && !isCorrect ? "Finish" : "Continue"}
+                                {lives === 0 && !isCorrect ? t("finish") : t("continue")}
                             </Button>
                         </div>
                     </motion.div>
@@ -506,11 +507,13 @@ function QuizContent() {
 }
 
 export default function QuizPage() {
+    const t = useTranslations("Quiz");
+
     return (
         <Suspense fallback={
             <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
                 <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4" />
-                <p className="text-muted-foreground font-bold italic">Loading quiz...</p>
+                <p className="text-muted-foreground font-bold italic">{t("loading")}</p>
             </div>
         }>
             <QuizContent />

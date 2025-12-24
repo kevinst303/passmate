@@ -1,23 +1,24 @@
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import MockTestClient from "./MockTestClient";
 
-export default async function MockTestPage() {
+export default async function MockTestPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-        redirect("/login");
+        redirect({ href: '/login', locale });
     }
 
     const { data: profile } = await supabase
         .from("profiles")
         .select("*")
-        .eq("id", user.id)
+        .eq("id", user!.id)
         .single();
 
     if (!profile?.is_premium) {
-        redirect("/premium?reason=mock_test");
+        redirect({ href: "/premium?reason=mock_test", locale });
     }
 
     return <MockTestClient profile={profile} />;

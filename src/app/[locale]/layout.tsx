@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import Script from 'next/script';
 import { PWARegister } from "@/components/PWARegister";
 
 const inter = Inter({
@@ -77,10 +78,17 @@ export default async function RootLayout({
         className={`${inter.variable} ${poppins.variable} antialiased`}
         suppressHydrationWarning
       >
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages} locale={locale}>
           {children}
           <PWARegister />
         </NextIntlClientProvider>
+        <Script
+          id="remove-attrs"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.removeAttribute("data-jetski-tab-id")`,
+          }}
+        />
       </body>
     </html>
   );

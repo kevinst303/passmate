@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import { CheckCircle2, Sparkles, Rocket, ArrowRight, ShieldCheck, Zap, Star } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/Button";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import confetti from "canvas-confetti";
 
 export default function PremiumSuccessPage() {
@@ -16,7 +16,7 @@ export default function PremiumSuccessPage() {
 
         const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
-        const interval: any = setInterval(function () {
+        const interval: NodeJS.Timeout = setInterval(function () {
             const timeLeft = animationEnd - Date.now();
 
             if (timeLeft <= 0) {
@@ -54,7 +54,7 @@ export default function PremiumSuccessPage() {
 
                     <h1 className="text-4xl md:text-5xl font-display font-black mb-4">Welcome to Premium, Mate!</h1>
                     <p className="text-xl text-muted-foreground font-bold mb-12">
-                        You're now a <span className="text-primary italic">Citizenship Achiever</span>.
+                        You&apos;re now a <span className="text-primary italic">Citizenship Achiever</span>.
                         Your journey to becoming Australian just got a massive boost.
                     </p>
 

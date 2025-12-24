@@ -1,39 +1,719 @@
 {
     "HomePage": {
         "hero": {
-            "trusted": "超过 5,000 名未来公民的信赖",
-            "title": "助您成为澳大利亚公民的{mate}。",
-            "mate": "好伙伴",
-            "subtitle": "自信地通过澳大利亚公民考试。游戏化学习、AI 语音辅导和个性化准备，让学习像玩游戏一样轻松。",
+            "trusted": "深受 5,000+ 未来公民信赖",
+            "title": "您的<mate>伙伴</mate> 助您成为澳大利亚人。",
+            "mate": "伙伴",
+            "subtitle": "充满信心通过澳大利亚公民考试。游戏化学习、AI 语音辅导和个性化准备，让学习像玩游戏一样简单。",
             "cta1": "立即开始学习",
-            "cta2": "查看样题"
+            "cta2": "查看样本测试"
         },
         "features": {
             "title": "为什么选择 PassMate？",
-            "subtitle": "我们将枯燥、令人焦虑的备考过程转变为令人上瘾的游戏化学习之旅。",
+            "subtitle": "我们将枯燥、令人焦虑的测试准备过程转变为令人上瘾的游戏化学习之旅。",
             "f1": {
                 "title": "每日连胜",
-                "desc": "通过每日连胜保持动力，绝不错过任何一天的学习。"
+                "desc": "利用每日连胜保持动力，永不漏掉任何一天的学习。"
             },
             "f2": {
                 "title": "每周联赛",
-                "desc": "与其他学习者竞争，从青铜级晋升到钻石级。"
+                "desc": "与其他学习者竞争，从青铜一路攀升至钻石。"
             },
             "f3": {
-                "title": "模拟考试",
-                "desc": "真实的 45 分钟定时考试，包含官方及格分数。"
+                "title": "模拟考模拟器",
+                "desc": "具有官方合格分数的真实 45 分钟计时考试。"
             },
             "f4": {
-                "title": "80% 通过保证",
-                "desc": "我们对我们的方法充满信心，保证您的成功。"
+                "title": "80% 合格保证",
+                "desc": "我们对自己的方法充满信心，保证您的成功。"
             }
+        },
+        "stats": {
+            "trained": "伙伴已培训",
+            "passRate": "首次通过率",
+            "questions": "练习题",
+            "rating": "用户评分"
+        },
+        "testimonials": {
+            "title": "深受新澳大利亚人的喜爱",
+            "subtitle": "通过 PassMate 成为澳大利亚公民的人们的真实故事。"
+        },
+        "cta": {
+            "title": "准备好成为澳大利亚人了吗？",
+            "subtitle": "加入数千名通过 PassMate 第一次就通过测试的成功用户。",
+            "button": "免费开始"
+        }
+    },
+    "Navigation": {
+        "home": "首页",
+        "learn": "学习",
+        "ollie": "Ollie",
+        "masterclass": "大师课",
+        "leagues": "联赛",
+        "friends": "朋友",
+        "achievements": "成就",
+        "premium": "高级版",
+        "profile": "个人资料",
+        "settings": "设置",
+        "more": "更多",
+        "moreOptions": "更多选项",
+        "myProfile": "我的资料",
+        "viewAccount": "查看账户",
+        "goPremium": "升级高级版",
+        "premiumDesc": "解锁无限访问、移除广告并获得 AI 辅导！",
+        "upgradeNow": "立即升级",
+        "desc": {
+            "home": "仪表板与测验",
+            "learn": "学习路径与主题",
+            "ollie": "AI 学习助手",
+            "masterclass": "专家视频课程",
+            "leagues": "排名与竞争",
+            "friends": "与伙伴联系",
+            "achievements": "徽章与奖励",
+            "premium": "解锁完整访问",
+            "profile": "您的账户",
+            "settings": "应用偏好"
+        }
+    },
+    "Dashboard": {
+        "welcome": "嘿，{name}！",
+        "pro": "专业级",
+        "proDesc": "享受无限学习！",
+        "streakDesc": "保持连胜！",
+        "proMateDesc": "你是专业伙伴！享受你的无限学习之旅。",
+        "doingGreat": "你做得很好！完成今天的任务以保持连胜。",
+        "startPracticing": "开始练习",
+        "review": "个性化复习",
+        "reviewDesc": "练习你错过的题目",
+        "talkToOllie": "与 Ollie 交流",
+        "ollieDesc": "AI 公民入籍导师",
+        "course": "公民课程",
+        "topicsMastered": "已掌握 {completed} / {total} 个主题",
+        "resumePath": "继续路径",
+        "level": "等级 {level}",
+        "rank": {
+            "beginner": "初学者",
+            "journeyman": "熟练者",
+            "expert": "专家"
+        },
+        "dailyQuests": "每日任务",
+        "resetIn": "{time} 后重置",
+        "yourRank": "你的排名",
+        "keepItUp": "继续保持！",
+        "viewAll": "查看全部",
+        "noPlayers": "该联赛尚无玩家。",
+        "mockTest": "完整模拟测试",
+        "mockTestDesc": "20 道题，45 分钟。必须达到 75% 才能通过。",
+        "attemptNow": "立即尝试",
+        "recentActivity": "最近动态",
+        "live": "直播",
+        "scored": "在测验中获得了 {score}/{total} 分",
+        "quietOutback": "内陆地区静悄悄的…… 做个测验打破沉默吧！",
+        "defaultQuests": {
+            "q1": "完成3个测验",
+            "q2": "历史获得满分"
         }
     },
     "Common": {
-        "koalaName": "考拉 Ollie",
-        "dashboard": "控制面板",
+        "koalaName": "考拉奥利",
+        "dashboard": "仪表板",
         "login": "登录",
         "getStarted": "开始使用",
-        "footer": "© 2025 PassMate。与澳大利亚内政部无关。"
+        "footer": "© 2025 PassMate.不隶属于澳大利亚内政部。",
+        "privacy": "隐私",
+        "terms": "条款",
+        "contact": "联系我们",
+        "hearts": "红心",
+        "unlimited": "无限",
+        "nextIn": "{time} 分钟后获得下一个",
+        "streak": "连胜",
+        "xp": "经验值",
+        "days": "天"
+    },
+    "Quiz": {
+        "loading": "正在收集学习资料...",
+        "error": "哎呀，糟糕！",
+        "ready": "准备好接受挑战了吗？",
+        "battleMode": "对战模式！",
+        "outOfLives": "红心用光啦！",
+        "battleDesc": "你正在与 {opponent} 对战。尽你最大的努力！",
+        "studyDesc": "掌握 \"{topic}\" 可获得 {xp} 经验值并保持连胜！",
+        "outOfLivesDesc": "等红心恢复，或者升级高级版获取无限红心！",
+        "nextHeartIn": "{time} 后获得下一个红心",
+        "heartsRegen": "红心每 3 小时恢复一个。",
+        "start": "开始测验！",
+        "commenceBattle": "开始对战",
+        "restUp": "休息一下",
+        "maybeLater": "稍后再说",
+        "victorious": "胜利！",
+        "draw": "平局！",
+        "part1Complete": "第一部分完成！",
+        "defeated": "战败！",
+        "perfect": "完美！",
+        "score100": "100分！",
+        "complete": "测验完成！",
+        "keepPracticing": "继续练习！",
+        "waitingOpponent": "你已经完成了你的回合。正在等待对手对战！",
+        "finalScore": "最终得分：{score} - {opponentScore}",
+        "outOfLivesResult": "红心用完了。别担心，很快就会长回来的！",
+        "passedDesc": "你答对了 {score} 道题，获得了 {xp} 经验值。",
+        "failedDesc": "你快成功了！查看答案并再试一次。",
+        "newBadge": "解锁新徽章！",
+        "saving": "正在保存进度...",
+        "backToMates": "回到伙伴",
+        "backToDashboard": "回到仪表板",
+        "check": "检查",
+        "correct": "正确！",
+        "incorrect": "错误",
+        "correctAnswer": "正确答案：{answer}",
+        "finish": "结束",
+        "continue": "继续"
+    },
+    "Auth": {
+        "backHome": "回到首页",
+        "welcomeBack": "欢迎回来！",
+        "joinSquad": "加入小队！",
+        "journeyContinue": "您的澳大利亚之旅仍在继续。",
+        "startPath": "今天就开始您的公民之路。",
+        "login": "登录",
+        "signup": "注册",
+        "email": "电子邮箱",
+        "password": "密码",
+        "checkEmail": "检查您的邮箱以获取确认链接！",
+        "letsGo": "出发！",
+        "createAccount": "创建账户",
+        "agree": "继续即表示您同意 PassMate 的",
+        "terms": "服务条款",
+        "privacy": "隐私政策"
+    },
+    "Leagues": {
+        "backDashboard": "回到仪表板",
+        "competingDesc": "本周正在竞争晋级！",
+        "yourPosition": "您的位置",
+        "endsIn": "结束于",
+        "status": "状态",
+        "promotionZone": "晋级区",
+        "boostRank": "提升您的排名！",
+        "boostRankDesc": "完成测验并赢得对战，在排行榜上攀升。",
+        "getMoreXP": "获得更多经验值",
+        "topPerformers": "卓越表现者",
+        "weeklyStandings": "每周排名",
+        "noRankings": "尚无排名。开始测验来夺取宝座吧！",
+        "resetInfo": "联赛在每周日晚上 11:59 重置",
+        "promotion": "晋级",
+        "relegation": "降级",
+        "you": "您"
+    },
+    "SkillTrees": {
+        "backDashboard": "回到仪表板",
+        "studyCourse": "课程学习",
+        "pathDesc": "您成为澳大利亚公民的必经之路。",
+        "courseProgress": "课程进度",
+        "topicsCount": "{completed}/{total} 个主题",
+        "topicsMastered": "已掌握 {completed} / {total} 个主题",
+        "percentComplete": "{percent}% 已完成",
+        "mastered": "已掌握",
+        "inProgress": "进行中",
+        "lessons": "课时",
+        "locked": "已锁定",
+        "review": "复习",
+        "continue": "继续",
+        "start": "开始",
+        "reviewTopic": "复习主题",
+        "startLearning": "开始学习",
+        "mockTestTitle": "官方模拟考试",
+        "mockTestDesc": "准备好证明您的知识了吗？通过此测试以获得 {badge} 徽章！",
+        "mockBadge": "\"模拟考大师\"",
+        "takeTest": "参加测试",
+        "proTip": "温馨提示：按顺序完成主题以解锁新内容并最大化您的学习效果！"
+    },
+    "AITutor": {
+        "welcomeMistakes": "嘿伙计！我看你很努力，但最近几道题有点卡壳。需要我解释一下吗？",
+        "welcomeDefault": "嘿伙计！我是 Ollie，你的入籍导师。想考考我澳洲历史，还是聊聊澳洲生活，我都在这儿！想聊点啥？",
+        "errorConnecting": "抱歉，伙计，我连接网络时遇到了一些问题。请稍后再试！",
+        "activeNow": "当前活跃",
+        "dayStreak": "天连胜",
+        "chatPlaceholder": "与奥利聊天...",
+        "ollieHearing": "奥利正在倾听！",
+        "speakNaturally": "自然地交谈吧，伙计……",
+        "listening": "正在倾听",
+        "cancel": "取消",
+        "suggestions": {
+            "constitution": "解释“宪法”",
+            "trialTest": "模拟测试",
+            "aussieSlang": "澳洲俚语",
+            "oath": "入籍誓词"
+        }
+    },
+    "Masterclass": {
+        "backDashboard": "回到仪表板",
+        "title": "公民大师课",
+        "exclusive": "入籍成功者专属",
+        "yourProgress": "您的进度",
+        "percentComplete": "{percent}% 已完成",
+        "nextUp": "下一节",
+        "courseCompleted": "课程已完成！",
+        "heroDesc": "探索澳大利亚民主的核心以及您在其中的作用。",
+        "resumeModule": "继续课程",
+        "curriculum": "课程大纲",
+        "video": "视频",
+        "xpReward": "{xp} 经验值奖励",
+        "watchAgain": "再次观看",
+        "startVideo": "开始视频",
+        "nowPlaying": "正在播放",
+        "tip": "提示：请密切关注有关澳大利亚宪法的部分，因为它是测试题的一个常见考察领域！",
+        "completeEarn": "完成并获得 {xp} 经验值",
+        "modules": {
+            "m1": {
+                "title": "模块 1：澳大利亚的基础",
+                "desc": "深入探讨早期历史和通往联邦之路。"
+            },
+            "m2": {
+                "title": "模块 2：民主制度",
+                "desc": "了解政府的三个层级以及投票如何运作。"
+            },
+            "m3": {
+                "title": "模块 3：价值观与权利",
+                "desc": "在现代世界，成为澳大利亚公民意味着什么。"
+            },
+            "m4": {
+                "title": "模块 4：最后考试准备",
+                "desc": "以 100% 的信心通过考试的策略。"
+            }
+        }
+    },
+    "Achievements": {
+        "backDashboard": "回到仪表板",
+        "title": "成就",
+        "subtitle": "解锁徽章展示您的公民专业知识！",
+        "yourStats": "您的统计数据",
+        "completionProgress": "完成进度",
+        "unlockedCount": "您已获得 {total} 个徽章中的 {unlocked} 个",
+        "badges": "徽章",
+        "rewardXp": "奖励经验值",
+        "collectionTitle": "您的徽章收藏",
+        "earned": "获得于 {date}",
+        "secretTitle": "秘密徽章",
+        "secretDesc": "还有隐藏的成就等待被发现。继续探索，与伙伴互动，达到新高度来揭开它们！",
+        "mysteryAwaits": "神秘正在等待"
+    },
+    "Review": {
+        "title": "个性化复习",
+        "clearTitle": "你全掌握了！",
+        "clearDesc": "目前没有需要复习的错误。你是个公民入籍大师，伙计！",
+        "introDesc": "奥利识别了你最近答错的 {count} 道棘手题目。让我们攻克它们！",
+        "startReview": "开始复习",
+        "maybeLater": "以后再说",
+        "completeTitle": "复习完成！",
+        "completeDesc": "你已经攻克了那 {count} 道棘手题目。你的思维变得更强大了！",
+        "solved": "已解决",
+        "xpEarned": "获得的经验值",
+        "trickyQuestion": "棘手题目",
+        "wellDone": "做得好！",
+        "notQuite": "不完全对，伙计",
+        "check": "检查",
+        "next": "下一题",
+        "finish": "结束"
+    },
+    "MockTest": {
+        "preparing": "正在准备官方模拟考试...",
+        "title": "官方模拟考试",
+        "requirements": "要求",
+        "passMark": "必须得到 75% 以上的分数才能通过测试。",
+        "mandatory": "必填",
+        "mandatoryDesc": "必须正确回答所有关于民主信仰的问题。",
+        "timer": "计时器",
+        "duration": "完整的 45 分钟时长。",
+        "reward": "奖励",
+        "rewardDesc": "获得高达 500 经验值和证书！",
+        "startTest": "开始正式考试",
+        "backDashboard": "回到仪表板",
+        "legend": "你太牛了！",
+        "almost": "只差一点点了，伙计！",
+        "passDesc": "你已成功通过官方模拟测试。你已经准备好迎接正式考试了！",
+        "mandatoryFailDesc": "你答错了一些关于民主信仰的必答题。这些对测试至关重要！",
+        "failScoreDesc": "你得到了 {score}/{total} 分，略低于 75% 的合格分。",
+        "overallScore": "总评分",
+        "mandatoryLabel": "必答",
+        "certificateTitle": "公民证书",
+        "certificateUnlocked": "为入籍成功者解锁！",
+        "view": "查看",
+        "saving": "正在保存结果...",
+        "returnHome": "回到首页",
+        "questionCount": "第 {current} 题，共 {total} 题",
+        "mandatoryBadge": "必答题",
+        "rulesTip": "别着急，伙计。适用正式考试规则。",
+        "finishTest": "结束测试",
+        "nextQuestion": "下一题",
+        "checkAnswer": "检查答案"
+    },
+    "Profile": {
+        "title": "个人资料",
+        "settings": "设置",
+        "signOut": "退出登录",
+        "level": "等级 {level}",
+        "pro": "专业版",
+        "joined": "加入于 {date}",
+        "dayStreak": "{count} 天连胜",
+        "totalXp": "总经验值 {count}",
+        "yourStats": "您的统计数据",
+        "currentXp": "当前经验值",
+        "streak": "连胜",
+        "quizzes": "测验",
+        "badges": "徽章",
+        "recentBadges": "最近徽章",
+        "viewCollection": "查看收藏",
+        "startLearning": "开始学习以开启您的旅程！",
+        "legendTitle": "您是 PassMate 传奇",
+        "goldTitle": "PassMate Gold 等着您",
+        "legendDesc": "您正在使用所有高级功能。在奥利的帮助下继续学习吧！",
+        "goldDesc": "解锁无限红心、AI 语音导师和专属大师课。",
+        "manageSub": "管理订阅",
+        "goPremium": "升级高级版"
+    },
+    "Settings": {
+        "title": "账户设置",
+        "backProfile": "回到个人资料",
+        "profilePicture": "个人资料图片",
+        "personalDetails": "个人详情",
+        "fullName": "全名",
+        "username": "用户名",
+        "email": "电子邮件",
+        "saveChanges": "保存更改",
+        "saving": "正在保存...",
+        "success": "个人资料已成功更新！",
+        "avatars": {
+            "ollie1": "经典奥利",
+            "ollie2": "聪明奥利",
+            "ollie3": "酷炫奥利",
+            "ollie4": "派对奥利",
+            "ollie5": "运动奥利",
+            "ollie6": "瑜伽奥利"
+        },
+        "placeholders": {
+            "fullName": "输入您的全名",
+            "username": "@用户名"
+        }
+    },
+    "Security": {
+        "title": "隐私与安全",
+        "subtitle": "管理您的账户数据和登录方法。",
+        "backProfile": "回到个人资料",
+        "changePassword": "更改密码",
+        "newPassword": "新密码",
+        "confirmPassword": "确认密码",
+        "placeholder": "••••••••",
+        "updatePassword": "更新密码",
+        "updating": "正在更新...",
+        "passwordMinLength": "密码长度必须至少为 8 个字符",
+        "passwordsMismatch": "密码不匹配",
+        "success": "密码已成功更新！",
+        "twoFactor": {
+            "title": "双重身份验证",
+            "soon": "即将推出",
+            "desc": "为您的账户添加额外的一层安全保护。",
+            "enable": "启用 2FA"
+        },
+        "recentActivity": {
+            "title": "最近活动",
+            "currentSession": "当前活跃会话",
+            "loggedIn": "上次登录时间",
+            "ago": "{time} 前",
+            "signOutAll": "从所有设备退出登录"
+        },
+        "dataPrivacy": {
+            "title": "数据与隐私",
+            "desc": "您的隐私是我们的重中之重。您对自己的数据拥有完全的控制权。",
+            "policy": "隐私政策",
+            "terms": "服务条款",
+            "downloadTitle": "下载您的数据",
+            "downloadDesc": "获取您所有个人数据、进度和活动的副本。",
+            "requestExport": "请求导出"
+        },
+        "dangerZone": {
+            "title": "危险区域",
+            "desc": "一旦您删除了账户，将无法撤销。请谨慎操作。",
+            "delete": "永久删除账户"
+        }
+    },
+    "Referral": {
+        "title": "邀请朋友",
+        "backProfile": "回到个人资料",
+        "heroTitle": "带来伙伴，\n获得奖励！",
+        "heroDesc": "邀请您的朋友加入 PassMate，一起为澳大利亚公民身份做准备。他们注册后，你们双方都将获得丰厚的奖励！",
+        "yourLink": "您的个人邀请链接",
+        "copyLink": "复制链接",
+        "copied": "已复制！",
+        "performance": "您的邀请表现",
+        "topReferrer": "顶级推荐人",
+        "climbLeaderboard": "带来更多伙伴以攀升排行榜！",
+        "quickShare": "快速分享",
+        "milestonesTitle": "邀请里程碑",
+        "friendsCount": "{count} 个朋友",
+        "unlockBadge": "解锁 \"{name}\" 徽章",
+        "howItWorks": {
+            "title": "它是如何运作的？",
+            "desc": "当您的朋友使用您的链接注册时，你们双方都会获得额外的经验值。随着您邀请更多的朋友，您将解锁独家徽章和高级版折扣！"
+        },
+        "stats": {
+            "friends": "已邀请的朋友",
+            "xp": "获得的额外经验值",
+            "badges": "邀请徽章"
+        },
+        "rewards": {
+            "r1": "500 额外经验值",
+            "r2": "高级版一个月折扣",
+            "r3": "专属 Mate Gold 徽章",
+            "b1": "友好考拉",
+            "b2": "派对领袖",
+            "b3": "社区支柱"
+        },
+        "social": {
+            "meta": "Facebook",
+            "x": "X / Twitter",
+            "whatsapp": "在 WhatsApp 上分享"
+        }
+    },
+    "Premium": {
+        "title": "PassMate 高级版",
+        "backDashboard": "回到仪表板",
+        "goPremium": "升级高级版",
+        "heroTitle": "成为澳大利亚人的 {italic}最快{italic} 途径",
+        "heroSubtitle": "加入数千名使用我们独有的 AI 驱动功能通过测试的新公民。",
+        "plans": {
+            "popular": "最受欢迎",
+            "loading": "处理中...",
+            "free": {
+                "name": "免费版",
+                "cta": "当前计划"
+            },
+            "ready": {
+                "name": "准考版",
+                "duration": "/年",
+                "cta": "准备考试"
+            },
+            "achiever": {
+                "name": "成就者公民",
+                "duration": "/永久",
+                "cta": "成为成就者"
+            },
+            "features": {
+                "quests": "每日任务与连胜",
+                "bank": "500+ 个问题的题库",
+                "leagues": "每周联赛",
+                "hearts5": "5 颗红心 (可恢复)",
+                "unlimitedHearts": "无限红心",
+                "aiTutor": "奥利：AI 语音导师",
+                "mockExam": "完整的模拟考试模拟器",
+                "aiReview": "AI 驱动的错误复习功能",
+                "adFree": "100% 无广告体验",
+                "masterclass": "公民大师课专属权限",
+                "certificate": "官方准备证书",
+                "updates": "永久题目更新",
+                "discord": "加入 VIP Discord 社区"
+            }
+        },
+        "comparison": {
+            "title": "计划对比",
+            "subtitle": "选择最适合您的学习风格和目标的层级。",
+            "feature": "功能",
+            "free": "免费版",
+            "ready": "准考版",
+            "achiever": "成就者",
+            "rows": {
+                "quests": "每日任务",
+                "bank": "题目库",
+                "unlimitedHearts": "无限红心",
+                "aiTutor": "AI 语音导师",
+                "mockExam": "模拟考试",
+                "aiReview": "错误复习",
+                "adFree": "无广告",
+                "masterclass": "大师课",
+                "certificate": "证书",
+                "vip": "VIP 社区"
+            }
+        },
+        "testimonials": {
+            "title": "用户评价",
+            "subtitle": "听听那些通过 PassMate 高级版通过测试的人怎么说。",
+            "t1": {
+                "name": "Priya S.",
+                "city": "悉尼",
+                "text": "AI 导师改变了游戏规则。与奥利交谈让我对自己的知识非常有信心。"
+            },
+            "t2": {
+                "name": "Mohamed A.",
+                "city": "墨尔本",
+                "text": "模拟考试与真实的测试完全一样。当我进入考试中心时，我确切知道该期待什么。"
+            },
+            "t3": {
+                "name": "Linda W.",
+                "city": "布里斯班",
+                "text": "大师课解释得非常透彻。成就者计划绝对物超所值。"
+            }
+        },
+        "faqs": {
+            "title": "常见问题",
+            "q1": {
+                "q": "我可以随时取消订阅吗？",
+                "a": "是的，您可以随时 from 账户设置中取消订阅。在当前账单周期结束前，您仍可访问高级功能。"
+            },
+            "q2": {
+                "q": "准考版和成就者计划有什么区别？",
+                "a": "准考版是一个专注于核心高级功能的年度计划。成就者计划是一个永久计划，包括专属奖励，如视频大师课和准备证书。"
+            },
+            "q3": {
+                "q": "如何运作无限红心？",
+                "a": "使用高级版，您不会因为选错答案而受到惩罚。您可以随心所欲地练习，不受任何干扰。"
+            },
+            "q4": {
+                "q": "付款后我可以改变主意吗？",
+                "a": "我们提供 30 天退款保证。如果您对体验不满意，请告诉我们，我们将为您全额退款。"
+            }
+        },
+        "trust": {
+            "secure": "安全支付",
+            "secureDesc": "由 Stripe 提供的 256 位安全加密。",
+            "rating": "4.9/5 星评分",
+            "ratingDesc": "深受 5,000+ 成功的澳大利亚公民信赖。",
+            "refund": "退款保证",
+            "refundDesc": "30 天内退款，无需任何理由。"
+        },
+        "banners": {
+            "cancelled": "付款已取消。准备好后可以再试一次！",
+            "ai_tutor": {
+                "title": "想和奥利谈谈吗？",
+                "desc": "使用我们的 AI 语音导师进行更智能的准备。适用于准考版或成就者计划。"
+            },
+            "masterclass": {
+                "title": "解锁大师课",
+                "desc": "通过我们的全面视频课程深入学习。成就者公民专属。"
+            },
+            "mock_test": {
+                "title": "无限模拟测试",
+                "desc": "随心所欲地练习，并通过无限红心从错误中学习。"
+            },
+            "requires": "需要 {feature}"
+        }
+    },
+    "Billing": {
+        "backProfile": "回到个人资料",
+        "title": "账单与订阅",
+        "subtitle": "管理您的计划、付款和账单历史。",
+        "currentPlan": "当前计划",
+        "premiumPlan": "成就者高级版",
+        "freePlan": "免费探索者",
+        "activeAccount": "活跃账户",
+        "loading": "正在加载...",
+        "managePayments": "管理付款",
+        "upgradePremium": "升级高级版",
+        "yourBenefits": "您的权益",
+        "nextBilling": "下次结账",
+        "lifetimeAccess": "永久访问",
+        "lifetimeDesc": "你已经拥有了全部功能，伙计！无需再次付费。",
+        "na": "不适用",
+        "upgradeUnlock": "升级以解锁完整功能。",
+        "recentInvoices": "最近发票",
+        "passmatePremium": "PassMate 高级版",
+        "oneTimePayment": "一次性付款",
+        "downloadPdf": "下载 PDF",
+        "needMoreHistory": "需要更多历史记录？使用",
+        "billingPortal": "账单门户",
+        "noInvoices": "尚无发票。",
+        "helpfulLinks": "常用链接",
+        "pricingDetails": "价格详情",
+        "refundPolicy": "退款政策",
+        "subscriptionFaq": "订阅常见问题",
+        "contactSupport": "联系支持",
+        "plans": {
+            "free": {
+                "f1": "基础学习模块",
+                "f2": "每日练习题",
+                "f3": "社区支持",
+                "f4": "标准学习路径"
+            },
+            "premium": {
+                "f1": "无限模拟考试",
+                "f2": "24/7 AI 导师访问",
+                "f3": "大师课系列",
+                "f4": "官方证书",
+                "f5": "无广告体验"
+            }
+        }
+    },
+    "Support": {
+        "backProfile": "回到个人资料",
+        "title": "有什么可以帮忙的，伙计？",
+        "subtitle": "在我们的帮助中心搜索或浏览下面的类别，找到您需要的内容。",
+        "searchPlaceholder": "搜索答案...",
+        "categories": {
+            "study": {
+                "title": "学习指南",
+                "desc": "了解如何有效地使用该应用。"
+            },
+            "account": {
+                "title": "账户与账单",
+                "desc": "管理您的订阅和个人资料。"
+            },
+            "test": {
+                "title": "考试信息",
+                "desc": "有关官方公民考试的详情。"
+            },
+            "feedback": {
+                "title": "发送反馈",
+                "desc": "帮助我们把 PassMate 做得更好。"
+            }
+        },
+        "faqsTitle": "常见问题",
+        "viewAllFaqs": "查看所有常见问题",
+        "stillNeedHelp": "还需要帮助吗？",
+        "supportDesc": "我们友好的支持团队通常会在 24 小时内回复。让我们快点回到学习中去吧！",
+        "messageUs": "给我们发消息",
+        "liveChat": "实时聊天",
+        "monFri": "周一 - 周五",
+        "support24h": "24小时支持",
+        "resourcesTitle": "实用资源",
+        "resources": {
+            "book": "官方资源书 (PDF)",
+            "videos": "学习视频系列",
+            "forum": "社区论坛",
+            "booking": "预订您的测试"
+        },
+        "faqs": {
+            "q1": "此应用是否已更新至 2025/2026 年？",
+            "a1": "是的，我们的内容会根据最新的 'Our Common Bond' 和官方考试模式不断更新。",
+            "q2": "AI 导师是如何运作的？",
+            "a2": "我们的 AI 导师根据官方澳大利亚公民资源进行培训，全天候回答您的具体问题。"
+        },
+        "form": {
+            "labelName": "您的姓名",
+            "labelEmail": "电子邮件地址",
+            "labelSubject": "主题",
+            "labelMessage": "留言",
+            "placeholderName": "Steve Irwin",
+            "placeholderEmail": "mate@example.com",
+            "placeholderMessage": "告诉我们您的想法...",
+            "placeholderSubject": "选择一个主题...",
+            "subjects": {
+                "general": "一般咨询",
+                "technical": "技术支持",
+                "billing": "账单问题",
+                "refund": "退款请求",
+                "partnership": "合作伙伴机会",
+                "feedback": "反馈/建议"
+            },
+            "send": "发送留言",
+            "sending": "正在发送...",
+            "sent": "留言已发送！",
+            "success": "感谢您的联系。我们将在 24 小时内回复您。"
+        },
+        "contactInfo": {
+            "title": "联系信息",
+            "email": "电子邮件",
+            "responseTime": "回复时间",
+            "responseValue": "24 小时内 (周一至周五)",
+            "location": "地点",
+            "locationValue": "悉尼, 澳大利亚 🇦🇺"
+        }
     }
 }

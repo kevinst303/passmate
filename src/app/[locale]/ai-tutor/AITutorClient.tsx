@@ -19,8 +19,9 @@ import {
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface AITutorClientProps {
     initialMistakes?: any[];
@@ -28,20 +29,22 @@ interface AITutorClientProps {
 }
 
 export default function AITutorClient({ initialMistakes, profile }: AITutorClientProps) {
+    const t = useTranslations("AITutor");
     const [messages, setMessages] = useState<any[]>([]);
 
     useEffect(() => {
         if (initialMistakes && initialMistakes.length > 0) {
             const mistakeList = initialMistakes.map(m => `- ${m.questions?.question_text}`).join('\n');
             setMessages([
-                { role: "assistant", content: `G'day mate! I see you've been working hard but had a few tricky questions lately. Want me to explain some of these? \n\n${mistakeList}` }
+                { role: "assistant", content: `${t("welcomeMistakes")} \n\n${mistakeList}` }
             ]);
         } else {
             setMessages([
-                { role: "assistant", content: "G'day mate! I'm Ollie, your citizenship tutor. Whether you want to grill me on Australian history or just have a yarn about life in the sun, I'm here for ya! What's on your mind?" }
+                { role: "assistant", content: t("welcomeDefault") }
             ]);
         }
-    }, [initialMistakes]);
+    }, [initialMistakes, t]);
+
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -79,11 +82,18 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
             }
         } catch (error) {
             console.error("Chat Error:", error);
-            setMessages(prev => [...prev, { role: "assistant", content: "Sorry mate, I'm having a bit of trouble connecting to the network. Try again in a sec!" }]);
+            setMessages(prev => [...prev, { role: "assistant", content: t("errorConnecting") }]);
         } finally {
             setIsTyping(false);
         }
     };
+
+    const suggestions = [
+        t("suggestions.constitution"),
+        t("suggestions.trialTest"),
+        t("suggestions.aussieSlang"),
+        t("suggestions.oath")
+    ];
 
     return (
         <div className="min-h-screen bg-[#FDFCFB] pb-24 md:pb-0 md:pl-28 flex flex-col">
@@ -100,7 +110,7 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                         </div>
                         <div>
                             <h1 className="text-xl font-display font-black text-foreground leading-tight">Ollie AI</h1>
-                            <p className="text-xs font-bold text-green-600 uppercase tracking-widest">Active Now</p>
+                            <p className="text-xs font-bold text-green-600 uppercase tracking-widest">{t("activeNow")}</p>
                         </div>
                     </div>
                 </div>
@@ -108,7 +118,7 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                 <div className="flex items-center gap-4">
                     <div className="hidden sm:flex items-center gap-4 mr-4">
                         <div className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-4 py-2 rounded-2xl border border-orange-100 font-black text-xs">
-                            <Flame className="w-4 h-4 fill-orange-600" /> {profile.daily_streak} DAY STREAK
+                            <Flame className="w-4 h-4 fill-orange-600" /> {profile.daily_streak} {t("dayStreak")}
                         </div>
                         <div className="flex items-center gap-1.5 bg-blue-50 text-blue-600 px-4 py-2 rounded-2xl border border-blue-100 font-black text-xs">
                             <Zap className="w-4 h-4 fill-blue-600" /> {profile.total_xp.toLocaleString()} XP
@@ -174,7 +184,7 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                 {/* Input Controls */}
                 <div className="mt-6 flex flex-col gap-4">
                     <div className="flex gap-2 px-2 overflow-x-auto pb-2 no-scrollbar">
-                        {['Explain "The Constitution"', 'Trial Test', 'Aussie Slang', 'Citizenship Oath'].map((suggestion) => (
+                        {suggestions.map((suggestion) => (
                             <button
                                 key={suggestion}
                                 onClick={() => setInput(suggestion)}
@@ -199,7 +209,7 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                placeholder="Chat with Ollie..."
+                                placeholder={t("chatPlaceholder")}
                                 className="flex-1 bg-transparent border-none focus:ring-0 font-bold text-xl placeholder:text-muted-foreground/40"
                             />
                             <button
@@ -240,8 +250,8 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                         </div>
 
                         <div className="text-center space-y-6">
-                            <h2 className="text-5xl font-display font-black italic tracking-tight">Ollie is hearing ya!</h2>
-                            <p className="text-xl font-bold text-primary animate-pulse">Speak naturally, mate...</p>
+                            <h2 className="text-5xl font-display font-black italic tracking-tight">{t("ollieHearing")}</h2>
+                            <p className="text-xl font-bold text-primary animate-pulse">{t("speakNaturally")}</p>
                         </div>
 
                         <div className="mt-24 flex gap-3 h-20 items-center">
@@ -260,13 +270,16 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                                 <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10">
                                     <Ear className="w-6 h-6" />
                                 </div>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Listening</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-white/40">{t("listening")}</span>
                             </div>
                             <div className="flex flex-col items-center gap-2">
-                                <Link href="/dashboard" className="w-14 h-14 bg-red-500/20 rounded-2xl flex items-center justify-center border border-red-500/30 group">
+                                <button
+                                    onClick={() => setIsSpeaking(false)}
+                                    className="w-14 h-14 bg-red-500/20 rounded-2xl flex items-center justify-center border border-red-500/30 group"
+                                >
                                     <X className="w-6 h-6 text-red-400 group-hover:scale-110 transition-transform" />
-                                </Link>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-red-400">Cancel</span>
+                                </button>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-red-400">{t("cancel")}</span>
                             </div>
                         </div>
                     </motion.div>

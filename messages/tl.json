@@ -2,8 +2,8 @@
     "HomePage": {
         "hero": {
             "trusted": "Pinagkakatiwalaan ng mahigit 5,000+ Future-Citizens",
-            "title": "Ang iyong {mate} para matulungan kang maging Australian.",
-            "mate": "Mate",
+            "title": "Ang iyong <mate>kaibigan</mate> para matulungan kang maging Australian.",
+            "mate": "Kaibigan",
             "subtitle": "Ipasa ang Australian Citizenship Test nang may kumpiyansa. Gamified na pag-aaral, AI voice tutoring, at personalized na paghahanda na parang naglalaro lang.",
             "cta1": "Magsimulang Mag-aral Ngayon",
             "cta2": "Tignan ang Sample Test"
@@ -27,6 +27,91 @@
                 "title": "80% Pass Guarantee",
                 "desc": "Sobrang tiwala kami sa aming paraan kaya ginagarantiya namin ang iyong tagumpay."
             }
+        },
+        "stats": {
+            "trained": "Mates na Naturuan",
+            "passRate": "First-Time Pass Rate",
+            "questions": "Mga Practice Question",
+            "rating": "User Rating"
+        },
+        "testimonials": {
+            "title": "Minamahal ng mga bagong Aussies",
+            "subtitle": "Mga totoong kuwento mula sa mga taong naging Australian citizen gamit ang PassMate."
+        },
+        "cta": {
+            "title": "Handa ka na bang maging Australian?",
+            "subtitle": "Sumali sa libu-libong matagumpay na user na nakapasa sa kanilang test sa unang subok gamit ang PassMate.",
+            "button": "Magsimula nang Libre"
+        }
+    },
+    "Navigation": {
+        "home": "Home",
+        "learn": "Mag-aral",
+        "ollie": "Ollie",
+        "masterclass": "Masterclass",
+        "leagues": "Leagues",
+        "friends": "Mga Kaibigan",
+        "achievements": "Mga Nakamit",
+        "premium": "Premium",
+        "profile": "Profile",
+        "settings": "Settings",
+        "more": "Iba pa",
+        "moreOptions": "Higit pang mga Opsyon",
+        "myProfile": "Aking Profile",
+        "viewAccount": "Tignan ang Account",
+        "goPremium": "Mag-Premium Na",
+        "premiumDesc": "I-unlock ang unlimited access, tanggalin ang ads, at kumuha ng AI tutoring!",
+        "upgradeNow": "Mag-upgrade Ngayon",
+        "desc": {
+            "home": "Dashboard at quizzes",
+            "learn": "Study path at mga paksa",
+            "ollie": "AI study assistant",
+            "masterclass": "Expert video lessons",
+            "leagues": "Rankings at kompetisyon",
+            "friends": "Kumonekta sa mga mate",
+            "achievements": "Mga badge at rewards",
+            "premium": "I-unlock ang full access",
+            "profile": "Iyong account",
+            "settings": "Mga preference sa app"
+        }
+    },
+    "Dashboard": {
+        "welcome": "Kumusta, {name}!",
+        "pro": "Pro",
+        "proDesc": "Enjoyin ang unlimited learning!",
+        "streakDesc": "Panatilihing buhay ang iyong streak!",
+        "proMateDesc": "Isa kang Pro Kaibigan! I-enjoy ang iyong unlimited learning journey.",
+        "doingGreat": "Mahusay ang iyong ginagawa! Kumpletuhin ang mga quest ngayong araw para mapanatili ang iyong streak.",
+        "startPracticing": "Magsimula Mag-practice",
+        "review": "Personalized na Review",
+        "reviewDesc": "I-practice ang mga namali mo",
+        "talkToOllie": "Makipag-usap kay Ollie",
+        "ollieDesc": "AI Citizenship Tutor",
+        "course": "Citizenship Course",
+        "topicsMastered": "{completed} sa {total} na Paksa ang Master na",
+        "resumePath": "Ipagpatuloy ang Path",
+        "level": "Level {level}",
+        "rank": {
+            "beginner": "Beginner",
+            "journeyman": "Journeyman",
+            "expert": "Expert"
+        },
+        "dailyQuests": "Daily Quests",
+        "resetIn": "Mag-rereset sa loob ng {time}",
+        "yourRank": "Iyong Rank",
+        "keepItUp": "Ipagpatuloy lang!",
+        "viewAll": "Tignan Lahat",
+        "noPlayers": "Wala pang mga player sa league na ito.",
+        "mockTest": "Full Mock Test",
+        "mockTestDesc": "20 questions, 45 minutes. Dapat makakuha ng 75% para pumasa.",
+        "attemptNow": "Subukan Na",
+        "recentActivity": "Kamakailang Aktibidad",
+        "live": "Live",
+        "scored": "Naka-score ng {score}/{total} sa quiz",
+        "quietOutback": "Tahimik na umaga sa Outback... Magsimula ng quiz para mabasag ang katahimikan!",
+        "defaultQuests": {
+            "q1": "Kumpletuhin ang 3 Quiz",
+            "q2": "Perpektong iskor sa Kasaysayan"
         }
     },
     "Common": {
@@ -34,6 +119,601 @@
         "dashboard": "Dashboard",
         "login": "Login",
         "getStarted": "Magsimula Na",
-        "footer": "© 2025 PassMate. Hindi kaanib sa Australian Department of Home Affairs."
+        "footer": "© 2025 PassMate. Hindi kaanib sa Australian Department of Home Affairs.",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "contact": "Contact",
+        "hearts": "Mga Buhay",
+        "unlimited": "Unlimited",
+        "nextIn": "Susunod sa {time}m",
+        "streak": "Streak",
+        "xp": "XP",
+        "days": "mga araw"
+    },
+    "Quiz": {
+        "loading": "Nangongolekta ng mga study material...",
+        "error": "Ay, sayang!",
+        "ready": "Handa na ba para sa hamon?",
+        "battleMode": "Battle Mode!",
+        "outOfLives": "Ubos na ang iyong hearts, kaibigan!",
+        "battleDesc": "Lumalaban ka kay {opponent}. Ibigay ang iyong best!",
+        "studyDesc": "I-master ang \"{topic}\" para makakuha ng {xp} XP at mapanatiling buhay ang iyong streak!",
+        "outOfLivesDesc": "Hintaying mag-regenerate ang iyong mga puso o mag-upgrade sa Premium para sa unlimited na buhay!",
+        "nextHeartIn": "Susunod na puso sa {time}",
+        "heartsRegen": "Nag-reregenerate ang mga puso kada 3 oras.",
+        "start": "Simulan Na!",
+        "commenceBattle": "MAGSIMULA NG LABAN",
+        "restUp": "Magpahinga Muna",
+        "maybeLater": "Siguro Mamaya Na",
+        "victorious": "Nagwagi!",
+        "draw": "Tabla!",
+        "part1Complete": "Kumpleto na ang Part 1!",
+        "defeated": "Talo!",
+        "perfect": "PERPEKTO!",
+        "score100": "100% Score",
+        "complete": "Tapos na ang Quiz!",
+        "keepPracticing": "Mag-practice Pa!",
+        "waitingOpponent": "Tapos ka na sa iyong round. Naghihintay sa iyong kalaban na maglaro!",
+        "finalScore": "Pinal na Score: {score} - {opponentScore}",
+        "outOfLivesResult": "Naubusan ka ng puso. Huwag mag-alala, babalik din sila agad!",
+        "passedDesc": "Nasagot mo nang tama ang {score} na tanong at nakakuha ng {xp} XP.",
+        "failedDesc": "Malapit na! I-review ang mga sagot at subukan ulit.",
+        "newBadge": "Bagong Badge ang Na-unlock!",
+        "saving": "Sini-save ang Progress...",
+        "backToMates": "Balik sa mga Mate",
+        "backToDashboard": "Balik sa Dashboard",
+        "check": "I-check",
+        "correct": "Tama!",
+        "incorrect": "Mali",
+        "correctAnswer": "Tamang sagot: {answer}",
+        "finish": "Tapusin",
+        "continue": "Ipagpatuloy"
+    },
+    "Auth": {
+        "backHome": "Balik sa Home",
+        "welcomeBack": "Welcome Back!",
+        "joinSquad": "Sumali sa Squad!",
+        "journeyContinue": "Nagpapatuloy ang iyong paglalakbay sa Australia.",
+        "startPath": "Simulan ang iyong landas patungong citizenship ngayong araw.",
+        "login": "Login",
+        "signup": "Signup",
+        "email": "Email Address",
+        "password": "Password",
+        "checkEmail": "I-check ang iyong email para sa confirmation link!",
+        "letsGo": "Tara Na!",
+        "createAccount": "Gumawa ng Account",
+        "agree": "Sa pagpapatuloy, sumasang-ayon ka sa mga",
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy ng PassMate"
+    },
+    "Leagues": {
+        "backDashboard": "Balik sa Dashboard",
+        "competingDesc": "Nakikipagkumpitensya para sa promotion ngayong linggo!",
+        "yourPosition": "Iyong Posisyon",
+        "endsIn": "Matatapos sa loob ng",
+        "status": "Status",
+        "promotionZone": "PROMOTION ZONE",
+        "boostRank": "Itaas ang iyong Rank!",
+        "boostRankDesc": "Kumpletuhin ang mga quiz at manalo sa mga battle para umakyat sa leaderboard.",
+        "getMoreXP": "Kumuha ng mas maraming XP",
+        "topPerformers": "Top Performers",
+        "weeklyStandings": "Weekly Standings",
+        "noRankings": "Wala pang mga ranking. Magsimula ng quiz para makuha ang trono!",
+        "resetInfo": "Nag-rereset ang League tuwing Linggo ng 11:59 PM",
+        "promotion": "Promotion",
+        "relegation": "Relegation",
+        "you": "Ikaw"
+    },
+    "SkillTrees": {
+        "backDashboard": "Balik sa Dashboard",
+        "studyCourse": "Study Course",
+        "pathDesc": "Iyong landas patungong Australian Citizenship.",
+        "courseProgress": "Progress ng Course",
+        "topicsCount": "{completed}/{total} na Paksa",
+        "topicsMastered": "{completed} sa {total} na Paksa ang Master na",
+        "percentComplete": "{percent}% Kumpleto",
+        "mastered": "Master Na",
+        "inProgress": "Kasalukuyang Ginagawa",
+        "lessons": "Lessons",
+        "locked": "Locked",
+        "review": "I-review",
+        "continue": "Ipagpatuloy",
+        "start": "Simulan",
+        "reviewTopic": "I-review ang Paksa",
+        "startLearning": "Simulan ang Pag-aaral",
+        "mockTestTitle": "Ang Opisyal na Mock Test",
+        "mockTestDesc": "Handa na bang patunayan ang iyong kaalaman? Ipasa ang test na ito para makuha ang {badge} badge!",
+        "mockBadge": "\"Mock Master\"",
+        "takeTest": "Kumuha ng Test",
+        "proTip": "Pro tip: Kumpletuhin ang mga paksa nang sunod-sunod para ma-unlock ang mga bagong content at ma-maximize ang iyong pag-aaral!"
+    },
+    "AITutor": {
+        "welcomeMistakes": "Kumusta kaibigan! Nakikita ko na nagtatrabaho ka nang maigi pero may ilang mahirap na tanong kamakailan. Gusto mo bang ipaliwanag ko ang ilan sa mga ito?",
+        "welcomeDefault": "Kumusta kaibigan! Ako si Ollie, ang iyong citizenship tutor. Gusto mo mang tanungin ako tungkol sa Australian history o makipagkwentuhan lang tungkol sa buhay sa ilalim ng araw, nandito ako para sa'yo! Ano ang nasa isip mo?",
+        "errorConnecting": "Pasensya na mate, may problema ako sa pagkonekta sa network. Subukan ulit sa ilang sandali!",
+        "activeNow": "Active Ngayon",
+        "dayStreak": "DAY STREAK",
+        "chatPlaceholder": "Makipag-chat kay Ollie...",
+        "ollieHearing": "Naririnig ka ni Ollie!",
+        "speakNaturally": "Magsalita nang natural, mate...",
+        "listening": "Nakikinig",
+        "cancel": "I-cancel",
+        "suggestions": {
+            "constitution": "Ipaliwanag ang \"Ang Konstitusyon\"",
+            "trialTest": "Trial Test",
+            "aussieSlang": "Aussie Slang",
+            "oath": "Panunumpa sa Citizenship"
+        }
+    },
+    "Masterclass": {
+        "backDashboard": "Balik sa Dashboard",
+        "title": "Citizenship Masterclass",
+        "exclusive": "Eksklusibo para sa mga Citizenship Achievers",
+        "yourProgress": "Iyong Progress",
+        "percentComplete": "{percent}% Kumpleto",
+        "nextUp": "Susunod",
+        "courseCompleted": "Kumpleto na ang Course!",
+        "heroDesc": "Galugarin ang core ng demokrasya ng Australia at ang iyong papel dito.",
+        "resumeModule": "Ipagpatuloy ang Module",
+        "curriculum": "Kurikulum",
+        "video": "Video",
+        "xpReward": "{xp} XP Reward",
+        "watchAgain": "Panoorin Muli",
+        "startVideo": "Simulan ang Video",
+        "nowPlaying": "Kasalukuyang Pinapatugtog",
+        "tip": "Tip: Bigyang-pansin ang seksyon tungkol sa Konstitusyon ng Australia, dahil isa itong karaniwang paksa para sa mga tanong sa test!",
+        "completeEarn": "Tapusin at Kumuha ng {xp} XP",
+        "modules": {
+            "m1": {
+                "title": "Module 1: pundasyon ng Australia",
+                "desc": "Isang malalim na pagsisid sa maagang kasaysayan at ang landas patungo sa Federation."
+            },
+            "m2": {
+                "title": "Module 2: Ang Demokratikong Sistema",
+                "desc": "Pag-unawa sa tatlong antas ng pamahalaan at kung paano gumagana ang pagboto."
+            },
+            "m3": {
+                "title": "Module 3: Mga Halaga at Karapatan",
+                "desc": "Ano ang ibig sabihin ng maging isang mamamayang Australian sa modernong mundo."
+            },
+            "m4": {
+                "title": "Module 4: Paghahanda sa Huling Test",
+                "desc": "Mga diskarte para sa pagpasa sa exam nang may 100% tiwala."
+            }
+        }
+    },
+    "Achievements": {
+        "backDashboard": "Balik sa Dashboard",
+        "title": "Mga Nakamit",
+        "subtitle": "I-unlock ang mga badge para ipakita ang iyong galing sa citizenship!",
+        "yourStats": "Iyong Stats",
+        "completionProgress": "Progress ng Pagkumpleto",
+        "unlockedCount": "Nakuha mo ang {unlocked} sa {total} na mga badge",
+        "badges": "Mga Badge",
+        "rewardXp": "XP Reward",
+        "collectionTitle": "Iyong Koleksyon ng Badge",
+        "earned": "Nakuha noong {date}",
+        "secretTitle": "Mga Secret Badge",
+        "secretDesc": "May mga nakatagong achievement pa na naghihintay na matuklasan. Patuloy na mag-explore, makipag-ugnayan sa mga mate, at abutin ang mga bagong taas para mabunyag ang mga ito!",
+        "mysteryAwaits": "Naghihintay ang hiwaga"
+    },
+    "Review": {
+        "title": "Personalized na Review",
+        "clearTitle": "Plantsado na ang lahat!",
+        "clearDesc": "Wala pang mga mali na dapat i-review sa ngayon. Isa kang citizenship master, kaibigan!",
+        "introDesc": "Natukoy ni Ollie ang {count} na mahihirap na tanong na nagkamali ka kamakailan. I-master natin sila!",
+        "startReview": "Simulan ang Review",
+        "maybeLater": "Siguro Mamaya Na",
+        "completeTitle": "Tapos na ang Review!",
+        "completeDesc": "Suko na ang {count} na mahihirap na tanong na iyon. Lalong tumatalas ang iyong isipan!",
+        "solved": "Naresolba Na",
+        "xpEarned": "XP na Nakuha",
+        "trickyQuestion": "Mahirap na Tanong",
+        "wellDone": "Magaling!",
+        "notQuite": "Hindi masyadong tama, kaibigan",
+        "check": "I-check",
+        "next": "Susunod",
+        "finish": "Tapusin"
+    },
+    "MockTest": {
+        "preparing": "Inihahanda ang Opisyal na Mock Test simulation...",
+        "title": "Opisyal na Mock Test",
+        "requirements": "Mga Kinakailangan",
+        "passMark": "Dapat makakuha ng hindi bababa sa 75% para pumasa sa test.",
+        "mandatory": "Mandatory",
+        "mandatoryDesc": "Dapat masagot nang tama ang lahat ng tanong tungkol sa mga demokratikong paniniwala.",
+        "timer": "Timer",
+        "duration": "Isang buong 45-minutong tagal.",
+        "reward": "Reward",
+        "rewardDesc": "Kumuha ng hanggang 500 XP at isang certificate!",
+        "startTest": "Simulan ang Opisyal na Test",
+        "backDashboard": "Balik sa Dashboard",
+        "legend": "Isa kang alamat!",
+        "almost": "Malapit na, kaibigan!",
+        "passDesc": "Matagumpay mong naipasa ang Opisyal na Mock Test. Handa ka na para sa totoong test!",
+        "mandatoryFailDesc": "May ilang mandatory questions tungkol sa mga demokratikong paniniwala na nagkamali ka. Napakahalaga ng mga ito para sa test!",
+        "failScoreDesc": "Nakakuha ka ng {score}/{total}, na medyo mababa sa 75% na kailangan para pumasa.",
+        "overallScore": "Kabuuang Score",
+        "mandatoryLabel": "Mandatory",
+        "certificateTitle": "Citizenship Certificate",
+        "certificateUnlocked": "Unlocked para sa mga Citizenship Achievers!",
+        "view": "Tignan",
+        "saving": "Sini-save ang mga resulta...",
+        "returnHome": "Balik sa Home",
+        "questionCount": "Tanong {current} ng {total}",
+        "mandatoryBadge": "MANDATORY QUESTION",
+        "rulesTip": "Dahan-dahan lang, mate. Nalalapat ang mga opisyal na panuntunan sa test.",
+        "finishTest": "Tapusin ang Test",
+        "nextQuestion": "Susunod na Tanong",
+        "checkAnswer": "I-check ang Sagot"
+    },
+    "Profile": {
+        "title": "Profile",
+        "settings": "Settings",
+        "signOut": "Sign Out",
+        "level": "Level {level}",
+        "pro": "PRO",
+        "joined": "Sumali noong {date}",
+        "dayStreak": "{count} araw na streak",
+        "totalXp": "Kabuuang {count} XP",
+        "yourStats": "Iyong Stats",
+        "currentXp": "Kasalukuyang XP",
+        "streak": "Streak",
+        "quizzes": "Quizzes",
+        "badges": "Badges",
+        "recentBadges": "Mga Kamakailang Badge",
+        "viewCollection": "Tignan ang Koleksyon",
+        "startLearning": "Magsimulang mag-aral para simulan ang iyong paglalakbay!",
+        "legendTitle": "Isa kang PassMate Legend",
+        "goldTitle": "Naghihintay sa iyo ang PassMate Gold",
+        "legendDesc": "Ginagamit mo ang lahat ng premium features. Patuloy na mag-aral sa tulong ni Ollie!",
+        "goldDesc": "I-unlock ang unlimited na mga buhay, AI voice tutor, at mga eksklusibong masterclass.",
+        "manageSub": "I-manage ang Subscription",
+        "goPremium": "Mag-Premium Na"
+    },
+    "Settings": {
+        "title": "Account Settings",
+        "backProfile": "Balik sa Profile",
+        "profilePicture": "Larawan sa Profile",
+        "personalDetails": "Mga Personal na Detalye",
+        "fullName": "Full Name",
+        "username": "Username",
+        "email": "Email",
+        "saveChanges": "I-save ang mga Pagbabago",
+        "saving": "Sini-save...",
+        "success": "Matagumpay na na-update ang profile!",
+        "avatars": {
+            "ollie1": "Classic Ollie",
+            "ollie2": "Smart Ollie",
+            "ollie3": "Cool Ollie",
+            "ollie4": "Party Ollie",
+            "ollie5": "Sporty Ollie",
+            "ollie6": "Yoga Ollie"
+        },
+        "placeholders": {
+            "fullName": "Ipasok ang iyong buong pangalan",
+            "username": "@username"
+        }
+    },
+    "Security": {
+        "title": "Privacy at Security",
+        "subtitle": "I-manage ang iyong account data at mga paraan ng pag-login.",
+        "backProfile": "Balik sa Profile",
+        "changePassword": "Palitan ang Password",
+        "newPassword": "Bagong Password",
+        "confirmPassword": "Kumpirmahin ang Password",
+        "placeholder": "••••••••",
+        "updatePassword": "I-update ang Password",
+        "updating": "Ina-update...",
+        "passwordMinLength": "Ang password ay dapat na may hindi bababa sa 8 characters",
+        "passwordsMismatch": "Hindi magkatugma ang mga password",
+        "success": "Matagumpay na na-update ang password!",
+        "twoFactor": {
+            "title": "Two-Factor Authentication",
+            "soon": "Malapit Na",
+            "desc": "Magdagdag ng extra layer ng security para sa iyong account.",
+            "enable": "I-enable ang 2FA"
+        },
+        "recentActivity": {
+            "title": "Kamakailang Aktibidad",
+            "currentSession": "Kasalukuyang Aktibong Session",
+            "loggedIn": "Huling nag-login",
+            "ago": "{time} ago",
+            "signOutAll": "Mag-sign out sa lahat ng devices"
+        },
+        "dataPrivacy": {
+            "title": "Data at Privacy",
+            "desc": "Ang iyong privacy ang aming top priority. Mayroon kang ganap na kontrol sa iyong data.",
+            "policy": "Privacy Policy",
+            "terms": "Terms of Service",
+            "downloadTitle": "I-download ang iyong Data",
+            "downloadDesc": "Kumuha ng kopya ng lahat ng iyong personal data, progress, at aktibidad.",
+            "requestExport": "Humiling ng Export"
+        },
+        "dangerZone": {
+            "title": "Danger Zone",
+            "desc": "Kapag binura mo ang iyong account, wala nang balikan. Maging maingat.",
+            "delete": "Permanenteng Burahin ang Account"
+        }
+    },
+    "Referral": {
+        "title": "Mag-imbita ng mga Kaibigan",
+        "backProfile": "Balik sa Profile",
+        "heroTitle": "Magdala ng mga Mate,\nMakakuha ng mga Reward!",
+        "heroDesc": "Ibitahan ang iyong mga kaibigan sa PassMate at sabay-sabay na maghanda para sa Australian citizenship. Mag-signup sila, at pareho kayong makakakuha ng mga astig na reward!",
+        "yourLink": "Iyong Personal na Referral Link",
+        "copyLink": "Kopyahin ang Link",
+        "copied": "Nakopya na!",
+        "performance": "Iyong Referral Performance",
+        "topReferrer": "Top Referrer",
+        "climbLeaderboard": "Magdala pa ng mas maraming mate para umakyat sa leaderboard!",
+        "quickShare": "Mabilisang Pag-share",
+        "milestonesTitle": "Referral Milestones",
+        "friendsCount": "{count} na mga kaibigan",
+        "unlockBadge": "Nag-uunlock ng \"{name}\" badge",
+        "howItWorks": {
+            "title": "Paano ito gumagana?",
+            "desc": "Kapag nag-signup ang iyong kaibigan gamit ang iyong link, pareho kayong makakakuha ng bonus XP. Sa pag-imbita ng mas maraming kaibigan, maa-unlock mo ang mga eksklusibong badge at Premium discounts!"
+        },
+        "stats": {
+            "friends": "Mga kaibigang naimbita",
+            "xp": "Kabuuang bonus XP na nakuha",
+            "badges": "Mga Referral Badge"
+        },
+        "rewards": {
+            "r1": "500 Bonus XP",
+            "r2": "Isang buwang discount sa Premium",
+            "r3": "Eksklusibong Mate Gold Badge",
+            "b1": "Friendly Koala",
+            "b2": "Party Leader",
+            "b3": "Community Column"
+        },
+        "social": {
+            "meta": "Facebook",
+            "x": "X / Twitter",
+            "whatsapp": "I-share sa WhatsApp"
+        }
+    },
+    "Premium": {
+        "title": "PassMate Premium",
+        "backDashboard": "Balik sa Dashboard",
+        "goPremium": "Mag-Premium Na",
+        "heroTitle": "Ang {italic}pinakamabilis{italic} na paraan para maging Australian",
+        "heroSubtitle": "Sumali sa libu-libong bagong citizens na nakapasa sa kanilang test gamit ang aming eksklusibong AI-powered features.",
+        "plans": {
+            "popular": "Pinaka-popular",
+            "loading": "Pinoproseso...",
+            "free": {
+                "name": "Libre",
+                "cta": "Kasalukuyang Plan"
+            },
+            "ready": {
+                "name": "Test Ready",
+                "duration": "/taon",
+                "cta": "Maging Test Ready"
+            },
+            "achiever": {
+                "name": "Citizenship Achiever",
+                "duration": "/lifetime",
+                "cta": "Maging isang Achiever"
+            },
+            "features": {
+                "quests": "Daily Quests at Streaks",
+                "bank": "500+ Questions sa Question Bank",
+                "leagues": "Weekly Leagues",
+                "hearts5": "5 Hearts (Nag-reregenerate)",
+                "unlimitedHearts": "Unlimited Hearts",
+                "aiTutor": "Ollie: AI Voice Tutor",
+                "mockExam": "Full Mock Exam Simulator",
+                "aiReview": "AI-powered Error Review",
+                "adFree": "100% Ad-Free na Karanasan",
+                "masterclass": "Eksklusibong Citizenship Masterclass",
+                "certificate": "Opisyal na Prep Certificate",
+                "updates": "Lifetime na pag-update ng mga tanong",
+                "discord": "Access sa VIP Discord Community"
+            }
+        },
+        "comparison": {
+            "title": "Ipaghambing ang iyong Plan",
+            "subtitle": "Piliin ang level na pinaka-angkop para sa iyong istilo ng pag-aaral at mga layunin.",
+            "feature": "Feature",
+            "free": "Libre",
+            "ready": "Test Ready",
+            "achiever": "Achiever",
+            "rows": {
+                "quests": "Daily Quests",
+                "bank": "Question Bank",
+                "unlimitedHearts": "Unlimited Hearts",
+                "aiTutor": "Voice Tutor",
+                "mockExam": "Mock Exam",
+                "aiReview": "Error Review",
+                "adFree": "Walang Ads",
+                "masterclass": "Masterclass",
+                "certificate": "Certificate",
+                "vip": "VIP Community"
+            }
+        },
+        "testimonials": {
+            "title": "Karanasan ng mga User",
+            "subtitle": "Pakinggan ang mga nakapasa na sa kanilang test gamit ang PassMate Premium.",
+            "t1": {
+                "name": "Priya S.",
+                "city": "Sydney",
+                "text": "Ang AI Tutor ay talagang nakapagpabago ng laro. Ang pakikipag-usap kay Ollie ay nagbigay sa akin ng matinding tiwala sa aking kaalaman."
+            },
+            "t2": {
+                "name": "Mohamed A.",
+                "city": "Melbourne",
+                "text": "Ang mga mock test ay eksaktong katulad ng totoong test. Alam ko ang dapat asahan pagpasok ko sa testing center."
+            },
+            "t3": {
+                "name": "Linda W.",
+                "city": "Brisbane",
+                "text": "Maayos na naipaliwanag ng mga Masterclass ang lahat. Sulit na sulit ito para sa Achiever plan."
+            }
+        },
+        "faqs": {
+            "title": "Mga Madalas Itanong (FAQs)",
+            "q1": {
+                "q": "Maaari ko bang i-cancel ang aking subscription anumang oras?",
+                "a": "Oo, maaari mong i-cancel ang iyong subscription anumang oras mula sa iyong account settings. Mananatili kang may access sa premium features hanggang sa katapusan ng iyong billing period."
+            },
+            "q2": {
+                "q": "Ano ang pagkakaiba ng Test Ready at Achiever plans?",
+                "a": "Ang Test Ready ay isang annual plan na nakatuon sa core premium features. Ang Achiever ay isang lifetime plan na may kasamang mga eksklusibong perk tulad ng video masterclasses at prep certificate."
+            },
+            "q3": {
+                "q": "Paano gumagana ang Unlimited Hearts?",
+                "a": "Sa Premium, hindi ka papatawan ng parusa para sa mga maling sagot. Maaari kang mag-practice nang kahit kailan mo gusto nang walang abala."
+            },
+            "q4": {
+                "q": "Maaari ko bang baguhin ang aking isip pagkatapos magbayad?",
+                "a": "Nag-aalok kami ng 30-day money-back guarantee. Kung hindi ka nasiyahan sa iyong karanasan, sabihin lang sa amin at ibabalik namin ang iyong buong bayad."
+            }
+        },
+        "trust": {
+            "secure": "Ligtas na Pagbabayad",
+            "secureDesc": "256-bit secure encryption na pinapagana ng Stripe.",
+            "rating": "4.9/5 Star na Rating",
+            "ratingDesc": "Pinagkakatiwalaan ng mahigit 5,000+ na matagumpay na Australian Citizens.",
+            "refund": "Money-Back Guarantee",
+            "refundDesc": "30-day refund, walang mga tanong."
+        },
+        "banners": {
+            "cancelled": "Nakansela ang pagbabayad. Maaari mong subukan ulit kapag handa ka na!",
+            "ai_tutor": {
+                "title": "Gusto mo bang makipag-usap ka kay Ollie?",
+                "desc": "Maghanda nang mas matalino gamit ang aming AI voice tutor. Available sa Test Ready o Achiever plans."
+            },
+            "masterclass": {
+                "title": "I-unlock ang Masterclass",
+                "desc": "Mag-aral nang mas malalim gamit ang aming komprehensibong video course. Eksklusibo para sa mga Citizenship Achievers."
+            },
+            "mock_test": {
+                "title": "Unlimited Mock Tests",
+                "desc": "Mag-practice nang kahit kailan mo gusto at matuto mula sa iyong mga mali gamit ang unlimited hearts."
+            },
+            "requires": "Nangangailangan ng {feature}"
+        }
+    },
+    "Billing": {
+        "backProfile": "Balik sa Profile",
+        "title": "Billing at Subscription",
+        "subtitle": "I-manage ang iyong plan, mga pagbabayad, at billing history.",
+        "currentPlan": "Kasalukuyang Plan",
+        "premiumPlan": "Achiever Premium",
+        "freePlan": "Libreng Explorer",
+        "activeAccount": "Aktibong Account",
+        "loading": "Naglo-load...",
+        "managePayments": "I-manage ang mga Pagbabayad",
+        "upgradePremium": "Mag-upgrade sa Premium",
+        "yourBenefits": "Iyong mga Benepisyo",
+        "nextBilling": "Susunod na Billing",
+        "lifetimeAccess": "Lifetime Access",
+        "lifetimeDesc": "Nasa iyo na ang lahat, mate! Wala nang susunod na mga pagbabayad.",
+        "na": "N/A",
+        "upgradeUnlock": "Mag-upgrade para ma-unlock ang buong features.",
+        "recentInvoices": "Mga Kamakailang Invoice",
+        "passmatePremium": "PassMate Premium",
+        "oneTimePayment": "One-time Payment",
+        "downloadPdf": "I-download ang PDF",
+        "needMoreHistory": "Kailangan ng higit pang history? Gamitin ang",
+        "billingPortal": "Billing Portal",
+        "noInvoices": "Wala pang mga invoice.",
+        "helpfulLinks": "Mga Nakakatulong na Link",
+        "pricingDetails": "Mga Detalye ng Presyo",
+        "refundPolicy": "Refund Policy",
+        "subscriptionFaq": "Subscription FAQ",
+        "contactSupport": "Makipag-ugnayan sa Support",
+        "plans": {
+            "free": {
+                "f1": "Basic study modules",
+                "f2": "Daily practice questions",
+                "f3": "Support ng community",
+                "f4": "Standard na learning path"
+            },
+            "premium": {
+                "f1": "Unlimited mock tests",
+                "f2": "24/7 AI Tutor access",
+                "f3": "Masterclass series",
+                "f4": "Opisyal na certificate",
+                "f5": "Karanasang walang ads"
+            }
+        }
+    },
+    "Support": {
+        "backProfile": "Balik sa Profile",
+        "title": "Paano kami makakatulong, kaibigan?",
+        "subtitle": "Maghanap sa aming help center o mag-browse sa mga kategorya sa ibaba para mahanap ang kailangan mo.",
+        "searchPlaceholder": "Maghanap ng mga sagot...",
+        "categories": {
+            "study": {
+                "title": "Gabay sa Pag-aaral",
+                "desc": "Alamin kung paano gamitin ang app nang epektibo."
+            },
+            "account": {
+                "title": "Account at Billing",
+                "desc": "I-manage ang iyong subscription at profile."
+            },
+            "test": {
+                "title": "Impormasyon sa Test",
+                "desc": "Mga detalye tungkol sa opisyal na citizenship test."
+            },
+            "feedback": {
+                "title": "Magbigay ng Feedback",
+                "desc": "Tulungan kaming mas pagandahin ang PassMate."
+            }
+        },
+        "faqsTitle": "Mga Malimit Itanong",
+        "viewAllFaqs": "Tignan ang lahat ng FAQs",
+        "stillNeedHelp": "Kailangan pa ba ng tulong?",
+        "supportDesc": "Karaniwang sumasagot ang aming friendly support team sa loob ng 24 oras. Balik na tayo sa pag-aaral!",
+        "messageUs": "I-message kami",
+        "liveChat": "Live Chat",
+        "monFri": "Mon - Fri",
+        "support24h": "24-hour Support",
+        "resourcesTitle": "Mga Nakakatulong na Resource",
+        "resources": {
+            "book": "Opisyal na Resource Book (PDF)",
+            "videos": "Study Video Series",
+            "forum": "Community Forum",
+            "booking": "I-book ang iyong test"
+        },
+        "faqs": {
+            "q1": "Updated ba ang app na ito para sa 2025/2026?",
+            "a1": "Oo, ang aming content ay patuloy na ina-update para maipakita ang pinakabagong 'Our Common Bond' version at mga opisyal na patterns ng test.",
+            "q2": "Paano gumagana ang AI Tutor?",
+            "a2": "Ang aming AI Tutor ay sinanay sa mga opisyal na Australian citizenship resources para masagot ang iyong mga partikular na katanungan 24/7."
+        },
+        "form": {
+            "labelName": "Iyong Pangalan",
+            "labelEmail": "Email Address",
+            "labelSubject": "Paksa",
+            "labelMessage": "Mensahe",
+            "placeholderName": "Steve Irwin",
+            "placeholderEmail": "mate@example.com",
+            "placeholderMessage": "Sabihin sa amin ang iyong iniisip...",
+            "placeholderSubject": "Pumili ng paksa...",
+            "subjects": {
+                "general": "Pangkalahatang Inquiry",
+                "technical": "Teknikal na Support",
+                "billing": "Katanungan sa Billing",
+                "refund": "Request para sa Refund",
+                "partnership": "Oportunidad sa Partnership",
+                "feedback": "Feedback / Suhestyon"
+            },
+            "send": "Ipadala ang Mensahe",
+            "sending": "Ipinapadala...",
+            "sent": "Naipadala na ang Mensahe!",
+            "success": "Salamat sa pakikipag-ugnayan. Babalikan ka namin sa loob ng 24 oras."
+        },
+        "contactInfo": {
+            "title": "Impormasyon sa Pakikipag-ugnayan",
+            "email": "Email",
+            "responseTime": "Oras ng Pagtugon",
+            "responseValue": "Sa loob ng 24 oras (Mon-Fri)",
+            "location": "Lokasyon",
+            "locationValue": "Sydney, Australia 🇦🇺"
+        }
     }
 }
