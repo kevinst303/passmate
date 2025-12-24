@@ -205,7 +205,15 @@
         "resetInfo": "يتم إعادة تعيين الدوري كل أحد الساعة 11:59 مساءً",
         "promotion": "ترقية",
         "relegation": "هبوط",
-        "you": "أنت"
+        "you": "أنت",
+        "weeklyXpLabel": "{xp} XP أسبوعي",
+        "totalXpLabel": "إجمالي XP",
+        "leagueNames": {
+            "Bronze": "برونزي",
+            "Silver": "فضي",
+            "Gold": "ذهبي",
+            "Diamond": "ماسي"
+        }
     },
     "SkillTrees": {
         "backDashboard": "العودة للوحة التحكم",
@@ -225,7 +233,7 @@
         "reviewTopic": "مراجعة الموضوع",
         "startLearning": "ابدأ التعلم",
         "mockTestTitle": "الاختبار التجريبي الرسمي",
-        "mockTestDesc": "هل أنت مستعد لإثبات معرفتك؟ اجتز هذا الاختبار للحصول على وسام {badge}!",
+        "mockTestDesc": "هل أنت مستعد لإثبات معرفتك؟ اجتز هذا الاختبار للحصول على وسام <badge />!",
         "mockBadge": "\"سيد الاختبار\"",
         "takeTest": "خض الاختبار",
         "proTip": "نصيحة: أكمل المواضيع بالترتيب لفتح محتوى جديد وتحقيق أقصى استفادة من تعلمك!"
@@ -372,30 +380,63 @@
         "legendDesc": "أنت تستخدم جميع ميزات بريميوم. استمر في التعلم بمساعدة أولي!",
         "goldDesc": "افتح قلوباً غير محدودة، ومعلم صوت ذكاء اصطناعي، وماستركلاس حصري.",
         "manageSub": "إدارة الاشتراك",
-        "goPremium": "اشترك في بريميوم"
+        "goPremium": "اشترك في بريميوم",
+        "becomePro": "كن برو",
+        "supportOllie": "ادعم أولي",
+        "features": {
+            "mockTests": "اختبارات تجريبية غير محدودة",
+            "aiTutor": "معلم ذكاء اصطناعي شخصي 24/7",
+            "aiTutorUnlocked": "الوصول إلى معلم الذكاء الاصطناعي (مفتوح)",
+            "analytics": "تحليلات مفصلة للأداء",
+            "noHearts": "لا توجد قيود على القلوب"
+        }
     },
     "Settings": {
-        "title": "إعدادات الحساب",
         "backProfile": "العودة للملف الشخصي",
+        "title": "إعدادات الحساب",
+        "profileSection": "الملف الشخصي",
+        "preferencesSection": "التفضيلات",
+        "securitySection": "الأمان",
         "profilePicture": "صورة الملف الشخصي",
+        "chooseAvatar": "اختر صورتك الرمزية من الخيارات أدناه",
         "personalDetails": "التفاصيل الشخصية",
         "fullName": "الاسم الكامل",
         "username": "اسم المستخدم",
-        "email": "البريد الإلكتروني",
+        "email": "البريد الإلكتروني (لا يمكن تغييره)",
+        "emailLocked": "عنوان البريد الإلكتروني مرتبط بحسابك ولا يمكن تغييره.",
         "saveChanges": "حفظ التغييرات",
         "saving": "جاري الحفظ...",
         "success": "تم تحديث الملف الشخصي بنجاح!",
+        "appearance": "المظهر",
+        "darkMode": "الوضع الداكن",
+        "darkModeDesc": "التبديل إلى المظهر الداكن للقراءة المريحة",
+        "language": "اللغة",
+        "currentLanguage": "العربية",
+        "notifications": "الإشعارات",
+        "pushNotifications": "إشعارات الدفع",
+        "pushNotificationsDesc": "احصل على تذكيرات للحفاظ على سلسلتك",
+        "soundEffects": "المؤثرات الصوتية",
+        "soundEffectsDesc": "تشغيل أصوات للإجابات الصحيحة/الخاطئة",
+        "securityOptions": "خيارات الأمان",
+        "changePassword": "تغيير كلمة المرور",
+        "changePasswordDesc": "تحديث كلمة المرور لتحسين الأمان",
+        "helpSupport": "المساعدة والدعم",
+        "helpSupportDesc": "احصل على إجابات لأسئلتك",
+        "accountSecurity": "حسابك آمن",
+        "accountSecurityDesc": "نستخدم تشفيرًا قياسيًا في الصناعة لحماية بياناتك. يتم تشفير كلمة مرورك ونسخ تقدمك التعليمي احتياطيًا يوميًا.",
+        "placeholders": {
+            "fullName": "أدخل اسمك الكامل",
+            "username": "@اسم_المستخدم"
+        },
         "avatars": {
             "ollie1": "أولي الكلاسيكي",
             "ollie2": "أولي الذكي",
             "ollie3": "أولي الرائع",
             "ollie4": "أولي الحفلة",
             "ollie5": "أولي الرياضي",
-            "ollie6": "أولي اليوغا"
-        },
-        "placeholders": {
-            "fullName": "أدخل اسمك الكامل",
-            "username": "@اسم_المستخدم"
+            "ollie6": "أولي اليوغا",
+            "ollie7": "أولي الحكيم",
+            "ollie8": "أولي روبي"
         }
     },
     "Security": {
@@ -481,7 +522,7 @@
         "title": "PassMate بريميوم",
         "backDashboard": "العودة للوحة التحكم",
         "goPremium": "اشترك في بريميوم",
-        "heroTitle": "أسرع طريقة {italic} لتصبح أسترالياً",
+        "heroTitle": "أسرع طريقة <italic> لتصبح أسترالياً</italic>",
         "heroSubtitle": "انضم إلى آلاف المواطنين الجدد الذين اجتازوا الاختبار بميزاتنا الحصرية المدعومة بالذكاء الاصطناعي.",
         "plans": {
             "popular": "الأكثر شيوعاً",
@@ -718,5 +759,40 @@
             "location": "الموقع",
             "locationValue": "سيدني، أستراليا 🇦🇺"
         }
+    },
+    "Friends": {
+        "title": "Friends",
+        "backDashboard": "Dashboard",
+        "searchPlaceholder": "Find mates by username...",
+        "add": "Add",
+        "requestSent": "Request sent to {username}!",
+        "battleStartError": "Failed to start battle",
+        "removeConfirm": "Are you sure you want to remove this mate?",
+        "pendingBattles": "Pending Battles",
+        "waitingMates": "Waiting for Mates",
+        "recentResults": "Recent Results",
+        "friendRequests": "Friend Requests",
+        "yourMates": "Your Mates",
+        "challengedYou": "Challenged you to a battle!",
+        "fight": "Fight!",
+        "improveScore": "Improve Score",
+        "yourTurnDone": "Your turn done! Waiting...",
+        "challengeSent": "Challenge sent!",
+        "finishPart": "Finish your part",
+        "won": "You won!",
+        "draw": "It's a draw!",
+        "lost": "Mangled...",
+        "versus": "vs {username} • {score1}:{score2}",
+        "rematch": "Rematch?",
+        "wantsToBeMates": "Wants to be mates!",
+        "accept": "Accept",
+        "reject": "Reject",
+        "friendsCount": "{count} Friends",
+        "chat": "Chat",
+        "battle": "Battle",
+        "noFriends": "No mates yet? Add some by username above! 🐨",
+        "inviteTitle": "Invite your mates!",
+        "inviteDesc": "Learning is better with friends. Invite someone to join PassMate and compete together!",
+        "sendInvites": "Send Invites"
     }
 }

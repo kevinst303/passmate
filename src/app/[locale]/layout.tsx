@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Script from 'next/script';
 import { PWARegister } from "@/components/PWARegister";
+import { SettingsProvider } from "@/providers/SettingsProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -79,8 +80,10 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <NextIntlClientProvider messages={messages} locale={locale}>
-          {children}
-          <PWARegister />
+          <SettingsProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+            <PWARegister />
+          </SettingsProvider>
         </NextIntlClientProvider>
         <Script
           id="remove-attrs"

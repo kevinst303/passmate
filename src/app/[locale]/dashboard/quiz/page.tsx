@@ -231,11 +231,11 @@ function QuizContent() {
                     </p>
 
                     {!canStart && (
-                        <div className="bg-red-50 p-6 rounded-[2rem] border-2 border-red-100 mb-8 flex items-center gap-4 text-left">
+                        <div className="bg-red-500/10 p-6 rounded-[2rem] border-2 border-red-500/20 mb-8 flex items-center gap-4 text-left">
                             <Heart className="w-10 h-10 text-red-500 fill-red-500 flex-shrink-0" />
                             <div>
-                                <p className="font-bold text-red-800">{t("nextHeartIn", { time: "2h 45m" })}</p>
-                                <p className="text-sm text-red-700">{t("heartsRegen")}</p>
+                                <p className="font-bold text-red-600 dark:text-red-400">{t("nextHeartIn", { time: "2h 45m" })}</p>
+                                <p className="text-sm text-red-500/80">{t("heartsRegen")}</p>
                             </div>
                         </div>
                     )}
@@ -270,7 +270,7 @@ function QuizContent() {
                 <motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    className="max-w-md w-full bg-white p-8 rounded-[3rem] border-2 border-border shadow-xl"
+                    className="max-w-md w-full bg-card glass p-8 rounded-[3rem] border-2 border-border shadow-xl"
                 >
                     <div className="text-6xl mb-4">
                         {isBattle
@@ -317,17 +317,17 @@ function QuizContent() {
                     </p>
 
                     <div className="grid grid-cols-2 gap-4 mb-8">
-                        <div className="bg-orange-50 p-4 rounded-3xl border-2 border-orange-100">
-                            <div className="flex items-center justify-center gap-2 text-orange-600 font-black mb-1">
-                                <Flame className="w-5 h-5 fill-orange-600" /> {common("streak").toUpperCase()}
+                        <div className="bg-orange-500/10 p-4 rounded-3xl border-2 border-orange-500/20">
+                            <div className="flex items-center justify-center gap-2 text-orange-600 dark:text-orange-400 font-black mb-1">
+                                <Flame className="w-5 h-5 fill-orange-600 dark:fill-orange-400" /> {common("streak").toUpperCase()}
                             </div>
-                            <div className="text-2xl font-display font-black text-orange-700">+1 {common("days")}</div>
+                            <div className="text-2xl font-display font-black text-orange-700 dark:text-orange-300">+1 {common("days")}</div>
                         </div>
-                        <div className="bg-blue-50 p-4 rounded-3xl border-2 border-blue-100">
-                            <div className="flex items-center justify-center gap-2 text-blue-600 font-black mb-1">
-                                <Zap className="w-5 h-5 fill-blue-600" /> {common("xp").toUpperCase()}
+                        <div className="bg-blue-500/10 p-4 rounded-3xl border-2 border-blue-500/20">
+                            <div className="flex items-center justify-center gap-2 text-blue-600 dark:text-blue-400 font-black mb-1">
+                                <Zap className="w-5 h-5 fill-blue-600 dark:fill-blue-400" /> {common("xp").toUpperCase()}
                             </div>
-                            <div className="text-2xl font-display font-black text-blue-700">+{score * 20}</div>
+                            <div className="text-2xl font-display font-black text-blue-700 dark:text-blue-300">+{score * 20}</div>
                         </div>
                     </div>
 
@@ -349,9 +349,9 @@ function QuizContent() {
                                             initial={{ y: 20, opacity: 0 }}
                                             animate={{ y: 0, opacity: 1 }}
                                             transition={{ delay: 0.2 + (idx * 0.1) }}
-                                            className="bg-gradient-to-br from-yellow-400 to-orange-500 p-0.5 rounded-2xl shadow-lg shadow-yellow-200"
+                                            className="bg-gradient-to-br from-yellow-400 to-orange-500 p-0.5 rounded-2xl shadow-lg shadow-yellow-200/50"
                                         >
-                                            <div className="bg-white px-4 py-2 rounded-[0.9rem] border border-yellow-100/50 flex items-center gap-2">
+                                            <div className="bg-card px-4 py-2 rounded-[0.9rem] border border-yellow-100/50 flex items-center gap-2">
                                                 <span className="text-2xl">{ach.badge_url || "🏆"}</span>
                                                 <span className="font-black text-sm text-yellow-900">{ach.name}</span>
                                             </div>
@@ -378,7 +378,7 @@ function QuizContent() {
     return (
         <div className="min-h-screen bg-background flex flex-col">
             {/* Top Header */}
-            <header className="max-w-4xl mx-auto w-full px-6 py-6 flex items-center gap-4">
+            <header className="max-w-4xl mx-auto w-full px-6 py-6 flex items-center gap-4 sticky top-0 bg-background z-10">
                 <button onClick={() => router.back()} className="text-muted-foreground hover:text-foreground">
                     <X className="w-8 h-8" />
                 </button>
@@ -419,10 +419,10 @@ function QuizContent() {
                                         className={cn(
                                             "w-full p-5 rounded-2xl border-2 text-left font-bold transition-all text-lg flex items-center gap-4 outline-none",
                                             isSelected
-                                                ? "border-primary bg-primary/5 text-primary shadow-[0_4px_0_rgba(27,155,143,0.3)] translate-y-[-2px]"
-                                                : "border-border hover:bg-muted/50",
-                                            isAnswered && index === currentQuestion.correct_index && "border-primary bg-primary/10",
-                                            isAnswered && isSelected && index !== currentQuestion.correct_index && "border-accent bg-accent/10"
+                                                ? "border-primary bg-primary/10 text-primary shadow-[0_4px_0_rgba(27,155,143,0.3)] translate-y-[-2px]"
+                                                : "border-border bg-card/10 hover:bg-muted/50",
+                                            isAnswered && index === currentQuestion.correct_index && "border-green-500/50 bg-green-500/10 text-green-600 dark:text-green-400",
+                                            isAnswered && isSelected && index !== currentQuestion.correct_index && "border-red-500/50 bg-red-500/10 text-red-600 dark:text-red-400"
                                         )}
                                     >
                                         <span className={cn(
@@ -466,7 +466,9 @@ function QuizContent() {
                         animate={{ y: 0 }}
                         className={cn(
                             "p-6 md:p-10 border-t-2",
-                            isCorrect ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
+                            isCorrect
+                                ? "bg-green-500/10 border-green-500/20 dark:bg-green-900/20 dark:border-green-800/50"
+                                : "bg-red-500/10 border-red-500/20 dark:bg-red-900/20 dark:border-red-800/50"
                         )}
                     >
                         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6">
@@ -477,12 +479,12 @@ function QuizContent() {
                                 {isCorrect ? <CheckCircle2 className="w-10 h-10" /> : <XCircle className="w-10 h-10" />}
                             </div>
                             <div className="flex-1 text-center md:text-left">
-                                <h3 className={cn("text-2xl font-black mb-1", isCorrect ? "text-green-800" : "text-red-800")}>
+                                <h3 className={cn("text-2xl font-black mb-1", isCorrect ? "text-green-800 dark:text-green-400" : "text-red-800 dark:text-red-400")}>
                                     {isCorrect ? t("correct") : t("incorrect")}
                                 </h3>
-                                <div className={cn("font-medium", isCorrect ? "text-green-700" : "text-red-700")}>
+                                <div className={cn("font-medium", isCorrect ? "text-green-700 dark:text-green-500/80" : "text-red-700 dark:text-red-500/80")}>
                                     {isAnswered && !isCorrect && (
-                                        <p className="block font-bold mb-1">{t("correctAnswer", { answer: currentQuestion.options[currentQuestion.correct_index] })}</p>
+                                        <p className="block font-bold mb-1 underline underline-offset-4">{t("correctAnswer", { answer: currentQuestion.options[currentQuestion.correct_index] })}</p>
                                     )}
                                     <p>{currentQuestion.explanation}</p>
                                 </div>

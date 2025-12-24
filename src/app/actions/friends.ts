@@ -23,8 +23,10 @@ export async function getFriendsData() {
         .eq('status', 'accepted');
 
     if (friendsError) {
-        console.error('Error fetching friends:', friendsError);
-        return { error: 'Failed to fetch friends' };
+        console.error('Error fetching friends - FULL ERROR:', friendsError);
+        console.error('Error fetching friends - MSG:', friendsError.message);
+        console.error('Error fetching friends - CODE:', friendsError.code);
+        return { error: `Failed to fetch friends: ${friendsError.message || 'Unknown error'}` };
     }
 
     // Format the list to show the "other" person as the friend
@@ -165,8 +167,10 @@ export async function searchUsers(query: string) {
         .limit(10);
 
     if (error) {
-        console.error('Error searching users:', error);
-        return { error: 'Failed to search users' };
+        console.error('Error searching users - FULL ERROR:', error);
+        console.error('Error searching users - MSG:', error.message);
+        console.error('Error searching users - CODE:', error.code);
+        return { error: `Failed to search users: ${error.message || 'Unknown error'}` };
     }
 
     return { users: users || [] };

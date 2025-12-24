@@ -86,10 +86,10 @@ export default function ProfileClient({ data, achievementsData }: ProfileClientP
     const unlockedAchievements = achievements.filter((a) => a.is_unlocked);
 
     return (
-        <div className="min-h-screen bg-[#FDFCFB] pb-24 md:pb-8 md:pl-28 md:pr-8">
+        <div className="min-h-screen bg-background pb-24 md:pb-8 md:pl-28 md:pr-8 font-sans">
             <main className="max-w-5xl mx-auto py-8 space-y-10">
                 {/* Profile Header Card */}
-                <section className="bg-white p-10 rounded-[4rem] border-2 border-border shadow-2xl relative overflow-hidden group">
+                <section className="bg-card glass p-10 rounded-[4rem] border-2 border-border shadow-2xl relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
 
                     <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
@@ -134,11 +134,11 @@ export default function ProfileClient({ data, achievementsData }: ProfileClientP
                             </div>
 
                             <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                                <div className="bg-orange-50 text-orange-600 px-6 py-2.5 rounded-2xl border-2 border-orange-100 font-black text-sm flex items-center gap-2 shadow-sm">
-                                    <Flame className="w-5 h-5 fill-orange-600" /> {t("dayStreak", { count: profile.daily_streak })}
+                                <div className="bg-orange-100 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400 px-6 py-2.5 rounded-2xl border-2 border-orange-200 dark:border-orange-800 font-black text-sm flex items-center gap-2 shadow-sm">
+                                    <Flame className="w-5 h-5 fill-orange-600 dark:fill-orange-400" /> {t("dayStreak", { count: profile.daily_streak })}
                                 </div>
-                                <div className="bg-blue-50 text-blue-600 px-6 py-2.5 rounded-2xl border-2 border-blue-100 font-black text-sm flex items-center gap-2 shadow-sm">
-                                    <Zap className="w-5 h-5 fill-blue-600" /> {t("totalXp", { count: profile.total_xp.toLocaleString() })}
+                                <div className="bg-blue-100 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 px-6 py-2.5 rounded-2xl border-2 border-blue-200 dark:border-blue-800 font-black text-sm flex items-center gap-2 shadow-sm">
+                                    <Zap className="w-5 h-5 fill-blue-600 dark:fill-blue-400" /> {t("totalXp", { count: profile.total_xp.toLocaleString() })}
                                 </div>
                             </div>
                         </div>
@@ -159,7 +159,7 @@ export default function ProfileClient({ data, achievementsData }: ProfileClientP
                 <div className="grid md:grid-cols-5 gap-10">
                     <div className="md:col-span-3 space-y-10">
                         {/* Stats Summary */}
-                        <section className="bg-white p-10 rounded-[3.5rem] border-2 border-border shadow-xl">
+                        <section className="bg-card glass p-10 rounded-[3.5rem] border-2 border-border shadow-xl">
                             <div className="flex items-center justify-between mb-8">
                                 <h3 className="text-2xl font-display font-black flex items-center gap-3">
                                     <Target className="w-6 h-6 text-accent" /> {t("yourStats")}
@@ -198,7 +198,7 @@ export default function ProfileClient({ data, achievementsData }: ProfileClientP
                         </section>
 
                         {/* Recent Badges */}
-                        <section className="bg-white p-10 rounded-[4.5rem] border-2 border-border shadow-xl">
+                        <section className="bg-card glass p-10 rounded-[4.5rem] border-2 border-border shadow-xl">
                             <div className="flex items-center justify-between mb-8">
                                 <h3 className="text-2xl font-display font-black flex items-center gap-3">
                                     <Award className="w-6 h-6 text-yellow-500" /> {t("recentBadges")}
@@ -243,8 +243,8 @@ export default function ProfileClient({ data, achievementsData }: ProfileClientP
                         <section className={cn(
                             "rounded-[4rem] p-10 shadow-2xl relative overflow-hidden group h-full transition-all",
                             profile.is_premium
-                                ? "bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/20 text-foreground"
-                                : "bg-black text-white border-4 border-white/5"
+                                ? "bg-card glass border-2 border-primary/20 text-foreground"
+                                : "bg-slate-950 text-white border-4 border-white/5"
                         )}>
                             <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/20 transition-colors" />
 
@@ -305,7 +305,7 @@ export default function ProfileClient({ data, achievementsData }: ProfileClientP
                 </div>
 
                 {/* Account Settings List */}
-                <section className="bg-white rounded-[4rem] border-2 border-border shadow-xl overflow-hidden divide-y-2 divide-border/50">
+                <section className="bg-card glass rounded-[4rem] border-2 border-border shadow-xl overflow-hidden divide-y-2 divide-border/50">
                     {[
                         { icon: CreditCard, label: tBilling("title"), href: "/billing", color: "text-green-500", bg: "bg-green-50" },
                         { icon: Shield, label: tSecurity("title"), href: "/security", color: "text-blue-500", bg: "bg-blue-50" },

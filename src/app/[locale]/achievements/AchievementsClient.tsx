@@ -26,12 +26,12 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
     const { achievements, stats } = achievementsData;
 
     return (
-        <div className="min-h-screen bg-muted/20 pb-24 md:pb-8 md:pl-28 md:pr-8">
+        <div className="min-h-screen bg-background pb-24 md:pb-8 md:pl-28 md:pr-8 font-sans">
             {/* Header */}
             <header className="max-w-6xl mx-auto pt-8 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
                     <Link href="/dashboard" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-all font-bold group mb-4">
-                        <div className="bg-white p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
+                        <div className="bg-card glass p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
                             <ArrowLeft className="w-5 h-5" />
                         </div>
                         <span>{t("backDashboard")}</span>
@@ -51,11 +51,11 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                     <div className="flex flex-col items-end">
                         <span className="text-[10px] font-black uppercase text-muted-foreground tracking-widest mb-1">{t("yourStats")}</span>
                         <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-4 py-2 rounded-2xl border-2 border-orange-100 font-black text-sm">
-                                <Flame className="w-4 h-4 fill-orange-600" /> {profile.daily_streak}
+                            <div className="flex items-center gap-1.5 bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-2xl border-2 border-orange-200 dark:border-orange-800 font-black text-sm">
+                                <Flame className="w-4 h-4 fill-orange-600 dark:fill-orange-400" /> {profile.daily_streak}
                             </div>
-                            <div className="flex items-center gap-1.5 bg-blue-50 text-blue-600 px-4 py-2 rounded-2xl border-2 border-blue-100 font-black text-sm">
-                                <Zap className="w-4 h-4 fill-blue-600" /> {profile.total_xp}
+                            <div className="flex items-center gap-1.5 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-2xl border-2 border-blue-200 dark:border-blue-800 font-black text-sm">
+                                <Zap className="w-4 h-4 fill-blue-600 dark:fill-blue-400" /> {profile.total_xp}
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
 
             <main className="max-w-6xl mx-auto py-8 space-y-12">
                 {/* Stats Summary Card */}
-                <section className="bg-white p-8 rounded-[3.5rem] border-2 border-border shadow-xl relative overflow-hidden">
+                <section className="bg-card glass p-8 rounded-[3.5rem] border-2 border-border shadow-xl relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-400/5 rounded-full -translate-y-1/2 translate-x-1/2" />
                     <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
                         <div className="flex-1 w-full">
@@ -116,9 +116,9 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.05 }}
                                 className={cn(
-                                    "group relative p-8 rounded-[3rem] border-2 flex flex-col items-center text-center gap-5 transition-all",
+                                    "group relative p-8 rounded-[3rem] border-2 flex flex-col items-center text-center gap-5 transition-all shadow-sm",
                                     achievement.is_unlocked
-                                        ? "bg-white border-yellow-200 shadow-lg hover:shadow-2xl hover:border-yellow-400 hover:-translate-y-2"
+                                        ? "bg-card glass border-yellow-500/30 hover:shadow-2xl hover:border-yellow-400 hover:-translate-y-2 dark:shadow-[0_0_20px_rgba(234,179,8,0.1)]"
                                         : "bg-muted/10 border-border/50 opacity-60 grayscale"
                                 )}
                             >
@@ -130,12 +130,12 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                                 <div className={cn(
                                     "w-24 h-24 rounded-full flex items-center justify-center text-5xl relative z-10 transition-transform group-hover:scale-110 duration-300",
                                     achievement.is_unlocked
-                                        ? "bg-gradient-to-br from-yellow-50 to-orange-50 border-[6px] border-white shadow-inner"
-                                        : "bg-muted border-[6px] border-white"
+                                        ? "bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border-[6px] border-card shadow-inner"
+                                        : "bg-muted border-[6px] border-card"
                                 )}>
                                     {achievement.badge_url || "🏆"}
                                     {achievement.is_unlocked && (
-                                        <div className="absolute -bottom-2 -right-2 bg-green-500 p-1.5 rounded-full border-4 border-white">
+                                        <div className="absolute -bottom-2 -right-2 bg-green-500 p-1.5 rounded-full border-4 border-card">
                                             <Unlock className="w-3 h-3 text-white" />
                                         </div>
                                     )}

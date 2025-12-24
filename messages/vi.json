@@ -131,7 +131,8 @@
         "streak": "Chuỗi",
         "xp": "XP",
         "days": "ngày",
-        "blog": "Blog"
+        "blog": "Blog",
+        "level": "Cấp độ {level}"
     },
     "Quiz": {
         "loading": "Đang thu thập tài liệu học tập...",
@@ -205,7 +206,15 @@
         "resetInfo": "Giải đấu đặt lại vào mỗi Chủ nhật lúc 11:59 CH",
         "promotion": "Thăng hạng",
         "relegation": "Xuống hạng",
-        "you": "Bạn"
+        "you": "Bạn",
+        "weeklyXpLabel": "{xp} XP hàng tuần",
+        "totalXpLabel": "TỔNG XP",
+        "leagueNames": {
+            "Bronze": "Hạng Đồng",
+            "Silver": "Hạng Bạc",
+            "Gold": "Hạng Vàng",
+            "Diamond": "Hạng Kim cương"
+        }
     },
     "SkillTrees": {
         "backDashboard": "Quay lại Bảng điều khiển",
@@ -225,7 +234,7 @@
         "reviewTopic": "Ôn Tập Chủ Đề",
         "startLearning": "Bắt Đầu Học",
         "mockTestTitle": "Kỳ Thi Thử Chính Thức",
-        "mockTestDesc": "Sẵn sàng chứng minh kiến thức của bạn? Vượt qua bài kiểm tra này để nhận huy hiệu {badge}!",
+        "mockTestDesc": "Sẵn sàng chứng minh kiến thức của bạn? Vượt qua bài kiểm tra này để nhận huy hiệu <badge />!",
         "mockBadge": "\"Bậc Thầy Thi Thử\"",
         "takeTest": "Làm Bài Kiểm Tra",
         "proTip": "Mẹo nhỏ: Hoàn thành các chủ đề theo thứ tự để mở khóa nội dung mới và tối đa hóa việc học của bạn!"
@@ -372,30 +381,63 @@
         "legendDesc": "Bạn đang sử dụng tất cả các tính năng cao cấp. Hãy tiếp tục học tập với sự giúp đỡ của Ollie nhé!",
         "goldDesc": "Mở khóa trái tim không giới hạn, gia sư giọng nói AI và các lớp học chuyên gia độc quyền.",
         "manageSub": "Quản lý đăng ký",
-        "goPremium": "Nâng cấp Cao cấp"
+        "goPremium": "Nâng cấp Cao cấp",
+        "becomePro": "Trở thành Pro",
+        "supportOllie": "Hỗ trợ Ollie",
+        "features": {
+            "mockTests": "Thi thử không giới hạn",
+            "aiTutor": "Gia sư AI cá nhân 24/7",
+            "aiTutorUnlocked": "Quyền truy cập gia sư AI (Đã mở khóa)",
+            "analytics": "Phân tích hiệu suất chi tiết",
+            "noHearts": "Không giới hạn trái tim"
+        }
     },
     "Settings": {
-        "title": "Cài đặt Tài khoản",
         "backProfile": "Quay lại Hồ sơ",
+        "title": "Cài đặt Tài khoản",
+        "profileSection": "Hồ sơ",
+        "preferencesSection": "Tùy chọn",
+        "securitySection": "Bảo mật",
         "profilePicture": "Ảnh hồ sơ",
+        "chooseAvatar": "Chọn hình đại diện của bạn từ các tùy chọn bên dưới",
         "personalDetails": "Thông tin cá nhân",
         "fullName": "Họ và tên",
         "username": "Tên người dùng",
-        "email": "Email",
+        "email": "Email (không thể thay đổi)",
+        "emailLocked": "Địa chỉ email được liên kết với tài khoản của bạn và không thể thay đổi.",
         "saveChanges": "Lưu thay đổi",
         "saving": "Đang lưu...",
         "success": "Hồ sơ đã được cập nhật thành công!",
+        "appearance": "Giao diện",
+        "darkMode": "Chế độ tối",
+        "darkModeDesc": "Chuyển sang giao diện tối để đọc thoải mái hơn",
+        "language": "Ngôn ngữ",
+        "currentLanguage": "Tiếng Việt",
+        "notifications": "Thông báo",
+        "pushNotifications": "Thông báo đẩy",
+        "pushNotificationsDesc": "Nhận lời nhắc để duy trì chuỗi ngày của bạn",
+        "soundEffects": "Hiệu ứng âm thanh",
+        "soundEffectsDesc": "Phát âm thanh khi trả lời đúng/sai",
+        "securityOptions": "Tùy chọn bảo mật",
+        "changePassword": "Đổi mật khẩu",
+        "changePasswordDesc": "Cập nhật mật khẩu để bảo mật tốt hơn",
+        "helpSupport": "Trợ giúp & Hỗ trợ",
+        "helpSupportDesc": "Nhận câu trả lời cho các câu hỏi của bạn",
+        "accountSecurity": "Tài khoản của bạn được bảo mật",
+        "accountSecurityDesc": "Chúng tôi sử dụng mã hóa tiêu chuẩn ngành để bảo vệ dữ liệu của bạn. Mật khẩu của bạn được băm và tiến trình học tập của bạn được sao lưu hàng ngày.",
+        "placeholders": {
+            "fullName": "Nhập họ tên của bạn",
+            "username": "@tennguoidung"
+        },
         "avatars": {
             "ollie1": "Ollie cổ điển",
             "ollie2": "Ollie thông thái",
             "ollie3": "Ollie cực ngầu",
             "ollie4": "Ollie tiệc tùng",
             "ollie5": "Ollie thể thao",
-            "ollie6": "Ollie yoga"
-        },
-        "placeholders": {
-            "fullName": "Nhập họ tên của bạn",
-            "username": "@tennguoidung"
+            "ollie6": "Ollie yoga",
+            "ollie7": "Ollie hiền triết",
+            "ollie8": "Ollie hồng ngọc"
         }
     },
     "Security": {
@@ -481,7 +523,7 @@
         "title": "PassMate Cao cấp",
         "backDashboard": "Quay lại Bảng điều khiền",
         "goPremium": "Nâng cấp Cao cấp",
-        "heroTitle": "Cách {italic}nhanh nhất{italic} để trở thành người Úc",
+        "heroTitle": "Cách <italic>nhanh nhất</italic> để trở thành người Úc",
         "heroSubtitle": "Tham gia cùng hàng ngàn công dân mới đã vượt qua kỳ thi với các tính năng AI độc quyền của chúng tôi.",
         "plans": {
             "popular": "Phổ biến nhất",
@@ -718,5 +760,41 @@
             "location": "Địa điểm",
             "locationValue": "Sydney, Australia 🇦🇺"
         }
+    },
+    "Friends": {
+        "title": "Bạn bè",
+        "backDashboard": "Bảng điều khiển",
+        "searchPlaceholder": "Tìm bạn bè bằng tên người dùng...",
+        "add": "Thêm",
+        "requestSent": "Đã gửi yêu cầu kết bạn đến {username}!",
+        "battleStartError": "Không thể bắt đầu trận đấu",
+        "removeConfirm": "Bạn có chắc chắn muốn xóa người bạn này không?",
+        "pendingBattles": "Trận đấu đang chờ",
+        "waitingMates": "Đang chờ bạn bè",
+        "recentResults": "Kết quả gần đây",
+        "friendRequests": "Yêu cầu kết bạn",
+        "yourMates": "Bạn bè của bạn",
+        "challengedYou": "Đã thách đấu bạn!",
+        "fight": "Chiến!",
+        "improveScore": "Cải thiện điểm số",
+        "yourTurnDone": "Bạn đã xong lượt! Đang chờ...",
+        "challengeSent": "Đã gửi lời thách đấu!",
+        "finishPart": "Hoàn thành phần của bạn",
+        "won": "Bạn đã thắng!",
+        "draw": "Hòa!",
+        "lost": "Thất bại...",
+        "versus": "với {username} • {score1}:{score2}",
+        "rematch": "Đấu lại?",
+        "wantsToBeMates": "Muốn kết bạn!",
+        "accept": "Chấp nhận",
+        "reject": "Từ chối",
+        "friendsCount": "{count} Bạn bè",
+        "chat": "Trò chuyện",
+        "battle": "Thách đấu",
+        "noFriends": "Chưa có bạn bè? Thêm bạn bằng tên người dùng phía trên! 🐨",
+        "inviteTitle": "Mời bạn bè!",
+        "inviteDesc": "Học cùng bạn bè sẽ vui hơn. Mời ai đó tham gia PassMate và cùng nhau thi đua!",
+        "sendInvites": "Gửi lời mời",
+        "linkCopied": "Đã sao chép liên kết mời vào bộ nhớ tạm! 🐨"
     }
 }

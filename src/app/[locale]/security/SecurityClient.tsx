@@ -75,7 +75,7 @@ export default function SecurityClient({ data: _data }: SecurityClientProps) {
     };
 
     return (
-        <div className="min-h-screen bg-[#FDFCFB] pb-24 md:pb-8 md:pl-28 md:pr-8">
+        <div className="min-h-screen bg-background pb-24 md:pb-8 md:pl-28 md:pr-8 font-sans">
             <main className="max-w-4xl mx-auto py-8 px-4">
                 <Link
                     href="/profile"
@@ -91,13 +91,13 @@ export default function SecurityClient({ data: _data }: SecurityClientProps) {
 
                 <div className="space-y-10">
                     {/* Password Update Section */}
-                    <section className="bg-white rounded-[3rem] border-2 border-border p-8 md:p-10 shadow-xl overflow-hidden relative">
+                    <section className="bg-card glass rounded-[3rem] border-2 border-border p-8 md:p-10 shadow-xl overflow-hidden relative">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
                         <div className="relative z-10">
                             <h2 className="text-2xl font-display font-black mb-8 flex items-center gap-4">
-                                <div className="p-3 bg-blue-50 rounded-2xl">
-                                    <Key className="w-6 h-6 text-blue-500" />
+                                <div className="p-3 bg-blue-100 dark:bg-blue-900/40 rounded-2xl border border-blue-200 dark:border-blue-800">
+                                    <Key className="w-6 h-6 text-blue-500 dark:text-blue-400" />
                                 </div>
                                 {t("changePassword")}
                             </h2>
@@ -111,7 +111,7 @@ export default function SecurityClient({ data: _data }: SecurityClientProps) {
                                                 type={showPassword ? "text" : "password"}
                                                 value={passwords.new}
                                                 onChange={(e) => setPasswords({ ...passwords, new: e.target.value })}
-                                                className="w-full bg-muted/30 border-2 border-border rounded-2xl py-4 px-5 pr-14 focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all font-bold outline-none"
+                                                className="w-full bg-card glass/50 border-2 border-border rounded-2xl py-4 px-5 pr-14 focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all font-bold outline-none"
                                                 placeholder={t("placeholder")}
                                             />
                                             <button
@@ -130,7 +130,7 @@ export default function SecurityClient({ data: _data }: SecurityClientProps) {
                                             type={showPassword ? "text" : "password"}
                                             value={passwords.confirm}
                                             onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })}
-                                            className="w-full bg-muted/30 border-2 border-border rounded-2xl py-4 px-5 focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all font-bold outline-none"
+                                            className="w-full bg-card glass/50 border-2 border-border rounded-2xl py-4 px-5 focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all font-bold outline-none"
                                             placeholder={t("placeholder")}
                                         />
                                     </div>
@@ -144,7 +144,7 @@ export default function SecurityClient({ data: _data }: SecurityClientProps) {
                                             exit={{ opacity: 0, height: 0 }}
                                             className={cn(
                                                 "p-4 rounded-2xl border-2 font-bold text-sm",
-                                                status.type === 'success' ? "bg-green-50 border-green-100 text-green-700" : "bg-red-50 border-red-100 text-red-700"
+                                                status.type === 'success' ? "bg-green-100 dark:bg-green-950/40 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400" : "bg-red-100 dark:bg-red-950/40 border-red-200 dark:border-red-800 text-red-700 dark:text-red-400"
                                             )}
                                         >
                                             {status.message}
@@ -171,7 +171,7 @@ export default function SecurityClient({ data: _data }: SecurityClientProps) {
                     {/* Security Features Grid */}
                     <div className="grid md:grid-cols-2 gap-8">
                         {/* 2FA Section (Simulated) */}
-                        <section className="bg-white rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
+                        <section className="bg-card glass rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
                             <div className="flex items-center justify-between mb-8">
                                 <h3 className="text-xl font-display font-black flex items-center gap-3">
                                     <Smartphone className="w-5 h-5 text-green-500" /> {t("twoFactor.title")}
@@ -187,7 +187,7 @@ export default function SecurityClient({ data: _data }: SecurityClientProps) {
                         </section>
 
                         {/* Recent Activity Section */}
-                        <section className="bg-white rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
+                        <section className="bg-card glass rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
                             <h3 className="text-xl font-display font-black mb-8 flex items-center gap-3">
                                 <History className="w-5 h-5 text-purple-500" /> {t("recentActivity.title")}
                             </h3>
@@ -217,7 +217,7 @@ export default function SecurityClient({ data: _data }: SecurityClientProps) {
                     </div>
 
                     {/* Data Privacy Section */}
-                    <section className="bg-white rounded-[2.5rem] border-2 border-border p-8 md:p-10 shadow-lg">
+                    <section className="bg-card glass rounded-[2.5rem] border-2 border-border p-8 md:p-10 shadow-lg">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                             <div className="space-y-2">
                                 <h2 className="text-2xl font-display font-black flex items-center gap-4">
@@ -248,7 +248,7 @@ export default function SecurityClient({ data: _data }: SecurityClientProps) {
                     </section>
 
                     {/* Danger Zone */}
-                    <section className="bg-red-50/30 rounded-[2.5rem] border-2 border-red-100 p-8 md:p-10">
+                    <section className="bg-red-500/10 dark:bg-red-950/20 rounded-[2.5rem] border-2 border-red-500/20 p-8 md:p-10">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                             <div>
                                 <h3 className="text-xl font-display font-black text-red-600 mb-1">{t("dangerZone.title")}</h3>

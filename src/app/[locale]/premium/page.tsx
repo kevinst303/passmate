@@ -205,14 +205,14 @@ export default function PremiumPage() {
     };
 
     return (
-        <div className="min-h-screen bg-muted/30 pb-24 md:pb-0 md:pl-20 overflow-x-hidden">
-            <header className="bg-white/80 backdrop-blur-md border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+        <div className="min-h-screen bg-background pb-24 md:pb-0 md:pl-20 overflow-x-hidden font-sans">
+            <header className="bg-background/80 backdrop-blur-md border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 z-50">
                 <Link href="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                     <ArrowLeft className="w-5 h-5" /> <span className="font-bold">{t("backDashboard")}</span>
                 </Link>
                 <button
                     onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-4 py-1.5 rounded-full font-bold text-sm shadow-sm hover:bg-yellow-200 transition-colors cursor-pointer"
+                    className="flex items-center gap-2 bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400 px-4 py-1.5 rounded-full font-bold text-sm shadow-sm hover:bg-yellow-200 transition-colors cursor-pointer"
                 >
                     <Sparkles className="w-4 h-4 fill-yellow-600 animate-pulse" /> {t("goPremium")}
                 </button>
@@ -252,8 +252,8 @@ export default function PremiumPage() {
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: i * 0.1 }}
                             className={cn(
-                                "relative bg-white p-6 md:p-8 rounded-[3.5rem] border-2 flex flex-col shadow-sm transition-all hover:shadow-2xl hover:scale-[1.02]",
-                                plan.popular ? "border-primary ring-8 ring-primary/5 md:mt-[-10px] md:mb-[-10px] md:scale-105 z-10" : "border-border"
+                                "relative bg-card glass p-6 md:p-8 rounded-[3.5rem] border-2 flex flex-col shadow-sm transition-all hover:shadow-2xl hover:scale-[1.02]",
+                                plan.popular ? "border-primary ring-8 ring-primary/5 dark:ring-primary/10 md:mt-[-10px] md:mb-[-10px] md:scale-105 z-10" : "border-border"
                             )}
                         >
                             {plan.popular && (
@@ -273,8 +273,8 @@ export default function PremiumPage() {
                             <ul className="space-y-4 mb-10 flex-1">
                                 {plan.features.map((feature) => (
                                     <li key={feature} className="flex items-start gap-3">
-                                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0 mt-0.5">
-                                            <Check className="w-4 h-4 text-green-600 stroke-[3px]" />
+                                        <div className="w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                                            <Check className="w-4 h-4 text-green-500 stroke-[3px]" />
                                         </div>
                                         <span className="font-bold text-muted-foreground/80 leading-snug">{feature}</span>
                                     </li>
@@ -306,7 +306,7 @@ export default function PremiumPage() {
                         <p className="text-muted-foreground font-bold">{t("comparison.subtitle")}</p>
                     </div>
 
-                    <div className="bg-white rounded-[3rem] border-2 border-border overflow-hidden shadow-xl">
+                    <div className="bg-card glass rounded-[3rem] border-2 border-border overflow-hidden shadow-xl">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
@@ -319,7 +319,7 @@ export default function PremiumPage() {
                                 </thead>
                                 <tbody>
                                     {COMPARISON.map((row, i) => (
-                                        <tr key={row.feature} className={i % 2 === 0 ? "bg-white" : "bg-muted/20"}>
+                                        <tr key={row.feature} className={i % 2 === 0 ? "bg-card" : "bg-muted/20"}>
                                             <td className="p-4 md:p-6 font-bold text-muted-foreground border-b border-border pl-4 md:pl-8">{row.feature}</td>
                                             <td className="p-4 md:p-6 text-center border-b border-border">
                                                 {row.free ? <Check className="w-6 h-6 text-green-500 mx-auto stroke-[3px]" /> : <div className="w-1.5 h-1.5 bg-muted rounded-full mx-auto" />}
@@ -352,7 +352,7 @@ export default function PremiumPage() {
                             <motion.div
                                 key={i}
                                 whileHover={{ y: -5 }}
-                                className="bg-white p-8 rounded-[2.5rem] border-2 border-border shadow-md"
+                                className="bg-card glass p-8 rounded-[2.5rem] border-2 border-border shadow-md"
                             >
                                 <div className="flex gap-1 mb-4 text-yellow-500">
                                     {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
@@ -384,7 +384,7 @@ export default function PremiumPage() {
                         {FAQS.map((faq, i) => (
                             <div
                                 key={i}
-                                className="bg-white rounded-[2rem] border-2 border-border overflow-hidden shadow-sm"
+                                className="bg-card glass rounded-[2rem] border-2 border-border overflow-hidden shadow-sm"
                             >
                                 <button
                                     onClick={() => setOpenFaq(openFaq === i ? null : i)}

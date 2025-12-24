@@ -139,7 +139,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
     return (
         <div className="min-h-screen bg-muted/30 pb-28 md:pb-8 md:pl-20">
             {/* Header */}
-            <header className="bg-white border-b border-border px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-40">
+            <header className="bg-card border-b border-border px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-40">
                 <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
                         <span className="text-xl sm:text-2xl" aria-hidden="true">🐨</span>
@@ -151,7 +151,9 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                         <div className="flex flex-col items-end gap-0.5">
                             <div className={cn(
                                 "flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full font-bold text-xs sm:text-sm transition-all",
-                                profile.is_premium ? "bg-red-100 text-red-600 border border-red-200" : "bg-red-100 text-red-600"
+                                profile.is_premium
+                                    ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800"
+                                    : "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400"
                             )}>
                                 <Heart className={cn("w-3.5 h-3.5 sm:w-4 sm:h-4 fill-red-600", profile.is_premium && "animate-pulse")} aria-hidden="true" />
                                 <span>{profile.is_premium ? "∞" : profile.hearts}</span>
@@ -162,13 +164,14 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                                     <span>{common("nextIn", { time: getNextHeartTime() })}</span>
                                 </div>
                             )}
+
                         </div>
-                        <div className="flex items-center gap-1.5 bg-orange-100 text-orange-600 px-2.5 sm:px-3 py-1 rounded-full font-bold text-xs sm:text-sm">
-                            <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-orange-600" aria-hidden="true" />
+                        <div className="flex items-center gap-1.5 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-2.5 sm:px-3 py-1 rounded-full font-bold text-xs sm:text-sm">
+                            <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-orange-600 dark:fill-orange-400" aria-hidden="true" />
                             <span>{profile.daily_streak}</span>
                         </div>
-                        <div className="flex items-center gap-1.5 bg-blue-100 text-blue-600 px-2.5 sm:px-3 py-1 rounded-full font-bold text-xs sm:text-sm">
-                            <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-blue-600" aria-hidden="true" />
+                        <div className="flex items-center gap-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2.5 sm:px-3 py-1 rounded-full font-bold text-xs sm:text-sm">
+                            <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-blue-600 dark:fill-blue-400" aria-hidden="true" />
                             <span>{profile.total_xp}</span>
                         </div>
                     </div>
@@ -230,10 +233,10 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                 <motion.section
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col gap-4 sm:gap-6 sm:flex-row sm:items-center bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-border shadow-sm"
+                    className="flex flex-col gap-4 sm:gap-6 sm:flex-row sm:items-center glass p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-border shadow-sm dark:shadow-[0_0_30px_rgba(20,184,166,0.05)]"
                 >
                     <div className="flex items-center gap-4 sm:block">
-                        <div className="w-16 h-16 sm:w-24 sm:h-24 bg-primary/10 rounded-full flex items-center justify-center text-2xl sm:text-4xl border-4 border-white shadow-lg shrink-0 overflow-hidden relative">
+                        <div className="w-16 h-16 sm:w-24 sm:h-24 bg-primary/10 rounded-full flex items-center justify-center text-2xl sm:text-4xl border-4 border-card shadow-lg shrink-0 overflow-hidden relative">
                             {profile.avatar_url ? (
                                 <Image
                                     src={profile.avatar_url}
@@ -288,7 +291,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                         <motion.div
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="bg-white p-4 sm:p-6 rounded-xl sm:rounded-[2.5rem] border border-border flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 group hover:border-primary/50 hover:shadow-md transition-all h-full"
+                            className="glass p-4 sm:p-6 rounded-xl sm:rounded-[2.5rem] border border-border flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 group hover:border-primary/50 hover:shadow-md transition-all h-full"
                         >
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-orange-200 transition-colors shrink-0">
                                 🧠
@@ -305,7 +308,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                         <motion.div
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="bg-white p-4 sm:p-6 rounded-xl sm:rounded-[2.5rem] border border-border flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 group hover:border-primary/50 hover:shadow-md transition-all h-full"
+                            className="glass p-4 sm:p-6 rounded-xl sm:rounded-[2.5rem] border border-border flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 group hover:border-primary/50 hover:shadow-md transition-all h-full"
                         >
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-blue-200 transition-colors shrink-0">
                                 💬
@@ -324,7 +327,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="bg-gradient-to-br from-primary to-primary/80 p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] text-white shadow-xl shadow-primary/20"
+                    className="bg-gradient-to-br from-primary via-primary to-primary/80 dark:from-primary/90 dark:to-primary/70 p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] text-white shadow-xl shadow-primary/20 dark:shadow-[0_8px_30px_rgba(20,184,166,0.2)]"
                 >
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
                         <div className="flex items-center gap-4 w-full sm:w-auto">
@@ -365,7 +368,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                 </motion.section>
 
                 {/* Level Progress */}
-                <section className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-border shadow-sm">
+                <section className="bg-card glass p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-border shadow-sm">
                     <div className="flex justify-between items-end mb-3 sm:mb-4">
                         <div>
                             <p className="text-[10px] sm:text-xs uppercase font-extrabold text-muted-foreground tracking-widest mb-0.5 sm:mb-1">{t("level", { level: profile.level })}</p>
@@ -409,7 +412,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                                 <motion.div
                                     key={userQuest.id}
                                     whileHover={{ scale: 1.01 }}
-                                    className="bg-white p-4 sm:p-5 rounded-xl sm:rounded-3xl border border-border shadow-sm flex items-center gap-3 sm:gap-4 group hover:border-primary/30 transition-all"
+                                    className="glass p-4 sm:p-5 rounded-xl sm:rounded-3xl border border-border shadow-sm flex items-center gap-3 sm:gap-4 group hover:border-primary/30 transition-all"
                                 >
                                     <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 ${userQuest.is_completed ? "bg-green-100 text-green-600" : "bg-muted text-muted-foreground"}`}>
                                         {userQuest.is_completed ? <Award className="w-5 h-5 sm:w-6 sm:h-6" /> : <Star className="w-5 h-5 sm:w-6 sm:h-6" />}
@@ -444,7 +447,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                             </h3>
                             <Link href="/leagues" className="text-xs sm:text-sm font-bold text-primary hover:underline">{t("viewAll")}</Link>
                         </div>
-                        <div className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-[2.5rem] border border-border shadow-sm">
+                        <div className="bg-card glass p-4 sm:p-6 rounded-2xl sm:rounded-[2.5rem] border border-border shadow-sm">
                             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-border/50">
                                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-yellow-100 rounded-2xl sm:rounded-3xl flex items-center justify-center text-2xl sm:text-3xl">🥇</div>
                                 <div>
@@ -526,7 +529,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                             <Link key={post.slug} href={`/blog/${post.slug}`}>
                                 <motion.div
                                     whileHover={{ y: -4, boxShadow: "0 10px 25px -10px rgba(0,0,0,0.1)" }}
-                                    className="bg-white rounded-3xl border border-border p-4 flex gap-4 items-center group transition-all h-full"
+                                    className="bg-card rounded-3xl border border-border p-4 flex gap-4 items-center group transition-all h-full"
                                 >
                                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-muted rounded-2xl overflow-hidden shrink-0 relative">
                                         <div className="absolute inset-0 bg-primary/10 group-hover:bg-primary/20 transition-colors" />
@@ -568,7 +571,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                                 key={act.id}
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-3xl border border-border flex items-center gap-3 sm:gap-4 group hover:shadow-md transition-all"
+                                className="glass p-3 sm:p-4 rounded-xl sm:rounded-3xl border border-border flex items-center gap-3 sm:gap-4 group hover:shadow-md transition-all"
                             >
                                 <div className="relative shrink-0">
                                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl sm:rounded-2xl overflow-hidden flex items-center justify-center text-lg sm:text-xl font-bold border-2 border-white shadow-sm relative">
@@ -610,7 +613,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                                 </div>
                             </motion.div>
                         )) : (
-                            <div className="col-span-full py-8 sm:py-12 text-center bg-white rounded-2xl sm:rounded-[2.5rem] border border-dashed border-border">
+                            <div className="col-span-full py-8 sm:py-12 text-center bg-card rounded-2xl sm:rounded-[2.5rem] border border-dashed border-border">
                                 <p className="text-muted-foreground font-medium italic text-sm">{t("quietOutback")}</p>
                             </div>
                         )}

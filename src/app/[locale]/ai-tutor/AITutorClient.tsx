@@ -73,6 +73,13 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                 body: JSON.stringify({ messages: newMessages })
             });
 
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                const text = await response.text();
+                console.error("Non-JSON response received:", text.slice(0, 100));
+                throw new Error("Received non-JSON response from server");
+            }
+
             const data = await response.json();
 
             if (data.content) {
@@ -80,7 +87,7 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
             } else {
                 throw new Error(data.error || "Something went wrong");
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Chat Error:", error);
             setMessages(prev => [...prev, { role: "assistant", content: t("errorConnecting") }]);
         } finally {
@@ -96,9 +103,9 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
     ];
 
     return (
-        <div className="min-h-screen bg-[#FDFCFB] pb-24 md:pb-0 md:pl-28 flex flex-col">
+        <div className="min-h-screen bg-background pb-24 md:pb-0 md:pl-28 flex flex-col font-sans">
             {/* Header */}
-            <header className="bg-white/80 backdrop-blur-md border-b border-border px-8 py-4 flex items-center justify-between sticky top-0 z-20">
+            <header className="bg-background/80 backdrop-blur-md border-b border-border px-8 py-4 flex items-center justify-between sticky top-0 z-20">
                 <div className="flex items-center gap-6">
                     <Link href="/dashboard" className="bg-muted/50 p-2.5 rounded-2xl hover:bg-primary/10 transition-colors">
                         <ArrowLeft className="w-5 h-5 text-muted-foreground" />
@@ -117,11 +124,11 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
 
                 <div className="flex items-center gap-4">
                     <div className="hidden sm:flex items-center gap-4 mr-4">
-                        <div className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-4 py-2 rounded-2xl border border-orange-100 font-black text-xs">
-                            <Flame className="w-4 h-4 fill-orange-600" /> {profile.daily_streak} {t("dayStreak")}
+                        <div className="flex items-center gap-1.5 bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-2xl border border-orange-200 dark:border-orange-800 font-black text-xs">
+                            <Flame className="w-4 h-4 fill-orange-600 dark:fill-orange-400" /> {profile.daily_streak} {t("dayStreak")}
                         </div>
-                        <div className="flex items-center gap-1.5 bg-blue-50 text-blue-600 px-4 py-2 rounded-2xl border border-blue-100 font-black text-xs">
-                            <Zap className="w-4 h-4 fill-blue-600" /> {profile.total_xp.toLocaleString()} XP
+                        <div className="flex items-center gap-1.5 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-2xl border border-blue-200 dark:border-blue-800 font-black text-xs">
+                            <Zap className="w-4 h-4 fill-blue-600 dark:fill-blue-400" /> {profile.total_xp.toLocaleString()} XP
                         </div>
                     </div>
                     <Button variant="ghost" className="rounded-2xl w-11 h-11 border-2 border-border/50 p-0">
@@ -155,7 +162,7 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                             <div className={cn(
                                 "max-w-[75%] p-6 rounded-[2.5rem] shadow-xl font-medium leading-relaxed tracking-tight text-lg relative",
                                 msg.role === "assistant"
-                                    ? "bg-white text-foreground rounded-bl-none border-2 border-border/10"
+                                    ? "bg-card glass text-foreground rounded-bl-none border-2 border-border/10"
                                     : "bg-primary text-white rounded-br-none"
                             )}>
                                 {msg.content}
@@ -172,7 +179,7 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                             <div className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center text-xl shadow-lg shadow-primary/20">
                                 🐨
                             </div>
-                            <div className="bg-white p-6 rounded-[2.5rem] rounded-bl-none shadow-xl border-2 border-border/10 flex gap-1.5">
+                            <div className="bg-card glass p-6 rounded-[2.5rem] rounded-bl-none shadow-xl border-2 border-border/10 flex gap-1.5">
                                 <motion.span animate={{ scale: [1, 1.2, 1], opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1 }} className="w-2.5 h-2.5 bg-primary rounded-full" />
                                 <motion.span animate={{ scale: [1, 1.2, 1], opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-2.5 h-2.5 bg-primary rounded-full" />
                                 <motion.span animate={{ scale: [1, 1.2, 1], opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-2.5 h-2.5 bg-primary rounded-full" />
@@ -188,14 +195,14 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                             <button
                                 key={suggestion}
                                 onClick={() => setInput(suggestion)}
-                                className="whitespace-nowrap bg-white border-2 border-border px-6 py-2.5 rounded-2xl text-sm font-black text-muted-foreground hover:border-primary hover:text-primary transition-all shadow-sm active:scale-95"
+                                className="whitespace-nowrap bg-card glass border-2 border-border px-6 py-2.5 rounded-2xl text-sm font-black text-muted-foreground hover:border-primary hover:text-primary transition-all shadow-sm active:scale-95"
                             >
                                 {suggestion}
                             </button>
                         ))}
                     </div>
 
-                    <div className="bg-white p-3 rounded-[3.5rem] shadow-2xl border-2 border-border/10 flex items-center gap-3">
+                    <div className="bg-card glass p-3 rounded-[3.5rem] shadow-2xl border-2 border-border/10 flex items-center gap-3">
                         <button
                             type="button"
                             onClick={() => setIsSpeaking(true)}

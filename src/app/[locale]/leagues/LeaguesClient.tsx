@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/Sidebar";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 interface LeaguesClientProps {
     data: any;
@@ -37,12 +38,12 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
     const currentLeague = LEAGUES.find(l => l.id === currentLeagueName) || LEAGUES[0];
 
     return (
-        <div className="min-h-screen bg-[#FDFCFB] pb-24 md:pb-8 md:pl-28 md:pr-8">
+        <div className="min-h-screen bg-background pb-24 md:pb-8 md:pl-28 md:pr-8 font-sans">
             {/* Header */}
             <header className="max-w-4xl mx-auto pt-8 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
                     <Link href="/dashboard" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-all font-bold group mb-4 text-sm">
-                        <div className="bg-white p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
+                        <div className="bg-card glass p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
                             <ArrowLeft className="w-4 h-4" />
                         </div>
                         <span>{t("backDashboard")}</span>
@@ -59,11 +60,11 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                 </div>
 
                 <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-4 py-2 rounded-2xl border-2 border-orange-100 font-black text-sm">
-                        <Flame className="w-4 h-4 fill-orange-600" /> {profile.daily_streak}
+                    <div className="flex items-center gap-1.5 bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-2xl border-2 border-orange-200 dark:border-orange-800 font-black text-sm">
+                        <Flame className="w-4 h-4 fill-orange-600 dark:fill-orange-400" /> {profile.daily_streak}
                     </div>
-                    <div className="flex items-center gap-1.5 bg-blue-50 text-blue-600 px-4 py-2 rounded-2xl border-2 border-blue-100 font-black text-sm">
-                        <Zap className="w-4 h-4 fill-blue-600" /> {profile.total_xp}
+                    <div className="flex items-center gap-1.5 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-2xl border-2 border-blue-200 dark:border-blue-800 font-black text-sm">
+                        <Zap className="w-4 h-4 fill-blue-600 dark:fill-blue-400" /> {profile.total_xp}
                     </div>
                 </div>
             </header>
@@ -72,15 +73,15 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                 <div className="grid md:grid-cols-3 gap-8">
                     {/* Left Column: Player Status */}
                     <div className="space-y-6">
-                        <section className="bg-white p-8 rounded-[3rem] border-2 border-border shadow-xl text-center relative overflow-hidden">
+                        <section className="bg-card glass p-8 rounded-[3rem] border-2 border-border shadow-xl text-center relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-4 opacity-20">
                                 <Target className="w-24 h-24" />
                             </div>
 
                             <div className="relative z-10">
                                 <p className="text-[10px] uppercase font-black text-muted-foreground tracking-[0.2em] mb-4">{t("yourPosition")}</p>
-                                <div className="text-6xl font-display font-black text-primary mb-2">#{standing?.current_rank || '10+'}</div>
-                                <div className="bg-primary/5 text-primary text-xs font-black py-2 px-4 rounded-full inline-block mb-8">
+                                <div className="text-6xl font-display font-black text-primary mb-2 drop-shadow-[0_0_15px_var(--glow-primary)]">#{standing?.current_rank || '10+'}</div>
+                                <div className="bg-primary/10 text-primary text-xs font-black py-2 px-4 rounded-full inline-block mb-8 border border-primary/20">
                                     {t("weeklyXpLabel", { xp: standing?.weekly_xp || 0 })}
                                 </div>
 
@@ -112,7 +113,7 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
 
                     {/* Right Column: Leaderboard */}
                     <div className="md:col-span-2">
-                        <section className="bg-white rounded-[3.5rem] border-2 border-border shadow-2xl overflow-hidden flex flex-col h-full">
+                        <section className="bg-card glass rounded-[3.5rem] border-2 border-border shadow-2xl overflow-hidden flex flex-col h-full">
                             <div className="p-8 border-b-2 border-border flex justify-between items-center bg-muted/5">
                                 <div className="flex items-center gap-3">
                                     <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -148,11 +149,11 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                                                     </div>
 
                                                     <div className={cn(
-                                                        "w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl text-white shadow-xl transition-transform group-hover:rotate-3",
-                                                        isUser ? "bg-primary shadow-primary/20 ring-4 ring-white" : "bg-muted-foreground/50 border-4 border-white"
+                                                        "w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl text-white shadow-xl transition-transform group-hover:rotate-3 relative overflow-hidden",
+                                                        isUser ? "bg-primary shadow-primary/20 ring-4 ring-background" : "bg-muted border-4 border-background"
                                                     )}>
                                                         {player.profiles?.avatar_url ? (
-                                                            <img src={player.profiles.avatar_url} alt="Avatar" className="w-full h-full object-cover rounded-xl" />
+                                                            <Image src={player.profiles.avatar_url} alt="Avatar" fill className="object-cover rounded-xl" />
                                                         ) : (player.profiles?.username?.[0] || 'M')}
                                                     </div>
 

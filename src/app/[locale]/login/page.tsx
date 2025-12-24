@@ -47,7 +47,7 @@ export default function AuthPage() {
     };
 
     return (
-        <div className="min-h-screen bg-muted/30 flex flex-col justify-center items-center px-4">
+        <div className="min-h-screen bg-background flex flex-col justify-center items-center px-4 font-sans">
             <Link href="/" className="mb-8 flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                 <ArrowLeft className="w-4 h-4" /> {t("backHome")}
             </Link>
@@ -55,7 +55,7 @@ export default function AuthPage() {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-border w-full max-w-md"
+                className="bg-card glass p-8 rounded-[2.5rem] shadow-xl border border-border w-full max-w-md"
             >
                 <div className="text-center mb-10">
                     <div className="text-5xl mb-4">🐨</div>
@@ -70,13 +70,13 @@ export default function AuthPage() {
                 <div className="flex bg-muted p-1 rounded-2xl mb-8">
                     <button
                         onClick={() => setIsLogin(true)}
-                        className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold transition-all ${isLogin ? "bg-white shadow-sm text-primary" : "text-muted-foreground"}`}
+                        className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold transition-all ${isLogin ? "bg-card glass shadow-sm text-primary" : "text-muted-foreground"}`}
                     >
                         <LogIn className="w-4 h-4" /> {t("login")}
                     </button>
                     <button
                         onClick={() => setIsLogin(false)}
-                        className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold transition-all ${!isLogin ? "bg-white shadow-sm text-primary" : "text-muted-foreground"}`}
+                        className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold transition-all ${!isLogin ? "bg-card glass shadow-sm text-primary" : "text-muted-foreground"}`}
                     >
                         <UserPlus className="w-4 h-4" /> {t("signup")}
                     </button>
@@ -93,7 +93,7 @@ export default function AuthPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="mate@example.com"
-                                className="w-full bg-muted border-none rounded-2xl py-3.5 pl-12 pr-4 focus:ring-2 focus:ring-primary/20 transition-all font-medium"
+                                className="w-full bg-muted/50 border-none rounded-2xl py-3.5 pl-12 pr-4 focus:ring-2 focus:ring-primary/20 transition-all font-medium"
                             />
                         </div>
                     </div>
@@ -108,7 +108,7 @@ export default function AuthPage() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="••••••••"
-                                className="w-full bg-muted border-none rounded-2xl py-3.5 pl-12 pr-4 focus:ring-2 focus:ring-primary/20 transition-all font-medium"
+                                className="w-full bg-muted/50 border-none rounded-2xl py-3.5 pl-12 pr-4 focus:ring-2 focus:ring-primary/20 transition-all font-medium"
                             />
                         </div>
                     </div>

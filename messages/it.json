@@ -131,7 +131,8 @@
         "streak": "Serie",
         "xp": "XP",
         "days": "giorni",
-        "blog": "Blog"
+        "blog": "Blog",
+        "level": "Livello {level}"
     },
     "Quiz": {
         "loading": "Raccolta materiali di studio...",
@@ -205,7 +206,15 @@
         "resetInfo": "La lega resetta ogni domenica alle 23:59",
         "promotion": "Promozione",
         "relegation": "Retrocessione",
-        "you": "Tu"
+        "you": "Tu",
+        "weeklyXpLabel": "{xp} XP settimanali",
+        "totalXpLabel": "XP TOTALI",
+        "leagueNames": {
+            "Bronze": "Bronzo",
+            "Silver": "Argento",
+            "Gold": "Oro",
+            "Diamond": "Diamante"
+        }
     },
     "SkillTrees": {
         "backDashboard": "Torna alla Dashboard",
@@ -225,7 +234,7 @@
         "reviewTopic": "Ripeti Argomento",
         "startLearning": "Inizia a Imparare",
         "mockTestTitle": "Il Simulatore d'Esame Ufficiale",
-        "mockTestDesc": "Pronto a dimostrare le tue conoscenze? Supera questo test per ottenere il distintivo {badge}!",
+        "mockTestDesc": "Pronto a dimostrare le tue conoscenze? Supera questo test per ottenere il distintivo <badge />!",
         "mockBadge": "\"Maestro del Test\"",
         "takeTest": "Fai il Test",
         "proTip": "Consiglio: Completa gli argomenti in ordine per sbloccare nuovi contenuti e massimizzare il tuo apprendimento!"
@@ -372,30 +381,63 @@
         "legendDesc": "Stai utilizzando tutte le funzionalità premium. Continua a imparare con l'aiuto di Ollie!",
         "goldDesc": "Sblocca cuori illimitati, tutor vocale AI e masterclass esclusive.",
         "manageSub": "Gestisci Abbonamento",
-        "goPremium": "Passa a Premium"
+        "goPremium": "Passa a Premium",
+        "becomePro": "Diventa Pro",
+        "supportOllie": "Supporta Ollie",
+        "features": {
+            "mockTests": "Test di simulazione illimitati",
+            "aiTutor": "Tutor AI personale 24/7",
+            "aiTutorUnlocked": "Accesso Tutor AI (Sbloccato)",
+            "analytics": "Analisi dettagliata delle prestazioni",
+            "noHearts": "Nessuna restrizione sui cuori"
+        }
     },
     "Settings": {
-        "title": "Impostazioni Account",
         "backProfile": "Torna al Profilo",
+        "title": "Impostazioni Account",
+        "profileSection": "Profilo",
+        "preferencesSection": "Preferenze",
+        "securitySection": "Sicurezza",
         "profilePicture": "Immagine del Profilo",
+        "chooseAvatar": "Scegli il tuo avatar dalle opzioni qui sotto",
         "personalDetails": "Dettagli Personali",
         "fullName": "Nome Completo",
         "username": "Nome Utente",
-        "email": "Email",
+        "email": "Email (non modificabile)",
+        "emailLocked": "L'indirizzo email è collegato al tuo account e non può essere modificato.",
         "saveChanges": "Salva Modifiche",
         "saving": "Salvataggio...",
         "success": "Profilo aggiornato con successo!",
+        "appearance": "Aspetto",
+        "darkMode": "Modalità Scura",
+        "darkModeDesc": "Passa al tema scuro per una lettura confortevole",
+        "language": "Lingua",
+        "currentLanguage": "Italiano",
+        "notifications": "Notifiche",
+        "pushNotifications": "Notifiche Push",
+        "pushNotificationsDesc": "Ricevi promemoria per mantenere la tua serie",
+        "soundEffects": "Effetti Sonori",
+        "soundEffectsDesc": "Riproduci suoni per risposte corrette/errate",
+        "securityOptions": "Opzioni di Sicurezza",
+        "changePassword": "Cambia Password",
+        "changePasswordDesc": "Aggiorna la tua password per una maggiore sicurezza",
+        "helpSupport": "Aiuto e Supporto",
+        "helpSupportDesc": "Ottieni risposte alle tue domande",
+        "accountSecurity": "Il tuo account è al sicuro",
+        "accountSecurityDesc": "Utilizziamo la crittografia standard del settore per proteggere i tuoi dati. La tua password è crittografata e i tuoi progressi vengono salvati giornalmente.",
+        "placeholders": {
+            "fullName": "Inserisci il tuo nome completo",
+            "username": "@nomeutente"
+        },
         "avatars": {
             "ollie1": "Ollie Classico",
             "ollie2": "Ollie Intelligente",
             "ollie3": "Ollie Cool",
             "ollie4": "Ollie Party",
             "ollie5": "Ollie Sportivo",
-            "ollie6": "Ollie Yoga"
-        },
-        "placeholders": {
-            "fullName": "Inserisci il tuo nome completo",
-            "username": "@nomeutente"
+            "ollie6": "Ollie Yoga",
+            "ollie7": "Ollie Saggio",
+            "ollie8": "Ollie Rubino"
         }
     },
     "Security": {
@@ -481,7 +523,7 @@
         "title": "PassMate Premium",
         "backDashboard": "Torna alla Dashboard",
         "goPremium": "Passa a Premium",
-        "heroTitle": "Il modo {italic}più veloce{italic} per diventare australiano",
+        "heroTitle": "Il modo <italic>più veloce</italic> per diventare australiano",
         "heroSubtitle": "Unisciti a migliaia di nuovi cittadini che hanno superato il test con le nostre esclusive funzionalità basate sull'IA.",
         "plans": {
             "popular": "Il più popolare",
@@ -718,5 +760,40 @@
             "location": "Posizione",
             "locationValue": "Sydney, Australia 🇦🇺"
         }
+    },
+    "Friends": {
+        "title": "Amici",
+        "backDashboard": "Dashboard",
+        "searchPlaceholder": "Trova amici per nome utente...",
+        "add": "Aggiungi",
+        "requestSent": "Richiesta inviata a {username}!",
+        "battleStartError": "Impossibile avviare la battaglia",
+        "removeConfirm": "Sei sicuro di voler rimuovere questo amico?",
+        "pendingBattles": "Battaglie in sospeso",
+        "waitingMates": "In attesa di amici",
+        "recentResults": "Risultati recenti",
+        "friendRequests": "Richieste di amicizia",
+        "yourMates": "I tuoi amici",
+        "challengedYou": "Ti ha sfidato a una battaglia!",
+        "fight": "Combatti!",
+        "improveScore": "Migliora il punteggio",
+        "yourTurnDone": "Hai finito il tuo turno! In attesa...",
+        "challengeSent": "Sfida inviata!",
+        "finishPart": "Finisci la tua parte",
+        "won": "Hai vinto!",
+        "draw": "È un pareggio!",
+        "lost": "Sconfitto...",
+        "versus": "vs {username} • {score1}:{score2}",
+        "rematch": "Rivincita?",
+        "wantsToBeMates": "Vuole essere tuo amico!",
+        "accept": "Accetta",
+        "reject": "Rifiuta",
+        "friendsCount": "{count} Amici",
+        "chat": "Chat",
+        "battle": "Battaglia",
+        "noFriends": "Non hai ancora amici? Aggiungine alcuni sopra! 🐨",
+        "inviteTitle": "Invita i tuoi amici!",
+        "inviteDesc": "Imparare è meglio con gli amici. Invita qualcuno a unirsi a PassMate e competete insieme!",
+        "sendInvites": "Invia inviti"
     }
 }

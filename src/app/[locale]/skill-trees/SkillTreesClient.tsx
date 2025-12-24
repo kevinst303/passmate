@@ -56,9 +56,9 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
     const overallProgress = totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0;
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-[#FDFCFB] to-muted/30 pb-28 md:pb-8 md:pl-24">
+        <div className="min-h-screen bg-gradient-to-b from-background to-background/95 pb-28 md:pb-8 md:pl-24 font-sans">
             {/* Mobile-optimized Header */}
-            <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-lg border-b border-border/50 px-4 py-3 md:static md:bg-transparent md:border-none md:px-8 md:pt-8 md:pb-4">
+            <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-lg border-b border-border/50 px-4 py-3 md:static md:bg-transparent md:border-none md:px-8 md:pt-8 md:pb-4">
                 <div className="max-w-4xl mx-auto">
                     {/* Top row - Back button and stats */}
                     <div className="flex items-center justify-between mb-3 md:mb-4">
@@ -67,19 +67,19 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-all font-bold group text-sm min-h-[44px]"
                             aria-label={t("backDashboard")}
                         >
-                            <div className="bg-white p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all shadow-sm">
+                            <div className="bg-card glass p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all shadow-sm">
                                 <ArrowLeft className="w-4 h-4" />
                             </div>
                             <span className="hidden sm:inline">{t("backDashboard")}</span>
                         </Link>
 
                         <div className="flex items-center gap-2">
-                            <div className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-3 py-1.5 rounded-xl border border-orange-100 font-black text-xs sm:text-sm">
-                                <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-orange-600" />
+                            <div className="flex items-center gap-1.5 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-3 py-1.5 rounded-xl border border-orange-200 dark:border-orange-800 font-black text-xs sm:text-sm">
+                                <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-orange-600 dark:fill-orange-400" />
                                 <span>{profile.daily_streak}</span>
                             </div>
-                            <div className="flex items-center gap-1.5 bg-blue-50 text-blue-600 px-3 py-1.5 rounded-xl border border-blue-100 font-black text-xs sm:text-sm">
-                                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-blue-600" />
+                            <div className="flex items-center gap-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1.5 rounded-xl border border-blue-200 dark:border-blue-800 font-black text-xs sm:text-sm">
+                                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-blue-600 dark:fill-blue-400" />
                                 <span>{profile.total_xp}</span>
                             </div>
                         </div>
@@ -101,7 +101,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                     </div>
 
                     {/* Progress Overview - Mobile */}
-                    <div className="mt-4 p-4 bg-white rounded-2xl border border-border shadow-sm md:hidden">
+                    <div className="mt-4 p-4 glass rounded-2xl border border-border shadow-sm md:hidden">
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{t("courseProgress")}</span>
                             <span className="text-sm font-black text-primary">{t("topicsCount", { completed: completedTopics, total: totalTopics })}</span>
@@ -120,7 +120,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
 
             <main className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-6 md:py-12">
                 {/* Desktop Progress Overview */}
-                <div className="hidden md:flex items-center justify-between mb-8 p-6 bg-white rounded-3xl border border-border shadow-sm">
+                <div className="hidden md:flex items-center justify-between mb-8 p-6 glass rounded-3xl border border-border shadow-sm">
                     <div className="flex items-center gap-4">
                         <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center">
                             <Sparkles className="w-7 h-7 text-primary" />
@@ -185,11 +185,11 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                             <div className={cn(
                                                 "w-16 h-16 rounded-2xl flex items-center justify-center text-2xl shadow-lg relative z-20 shrink-0 transition-all duration-300 border-4",
                                                 isCompleted
-                                                    ? "bg-green-500 text-white border-green-400 shadow-green-200/50"
+                                                    ? "bg-green-500 text-white border-green-400 shadow-green-500/30"
                                                     : isInProgress
-                                                        ? "bg-primary text-white border-primary-light shadow-primary/30"
+                                                        ? "bg-primary text-white border-primary-light/50 shadow-primary/30"
                                                         : !isLocked
-                                                            ? "bg-white border-primary text-primary shadow-primary/10"
+                                                            ? "bg-card glass border-primary text-primary shadow-primary/10"
                                                             : "bg-muted/80 border-border text-muted-foreground shadow-none"
                                             )}>
                                                 {isCompleted ? (
@@ -216,9 +216,9 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                         {/* Right column: Card */}
                                         <div className="pb-6">
                                             <div className={cn(
-                                                "bg-white p-5 rounded-2xl border-2 shadow-sm transition-all duration-300 h-full",
+                                                "bg-card glass p-5 rounded-2xl border-2 shadow-sm transition-all duration-300 h-full",
                                                 !isLocked && "hover:shadow-md hover:border-primary/40",
-                                                isCompleted && "border-green-200 bg-green-50/50",
+                                                isCompleted && "border-green-500/20 bg-green-500/5",
                                                 isInProgress && "border-primary/40 bg-primary/5",
                                                 !isLocked && !isCompleted && !isInProgress && "border-border",
                                                 isLocked && "border-border/50 bg-muted/30"
@@ -227,7 +227,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                                     {/* Topic icon */}
                                                     <div className={cn(
                                                         "w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0",
-                                                        isCompleted ? "bg-green-100" : isLocked ? "bg-muted" : "bg-primary/10"
+                                                        isCompleted ? "bg-green-500/20" : isLocked ? "bg-muted" : "bg-primary/10"
                                                     )}>
                                                         {topic.icon}
                                                     </div>
@@ -239,7 +239,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                                                 {topic.title}
                                                             </h3>
                                                             {isCompleted && (
-                                                                <span className="bg-green-100 text-green-700 text-[10px] font-bold uppercase px-2 py-0.5 rounded-md">
+                                                                <span className="bg-green-500/20 text-green-500 text-[10px] font-bold uppercase px-2 py-0.5 rounded-md">
                                                                     {t("mastered")}
                                                                 </span>
                                                             )}
@@ -312,8 +312,8 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                     isLocked && "opacity-60"
                                 )}>
                                     <div className={cn(
-                                        "bg-white p-4 rounded-2xl border-2 shadow-sm transition-all",
-                                        isCompleted && "border-green-200 bg-green-50/30",
+                                        "bg-card glass p-4 rounded-2xl border-2 shadow-sm transition-all",
+                                        isCompleted && "border-green-500/20 bg-green-500/5",
                                         isInProgress && "border-primary/30",
                                         !isLocked && !isCompleted && !isInProgress && "border-border",
                                         isLocked && "border-border/50 bg-muted/20"
@@ -322,7 +322,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                                         <div className="flex items-start gap-3 mb-3">
                                             <div className={cn(
                                                 "w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0",
-                                                isCompleted ? "bg-green-100" : isLocked ? "bg-muted" : "bg-primary/10"
+                                                isCompleted ? "bg-green-500/20" : isLocked ? "bg-muted" : "bg-primary/10"
                                             )}>
                                                 {topic.icon}
                                             </div>
@@ -338,7 +338,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
 
                                             {/* Status badge */}
                                             {isCompleted && (
-                                                <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded-lg shrink-0">
+                                                <span className="bg-green-500/20 text-green-500 text-[10px] font-bold px-2 py-1 rounded-lg shrink-0">
                                                     ✓ {t("mastered")}
                                                 </span>
                                             )}
@@ -420,7 +420,7 @@ export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClie
                             </h2>
                             <p className="text-white/60 font-semibold text-sm sm:text-base md:text-lg leading-relaxed max-w-lg mx-auto md:mx-0">
                                 {t.rich("mockTestDesc", {
-                                    badge: () => <span className="text-primary font-bold italic">{t("mockBadge")}</span>
+                                    badge: (chunks) => <span className="text-primary font-bold italic">{t("mockBadge")}</span>
                                 })}
                             </p>
                         </div>

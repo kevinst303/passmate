@@ -8,26 +8,28 @@ export async function getMistakesForAI() {
 
     if (!user) return { error: 'Not authenticated' };
 
-    const { data, error } = await supabase
-        .from('user_mistakes')
-        .select(`
-            id,
-            incorrect_attempts,
-            questions (
-                question_text,
-                explanation,
-                topic
-            )
-        `)
-        .eq('user_id', user.id)
-        .eq('is_resolved', false)
-        .order('last_mistake_at', { ascending: false })
-        .limit(5);
+    try {
+        const { data, error } = await supabase
+            .from('user_mistakes')
+            .select('*, questions(*)')
+            .eq('user_id', user.id)
+            .eq('is_resolved', false)
+            .order('last_mistake_at', { ascending: false })
+            .limit(5);
 
-    if (error) {
-        console.error('Error fetching mistakes:', error);
-        return { error: 'Failed to fetch mistakes' };
+        if (error) {
+            console.error(`[getMistakesForAI] Supabase Error: ${error.message} (Code: ${error.code})`);
+            return { mistakes: [] };
+        }
+
+        const formattedData = data?.map(m => ({
+            ...m,
+            questions: Array.isArray(m.questions) ? m.questions[0] : m.questions
+        })) || [];
+
+        return { mistakes: formattedData };
+    } catch (err: any) {
+        console.error(`[getMistakesForAI] Catch Error: ${err.message || err}`);
+        return { mistakes: [] };
     }
-
-    return { mistakes: data || [] };
 }

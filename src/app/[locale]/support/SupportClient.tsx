@@ -44,7 +44,7 @@ export default function SupportClient({ data: _data }: SupportClientProps) {
     ];
 
     return (
-        <div className="min-h-screen bg-[#FDFCFB] pb-24 md:pb-8 md:pl-28 md:pr-8">
+        <div className="min-h-screen bg-background pb-24 md:pb-8 md:pl-28 md:pr-8 font-sans">
             <main className="max-w-6xl mx-auto py-8 px-4">
                 <Link
                     href="/profile"
@@ -54,7 +54,7 @@ export default function SupportClient({ data: _data }: SupportClientProps) {
                 </Link>
 
                 {/* Hero Search Section */}
-                <section className="bg-white rounded-[4rem] border-2 border-border p-10 md:p-16 shadow-2xl relative overflow-hidden text-center mb-16">
+                <section className="bg-card glass rounded-[4rem] border-2 border-border p-10 md:p-16 shadow-2xl relative overflow-hidden text-center mb-16">
                     <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                     <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
@@ -72,7 +72,7 @@ export default function SupportClient({ data: _data }: SupportClientProps) {
                             <input
                                 type="text"
                                 placeholder={t("searchPlaceholder")}
-                                className="w-full bg-muted/50 border-2 border-border rounded-[2rem] py-6 px-16 text-lg font-bold outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+                                className="w-full bg-card glass/50 border-2 border-border rounded-[2rem] py-6 px-16 text-lg font-bold outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
                             />
                         </div>
                     </div>
@@ -84,10 +84,10 @@ export default function SupportClient({ data: _data }: SupportClientProps) {
                         <motion.div
                             key={i}
                             whileHover={{ y: -5 }}
-                            className="bg-white p-8 rounded-[2.5rem] border-2 border-border shadow-lg cursor-pointer group hover:border-primary/50 transition-all"
+                            className="bg-card glass p-8 rounded-[2.5rem] border-2 border-border shadow-lg cursor-pointer group hover:border-primary/50 transition-all"
                         >
-                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 ${cat.bg}`}>
-                                <cat.icon className={`w-7 h-7 ${cat.color}`} />
+                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 bg-muted/50 border border-border`}>
+                                <cat.icon className={`w-7 h-7 ${cat.color} dark:text-primary-light`} />
                             </div>
                             <h3 className="text-xl font-display font-black mb-2">{cat.title}</h3>
                             <p className="text-sm font-bold text-muted-foreground leading-relaxed">{cat.desc}</p>
@@ -103,7 +103,7 @@ export default function SupportClient({ data: _data }: SupportClientProps) {
                         </h2>
                         <div className="space-y-4">
                             {faqs.map((faq, i) => (
-                                <details key={i} className="group bg-white border-2 border-border rounded-3xl overflow-hidden hover:border-primary/50 transition-colors">
+                                <details key={i} className="group bg-card glass border-2 border-border rounded-3xl overflow-hidden hover:border-primary/50 transition-colors">
                                     <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
                                         <span className="font-black text-lg">{faq.q}</span>
                                         <ChevronRight className="w-5 h-5 text-muted-foreground group-open:rotate-90 transition-transform" />
@@ -122,7 +122,7 @@ export default function SupportClient({ data: _data }: SupportClientProps) {
                     {/* Contact & Resources */}
                     <div className="space-y-10">
                         {/* Direct Support Card */}
-                        <section className="bg-black text-white rounded-[3.5rem] p-10 shadow-2xl relative overflow-hidden">
+                        <section className="bg-slate-950 dark:bg-card glass text-white dark:text-foreground rounded-[3.5rem] p-10 shadow-2xl relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px]" />
                             <div className="relative z-10 text-center">
                                 <h3 className="text-2xl font-display font-black mb-4">{t("stillNeedHelp")}</h3>
@@ -131,11 +131,11 @@ export default function SupportClient({ data: _data }: SupportClientProps) {
                                 </p>
                                 <div className="grid grid-cols-2 gap-4">
                                     <Link href="/contact" className="w-full">
-                                        <Button className="w-full h-14 rounded-2xl font-black bg-white text-black hover:bg-white/90">
+                                        <Button className="w-full h-14 rounded-2xl font-black bg-white dark:bg-primary text-black dark:text-white hover:bg-white/90 dark:hover:bg-primary/90 shadow-xl">
                                             <Mail className="w-5 h-5 mr-2" /> {t("messageUs")}
                                         </Button>
                                     </Link>
-                                    <Button variant="outline" className="h-14 rounded-2xl font-black border-white/20 hover:bg-white/10">
+                                    <Button variant="outline" className="h-14 rounded-2xl font-black border-white/20 dark:border-border hover:bg-white/10 dark:hover:bg-background/20">
                                         <MessageSquare className="w-5 h-5 mr-2" /> {t("liveChat")}
                                     </Button>
                                 </div>
@@ -147,7 +147,7 @@ export default function SupportClient({ data: _data }: SupportClientProps) {
                         </section>
 
                         {/* External Resources */}
-                        <section className="bg-white border-2 border-border rounded-[3rem] p-10 shadow-xl">
+                        <section className="bg-card glass border-2 border-border rounded-[3rem] p-10 shadow-xl">
                             <h3 className="text-xl font-display font-black mb-8 flex items-center gap-3">
                                 <PlayCircle className="w-5 h-5 text-red-500" /> {t("resourcesTitle")}
                             </h3>

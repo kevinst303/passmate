@@ -141,7 +141,7 @@ export const Sidebar = () => {
                 initial={false}
                 animate={{ width: isExpanded ? 280 : 80 }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="hidden md:flex fixed top-0 left-0 h-full bg-white/95 backdrop-blur-lg border-r border-border flex-col z-50"
+                className="hidden md:flex fixed top-0 left-0 h-full bg-card/95 backdrop-blur-lg border-r border-border flex-col z-50"
                 role="navigation"
                 aria-label="Main navigation"
                 onMouseEnter={() => setIsExpanded(true)}
@@ -276,7 +276,7 @@ export const Sidebar = () => {
 
             {/* Mobile Bottom Navigation */}
             <nav
-                className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-border z-50 safe-area-bottom"
+                className="md:hidden fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-border z-50 safe-area-bottom"
                 role="navigation"
                 aria-label="Mobile navigation"
             >
@@ -361,7 +361,7 @@ export const Sidebar = () => {
                             animate={{ y: 0 }}
                             exit={{ y: "100%" }}
                             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                            className="more-menu-container md:hidden fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-[70] safe-area-bottom max-h-[80vh] overflow-y-auto"
+                            className="more-menu-container md:hidden fixed bottom-0 left-0 right-0 bg-card rounded-t-3xl z-[70] safe-area-bottom max-h-[80vh] overflow-y-auto"
                         >
                             {/* Handle */}
                             <div className="flex justify-center pt-3 pb-2">

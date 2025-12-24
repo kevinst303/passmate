@@ -131,7 +131,8 @@
         "streak": "Streak",
         "xp": "XP",
         "days": "mga araw",
-        "blog": "Blog"
+        "blog": "Blog",
+        "level": "Level {level}"
     },
     "Quiz": {
         "loading": "Nangongolekta ng mga study material...",
@@ -205,7 +206,15 @@
         "resetInfo": "Nag-rereset ang League tuwing Linggo ng 11:59 PM",
         "promotion": "Promotion",
         "relegation": "Relegation",
-        "you": "Ikaw"
+        "you": "Ikaw",
+        "weeklyXpLabel": "{xp} Lingguhang XP",
+        "totalXpLabel": "KABUUANG XP",
+        "leagueNames": {
+            "Bronze": "Bronze",
+            "Silver": "Silver",
+            "Gold": "Gold",
+            "Diamond": "Diamond"
+        }
     },
     "SkillTrees": {
         "backDashboard": "Balik sa Dashboard",
@@ -225,7 +234,7 @@
         "reviewTopic": "I-review ang Paksa",
         "startLearning": "Simulan ang Pag-aaral",
         "mockTestTitle": "Ang Opisyal na Mock Test",
-        "mockTestDesc": "Handa na bang patunayan ang iyong kaalaman? Ipasa ang test na ito para makuha ang {badge} badge!",
+        "mockTestDesc": "Handa na bang patunayan ang iyong kaalaman? Ipasa ang test na ito para makuha ang <badge /> badge!",
         "mockBadge": "\"Mock Master\"",
         "takeTest": "Kumuha ng Test",
         "proTip": "Pro tip: Kumpletuhin ang mga paksa nang sunod-sunod para ma-unlock ang mga bagong content at ma-maximize ang iyong pag-aaral!"
@@ -372,30 +381,63 @@
         "legendDesc": "Ginagamit mo ang lahat ng premium features. Patuloy na mag-aral sa tulong ni Ollie!",
         "goldDesc": "I-unlock ang unlimited na mga buhay, AI voice tutor, at mga eksklusibong masterclass.",
         "manageSub": "I-manage ang Subscription",
-        "goPremium": "Mag-Premium Na"
+        "goPremium": "Mag-Premium Na",
+        "becomePro": "Maging Pro",
+        "supportOllie": "Suportahan si Ollie",
+        "features": {
+            "mockTests": "Unlimited Mock Tests",
+            "aiTutor": "Personal AI Tutor 24/7",
+            "aiTutorUnlocked": "AI Tutor Access (Na-unlock)",
+            "analytics": "Detalyadong Performance Analytics",
+            "noHearts": "Walang Limitasyon sa Puso"
+        }
     },
     "Settings": {
-        "title": "Account Settings",
-        "backProfile": "Balik sa Profile",
-        "profilePicture": "Larawan sa Profile",
-        "personalDetails": "Mga Personal na Detalye",
-        "fullName": "Full Name",
+        "backProfile": "Bumalik sa Profile",
+        "title": "Mga Setting ng Account",
+        "profileSection": "Profile",
+        "preferencesSection": "Mga Kagustuhan",
+        "securitySection": "Seguridad",
+        "profilePicture": "Larawan ng Profile",
+        "chooseAvatar": "Piliin ang iyong avatar mula sa mga opsyon sa ibaba",
+        "personalDetails": "Personal na Detalye",
+        "fullName": "Buong Pangalan",
         "username": "Username",
-        "email": "Email",
+        "email": "Email (hindi mapapalitan)",
+        "emailLocked": "Ang email address ay nakaugnay sa iyong account at hindi maaaring baguhin.",
         "saveChanges": "I-save ang mga Pagbabago",
-        "saving": "Sini-save...",
+        "saving": "Nagse-save...",
         "success": "Matagumpay na na-update ang profile!",
+        "appearance": "Hitsura",
+        "darkMode": "Dark Mode",
+        "darkModeDesc": "Lumipat sa madilim na tema para sa mas komportableng pagbabasa",
+        "language": "Wika",
+        "currentLanguage": "Filipino",
+        "notifications": "Mga Abiso",
+        "pushNotifications": "Push Notifications",
+        "pushNotificationsDesc": "Makatanggap ng mga paalala upang mapanatili ang iyong streak",
+        "soundEffects": "Sound Effects",
+        "soundEffectsDesc": "Mag-play ng tunog para sa tama/maling sagot",
+        "securityOptions": "Mga Opsyon sa Seguridad",
+        "changePassword": "Palitan ang Password",
+        "changePasswordDesc": "I-update ang iyong password para sa mas mahusay na seguridad",
+        "helpSupport": "Tulong at Suporta",
+        "helpSupportDesc": "Kumuha ng mga sagot sa iyong mga katanungan",
+        "accountSecurity": "Ligtas ang iyong account",
+        "accountSecurityDesc": "Gumagamit kami ng industry-standard encryption upang protektahan ang iyong data. Ang iyong password ay naka-hash at ang iyong pag-unlad sa pag-aaral ay bina-back up araw-araw.",
+        "placeholders": {
+            "fullName": "Ipasok ang iyong buong pangalan",
+            "username": "@username"
+        },
         "avatars": {
             "ollie1": "Classic Ollie",
             "ollie2": "Smart Ollie",
             "ollie3": "Cool Ollie",
             "ollie4": "Party Ollie",
             "ollie5": "Sporty Ollie",
-            "ollie6": "Yoga Ollie"
-        },
-        "placeholders": {
-            "fullName": "Ipasok ang iyong buong pangalan",
-            "username": "@username"
+            "ollie6": "Yoga Ollie",
+            "ollie7": "Sage Ollie",
+            "ollie8": "Ruby Ollie"
         }
     },
     "Security": {
@@ -481,7 +523,7 @@
         "title": "PassMate Premium",
         "backDashboard": "Balik sa Dashboard",
         "goPremium": "Mag-Premium Na",
-        "heroTitle": "Ang {italic}pinakamabilis{italic} na paraan para maging Australian",
+        "heroTitle": "Ang <italic>pinakamabilis</italic> na paraan para maging Australian",
         "heroSubtitle": "Sumali sa libu-libong bagong citizens na nakapasa sa kanilang test gamit ang aming eksklusibong AI-powered features.",
         "plans": {
             "popular": "Pinaka-popular",
@@ -718,5 +760,40 @@
             "location": "Lokasyon",
             "locationValue": "Sydney, Australia 🇦🇺"
         }
+    },
+    "Friends": {
+        "title": "Mga Kaibigan",
+        "backDashboard": "Dashboard",
+        "searchPlaceholder": "Maghanap ng mga kaibigan...",
+        "add": "Idagdag",
+        "requestSent": "Naipadala ang request kay {username}!",
+        "battleStartError": "Hindi nasimulan ang laban",
+        "removeConfirm": "Sigurado ka bang gusto mong alisin ang kaibigang ito?",
+        "pendingBattles": "Mga Labang Nakabinbin",
+        "waitingMates": "Naghihintay sa mga Kaibigan",
+        "recentResults": "Mga Kamakailang Resulta",
+        "friendRequests": "Mga Friend Request",
+        "yourMates": "Iyong mga Kaibigan",
+        "challengedYou": "Hinamon ka sa isang laban!",
+        "fight": "Laban!",
+        "improveScore": "Pagbutihin ang score",
+        "yourTurnDone": "Tapos na ang iyong turn! Naghihintay...",
+        "challengeSent": "Naipadala ang hamon!",
+        "finishPart": "Tapusin ang iyong bahagi",
+        "won": "Ikaw ang nanalo!",
+        "draw": "Tabla!",
+        "lost": "Natalo...",
+        "versus": "vs {username} • {score1}:{score2}",
+        "rematch": "Rematch?",
+        "wantsToBeMates": "Gusto kang maging kaibigan!",
+        "accept": "Tanggapin",
+        "reject": "Tanggihan",
+        "friendsCount": "{count} na Kaibigan",
+        "chat": "Chat",
+        "battle": "Laban",
+        "noFriends": "Wala pang mga kaibigan? Magdagdag sa itaas! 🐨",
+        "inviteTitle": "Imbitahan ang iyong mga kaibigan!",
+        "inviteDesc": "Mas masaya ang pag-aaral kasama ang mga kaibigan. Mag-imbita sa PassMate at maglaban-laban!",
+        "sendInvites": "Magpadala ng mga Imbitasyon"
     }
 }

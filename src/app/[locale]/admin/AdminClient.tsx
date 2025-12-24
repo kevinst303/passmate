@@ -200,7 +200,7 @@ export default function AdminClient() {
     ];
 
     return (
-        <div className="min-h-screen bg-[#F8FAFC] p-4 pb-24 md:pb-12 md:pl-28 md:pr-6 md:pt-6 font-sans selection:bg-primary/10">
+        <div className="min-h-screen bg-background p-4 pb-24 md:pb-12 md:pl-28 md:pr-6 md:pt-6 font-sans selection:bg-primary/10">
             <main className="max-w-6xl mx-auto space-y-10">
                 {/* Modern Header */}
                 <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-4 border-b border-slate-200">
@@ -211,20 +211,20 @@ export default function AdminClient() {
                             </div>
                             <span className="text-xs font-black uppercase tracking-[0.2em] text-primary/60">System Administrator</span>
                         </div>
-                        <h1 className="text-5xl font-display font-black tracking-tight text-slate-900">
+                        <h1 className="text-5xl font-display font-black tracking-tight text-foreground">
                             Console<span className="text-primary">.</span>
                         </h1>
-                        <p className="text-slate-500 font-bold mt-2 text-lg">Manage PassMate infrastructure and user experience</p>
+                        <p className="text-muted-foreground font-bold mt-2 text-lg">Manage PassMate infrastructure and user experience</p>
                     </div>
 
-                    <div className="flex items-center gap-1 p-1.5 bg-white/80 backdrop-blur-md rounded-[1.5rem] border-2 border-slate-200/60 shadow-xl shadow-slate-200/50 overflow-x-auto w-full lg:w-auto scrollbar-hide">
+                    <div className="flex items-center gap-1 p-1.5 bg-card/80 backdrop-blur-md rounded-[1.5rem] border-2 border-border/60 shadow-xl shadow-black/5 overflow-x-auto w-full lg:w-auto scrollbar-hide">
                         {navItems.map((item) => (
                             <button
                                 key={item.id}
                                 onClick={() => setActiveTab(item.id as any)}
                                 className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-black transition-all duration-300 ${activeTab === item.id
                                     ? 'bg-primary text-white shadow-lg shadow-primary/25 scale-[1.02]'
-                                    : 'hover:bg-slate-100 text-slate-500 hover:text-slate-900'
+                                    : 'hover:bg-muted text-slate-500 hover:text-foreground'
                                     } shrink-0`}
                             >
                                 <item.icon className={`w-4 h-4 transition-transform ${activeTab === item.id ? 'scale-110' : ''}`} />
@@ -256,14 +256,14 @@ export default function AdminClient() {
                                     <motion.div
                                         key={stat.label}
                                         whileHover={{ y: -5, scale: 1.02 }}
-                                        className="bg-white p-7 rounded-[2.5rem] border-2 border-slate-200/60 shadow-sm flex items-center gap-6 group hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-500"
+                                        className="bg-card glass p-7 rounded-[2.5rem] border-2 border-border shadow-sm flex items-center gap-6 group hover:shadow-2xl hover:shadow-black/10 transition-all duration-500"
                                     >
-                                        <div className={`w-16 h-16 rounded-[1.5rem] bg-gradient-to-br ${stat.gradient} flex items-center justify-center shrink-0 shadow-lg shadow-slate-200/50 group-hover:rotate-6 transition-transform duration-500`}>
+                                        <div className={`w-16 h-16 rounded-[1.5rem] bg-gradient-to-br ${stat.gradient} flex items-center justify-center shrink-0 shadow-lg shadow-black/10 group-hover:rotate-6 transition-transform duration-500`}>
                                             <stat.icon className="w-8 h-8 text-white" />
                                         </div>
                                         <div>
-                                            <p className="text-slate-400 font-black text-xs uppercase tracking-[0.15em] mb-1">{stat.label}</p>
-                                            <p className="text-4xl font-black font-display text-slate-900 tabular-nums leading-none">{stat.value}</p>
+                                            <p className="text-muted-foreground font-black text-xs uppercase tracking-[0.15em] mb-1">{stat.label}</p>
+                                            <p className="text-4xl font-black font-display text-foreground tabular-nums leading-none">{stat.value}</p>
                                         </div>
                                     </motion.div>
                                 ))}
@@ -271,20 +271,20 @@ export default function AdminClient() {
 
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                 {/* Database Management */}
-                                <div className="bg-white p-10 rounded-[3rem] border-2 border-slate-200/60 shadow-xl shadow-slate-200/20">
+                                <div className="bg-card glass p-10 rounded-[3rem] border-2 border-border shadow-xl shadow-black/5">
                                     <h3 className="text-2xl font-black font-display mb-8 flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
-                                            <Database className="w-6 h-6 text-orange-600" />
+                                        <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center">
+                                            <Database className="w-6 h-6 text-orange-600 dark:text-orange-400" />
                                         </div>
                                         System Maintenance
                                     </h3>
 
-                                    <div className="bg-orange-50/50 p-8 rounded-[2rem] border-2 border-orange-100 mb-6 relative overflow-hidden group">
+                                    <div className="bg-orange-500/10 p-8 rounded-[2rem] border-2 border-orange-500/20 mb-6 relative overflow-hidden group">
                                         <div className="relative z-10">
-                                            <h4 className="text-orange-900 font-black mb-2 text-xl">Global Data Seeder</h4>
-                                            <p className="text-sm text-orange-800/70 mb-8 leading-relaxed font-bold">
+                                            <h4 className="text-orange-600 dark:text-orange-400 font-black mb-2 text-xl">Global Data Seeder</h4>
+                                            <p className="text-sm text-orange-800/70 dark:text-orange-300/60 mb-8 leading-relaxed font-bold">
                                                 Re-sync core content, tiers, and base questions.
-                                                <span className="block mt-2 flex items-center gap-2 text-orange-600 font-black">
+                                                <span className="block mt-2 flex items-center gap-2 text-orange-500 font-black">
                                                     <AlertTriangle className="w-4 h-4" />
                                                     Action will bypass duplicate checks.
                                                 </span>
@@ -315,7 +315,7 @@ export default function AdminClient() {
                                 </div>
 
                                 {/* Recent Activity */}
-                                <div className="bg-white p-8 rounded-[3rem] border-2 border-border shadow-sm">
+                                <div className="bg-card glass p-8 rounded-[3rem] border-2 border-border shadow-sm">
                                     <h3 className="text-2xl font-black font-display mb-6 flex items-center gap-2">
                                         <Clock className="w-6 h-6 text-primary" /> Recent Quizzes
                                     </h3>

@@ -22,8 +22,10 @@ export async function getChallengesData() {
         .order('created_at', { ascending: false });
 
     if (error) {
-        console.error('Error fetching challenges:', error);
-        return { error: 'Failed to fetch challenges' };
+        console.error('Error fetching challenges - FULL ERROR:', error);
+        console.error('Error fetching challenges - MSG:', error.message);
+        console.error('Error fetching challenges - CODE:', error.code);
+        return { error: `Failed to fetch challenges: ${error.message || 'Unknown error'}` };
     }
 
     const pendingReceived = challenges.filter(c => c.challenged_id === user.id && c.status === 'pending');
@@ -87,8 +89,9 @@ export async function getPendingChallenges() {
         .order('created_at', { ascending: false });
 
     if (error) {
-        console.error('Error fetching challenges:', error);
-        return { error: 'Failed to fetch challenges' };
+        console.error('Error fetching pending challenges - FULL ERROR:', error);
+        console.error('Error fetching pending challenges - MSG:', error.message);
+        return { error: `Failed to fetch challenges: ${error.message || 'Unknown error'}` };
     }
 
     return { challenges: data || [] };

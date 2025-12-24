@@ -131,7 +131,8 @@
         "streak": "连胜",
         "xp": "经验值",
         "days": "天",
-        "blog": "博客"
+        "blog": "博客",
+        "level": "等级 {level}"
     },
     "Quiz": {
         "loading": "正在收集学习资料...",
@@ -205,7 +206,15 @@
         "resetInfo": "联赛在每周日晚上 11:59 重置",
         "promotion": "晋级",
         "relegation": "降级",
-        "you": "您"
+        "you": "您",
+        "weeklyXpLabel": "{xp} 每周经验值",
+        "totalXpLabel": "总经验值",
+        "leagueNames": {
+            "Bronze": "青铜",
+            "Silver": "白银",
+            "Gold": "黄金",
+            "Diamond": "钻石"
+        }
     },
     "SkillTrees": {
         "backDashboard": "回到仪表板",
@@ -225,7 +234,7 @@
         "reviewTopic": "复习主题",
         "startLearning": "开始学习",
         "mockTestTitle": "官方模拟考试",
-        "mockTestDesc": "准备好证明您的知识了吗？通过此测试以获得 {badge} 徽章！",
+        "mockTestDesc": "准备好证明您的知识了吗？通过此测试以获得 <badge /> 徽章！",
         "mockBadge": "\"模拟考大师\"",
         "takeTest": "参加测试",
         "proTip": "温馨提示：按顺序完成主题以解锁新内容并最大化您的学习效果！"
@@ -372,30 +381,63 @@
         "legendDesc": "您正在使用所有高级功能。在奥利的帮助下继续学习吧！",
         "goldDesc": "解锁无限红心、AI 语音导师和专属大师课。",
         "manageSub": "管理订阅",
-        "goPremium": "升级高级版"
+        "goPremium": "升级高级版",
+        "becomePro": "成为 Pro",
+        "supportOllie": "支持奥利",
+        "features": {
+            "mockTests": "无限次模拟考试",
+            "aiTutor": "24/7 个人 AI 导师",
+            "aiTutorUnlocked": "AI 导师访问权限（已解锁）",
+            "analytics": "详细的表现分析",
+            "noHearts": "无红心限制"
+        }
     },
     "Settings": {
-        "title": "账户设置",
         "backProfile": "回到个人资料",
+        "title": "账户设置",
+        "profileSection": "个人资料",
+        "preferencesSection": "偏好设置",
+        "securitySection": "安全",
         "profilePicture": "个人资料图片",
+        "chooseAvatar": "从下方选项中选择您的头像",
         "personalDetails": "个人详情",
         "fullName": "全名",
         "username": "用户名",
-        "email": "电子邮件",
+        "email": "电子邮件（无法更改）",
+        "emailLocked": "电子邮件地址与您的账户关联，无法更改。",
         "saveChanges": "保存更改",
         "saving": "正在保存...",
         "success": "个人资料已成功更新！",
-        "avatars": {
-            "ollie1": "经典奥利",
-            "ollie2": "聪明奥利",
-            "ollie3": "酷炫奥利",
-            "ollie4": "派对奥利",
-            "ollie5": "运动奥利",
-            "ollie6": "瑜伽奥利"
-        },
+        "appearance": "外观",
+        "darkMode": "深色模式",
+        "darkModeDesc": "切换到深色主题以便舒适阅读",
+        "language": "语言",
+        "currentLanguage": "简体中文",
+        "notifications": "通知",
+        "pushNotifications": "推送通知",
+        "pushNotificationsDesc": "接收提醒以保持连胜",
+        "soundEffects": "音效",
+        "soundEffectsDesc": "播放答对/答错的音效",
+        "securityOptions": "安全选项",
+        "changePassword": "更改密码",
+        "changePasswordDesc": "更新密码以提高安全性",
+        "helpSupport": "帮助与支持",
+        "helpSupportDesc": "获取问题的答案",
+        "accountSecurity": "您的账户是安全的",
+        "accountSecurityDesc": "我们使用行业标准加密来保护您的数据。您的密码经过哈希处理，学习进度每天备份。",
         "placeholders": {
             "fullName": "输入您的全名",
             "username": "@用户名"
+        },
+        "avatars": {
+            "ollie1": "Felix 机器人",
+            "ollie2": "Aneka 机器人",
+            "ollie3": "Zephyr 机器人",
+            "ollie4": "Milo 机器人",
+            "ollie5": "Luna 机器人",
+            "ollie6": "Nova 机器人",
+            "ollie7": "Sage 机器人",
+            "ollie8": "Ruby 机器人"
         }
     },
     "Security": {
@@ -481,7 +523,7 @@
         "title": "PassMate 高级版",
         "backDashboard": "回到仪表板",
         "goPremium": "升级高级版",
-        "heroTitle": "成为澳大利亚人的 {italic}最快{italic} 途径",
+        "heroTitle": "成为澳大利亚人的 <italic>最快</italic> 途径",
         "heroSubtitle": "加入数千名使用我们独有的 AI 驱动功能通过测试的新公民。",
         "plans": {
             "popular": "最受欢迎",
@@ -718,5 +760,40 @@
             "location": "地点",
             "locationValue": "悉尼, 澳大利亚 🇦🇺"
         }
+    },
+    "Friends": {
+        "title": "好友",
+        "backDashboard": "仪表盘",
+        "searchPlaceholder": "通过用户名搜好友...",
+        "add": "添加",
+        "requestSent": "已向 {username} 发送好友请求！",
+        "battleStartError": "无法开始对战",
+        "removeConfirm": "你确定要删除这位好友吗？",
+        "pendingBattles": "待处理对战",
+        "waitingMates": "等待好友",
+        "recentResults": "最近结果",
+        "friendRequests": "好友请求",
+        "yourMates": "你的好友",
+        "challengedYou": "向你发起了挑战！",
+        "fight": "开战！",
+        "improveScore": "提高分数",
+        "yourTurnDone": "你已完成！等待中...",
+        "challengeSent": "挑战已发送！",
+        "finishPart": "完成你的部分",
+        "won": "你赢了！",
+        "draw": "平局！",
+        "lost": "失败...",
+        "versus": "对阵 {username} • {score1}:{score2}",
+        "rematch": "再战一场？",
+        "wantsToBeMates": "想和你交朋友！",
+        "accept": "接受",
+        "reject": "拒绝",
+        "friendsCount": "{count} 位好友",
+        "chat": "聊天",
+        "battle": "挑战",
+        "noFriends": "还没有好友？在上方通过用户名添加吧！ 🐨",
+        "inviteTitle": "邀请好友！",
+        "inviteDesc": "和好友一起学习更有趣。邀请他人加入 PassMate，一起竞争吧！",
+        "sendInvites": "发送邀请"
     }
 }

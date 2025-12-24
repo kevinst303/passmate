@@ -76,7 +76,7 @@ export default function BillingClient({ data }: BillingClientProps) {
     ];
 
     return (
-        <div className="min-h-screen bg-[#FDFCFB] pb-24 md:pb-8 md:pl-28 md:pr-8">
+        <div className="min-h-screen bg-background pb-24 md:pb-8 md:pl-28 md:pr-8 font-sans">
             <main className="max-w-4xl mx-auto py-8 px-4">
                 <Link
                     href="/profile"
@@ -94,7 +94,7 @@ export default function BillingClient({ data }: BillingClientProps) {
 
                 <div className="grid gap-8">
                     {/* Current Plan Card */}
-                    <section className="bg-white rounded-[3rem] border-2 border-border p-8 md:p-10 shadow-xl relative overflow-hidden">
+                    <section className="bg-card glass rounded-[3rem] border-2 border-border p-8 md:p-10 shadow-xl relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
                         <div className="relative z-10">
@@ -110,7 +110,7 @@ export default function BillingClient({ data }: BillingClientProps) {
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-2 text-green-600 font-bold bg-green-50 px-4 py-2 rounded-xl w-fit">
+                                    <div className="flex items-center gap-2 text-green-600 dark:text-green-400 font-bold bg-green-100 dark:bg-green-950/40 px-4 py-2 rounded-xl w-fit border border-green-200 dark:border-green-800">
                                         <CheckCircle2 className="w-4 h-4" />
                                         {t("activeAccount")}
                                     </div>
@@ -145,7 +145,7 @@ export default function BillingClient({ data }: BillingClientProps) {
                                         <ul className="space-y-3">
                                             {(profile.is_premium ? plans[1].features : plans[0].features).map((feat, i) => (
                                                 <li key={i} className="flex items-center gap-3 font-bold text-sm">
-                                                    <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                                                    <div className="w-5 h-5 bg-green-100 dark:bg-green-950/40 rounded-full flex items-center justify-center text-green-600 dark:text-green-400">
                                                         <CheckCircle2 className="w-3 h-3" />
                                                     </div>
                                                     {feat}
@@ -177,7 +177,7 @@ export default function BillingClient({ data }: BillingClientProps) {
 
                     {/* Quick Invoicing Section (Static/Simulated) */}
                     <div className="grid md:grid-cols-2 gap-8">
-                        <section className="bg-white rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
+                        <section className="bg-card glass rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
                             <h3 className="text-xl font-display font-black mb-6 flex items-center gap-3">
                                 <Receipt className="w-5 h-5 text-primary" /> {t("recentInvoices")}
                             </h3>
@@ -208,7 +208,7 @@ export default function BillingClient({ data }: BillingClientProps) {
                             )}
                         </section>
 
-                        <section className="bg-white rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
+                        <section className="bg-card glass rounded-[2.5rem] border-2 border-border p-8 shadow-lg">
                             <h3 className="text-xl font-display font-black mb-6 flex items-center gap-3">
                                 <ExternalLink className="w-5 h-5 text-primary" /> {t("helpfulLinks")}
                             </h3>

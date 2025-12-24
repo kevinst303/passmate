@@ -27,6 +27,52 @@
   --radius: 1rem;
 }
 
+
+
+:root.dark {
+  color-scheme: dark;
+
+  /* Slate 950 base */
+  --background: #020817;
+  --foreground: #f8fafc;
+
+  /* Teals for Primary - Brighter for dark mode contrast */
+  --primary: #14b8a6;
+  --primary-foreground: #020817;
+
+  /* Warm Sand/Gold for Secondary */
+  --secondary: #eab308;
+  --secondary-foreground: #020817;
+
+  /* Orange/Coral for Accent */
+  --accent: #f97316;
+  --accent-foreground: #020817;
+
+  /* Slate 900 for Cards (slightly lighter than background) */
+  --card: #0f172a;
+  --card-foreground: #f8fafc;
+
+  /* Slate 800 for Muted elements */
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+
+  /* Slate 800 for Borders */
+  --border: #1e293b;
+  --input: #1e293b;
+
+  /* Glow effects */
+  --glow-primary: rgba(20, 184, 166, 0.3);
+  --glow-secondary: rgba(234, 179, 8, 0.3);
+  --glow-accent: rgba(249, 115, 22, 0.3);
+
+  /* Shadow variables for buttons in dark mode */
+  --shadow-primary: #0d7a6e;
+  --shadow-secondary: #a17c06;
+  --shadow-accent: #a34b0e;
+
+  --ring: #14b8a6;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -74,6 +120,27 @@ h5,
 h6 {
   font-family: var(--font-poppins), sans-serif;
   font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.glass {
+  @apply bg-card/60 backdrop-blur-xl border border-border/50;
+}
+
+.dark .glass {
+  @apply bg-card/40 backdrop-blur-2xl border-white/5;
+}
+
+.glow-primary {
+  @apply shadow-[0_0_20px_var(--glow-primary)];
+}
+
+.glow-secondary {
+  @apply shadow-[0_0_20px_var(--glow-secondary)];
+}
+
+.glow-accent {
+  @apply shadow-[0_0_20px_var(--glow-accent)];
 }
 
 /* Duolingo-style button shadows */
@@ -82,14 +149,26 @@ h6 {
   box-shadow: 0 4px 0 #147a71;
 }
 
+.dark .btn-primary {
+  box-shadow: 0 4px 0 var(--shadow-primary);
+}
+
 .btn-secondary {
   @apply relative bg-secondary text-white px-6 py-3 rounded-2xl font-bold transition-all active:translate-y-1 active:shadow-none;
   box-shadow: 0 4px 0 #b38b61;
 }
 
+.dark .btn-secondary {
+  box-shadow: 0 4px 0 var(--shadow-secondary);
+}
+
 .btn-accent {
   @apply relative bg-accent text-white px-6 py-3 rounded-2xl font-bold transition-all active:translate-y-1 active:shadow-none;
   box-shadow: 0 4px 0 #c26a4c;
+}
+
+.dark .btn-accent {
+  box-shadow: 0 4px 0 var(--shadow-accent);
 }
 
 /* Safe area support for notched devices */

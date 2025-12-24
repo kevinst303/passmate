@@ -20,6 +20,7 @@ import {
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { sendFriendRequest, acceptFriendRequest, rejectFriendRequest, removeFriend, searchUsers } from "@/app/actions/friends";
 import { createChallenge } from "@/app/actions/challenges";
@@ -76,6 +77,7 @@ interface FriendsClientProps {
         pendingSent: Challenge[];
         completed: Challenge[];
         pendingRequests: FriendRequest[];
+        error?: string;
     };
     profile: {
         daily_streak: number;
@@ -85,12 +87,22 @@ interface FriendsClientProps {
 }
 
 export default function FriendsClient({ initialData, profile }: FriendsClientProps) {
-    const { friends, pendingRequests = [], pendingReceived = [], pendingSent = [], completed = [] } = initialData;
+    const t = useTranslations("Friends");
+    const common = useTranslations("Common");
+
+    const {
+        friends = [],
+        pendingRequests = [],
+        pendingReceived = [],
+        pendingSent = [],
+        completed = []
+    } = initialData as any;
+
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<User[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [isActionLoading, setIsActionLoading] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>((initialData as any).error || null);
     const [success, setSuccess] = useState<string | null>(null);
     const router = useRouter();
 
@@ -120,7 +132,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
         if (result.error) {
             setError(result.error);
         } else {
-            setSuccess(`Request sent to ${username}!`);
+            setSuccess(t("requestSent", { username }));
             setSearchQuery("");
             setSearchResults([]);
             router.refresh();
@@ -147,7 +159,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
     };
 
     const handleRemove = async (friendshipId: string) => {
-        if (!confirm("Are you sure you want to remove this mate?")) return;
+        if (!confirm(t("removeConfirm"))) return;
 
         setIsActionLoading(friendshipId);
         const result = await removeFriend(friendshipId);
@@ -157,29 +169,55 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
         setIsActionLoading(null);
     };
 
+    const handleInvite = async () => {
+        const inviteData = {
+            title: 'Join me on PassMate!',
+            text: 'I\'m using PassMate to study for my Australian Citizenship test. Join me and let\'s compete!',
+            url: window.location.origin
+        };
+
+        if (navigator.share) {
+            try {
+                await navigator.share(inviteData);
+            } catch (err) {
+                // AbortError is expected when user cancels the share dialog - ignore it
+                if (err instanceof Error && err.name !== 'AbortError') {
+                    console.error('Error sharing:', err);
+                }
+            }
+        } else {
+            try {
+                await navigator.clipboard.writeText(inviteData.url);
+                setSuccess(t("linkCopied") || "Invite link copied to clipboard!");
+            } catch (err) {
+                setError("Failed to copy link");
+            }
+        }
+    };
+
     const handleBattle = async (friendId: string) => {
         setIsActionLoading(friendId);
         const result = await createChallenge(friendId);
         if (result.success && result.challenge) {
             router.push(`/dashboard/quiz?type=battle&challengeId=${result.challenge.id}`);
         } else {
-            setError(result.error || "Failed to start battle");
+            setError(result.error || t("battleStartError"));
         }
         setIsActionLoading(null);
     };
 
     return (
-        <div className="min-h-screen bg-muted/30 pb-24 md:pb-0 md:pl-20">
-            <header className="bg-white border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+        <div className="min-h-screen bg-background pb-24 md:pb-0 md:pl-20 font-sans">
+            <header className="bg-card glass border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 z-10">
                 <Link href="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                    <ArrowLeft className="w-5 h-5" /> <span className="font-bold">Dashboard</span>
+                    <ArrowLeft className="w-5 h-5" /> <span className="font-bold">{t("backDashboard")}</span>
                 </Link>
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1.5 bg-orange-100 text-orange-600 px-3 py-1 rounded-full font-bold text-sm">
-                        <Flame className="w-4 h-4 fill-orange-600" /> {profile.daily_streak}
+                    <div className="flex items-center gap-1.5 bg-orange-100 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400 px-3 py-1 rounded-full font-bold text-sm">
+                        <Flame className="w-4 h-4 fill-orange-600 dark:fill-orange-400" /> {profile.daily_streak}
                     </div>
-                    <div className="flex items-center gap-1.5 bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-bold text-sm">
-                        <Zap className="w-4 h-4 fill-blue-600" /> {profile.total_xp}
+                    <div className="flex items-center gap-1.5 bg-blue-100 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full font-bold text-sm">
+                        <Zap className="w-4 h-4 fill-blue-600 dark:fill-blue-400" /> {profile.total_xp}
                     </div>
                 </div>
             </header>
@@ -194,8 +232,8 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                placeholder="Find mates by username..."
-                                className="w-full bg-white border-2 border-border rounded-2xl py-3.5 pl-12 pr-4 focus:ring-2 focus:ring-primary/20 transition-all font-medium outline-none"
+                                placeholder={t("searchPlaceholder")}
+                                className="w-full bg-card glass border-2 border-border rounded-2xl py-3.5 pl-12 pr-4 focus:ring-2 focus:ring-primary/20 transition-all font-medium outline-none"
                             />
                             {isSearching && (
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -212,7 +250,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="absolute z-20 w-full bg-white mt-1 rounded-2xl border-2 border-border shadow-2xl overflow-hidden"
+                                className="absolute z-20 w-full bg-card glass mt-1 rounded-2xl border-2 border-border shadow-2xl overflow-hidden"
                             >
                                 {searchResults.map((user) => (
                                     <div key={user.id} className="p-3 hover:bg-muted/50 flex items-center justify-between border-b border-muted last:border-0">
@@ -234,7 +272,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                                         <Sparkles className="w-3 h-3 text-yellow-500 fill-yellow-500" />
                                                     )}
                                                 </div>
-                                                <p className="text-xs text-muted-foreground">Level {user.level}</p>
+                                                <p className="text-xs text-muted-foreground">{common("level", { level: user.level })}</p>
                                             </div>
                                         </div>
                                         <Button
@@ -243,7 +281,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                             disabled={isActionLoading === user.username}
                                         >
                                             {isActionLoading === user.username ? <Loader2 className="w-4 h-4 animate-spin" /> : <UserPlus className="w-4 h-4 mr-2" />}
-                                            Add
+                                            {t("add")}
                                         </Button>
                                     </div>
                                 ))}
@@ -279,13 +317,13 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                 {pendingReceived.length > 0 && (
                     <section className="space-y-4">
                         <h3 className="text-xl font-display font-black px-2 flex items-center gap-2">
-                            <Zap className="w-5 h-5 text-orange-500 fill-orange-500" /> Pending Battles
+                            <Zap className="w-5 h-5 text-orange-500 fill-orange-500" /> {t("pendingBattles")}
                         </h3>
                         <div className="grid gap-4">
-                            {pendingReceived.map((challenge) => (
-                                <div key={challenge.id} className="bg-orange-50 p-5 rounded-[2.5rem] border-2 border-orange-200 flex items-center justify-between shadow-sm">
+                            {pendingReceived.map((challenge: Challenge) => (
+                                <div key={challenge.id} className="bg-orange-500/10 dark:bg-orange-950/20 p-5 rounded-[2.5rem] border-2 border-orange-500/20 flex items-center justify-between shadow-sm">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm overflow-hidden relative">
+                                        <div className="w-12 h-12 bg-card rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-border/50 overflow-hidden relative">
                                             {challenge.challenger?.avatar_url ? (
                                                 <Image
                                                     src={challenge.challenger.avatar_url}
@@ -297,7 +335,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                         </div>
                                         <div>
                                             <p className="font-black text-lg">{challenge.challenger?.username}</p>
-                                            <p className="text-sm font-medium text-orange-700">Challenged you to a battle!</p>
+                                            <p className="text-sm font-medium text-orange-700">{t("challengedYou")}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -306,7 +344,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                             className="rounded-xl border-2 bg-orange-600 hover:bg-orange-700 shadow-[0_4px_0_#9a3412]"
                                             onClick={() => router.push(`/dashboard/quiz?type=battle&challengeId=${challenge.id}`)}
                                         >
-                                            <Zap className="w-4 h-4 mr-2" /> {challenge.challenged_played ? "Improve Score" : "Fight!"}
+                                            <Zap className="w-4 h-4 mr-2" /> {challenge.challenged_played ? t("improveScore") : t("fight")}
                                         </Button>
                                     </div>
                                 </div>
@@ -319,11 +357,11 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                 {pendingSent.length > 0 && (
                     <section className="space-y-4">
                         <h3 className="text-xl font-display font-black px-2 flex items-center gap-2 text-muted-foreground">
-                            <Loader2 className="w-5 h-5" /> Waiting for Mates
+                            <Loader2 className="w-5 h-5" /> {t("waitingMates")}
                         </h3>
                         <div className="grid gap-4 opacity-75">
-                            {pendingSent.map((challenge) => (
-                                <div key={challenge.id} className="bg-white p-5 rounded-[2.5rem] border-2 border-border flex items-center justify-between shadow-sm">
+                            {pendingSent.map((challenge: Challenge) => (
+                                <div key={challenge.id} className="bg-card glass p-5 rounded-[2.5rem] border-2 border-border flex items-center justify-between shadow-sm">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-muted rounded-2xl flex items-center justify-center text-2xl grayscale overflow-hidden relative">
                                             {challenge.challenged?.avatar_url ? (
@@ -338,7 +376,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                         <div>
                                             <p className="font-black text-lg">{challenge.challenged?.username}</p>
                                             <p className="text-sm font-medium text-muted-foreground">
-                                                {challenge.challenger_played ? "Your turn done! Waiting..." : "Challenge sent!"}
+                                                {challenge.challenger_played ? t("yourTurnDone") : t("challengeSent")}
                                             </p>
                                         </div>
                                     </div>
@@ -349,7 +387,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                             className="rounded-xl"
                                             onClick={() => router.push(`/dashboard/quiz?type=battle&challengeId=${challenge.id}`)}
                                         >
-                                            Finish your part
+                                            {t("finishPart")}
                                         </Button>
                                     )}
                                 </div>
@@ -362,10 +400,10 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                 {completed.length > 0 && (
                     <section className="space-y-4">
                         <h3 className="text-xl font-display font-black px-2 flex items-center gap-2">
-                            <Trophy className="w-5 h-5 text-yellow-500 fill-yellow-500" /> Recent Results
+                            <Trophy className="w-5 h-5 text-yellow-500 fill-yellow-500" /> {t("recentResults")}
                         </h3>
                         <div className="grid gap-4">
-                            {completed.map((battle) => {
+                            {completed.map((battle: Challenge) => {
                                 const isWinner = battle.winner_id === profile.id;
                                 const isDraw = battle.winner_id === null;
                                 const opponent = battle.challenger_id === profile.id ? battle.challenged : battle.challenger;
@@ -383,15 +421,15 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                             </div>
                                             <div>
                                                 <p className="font-black text-lg">
-                                                    {isWinner ? "You won!" : isDraw ? "It's a draw!" : "Mangled..."}
+                                                    {isWinner ? t("won") : isDraw ? t("draw") : t("lost")}
                                                 </p>
                                                 <p className="text-sm font-medium opacity-70">
-                                                    vs {opponent?.username} • {myScore}:{opScore}
+                                                    {t("versus", { username: opponent?.username || "mate", score1: myScore ?? 0, score2: opScore ?? 0 })}
                                                 </p>
                                             </div>
                                         </div>
                                         <Link href={`/dashboard/quiz?type=battle&challengeId=${battle.id}`}>
-                                            <Button variant="ghost" size="sm" className="rounded-xl">Rematch?</Button>
+                                            <Button variant="ghost" size="sm" className="rounded-xl">{t("rematch")}</Button>
                                         </Link>
                                     </div>
                                 );
@@ -404,11 +442,11 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                 {pendingRequests.length > 0 && (
                     <section className="space-y-4">
                         <h3 className="text-xl font-display font-black px-2 flex items-center gap-2">
-                            <Mail className="w-5 h-5 text-blue-500 fill-blue-500" /> Friend Requests
+                            <Mail className="w-5 h-5 text-blue-500 fill-blue-500" /> {t("friendRequests")}
                         </h3>
                         <div className="grid gap-4">
-                            {pendingRequests.map((req) => (
-                                <div key={req.id} className="bg-white p-5 rounded-[2.5rem] border-2 border-border flex items-center justify-between shadow-sm">
+                            {pendingRequests.map((req: FriendRequest) => (
+                                <div key={req.id} className="bg-card glass p-5 rounded-[2.5rem] border-2 border-border flex items-center justify-between shadow-sm">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl overflow-hidden relative">
                                             {req.user?.avatar_url ? (
@@ -422,7 +460,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                         </div>
                                         <div>
                                             <p className="font-black text-lg">{req.user?.username}</p>
-                                            <p className="text-sm font-medium text-muted-foreground">Wants to be mates!</p>
+                                            <p className="text-sm font-medium text-muted-foreground">{t("wantsToBeMates")}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -434,7 +472,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                             disabled={isActionLoading === req.id}
                                         >
                                             {isActionLoading === req.id ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Check className="w-4 h-4 mr-2" />}
-                                            Accept
+                                            {t("accept")}
                                         </Button>
                                         <Button
                                             size="sm"
@@ -456,17 +494,17 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                 <section className="space-y-4">
                     <div className="flex items-center justify-between px-2">
                         <h3 className="text-xl font-display font-black flex items-center gap-2">
-                            <Users className="w-5 h-5 text-primary" /> Your Mates
+                            <Users className="w-5 h-5 text-primary" /> {t("yourMates")}
                         </h3>
-                        <span className="text-sm font-bold text-muted-foreground">{friends.length} Friends</span>
+                        <span className="text-sm font-bold text-muted-foreground">{t("friendsCount", { count: friends.length })}</span>
                     </div>
 
                     <div className="grid gap-4">
-                        {friends.map((friend) => (
+                        {friends.map((friend: FriendProfile) => (
                             <motion.div
                                 key={friend.id}
                                 whileHover={{ y: -2 }}
-                                className="bg-white p-6 rounded-[2.5rem] border-2 border-border shadow-sm flex items-center gap-4 group hover:border-primary/30 transition-all"
+                                className="bg-card glass p-6 rounded-[2.5rem] border-2 border-border shadow-sm flex items-center gap-4 group hover:border-primary/30 transition-all"
                             >
                                 <div className="relative">
                                     <div className="w-16 h-16 bg-muted rounded-[1.5rem] flex items-center justify-center text-4xl shadow-inner group-hover:bg-primary/5 transition-colors overflow-hidden relative">
@@ -494,7 +532,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                             </div>
                                         )}
                                         <span className="text-[10px] font-black uppercase bg-muted px-2 py-0.5 rounded-full text-muted-foreground">
-                                            Level {friend.level}
+                                            {common("level", { level: friend.level })}
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-3 mt-1">
@@ -509,7 +547,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
 
                                 <div className="flex items-center gap-2">
                                     <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2 border-primary/20 text-primary">
-                                        <MessageCircle className="w-4 h-4" /> Chat
+                                        <MessageCircle className="w-4 h-4" /> {t("chat")}
                                     </Button>
                                     <Button
                                         size="sm"
@@ -517,7 +555,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                         onClick={() => handleBattle(friend.id)}
                                         disabled={isActionLoading === friend.id}
                                     >
-                                        {isActionLoading === friend.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />} Battle
+                                        {isActionLoading === friend.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />} {t("battle")}
                                     </Button>
                                     <Button
                                         variant="ghost"
@@ -534,22 +572,26 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                     </div>
                     {friends.length === 0 && (
                         <div className="text-center py-12 bg-white rounded-[3rem] border-2 border-dashed border-border/50">
-                            <p className="text-muted-foreground font-bold italic">No mates yet? Add some by username above! 🐨</p>
+                            <p className="text-muted-foreground font-bold italic">{t("noFriends")}</p>
                         </div>
                     )}
                 </section>
 
                 {/* Global Mate Search CTA */}
-                <section className="bg-white p-10 rounded-[4rem] border-2 border-border shadow-sm text-center space-y-4">
+                <section className="bg-card glass p-10 rounded-[4rem] border-2 border-border shadow-sm text-center space-y-4">
                     <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-4 scale-110">
                         🐨
                     </div>
-                    <h2 className="text-2xl font-display font-black">Invite your mates!</h2>
+                    <h2 className="text-2xl font-display font-black">{t("inviteTitle")}</h2>
                     <p className="text-muted-foreground font-bold max-w-sm mx-auto">
-                        Learning is better with friends. Invite someone to join PassMate and compete together!
+                        {t("inviteDesc")}
                     </p>
-                    <Button variant="secondary" className="px-12 py-4 h-auto text-lg flex items-center gap-2 mx-auto">
-                        <Mail className="w-5 h-5" /> Send Invites
+                    <Button
+                        variant="secondary"
+                        className="px-12 py-4 h-auto text-lg flex items-center gap-2 mx-auto"
+                        onClick={handleInvite}
+                    >
+                        <Mail className="w-5 h-5" /> {t("sendInvites")}
                     </Button>
                 </section>
             </main>
