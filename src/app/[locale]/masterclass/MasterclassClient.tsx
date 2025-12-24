@@ -21,13 +21,22 @@ import { cn } from "@/lib/utils";
 import { flagMasterclassComplete } from "@/app/actions/masterclass";
 import { useTranslations } from "next-intl";
 
-export default function MasterclassClient({ profile, initialCompleted = [] }: { profile: any, initialCompleted?: string[] }) {
+
+interface Module {
+    id: string;
+    title: string;
+    length: string;
+    status: string;
+    description: string;
+}
+
+export default function MasterclassClient({ profile, initialCompleted = [] }: { profile: unknown, initialCompleted?: string[] }) {
     const t = useTranslations("Masterclass");
-    const [activeVideo, setActiveVideo] = useState<any>(null);
+    const [activeVideo, setActiveVideo] = useState<Module | null>(null);
     const [isCompleting, setIsCompleting] = useState(false);
     const [completedModules, setCompletedModules] = useState<string[]>(initialCompleted);
 
-    const modules = [
+    const modules: Module[] = [
         {
             id: "m1",
             title: t("modules.m1.title"),
@@ -61,7 +70,7 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
         }
     ];
 
-    const handleWatch = (module: any) => {
+    const handleWatch = (module: Module) => {
         setActiveVideo(module);
     };
 
@@ -135,7 +144,7 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
                         <Button
                             size="lg"
                             className="h-16 md:h-20 px-8 md:px-10 rounded-2xl md:rounded-[2.5rem] bg-yellow-400 text-yellow-900 hover:bg-yellow-300 font-black text-lg md:text-xl shadow-xl shadow-yellow-500/20 hover:scale-105 transition-all flex gap-3 border-none"
-                            onClick={() => handleWatch(nextModule)}
+                            onClick={() => nextModule && handleWatch(nextModule)}
                             disabled={!nextModule}
                         >
                             <PlayCircle className="w-6 h-6 md:w-8 md:h-8" /> {t("resumeModule")}

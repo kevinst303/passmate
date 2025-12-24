@@ -37,11 +37,10 @@ interface ProfileData {
 interface SkillTreesClientProps {
     data: {
         profile: ProfileData;
-        error?: string;
+        [key: string]: any;
     };
     skillTreeData: {
         topics: Topic[];
-        error?: string;
     };
 }
 

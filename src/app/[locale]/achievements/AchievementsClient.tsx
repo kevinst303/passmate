@@ -16,9 +16,33 @@ import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
+interface Profile {
+    daily_streak: number;
+    total_xp: number;
+}
+
+interface AchievementWithStatus {
+    id: string;
+    name: string;
+    description: string;
+    badge_url?: string;
+    xp_reward: number;
+    is_unlocked: boolean;
+    unlocked_at?: string;
+}
+
+interface AchievementsData {
+    achievements: AchievementWithStatus[];
+    stats: {
+        unlocked: number;
+        total: number;
+        progress: number;
+    };
+}
+
 interface AchievementsClientProps {
-    achievementsData: any;
-    profile: any;
+    achievementsData: AchievementsData;
+    profile: Profile;
 }
 
 export default function AchievementsClient({ achievementsData, profile }: AchievementsClientProps) {
@@ -94,7 +118,7 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                             </div>
                             <div className="bg-muted/30 p-4 rounded-3xl border border-border text-center">
                                 <Star className="w-6 h-6 mx-auto mb-2 text-yellow-500 fill-yellow-500" />
-                                <p className="text-2xl font-display font-black">{achievements.reduce((acc: number, a: any) => acc + (a.is_unlocked ? a.xp_reward : 0), 0)}</p>
+                                <p className="text-2xl font-display font-black">{achievements.reduce((acc: number, a: AchievementWithStatus) => acc + (a.is_unlocked ? a.xp_reward : 0), 0)}</p>
                                 <p className="text-[10px] uppercase font-black text-muted-foreground">{t("rewardXp")}</p>
                             </div>
                         </div>
@@ -109,7 +133,7 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {achievements.map((achievement: any, idx: number) => (
+                        {achievements.map((achievement: AchievementWithStatus, idx: number) => (
                             <motion.div
                                 key={achievement.id}
                                 initial={{ opacity: 0, y: 20 }}

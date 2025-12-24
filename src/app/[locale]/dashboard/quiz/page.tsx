@@ -30,12 +30,17 @@ import { useTranslations } from "next-intl";
 
 import { Suspense } from 'react';
 
+import { Question, Achievement } from '@/app/actions/admin';
+import { User } from '@supabase/supabase-js';
+
+// ... (existing imports)
+
 function QuizContent() {
     const t = useTranslations("Quiz");
     const common = useTranslations("Common");
 
     const [currentStep, setCurrentStep] = useState(0); // 0: Start, 1: Quiz, 2: Results
-    const [questions, setQuestions] = useState<any[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [isAnswered, setIsAnswered] = useState(false);
@@ -46,10 +51,10 @@ function QuizContent() {
     const [progress, setProgress] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [challengeData, setChallengeData] = useState<any>(null);
-    const [unlockedAchievements, setUnlockedAchievements] = useState<any[]>([]);
+    const [challengeData, setChallengeData] = useState<Record<string, any> | null>(null);
+    const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>([]);
 
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -262,7 +267,7 @@ function QuizContent() {
         const hasPassed = lives > 0 && score >= (questions.length * 0.6);
         const isCompletedBattle = isBattle && challengeData?.status === 'completed';
         const isWaitingBattle = isBattle && challengeData?.status !== 'completed';
-        const wonBattle = isCompletedBattle && challengeData.winner_id === user.id;
+        const wonBattle = isCompletedBattle && user && challengeData?.winner_id === user.id;
         const drewBattle = isCompletedBattle && challengeData.winner_id === null;
 
         return (
@@ -307,7 +312,7 @@ function QuizContent() {
                         {isBattle
                             ? (isWaitingBattle
                                 ? t("waitingOpponent")
-                                : t("finalScore", { score, opponentScore: challengeData.challenger_id === user.id ? challengeData.challenged_score : challengeData.challenger_score }))
+                                : t("finalScore", { score, opponentScore: challengeData?.challenger_id === user?.id ? challengeData?.challenged_score : challengeData?.challenger_score }))
                             : (lives === 0
                                 ? t("outOfLivesResult")
                                 : hasPassed
@@ -343,7 +348,7 @@ function QuizContent() {
                                     <Award className="w-5 h-5" /> {t("newBadge")}
                                 </div>
                                 <div className="flex flex-wrap justify-center gap-4">
-                                    {unlockedAchievements.map((ach: any, idx: number) => (
+                                    {unlockedAchievements.map((name: string, idx: number) => (
                                         <motion.div
                                             key={idx}
                                             initial={{ y: 20, opacity: 0 }}
@@ -352,8 +357,8 @@ function QuizContent() {
                                             className="bg-gradient-to-br from-yellow-400 to-orange-500 p-0.5 rounded-2xl shadow-lg shadow-yellow-200/50"
                                         >
                                             <div className="bg-card px-4 py-2 rounded-[0.9rem] border border-yellow-100/50 flex items-center gap-2">
-                                                <span className="text-2xl">{ach.badge_url || "🏆"}</span>
-                                                <span className="font-black text-sm text-yellow-900">{ach.name}</span>
+                                                <span className="text-2xl">🏆</span>
+                                                <span className="font-black text-sm text-yellow-900">{name}</span>
                                             </div>
                                         </motion.div>
                                     ))}

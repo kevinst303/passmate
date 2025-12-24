@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { resolveMistake } from "@/app/actions/quiz";
 import { useTranslations } from "next-intl";
 
-interface Question {
+export interface Question {
     id: string;
     question_text: string;
     options: string[];
@@ -21,7 +21,7 @@ interface Question {
     explanation: string;
 }
 
-interface Mistake {
+export interface Mistake {
     id: string;
     questions: Question;
 }

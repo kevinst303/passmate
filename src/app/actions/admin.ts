@@ -121,31 +121,36 @@ export async function getAllQuestions(topic?: string) {
     return { success: true, data };
 }
 
-interface Question {
+export interface Question {
     id?: string;
     topic: string;
+    subtopic?: string;
     question_text: string;
     options: string[];
     correct_index: number;
     explanation?: string;
     difficulty?: string;
+    is_premium?: boolean;
 }
 
-interface Achievement {
+export interface Achievement {
     id?: string;
     name: string;
     description: string;
-    badge_url: string;
+    badge_url?: string;
     xp_reward: number;
+    secret?: boolean;
 }
 
-interface Quest {
+export interface Quest {
     id?: string;
     title: string;
-    description: string;
+    description?: string;
+    objective?: string;
     xp_reward: number;
     type: string;
     requirement: number;
+    target_value?: number; // Alias for requirement if needed or removed
 }
 
 export async function upsertQuestion(question: Question) {

@@ -18,8 +18,37 @@ import { Sidebar } from "@/components/Sidebar";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
+interface Profile {
+    id: string;
+    daily_streak: number;
+    total_xp: number;
+}
+
+interface League {
+    name: string;
+}
+
+interface Standing {
+    current_rank: number;
+    weekly_xp: number;
+    leagues?: League;
+}
+
+interface LeaguePlayer {
+    user_id: string;
+    weekly_xp: number;
+    profiles?: {
+        username: string;
+        avatar_url: string;
+    };
+}
+
 interface LeaguesClientProps {
-    data: any;
+    data: {
+        profile: Profile;
+        standing: Standing;
+        topPlayers: LeaguePlayer[];
+    };
 }
 
 export default function LeaguesClient({ data }: LeaguesClientProps) {
@@ -127,7 +156,7 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                             <div className="flex-1">
                                 {topPlayers.length > 0 ? (
                                     <div className="divide-y divide-border/50">
-                                        {topPlayers.map((player: any, idx: number) => {
+                                        {topPlayers.map((player: LeaguePlayer, idx: number) => {
                                             const isUser = player.user_id === profile.id;
                                             const pos = idx + 1;
                                             return (

@@ -170,7 +170,7 @@ export async function getDashboardData() {
             .limit(10);
 
         if (players) {
-            topPlayers = (players as any[]).map(p => ({
+            topPlayers = players.map(p => ({
                 user_id: p.user_id,
                 weekly_xp: p.weekly_xp,
                 profiles: Array.isArray(p.profiles) ? p.profiles[0] : p.profiles

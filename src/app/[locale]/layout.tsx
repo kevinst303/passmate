@@ -8,6 +8,8 @@ import { routing } from '@/i18n/routing';
 import Script from 'next/script';
 import { PWARegister } from "@/components/PWARegister";
 import { SettingsProvider } from "@/providers/SettingsProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -65,7 +67,7 @@ export default async function RootLayout({
   const { locale } = await params;
 
   // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as typeof routing.locales[number])) {
     notFound();
   }
 
@@ -83,6 +85,8 @@ export default async function RootLayout({
           <SettingsProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
             <PWARegister />
+            <SpeedInsights />
+            <Analytics />
           </SettingsProvider>
         </NextIntlClientProvider>
         <Script

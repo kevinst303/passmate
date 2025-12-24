@@ -22,7 +22,11 @@ import { createPortalSession } from "@/app/actions/stripe";
 import { useTranslations } from "next-intl";
 
 interface BillingClientProps {
-    data: any;
+    data: {
+        profile: {
+            is_premium: boolean;
+        };
+    };
 }
 
 export default function BillingClient({ data }: BillingClientProps) {

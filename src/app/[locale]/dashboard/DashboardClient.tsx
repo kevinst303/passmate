@@ -29,6 +29,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { blogPosts, type BlogPost } from "@/data/blogPosts";
 
 interface Profile {
     id: string;
@@ -525,7 +526,7 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {require("@/data/blogPosts").blogPosts.slice(0, 2).map((post: any) => (
+                        {blogPosts.slice(0, 2).map((post: BlogPost) => (
                             <Link key={post.slug} href={`/blog/${post.slug}`}>
                                 <motion.div
                                     whileHover={{ y: -4, boxShadow: "0 10px 25px -10px rgba(0,0,0,0.1)" }}

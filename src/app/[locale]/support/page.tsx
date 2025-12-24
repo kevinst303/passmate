@@ -12,5 +12,5 @@ export default async function SupportPage({ params }: { params: Promise<{ locale
         redirect({ href: '/login', locale });
     }
 
-    return <SupportClient data={data as any} />;
+    return <SupportClient data={data} />;
 }

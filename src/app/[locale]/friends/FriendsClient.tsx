@@ -28,7 +28,7 @@ import { useRouter } from "@/i18n/routing";
 import { useEffect } from "react";
 import Image from "next/image";
 
-interface FriendProfile {
+export interface FriendProfile {
     id: string;
     username: string;
     full_name: string | null;
@@ -41,7 +41,7 @@ interface FriendProfile {
     friendship_id: string;
 }
 
-interface User {
+export interface User {
     id: string;
     username: string;
     avatar_url: string | null;
@@ -49,7 +49,7 @@ interface User {
     level: number;
 }
 
-interface Challenge {
+export interface Challenge {
     id: string;
     challenger_id: string;
     challenged_id: string;
@@ -62,7 +62,7 @@ interface Challenge {
     challenged?: { username: string; avatar_url: string | null };
 }
 
-interface FriendRequest {
+export interface FriendRequest {
     id: string;
     user: {
         username: string;
@@ -96,13 +96,13 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
         pendingReceived = [],
         pendingSent = [],
         completed = []
-    } = initialData as any;
+    } = initialData;
 
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<User[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [isActionLoading, setIsActionLoading] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>((initialData as any).error || null);
+    const [error, setError] = useState<string | null>(initialData.error || null);
     const [success, setSuccess] = useState<string | null>(null);
     const router = useRouter();
 

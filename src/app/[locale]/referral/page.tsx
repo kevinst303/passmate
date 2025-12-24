@@ -12,5 +12,5 @@ export default async function ReferralPage({ params }: { params: Promise<{ local
         redirect({ href: '/login', locale });
     }
 
-    return <ReferralClient data={data as any} />;
+    return <ReferralClient data={data as { profile: { id: string } }} />;
 }

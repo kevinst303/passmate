@@ -28,8 +28,9 @@ export async function getMistakesForAI() {
         })) || [];
 
         return { mistakes: formattedData };
-    } catch (err: any) {
-        console.error(`[getMistakesForAI] Catch Error: ${err.message || err}`);
+    } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        console.error(`[getMistakesForAI] Catch Error: ${errorMessage}`);
         return { mistakes: [] };
     }
 }

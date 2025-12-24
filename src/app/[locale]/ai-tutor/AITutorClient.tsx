@@ -23,24 +23,40 @@ import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
+interface Message {
+    role: "user" | "assistant" | "system";
+    content: string;
+}
+
+interface Mistake {
+    questions: {
+        question_text: string;
+    };
+}
+
+interface Profile {
+    daily_streak: number;
+    total_xp: number;
+}
+
 interface AITutorClientProps {
-    initialMistakes?: any[];
-    profile: any;
+    initialMistakes?: Mistake[];
+    profile: Profile;
 }
 
 export default function AITutorClient({ initialMistakes, profile }: AITutorClientProps) {
     const t = useTranslations("AITutor");
-    const [messages, setMessages] = useState<any[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
 
     useEffect(() => {
         if (initialMistakes && initialMistakes.length > 0) {
             const mistakeList = initialMistakes.map(m => `- ${m.questions?.question_text}`).join('\n');
             setMessages([
-                { role: "assistant", content: `${t("welcomeMistakes")} \n\n${mistakeList}` }
+                { role: "assistant" as const, content: `${t("welcomeMistakes")} \n\n${mistakeList}` }
             ]);
         } else {
             setMessages([
-                { role: "assistant", content: t("welcomeDefault") }
+                { role: "assistant" as const, content: t("welcomeDefault") }
             ]);
         }
     }, [initialMistakes, t]);
@@ -60,7 +76,7 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
         e?.preventDefault();
         if (!input.trim() || isTyping) return;
 
-        const userMsg = { role: "user", content: input };
+        const userMsg = { role: "user" as const, content: input };
         const newMessages = [...messages, userMsg];
         setMessages(newMessages);
         setInput("");
@@ -87,9 +103,9 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
             } else {
                 throw new Error(data.error || "Something went wrong");
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Chat Error:", error);
-            setMessages(prev => [...prev, { role: "assistant", content: t("errorConnecting") }]);
+            setMessages(prev => [...prev, { role: "assistant" as const, content: t("errorConnecting") }]);
         } finally {
             setIsTyping(false);
         }

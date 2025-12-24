@@ -436,8 +436,9 @@ export async function seedQuestions(): Promise<{ success: boolean; message?: str
         }
 
         return { success: true, message: `Database seeded! Added ${newQuestions.length} new questions.` };
-    } catch (err) {
+    } catch (err: unknown) {
         console.error('Seed error:', err);
-        return { success: false, error: 'Failed to seed database. Check server logs.' };
+        const errorMessage = err instanceof Error ? err.message : 'Failed to seed database. Check server logs.';
+        return { success: false, error: errorMessage };
     }
 }

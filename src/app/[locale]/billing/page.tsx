@@ -12,5 +12,5 @@ export default async function BillingPage({ params }: { params: Promise<{ locale
         redirect({ href: '/login', locale });
     }
 
-    return <BillingClient data={data as any} />;
+    return <BillingClient data={data as { profile: { is_premium: boolean } }} />;
 }

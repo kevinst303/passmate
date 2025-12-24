@@ -12,5 +12,5 @@ export default async function SecurityPage({ params }: { params: Promise<{ local
         redirect({ href: '/login', locale });
     }
 
-    return <SecurityClient data={data as any} />;
+    return <SecurityClient data={data} />;
 }

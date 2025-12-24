@@ -25,15 +25,21 @@ import { updateUserProgress } from "@/app/actions/progress";
 import { getRandomQuestions, logQuizMistake } from "@/app/actions/quiz";
 import { checkAndUnlockAchievements } from "@/app/actions/achievements";
 import { useTranslations } from "next-intl";
+import { Question } from "@/app/actions/admin";
+import { User } from "@supabase/supabase-js";
+
+interface Profile {
+    premium_tier?: string;
+}
 
 interface MockTestClientProps {
-    profile: any;
+    profile: Profile;
 }
 
 export default function MockTestClient({ profile }: MockTestClientProps) {
     const t = useTranslations("MockTest");
     const [currentStep, setCurrentStep] = useState(0); // 0: Start, 1: Quiz, 2: Results
-    const [questions, setQuestions] = useState<any[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [isAnswered, setIsAnswered] = useState(false);
@@ -43,7 +49,7 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
     const [timeLeft, setTimeLeft] = useState(45 * 60); // 45 minutes
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [attemptId, setAttemptId] = useState<string | null>(null);
 

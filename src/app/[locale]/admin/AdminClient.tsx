@@ -47,23 +47,87 @@ import {
     upsertQuest,
     deleteQuest,
     getSystemConfig,
-    updateSystemConfig
+    updateSystemConfig,
+    type Question,
+    type Achievement,
+    type Quest
 } from "@/app/actions/admin";
 import { Target } from "lucide-react";
+
+interface UserProfile {
+    id: string;
+    username: string;
+    full_name: string;
+    avatar_url: string;
+    is_premium: boolean;
+    hearts: number;
+    total_xp: number;
+    level: number;
+    created_at: string;
+}
+
+interface RecentQuiz {
+    id: string;
+    score: number;
+    total_questions: number;
+    completed_at: string;
+    profiles: {
+        username: string;
+        full_name: string;
+    } | {
+        username: string;
+        full_name: string;
+    }[] | null;
+}
+
+interface AdminDashboardData {
+    stats: {
+        totalUsers: number;
+        premiumUsers: number;
+        conversionRate: string | number;
+        totalQuestions: number;
+        totalAchievements: number;
+        newUsers24h: number;
+    };
+    recentQuizzes: RecentQuiz[];
+    activeQuests: Quest[];
+    allUsers: UserProfile[];
+}
+
+interface SystemConfigItem {
+    key: string;
+    value: string | number | boolean;
+    description?: string;
+}
+
+interface SettingsForm {
+    ai_provider: string;
+    ai_model: string;
+    ai_key: string;
+    ai_instructions: string;
+    stripe_webhook_secret: string;
+    stripe_standard_id: string;
+    stripe_premium_id: string;
+    maintenance_mode: boolean;
+    global_banner: string;
+    daily_xp_cap: number;
+    heart_regen_hours: number;
+    [key: string]: string | number | boolean;
+}
 
 export default function AdminClient() {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [status, setStatus] = useState<{ success?: boolean; message?: string } | null>(null);
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<AdminDashboardData | null>(null);
     const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'questions' | 'achievements' | 'quests' | 'settings'>('overview');
 
     // Management states
-    const [questions, setQuestions] = useState<any[]>([]);
-    const [achievements, setAchievements] = useState<any[]>([]);
-    const [quests, setQuests] = useState<any[]>([]);
-    const [systemConfig, setSystemConfig] = useState<any[]>([]);
-    const [settingsForm, setSettingsForm] = useState<any>({
+    const [questions, setQuestions] = useState<Question[]>([]);
+    const [achievements, setAchievements] = useState<Achievement[]>([]);
+    const [quests, setQuests] = useState<Quest[]>([]);
+    const [systemConfig, setSystemConfig] = useState<SystemConfigItem[]>([]);
+    const [settingsForm, setSettingsForm] = useState<SettingsForm>({
         ai_provider: 'google',
         ai_model: 'gemini-pro',
         ai_key: '',
@@ -77,7 +141,7 @@ export default function AdminClient() {
         heart_regen_hours: 3
     });
     const [searchQuery, setSearchQuery] = useState("");
-    const [isEditing, setIsEditing] = useState<any>(null);
+    const [isEditing, setIsEditing] = useState<Question | Achievement | Quest | null>(null);
 
     const fetchData = async () => {
         setRefreshing(true);
@@ -100,9 +164,9 @@ export default function AdminClient() {
                 if (sRes.success && sRes.data) {
                     setSystemConfig(sRes.data);
                     // Map array to object for the form
-                    const form: any = { ...settingsForm };
-                    sRes.data.forEach((item: any) => {
-                        form[item.key] = item.value;
+                    const form: SettingsForm = { ...settingsForm };
+                    sRes.data.forEach((item: SystemConfigItem) => {
+                        form[item.key] = item.value as any; // Cast value as it can be ambiguous for specific form fields
                     });
                     setSettingsForm(form);
                 }
@@ -142,11 +206,11 @@ export default function AdminClient() {
         try {
             let res;
             if (activeTab === 'questions') {
-                res = await upsertQuestion(isEditing);
+                res = await upsertQuestion(isEditing as Question);
             } else if (activeTab === 'achievements') {
-                res = await upsertAchievement(isEditing);
+                res = await upsertAchievement(isEditing as Achievement);
             } else if (activeTab === 'quests') {
-                res = await upsertQuest(isEditing);
+                res = await upsertQuest(isEditing as Quest);
             }
 
             if (res?.success) {
@@ -177,7 +241,8 @@ export default function AdminClient() {
         }
     };
 
-    const handleDelete = async (id: string) => {
+    const handleDelete = async (id: string | undefined) => {
+        if (!id) return;
         if (!confirm("Are you sure?")) return;
         let res;
         if (activeTab === 'questions') {
@@ -321,24 +386,31 @@ export default function AdminClient() {
                                     </h3>
 
                                     <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                                        {data?.recentQuizzes?.length > 0 ? (
-                                            data.recentQuizzes.map((quiz: any) => (
-                                                <div key={quiz.id} className="flex items-center justify-between p-4 bg-muted/40 rounded-2xl border border-border/50">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center border border-border text-primary shadow-sm font-black">
-                                                            {(quiz.profiles?.full_name || quiz.profiles?.username || "?")[0]}
+                                        {data?.recentQuizzes && data.recentQuizzes.length > 0 ? (
+                                            data.recentQuizzes.map((quiz) => {
+                                                const profileName = Array.isArray(quiz.profiles)
+                                                    ? (quiz.profiles[0]?.full_name || quiz.profiles[0]?.username || "Anonymous")
+                                                    : (quiz.profiles?.full_name || quiz.profiles?.username || "Anonymous");
+                                                const initial = profileName[0] || "?";
+
+                                                return (
+                                                    <div key={quiz.id} className="flex items-center justify-between p-4 bg-muted/40 rounded-2xl border border-border/50">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center border border-border text-primary shadow-sm font-black">
+                                                                {initial}
+                                                            </div>
+                                                            <div>
+                                                                <p className="font-black text-sm">{profileName}</p>
+                                                                <p className="text-xs text-muted-foreground font-bold">{new Date(quiz.completed_at).toLocaleString()}</p>
+                                                            </div>
                                                         </div>
-                                                        <div>
-                                                            <p className="font-black text-sm">{quiz.profiles?.full_name || quiz.profiles?.username || "Anonymous"}</p>
-                                                            <p className="text-xs text-muted-foreground font-bold">{new Date(quiz.completed_at).toLocaleString()}</p>
+                                                        <div className="text-right">
+                                                            <p className="font-black text-primary text-lg">{quiz.score}/{quiz.total_questions}</p>
+                                                            <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Score</p>
                                                         </div>
                                                     </div>
-                                                    <div className="text-right">
-                                                        <p className="font-black text-primary text-lg">{quiz.score}/{quiz.total_questions}</p>
-                                                        <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Score</p>
-                                                    </div>
-                                                </div>
-                                            ))
+                                                );
+                                            })
                                         ) : (
                                             <div className="flex flex-col items-center justify-center py-12 text-muted-foreground opacity-50">
                                                 <SearchX className="w-12 h-12 mb-2" />
@@ -395,10 +467,10 @@ export default function AdminClient() {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
-                                        {data?.allUsers?.filter((u: any) =>
+                                        {data?.allUsers?.filter((u: UserProfile) =>
                                             u.username?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                             u.full_name?.toLowerCase().includes(searchQuery.toLowerCase())
-                                        ).map((user: any) => (
+                                        ).map((user: UserProfile) => (
                                             <tr key={user.id} className="hover:bg-slate-50/80 transition-colors group">
                                                 <td className="px-10 py-8">
                                                     <div className="flex items-center gap-4">
@@ -601,7 +673,7 @@ export default function AdminClient() {
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {achievements.map((a: any) => (
+                                {achievements.map((a: Achievement) => (
                                     <motion.div
                                         layout
                                         key={a.id}
@@ -660,7 +732,7 @@ export default function AdminClient() {
                                     <p className="text-slate-500 font-bold mt-1">Configure automated daily challenges and rewards</p>
                                 </div>
                                 <Button
-                                    onClick={() => setIsEditing({ title: '', description: '', xp_reward: 50, type: 'quiz_complete', requirement_value: 1 })}
+                                    onClick={() => setIsEditing({ title: '', description: '', xp_reward: 50, type: 'quiz_complete', requirement: 1 } as Quest)}
                                     className="w-full md:w-auto bg-primary text-white font-black px-8 h-16 rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] flex items-center justify-center gap-3 transition-all"
                                 >
                                     <Plus className="w-6 h-6" /> Deploy New Mission
@@ -668,7 +740,7 @@ export default function AdminClient() {
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                {quests.map((q: any) => (
+                                {quests.map((q: Quest) => (
                                     <motion.div
                                         layout
                                         key={q.id}
@@ -1008,8 +1080,8 @@ export default function AdminClient() {
                                                 <div className="space-y-3">
                                                     <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">Core Topic</label>
                                                     <select
-                                                        value={isEditing.topic}
-                                                        onChange={e => setIsEditing({ ...isEditing, topic: e.target.value })}
+                                                        value={(isEditing as Question).topic}
+                                                        onChange={e => setIsEditing({ ...isEditing, topic: e.target.value } as Question)}
                                                         className="w-full p-5 bg-slate-50 border-2 border-slate-100 focus:border-primary focus:bg-white rounded-[1.5rem] font-bold transition-all outline-none"
                                                     >
                                                         <option>History</option>
@@ -1023,8 +1095,8 @@ export default function AdminClient() {
                                                     <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">Sub-Topic</label>
                                                     <input
                                                         type="text"
-                                                        value={isEditing.subtopic || ''}
-                                                        onChange={e => setIsEditing({ ...isEditing, subtopic: e.target.value })}
+                                                        value={(isEditing as Question).subtopic || ''}
+                                                        onChange={e => setIsEditing({ ...isEditing, subtopic: e.target.value } as Question)}
                                                         placeholder="e.g. Constitutional Powers"
                                                         className="w-full p-5 bg-slate-50 border-2 border-slate-100 focus:border-primary focus:bg-white rounded-[1.5rem] font-bold transition-all outline-none"
                                                     />
@@ -1034,8 +1106,8 @@ export default function AdminClient() {
                                             <div className="space-y-3">
                                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">Prompt Formulation</label>
                                                 <textarea
-                                                    value={isEditing.question_text}
-                                                    onChange={e => setIsEditing({ ...isEditing, question_text: e.target.value })}
+                                                    value={(isEditing as Question).question_text}
+                                                    onChange={e => setIsEditing({ ...isEditing, question_text: e.target.value } as Question)}
                                                     className="w-full p-8 bg-slate-50 border-2 border-slate-100 focus:border-primary focus:bg-white rounded-[2.5rem] font-bold transition-all outline-none min-h-[140px] text-lg leading-relaxed"
                                                     placeholder="Formal question content..."
                                                 />
@@ -1044,27 +1116,27 @@ export default function AdminClient() {
                                             <div className="space-y-5">
                                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2 block">Response Matrix</label>
                                                 <div className="space-y-4">
-                                                    {isEditing.options.map((opt: string, i: number) => (
+                                                    {(isEditing as Question).options.map((opt: string, i: number) => (
                                                         <div key={i} className="flex items-center gap-4 group">
                                                             <button
                                                                 type="button"
-                                                                onClick={() => setIsEditing({ ...isEditing, correct_index: i })}
-                                                                className={`w-12 h-12 rounded-[1rem] border-2 flex items-center justify-center transition-all duration-500 shadow-sm ${isEditing.correct_index === i
+                                                                onClick={() => setIsEditing({ ...isEditing, correct_index: i } as Question)}
+                                                                className={`w-12 h-12 rounded-[1rem] border-2 flex items-center justify-center transition-all duration-500 shadow-sm ${(isEditing as Question).correct_index === i
                                                                     ? 'bg-emerald-500 border-emerald-500 text-white shadow-emerald-200'
                                                                     : 'bg-white border-slate-200 text-slate-300 hover:border-primary/40'
                                                                     }`}
                                                             >
-                                                                {isEditing.correct_index === i ? <CheckCircle2 className="w-6 h-6" /> : (i + 1)}
+                                                                {(isEditing as Question).correct_index === i ? <CheckCircle2 className="w-6 h-6" /> : (i + 1)}
                                                             </button>
                                                             <input
                                                                 type="text"
                                                                 value={opt}
                                                                 onChange={e => {
-                                                                    const newOpts = [...isEditing.options];
+                                                                    const newOpts = [...(isEditing as Question).options];
                                                                     newOpts[i] = e.target.value;
-                                                                    setIsEditing({ ...isEditing, options: newOpts });
+                                                                    setIsEditing({ ...isEditing, options: newOpts } as Question);
                                                                 }}
-                                                                className={`flex-1 p-5 rounded-2xl font-bold transition-all border-2 outline-none ${isEditing.correct_index === i ? 'bg-emerald-50 border-emerald-100 text-emerald-900' : 'bg-slate-50 border-slate-100 focus:bg-white focus:border-primary'}`}
+                                                                className={`flex-1 p-5 rounded-2xl font-bold transition-all border-2 outline-none ${(isEditing as Question).correct_index === i ? 'bg-emerald-50 border-emerald-100 text-emerald-900' : 'bg-slate-50 border-slate-100 focus:bg-white focus:border-primary'}`}
                                                                 placeholder={`Choice ${i + 1}`}
                                                             />
                                                         </div>
@@ -1078,8 +1150,8 @@ export default function AdminClient() {
                                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">Badge Codename</label>
                                                 <input
                                                     type="text"
-                                                    value={isEditing.name}
-                                                    onChange={e => setIsEditing({ ...isEditing, name: e.target.value })}
+                                                    value={(isEditing as Achievement).name}
+                                                    onChange={e => setIsEditing({ ...isEditing, name: e.target.value } as Achievement)}
                                                     className="w-full p-5 bg-slate-50 border-2 border-slate-100 focus:border-primary focus:bg-white rounded-[1.5rem] font-bold transition-all outline-none"
                                                 />
                                             </div>
@@ -1087,8 +1159,8 @@ export default function AdminClient() {
                                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">Narrative Description</label>
                                                 <input
                                                     type="text"
-                                                    value={isEditing.description}
-                                                    onChange={e => setIsEditing({ ...isEditing, description: e.target.value })}
+                                                    value={(isEditing as Achievement).description}
+                                                    onChange={e => setIsEditing({ ...isEditing, description: e.target.value } as Achievement)}
                                                     className="w-full p-5 bg-slate-50 border-2 border-slate-100 focus:border-primary focus:bg-white rounded-[1.5rem] font-bold transition-all outline-none"
                                                 />
                                             </div>
@@ -1097,20 +1169,20 @@ export default function AdminClient() {
                                                     <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">XP Bounty</label>
                                                     <input
                                                         type="number"
-                                                        value={isEditing.xp_reward}
-                                                        onChange={e => setIsEditing({ ...isEditing, xp_reward: parseInt(e.target.value) })}
+                                                        value={(isEditing as Achievement).xp_reward}
+                                                        onChange={e => setIsEditing({ ...isEditing, xp_reward: parseInt(e.target.value) } as Achievement)}
                                                         className="w-full p-5 bg-slate-50 border-2 border-slate-100 focus:border-primary rounded-[1.5rem] font-bold outline-none"
                                                     />
                                                 </div>
                                                 <div className="space-y-3 flex items-end">
                                                     <label className="flex items-center gap-4 w-full p-5 bg-slate-50 rounded-[1.5rem] cursor-pointer border-2 border-slate-100 hover:border-primary transition-all group">
-                                                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${isEditing.secret ? 'bg-primary border-primary' : 'bg-white border-slate-300'}`}>
-                                                            {isEditing.secret && <CheckCircle2 className="w-4 h-4 text-white" />}
+                                                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${(isEditing as Achievement).secret ? 'bg-primary border-primary' : 'bg-white border-slate-300'}`}>
+                                                            {(isEditing as Achievement).secret && <CheckCircle2 className="w-4 h-4 text-white" />}
                                                         </div>
                                                         <input
                                                             type="checkbox"
-                                                            checked={isEditing.secret}
-                                                            onChange={e => setIsEditing({ ...isEditing, secret: e.target.checked })}
+                                                            checked={(isEditing as Achievement).secret}
+                                                            onChange={e => setIsEditing({ ...isEditing, secret: e.target.checked } as Achievement)}
                                                             className="hidden"
                                                         />
                                                         <span className="font-black text-slate-700">Classified Badge</span>
@@ -1124,8 +1196,8 @@ export default function AdminClient() {
                                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">Quest Protocol Name</label>
                                                 <input
                                                     type="text"
-                                                    value={isEditing.title}
-                                                    onChange={e => setIsEditing({ ...isEditing, title: e.target.value })}
+                                                    value={(isEditing as Quest).title}
+                                                    onChange={e => setIsEditing({ ...isEditing, title: e.target.value } as Quest)}
                                                     className="w-full p-5 bg-slate-50 border-2 border-slate-100 focus:border-primary rounded-[1.5rem] font-bold outline-none"
                                                     placeholder="Mission title..."
                                                 />
@@ -1134,8 +1206,8 @@ export default function AdminClient() {
                                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">Objective Context</label>
                                                 <input
                                                     type="text"
-                                                    value={isEditing.description || isEditing.objective || ''}
-                                                    onChange={e => setIsEditing({ ...isEditing, description: e.target.value })}
+                                                    value={(isEditing as Quest).description || (isEditing as Quest).objective || ''}
+                                                    onChange={e => setIsEditing({ ...isEditing, description: e.target.value } as Quest)}
                                                     className="w-full p-5 bg-slate-50 border-2 border-slate-100 focus:border-primary rounded-[1.5rem] font-bold outline-none"
                                                 />
                                             </div>
@@ -1143,8 +1215,8 @@ export default function AdminClient() {
                                                 <div className="space-y-3">
                                                     <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">Mission Logic</label>
                                                     <select
-                                                        value={isEditing.type}
-                                                        onChange={e => setIsEditing({ ...isEditing, type: e.target.value })}
+                                                        value={(isEditing as Quest).type}
+                                                        onChange={e => setIsEditing({ ...isEditing, type: e.target.value } as Quest)}
                                                         className="w-full p-5 bg-slate-50 border-2 border-slate-100 focus:border-primary rounded-[1.5rem] font-bold outline-none"
                                                     >
                                                         <option value="quiz_complete">Quiz Completion</option>
@@ -1157,8 +1229,8 @@ export default function AdminClient() {
                                                     <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-2">Quantifiable Goal</label>
                                                     <input
                                                         type="number"
-                                                        value={isEditing.requirement_value || isEditing.target_value || 1}
-                                                        onChange={e => setIsEditing({ ...isEditing, requirement_value: parseInt(e.target.value) })}
+                                                        value={(isEditing as Quest).requirement || 1}
+                                                        onChange={e => setIsEditing({ ...isEditing, requirement: parseInt(e.target.value) } as Quest)}
                                                         className="w-full p-5 bg-slate-50 border-2 border-slate-100 focus:border-primary rounded-[1.5rem] font-bold outline-none"
                                                     />
                                                 </div>
