@@ -1,7 +1,6 @@
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
-import { seedQuestions } from './seed';
 import { generateDailyQuests } from './quests';
 import { getGlobalActivity } from './activity';
 
@@ -14,17 +13,17 @@ export async function getDashboardData() {
         return { error: 'Not authenticated' };
     }
 
-    // 1. Fetch Profile
-    const { data: profileResult, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
+    // 1. Fetch Profile and League Standing in parallel - these are essential for the rest
+    const [profileRes, standingRes] = await Promise.all([
+        supabase.from('profiles').select('*').eq('id', user.id).single(),
+        supabase.from('league_standings').select('*, leagues(name, rank)').eq('user_id', user.id).single()
+    ]);
 
-    let profile = profileResult;
+    let profile = profileRes.data;
+    let standing = standingRes.data;
 
-    if (profileError && profileError.code === 'PGRST116') {
-        // Profile doesn't exist, create it
+    // Handle profile creation if missing
+    if (profileRes.error && profileRes.error.code === 'PGRST116') {
         const { data: newProfile, error: createError } = await supabase
             .from('profiles')
             .insert({
@@ -45,38 +44,14 @@ export async function getDashboardData() {
             return { error: 'Could not create profile' };
         }
         profile = newProfile;
-    } else if (profileError) {
-        console.error('Error fetching profile:', {
-            message: profileError.message,
-            code: profileError.code,
-            details: profileError.details,
-            hint: profileError.hint
-        });
-        return { error: `Profile error: ${profileError.message}` };
+    } else if (profileRes.error) {
+        return { error: `Profile error: ${profileRes.error.message}` };
     }
 
-    // Generate Quests
-    if (profile) {
-        await generateDailyQuests(user.id);
-    }
+    if (!profile) return { error: 'Profile not found' };
 
-    // 2. Fetch Quests
-    const { data: userQuests } = await supabase
-        .from('user_quests')
-        .select('*, quests(*)')
-        .eq('user_id', user.id)
-        .eq('is_completed', false);
-
-    // 3. Fetch League Standing
-    const { data: standing, error: leagueError } = await supabase
-        .from('league_standings')
-        .select('*, leagues(name, rank)')
-        .eq('user_id', user.id)
-        .single();
-
-    // If standing is missing, assign to Bronze
-    if (!standing && (!leagueError || leagueError.code === 'PGRST116')) {
-        // Find Bronze league
+    // Handle standing creation if missing
+    if (!standing && (standingRes.error?.code === 'PGRST116' || !standingRes.data)) {
         const { data: bronzeLeague } = await supabase
             .from('leagues')
             .select('id')
@@ -84,35 +59,31 @@ export async function getDashboardData() {
             .single();
 
         if (bronzeLeague) {
-            const { error: insertError } = await supabase
+            const { data: newStanding } = await supabase
                 .from('league_standings')
                 .insert({
                     user_id: user.id,
                     league_id: bronzeLeague.id,
                     weekly_xp: 0
-                });
-
-            if (!insertError) {
-                // If successful, we can just reload the page or let the next fetch handle it.
-                // But let's just create a standing object to use immediately.
-                // However, re-fetching is safer/easier to ensure structure match.
-                // Let's just return null for standing for now, and the client handles it?
-                // No, we want to show them in the list.
-                // We will rely on the next refresh or we can manually construct it.
-            }
+                })
+                .select('*, leagues(name, rank)')
+                .single();
+            standing = newStanding;
         }
     }
 
-    // Refetch standing if it was missing (and we hopefully just added it)
-    let finalStanding = standing;
-    if (!standing) {
-        const { data: refetchedStanding } = await supabase
-            .from('league_standings')
-            .select('*, leagues(name, rank)')
+    // 2. Fetch all other data in parallel
+    const [questsRes, topicProgressRes, activity] = await Promise.all([
+        supabase.from('user_quests')
+            .select('*, quests(*)')
             .eq('user_id', user.id)
-            .single();
-        finalStanding = refetchedStanding;
-    }
+            .eq('is_completed', false),
+        supabase.from('topic_progress')
+            .select('*')
+            .eq('user_id', user.id),
+        getGlobalActivity(),
+        generateDailyQuests(user.id) // Fire and forget or await? Let's await to be safe but it's parallelized
+    ]);
 
     // 3. Handle Hearts Regeneration
     let currentHearts = profile.hearts;
@@ -129,15 +100,18 @@ export async function getDashboardData() {
             currentHearts = Math.min(5, currentHearts + heartsToGain);
             const newRegenTime = new Date(lastRegen + (heartsToGain * threeHours)).toISOString();
 
-            await supabase
+            // Background update to not block
+            supabase
                 .from('profiles')
                 .update({
                     hearts: currentHearts,
                     last_heart_regen: newRegenTime
                 })
-                .eq('id', user.id);
+                .eq('id', user.id)
+                .then(({ error }) => {
+                    if (error) console.error('Heart regen update error:', error);
+                });
 
-            // Update the profile object for the response
             profile.hearts = currentHearts;
             profile.last_heart_regen = newRegenTime;
         }
@@ -147,25 +121,13 @@ export async function getDashboardData() {
         }
     }
 
-    // 4. Seed Questions if none exist (Dev convenience)
-    await seedQuestions();
-
-    // 5. Fetch Top Players in the same league
-    interface Player {
-        user_id: string;
-        weekly_xp: number;
-        profiles: {
-            username: string | null;
-            avatar_url: string | null;
-        } | null;
-    }
-
-    let topPlayers: Player[] = [];
-    if (finalStanding) {
+    // 4. Fetch Top Players (if standing exists)
+    let topPlayers: any[] = [];
+    if (standing) {
         const { data: players } = await supabase
             .from('league_standings')
             .select('user_id, weekly_xp, profiles(username, avatar_url)')
-            .eq('league_id', finalStanding.league_id)
+            .eq('league_id', standing.league_id)
             .order('weekly_xp', { ascending: false })
             .limit(10);
 
@@ -177,60 +139,35 @@ export async function getDashboardData() {
             }));
         }
 
-        // If leaderboard is thin, add some synthetic competitors
+        // Add mocks if needed
         if (topPlayers.length < 6) {
-            const mocks: Player[] = [
+            const mocks = [
                 { user_id: 'mock1', weekly_xp: 450, profiles: { username: 'DingoDave', avatar_url: 'https://api.dicebear.com/7.x/bottts/svg?seed=dave' } },
                 { user_id: 'mock2', weekly_xp: 320, profiles: { username: 'SheilaSunshine', avatar_url: 'https://api.dicebear.com/7.x/bottts/svg?seed=sheila' } },
                 { user_id: 'mock3', weekly_xp: 280, profiles: { username: 'JoeyJumper', avatar_url: 'https://api.dicebear.com/7.x/bottts/svg?seed=joe' } },
                 { user_id: 'mock4', weekly_xp: 150, profiles: { username: 'WallabyWally', avatar_url: 'https://api.dicebear.com/7.x/bottts/svg?seed=wally' } },
                 { user_id: 'mock5', weekly_xp: 90, profiles: { username: 'KoalaKiwi', avatar_url: 'https://api.dicebear.com/7.x/bottts/svg?seed=kiwi' } },
             ];
-
-            // Filter out mocks that might be lower than existing real players if we wanted, 
-            // but for now let's just combine and sort
-            topPlayers = [...topPlayers, ...mocks]
-                .sort((a, b) => b.weekly_xp - a.weekly_xp)
-                .slice(0, 10);
+            topPlayers = [...topPlayers, ...mocks].sort((a, b) => b.weekly_xp - a.weekly_xp).slice(0, 10);
         }
 
-        // Update rank based on current database state (more accurate than static rank)
+        // Rank calculation
         const { count } = await supabase
             .from('league_standings')
             .select('*', { count: 'exact', head: true })
-            .eq('league_id', finalStanding.league_id)
-            .gt('weekly_xp', finalStanding.weekly_xp);
+            .eq('league_id', standing.league_id)
+            .gt('weekly_xp', standing.weekly_xp);
 
-        // Also count mocks that are above the user
-        const mockCountAbove = [450, 320, 280, 150, 90].filter(xp => xp > finalStanding.weekly_xp).length;
-
-        finalStanding.current_rank = (count || 0) + mockCountAbove + 1;
+        const mockCountAbove = [450, 320, 280, 150, 90].filter(xp => xp > standing.weekly_xp).length;
+        standing.current_rank = (count || 0) + mockCountAbove + 1;
     }
-
-    // 6. Fetch Topic Progress
-    const { data: topicProgress, error: tpError } = await supabase
-        .from('topic_progress')
-        .select('*')
-        .eq('user_id', user.id);
-
-    if (tpError) {
-        console.error('Error fetching topic progress in dashboard:', {
-            message: tpError.message,
-            code: tpError.code,
-            details: tpError.details,
-            hint: tpError.hint
-        });
-    }
-
-    // 7. Get Global Activity
-    const activity = await getGlobalActivity();
 
     return {
         profile,
-        quests: userQuests || [],
-        standing: finalStanding,
+        quests: questsRes.data || [],
+        standing,
         topPlayers,
-        topicProgress: topicProgress || [],
+        topicProgress: topicProgressRes.data || [],
         activity,
         nextHeartAt,
         user

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
+import { Avatar } from "@/components/ui/Avatar";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -26,7 +27,6 @@ import { sendFriendRequest, acceptFriendRequest, rejectFriendRequest, removeFrie
 import { createChallenge } from "@/app/actions/challenges";
 import { useRouter } from "@/i18n/routing";
 import { useEffect } from "react";
-import Image from "next/image";
 
 export interface FriendProfile {
     id: string;
@@ -256,14 +256,12 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                     <div key={user.id} className="p-3 hover:bg-muted/50 flex items-center justify-between border-b border-muted last:border-0">
                                         <div className="flex items-center gap-3">
                                             <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-xl overflow-hidden relative">
-                                                {user.avatar_url ? (
-                                                    <Image
-                                                        src={user.avatar_url}
-                                                        alt=""
-                                                        fill
-                                                        className="object-cover"
-                                                    />
-                                                ) : "👤"}
+                                                <Avatar
+                                                    src={user.avatar_url}
+                                                    size="sm"
+                                                    fallback="👤"
+                                                    className="w-full h-full border-0 rounded-none bg-transparent"
+                                                />
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-1.5">
@@ -324,14 +322,12 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                 <div key={challenge.id} className="bg-orange-500/10 dark:bg-orange-950/20 p-5 rounded-[2.5rem] border-2 border-orange-500/20 flex items-center justify-between shadow-sm">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-card rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-border/50 overflow-hidden relative">
-                                            {challenge.challenger?.avatar_url ? (
-                                                <Image
-                                                    src={challenge.challenger.avatar_url}
-                                                    alt=""
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            ) : "⚔️"}
+                                            <Avatar
+                                                src={challenge.challenger?.avatar_url}
+                                                size="md"
+                                                fallback="⚔️"
+                                                className="w-full h-full border-0 rounded-none bg-transparent"
+                                            />
                                         </div>
                                         <div>
                                             <p className="font-black text-lg">{challenge.challenger?.username}</p>
@@ -364,14 +360,12 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                 <div key={challenge.id} className="bg-card glass p-5 rounded-[2.5rem] border-2 border-border flex items-center justify-between shadow-sm">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-muted rounded-2xl flex items-center justify-center text-2xl grayscale overflow-hidden relative">
-                                            {challenge.challenged?.avatar_url ? (
-                                                <Image
-                                                    src={challenge.challenged.avatar_url}
-                                                    alt=""
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            ) : "👤"}
+                                            <Avatar
+                                                src={challenge.challenged?.avatar_url}
+                                                size="md"
+                                                fallback="👤"
+                                                className="w-full h-full border-0 rounded-none bg-transparent"
+                                            />
                                         </div>
                                         <div>
                                             <p className="font-black text-lg">{challenge.challenged?.username}</p>
@@ -449,14 +443,12 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                                 <div key={req.id} className="bg-card glass p-5 rounded-[2.5rem] border-2 border-border flex items-center justify-between shadow-sm">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl overflow-hidden relative">
-                                            {req.user?.avatar_url ? (
-                                                <Image
-                                                    src={req.user.avatar_url}
-                                                    alt=""
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            ) : "👤"}
+                                            <Avatar
+                                                src={req.user?.avatar_url}
+                                                size="md"
+                                                fallback="👤"
+                                                className="w-full h-full border-0 rounded-none bg-transparent"
+                                            />
                                         </div>
                                         <div>
                                             <p className="font-black text-lg">{req.user?.username}</p>
@@ -508,14 +500,12 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
                             >
                                 <div className="relative">
                                     <div className="w-16 h-16 bg-muted rounded-[1.5rem] flex items-center justify-center text-4xl shadow-inner group-hover:bg-primary/5 transition-colors overflow-hidden relative">
-                                        {friend.avatar_url ? (
-                                            <Image
-                                                src={friend.avatar_url}
-                                                alt=""
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        ) : "👤"}
+                                        <Avatar
+                                            src={friend.avatar_url}
+                                            size="lg"
+                                            fallback="👤"
+                                            className="w-full h-full border-0 rounded-none bg-transparent"
+                                        />
                                     </div>
                                     <div className={cn(
                                         "absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white",

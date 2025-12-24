@@ -25,6 +25,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Link } from "@/i18n/routing";
 import { Sidebar } from "@/components/Sidebar";
+import { Avatar } from "@/components/ui/Avatar";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
@@ -238,14 +239,11 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                 >
                     <div className="flex items-center gap-4 sm:block">
                         <div className="w-16 h-16 sm:w-24 sm:h-24 bg-primary/10 rounded-full flex items-center justify-center text-2xl sm:text-4xl border-4 border-card shadow-lg shrink-0 overflow-hidden relative">
-                            {profile.avatar_url ? (
-                                <Image
-                                    src={profile.avatar_url}
-                                    alt=""
-                                    fill
-                                    className="object-cover"
-                                />
-                            ) : "🐨"}
+                            <Avatar
+                                src={profile.avatar_url}
+                                size="xl"
+                                className="w-full h-full border-0 rounded-none bg-transparent"
+                            />
                         </div>
                         <div className="sm:hidden flex-1">
                             <div className="flex items-center gap-2 flex-wrap">
@@ -466,14 +464,12 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                                     <div key={idx} className={`flex items-center gap-2 sm:gap-4 p-2 sm:p-3 rounded-xl sm:rounded-2xl ${player.user_id === profile.id ? "bg-primary/10 ring-1 ring-primary/20" : ""}`}>
                                         <span className="w-5 sm:w-6 text-xs sm:text-sm font-extrabold text-muted-foreground">#{idx + 1}</span>
                                         <div className="w-7 h-7 sm:w-8 sm:h-8 bg-muted rounded-full overflow-hidden flex items-center justify-center text-xs font-bold shrink-0 relative">
-                                            {player.profiles?.avatar_url ? (
-                                                <Image
-                                                    src={player.profiles.avatar_url}
-                                                    alt=""
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            ) : player.profiles?.username?.[0] || '?'}
+                                            <Avatar
+                                                src={player.profiles?.avatar_url}
+                                                size="sm"
+                                                fallback={player.profiles?.username?.[0] || '?'}
+                                                className="w-full h-full border-0 rounded-none bg-transparent"
+                                            />
                                         </div>
                                         <span className={`flex-1 font-bold text-sm truncate ${player.user_id === profile.id ? "text-primary" : ""}`}>
                                             {player.user_id === profile.id ? t("you") : (player.profiles?.username || t("player"))}
@@ -576,14 +572,11 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                             >
                                 <div className="relative shrink-0">
                                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl sm:rounded-2xl overflow-hidden flex items-center justify-center text-lg sm:text-xl font-bold border-2 border-white shadow-sm relative">
-                                        {act.avatar ? (
-                                            <Image
-                                                src={act.avatar}
-                                                alt=""
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        ) : "🐨"}
+                                        <Avatar
+                                            src={act.avatar}
+                                            size="md"
+                                            className="w-full h-full border-0 rounded-none bg-transparent"
+                                        />
                                     </div>
                                     {act.isPremium && (
                                         <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-[6px] sm:text-[8px] shadow-sm">

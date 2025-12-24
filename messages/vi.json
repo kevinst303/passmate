@@ -63,6 +63,7 @@
         "goPremium": "Nâng cấp Cao cấp",
         "premiumDesc": "Mở khóa quyền truy cập không giới hạn, xóa quảng cáo và nhận gia sư AI!",
         "upgradeNow": "Nâng cấp ngay",
+        "appearance": "Giao diện",
         "desc": {
             "home": "Bảng điều khiển và câu đố",
             "learn": "Lộ trình học và chủ đề",
@@ -74,7 +75,8 @@
             "premium": "Mở khóa toàn bộ quyền truy cập",
             "profile": "Tài khoản của bạn",
             "settings": "Tùy chỉnh ứng dụng",
-            "blog": "Phân tích và Thông tin chi tiết"
+            "blog": "Phân tích và Thông tin chi tiết",
+            "appearance": "Thay đổi giao diện"
         }
     },
     "Dashboard": {

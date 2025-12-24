@@ -369,11 +369,18 @@ function QuizContent() {
 
                     <Button
                         size="lg"
-                        className="w-full py-5 text-xl"
+                        className="w-full py-5 text-xl relative overflow-hidden"
                         disabled={isSaving}
                         onClick={() => router.push(isBattle ? "/friends" : "/dashboard")}
                     >
-                        {isSaving ? t("saving") : isBattle ? t("backToMates") : t("backToDashboard")}
+                        {isSaving ? (
+                            <div className="flex items-center justify-center gap-3">
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                <span>{t("savingProgress")}</span>
+                            </div>
+                        ) : (
+                            isBattle ? t("backToMates") : t("backToDashboard")
+                        )}
                     </Button>
                 </motion.div>
             </div>

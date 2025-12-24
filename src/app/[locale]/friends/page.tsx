@@ -8,9 +8,11 @@ import FriendsClient, { FriendProfile, Challenge, FriendRequest } from "./Friend
 
 export default async function FriendsPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const dashboardData = await getDashboardData();
-    const friendsData = await getFriendsData();
-    const challengesData = await getChallengesData();
+    const [dashboardData, friendsData, challengesData] = await Promise.all([
+        getDashboardData(),
+        getFriendsData(),
+        getChallengesData()
+    ]);
 
     if (dashboardData.error === 'Not authenticated') {
         redirect({ href: '/login', locale });

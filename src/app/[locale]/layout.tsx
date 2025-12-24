@@ -10,6 +10,7 @@ import { PWARegister } from "@/components/PWARegister";
 import { SettingsProvider } from "@/providers/SettingsProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -83,6 +84,7 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages} locale={locale}>
           <SettingsProvider attribute="class" defaultTheme="system" enableSystem>
+            <NextTopLoader color="#1B9B8F" showSpinner={false} height={3} />
             {children}
             <PWARegister />
             <SpeedInsights />

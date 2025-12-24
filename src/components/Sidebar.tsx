@@ -21,6 +21,7 @@ import {
     GraduationCap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface NavItem {
     href: string;
@@ -257,6 +258,30 @@ export const Sidebar = () => {
                         </AnimatePresence>
                     </Link>
 
+                    {/* Theme Toggle */}
+                    <div className="mt-2 flex items-center justify-center">
+                        <div className={cn(
+                            "flex items-center gap-3 transition-all",
+                            isExpanded ? "w-full px-2" : "w-10"
+                        )}>
+                            <ThemeToggle className="w-8 h-8" />
+                            <AnimatePresence>
+                                {isExpanded && (
+                                    <motion.div
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -10 }}
+                                        transition={{ duration: 0.15 }}
+                                        className="flex flex-col min-w-0"
+                                    >
+                                        <span className="font-bold text-sm">{t("appearance")}</span>
+                                        <span className="text-xs text-muted-foreground">{t("desc.appearance")}</span>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    </div>
+
                     {/* Expand hint */}
                     <div className="mt-3 flex justify-center">
                         <motion.div
@@ -419,6 +444,19 @@ export const Sidebar = () => {
                                         </Link>
                                     );
                                 })}
+
+                                {/* Mobile Theme Toggle */}
+                                <div className="flex items-center gap-4 p-4 rounded-2xl transition-all text-foreground hover:bg-muted/50">
+                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center transition-all bg-muted/50">
+                                        <ThemeToggle className="bg-transparent border-none shadow-none" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-bold">{t("appearance")}</p>
+                                        <p className="text-sm text-muted-foreground truncate">
+                                            {t("desc.appearance")}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Quick Actions */}

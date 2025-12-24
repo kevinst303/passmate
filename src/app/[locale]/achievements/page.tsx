@@ -8,8 +8,10 @@ import AchievementsClient from "./AchievementsClient";
 
 export default async function AchievementsPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const dashboardData = await getDashboardData();
-    const achievementsData = await getAchievementsData();
+    const [dashboardData, achievementsData] = await Promise.all([
+        getDashboardData(),
+        getAchievementsData()
+    ]);
 
     if (dashboardData.error === 'Not authenticated') {
         redirect({ href: '/login', locale });

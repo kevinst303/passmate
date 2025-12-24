@@ -7,8 +7,10 @@ import ProfileClient from "./ProfileClient";
 
 export default async function ProfilePage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const data = await getDashboardData();
-    const achievementsData = await getAchievementsData();
+    const [data, achievementsData] = await Promise.all([
+        getDashboardData(),
+        getAchievementsData()
+    ]);
 
     if (data.error === 'Not authenticated') {
         redirect({ href: '/login', locale });

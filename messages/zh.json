@@ -63,6 +63,7 @@
         "goPremium": "升级高级版",
         "premiumDesc": "解锁无限访问、移除广告并获得 AI 辅导！",
         "upgradeNow": "立即升级",
+        "appearance": "外观",
         "desc": {
             "home": "仪表板与测验",
             "learn": "学习路径与主题",
@@ -74,7 +75,8 @@
             "premium": "解锁完整访问",
             "profile": "您的账户",
             "settings": "应用偏好",
-            "blog": "分析与见解"
+            "blog": "分析与见解",
+            "appearance": "切换主题"
         }
     },
     "Dashboard": {

@@ -63,6 +63,7 @@
         "goPremium": "Go Premium",
         "premiumDesc": "Unlock unlimited access, remove ads, and get AI tutoring!",
         "upgradeNow": "Upgrade Now",
+        "appearance": "Appearance",
         "desc": {
             "home": "Dashboard & quizzes",
             "learn": "Study path & topics",
@@ -74,7 +75,8 @@
             "premium": "Unlock full access",
             "profile": "Your account",
             "settings": "App preferences",
-            "blog": "Analysis & Insights"
+            "blog": "Analysis & Insights",
+            "appearance": "Switch theme"
         }
     },
     "Dashboard": {

@@ -63,6 +63,7 @@
         "goPremium": "Mag-Premium Na",
         "premiumDesc": "I-unlock ang unlimited access, tanggalin ang ads, at kumuha ng AI tutoring!",
         "upgradeNow": "Mag-upgrade Ngayon",
+        "appearance": "Hitsura",
         "desc": {
             "home": "Dashboard at quizzes",
             "learn": "Study path at mga paksa",
@@ -74,7 +75,8 @@
             "premium": "I-unlock ang full access",
             "profile": "Iyong account",
             "settings": "Mga preference sa app",
-            "blog": "Pagsusuri at Pananaw"
+            "blog": "Pagsusuri at Pananaw",
+            "appearance": "Palitan ang tema"
         }
     },
     "Dashboard": {

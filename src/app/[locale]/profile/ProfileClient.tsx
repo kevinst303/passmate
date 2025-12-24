@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
+import { Avatar } from "@/components/ui/Avatar";
 import { Link } from "@/i18n/routing";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "@/i18n/routing";
@@ -95,14 +96,11 @@ export default function ProfileClient({ data, achievementsData }: ProfileClientP
                     <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
                         <div className="relative group/avatar">
                             <div className="w-40 h-40 bg-gradient-to-br from-primary/10 to-primary/5 rounded-[3.5rem] flex items-center justify-center text-7xl shadow-inner border-[6px] border-white overflow-hidden transition-transform group-hover/avatar:scale-105 duration-500">
-                                {profile.avatar_url ? (
-                                    <Image
-                                        src={profile.avatar_url}
-                                        alt="Avatar"
-                                        fill
-                                        className="object-cover"
-                                    />
-                                ) : "🐨"}
+                                <Avatar
+                                    src={profile.avatar_url}
+                                    size="2xl"
+                                    className="w-full h-full border-0 rounded-none bg-transparent"
+                                />
                             </div>
                             <Link href="/settings">
                                 <Button variant="secondary" className="absolute bottom-2 right-2 rounded-2xl shadow-xl w-10 h-10 border-2 border-white p-0">

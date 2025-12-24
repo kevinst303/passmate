@@ -63,6 +63,7 @@
         "goPremium": "Passa a Premium",
         "premiumDesc": "Sblocca l'accesso illimitato, rimuovi la pubblicità e ottieni il tutor AI!",
         "upgradeNow": "Aggiorna Ora",
+        "appearance": "Aspetto",
         "desc": {
             "home": "Dashboard e quiz",
             "learn": "Percorso di studio e argomenti",
@@ -74,7 +75,8 @@
             "premium": "Sblocca l'accesso completo",
             "profile": "Il tuo account",
             "settings": "Preferenze app",
-            "blog": "Analisi e Approfondimenti"
+            "blog": "Analisi e Approfondimenti",
+            "appearance": "Cambia tema"
         }
     },
     "Dashboard": {

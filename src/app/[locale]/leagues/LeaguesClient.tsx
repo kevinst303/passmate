@@ -15,8 +15,8 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/Sidebar";
+import { Avatar } from "@/components/ui/Avatar";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 
 interface Profile {
     id: string;
@@ -181,9 +181,12 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                                                         "w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl text-white shadow-xl transition-transform group-hover:rotate-3 relative overflow-hidden",
                                                         isUser ? "bg-primary shadow-primary/20 ring-4 ring-background" : "bg-muted border-4 border-background"
                                                     )}>
-                                                        {player.profiles?.avatar_url ? (
-                                                            <Image src={player.profiles.avatar_url} alt="Avatar" fill className="object-cover rounded-xl" />
-                                                        ) : (player.profiles?.username?.[0] || 'M')}
+                                                        <Avatar
+                                                            src={player.profiles?.avatar_url}
+                                                            size="lg"
+                                                            fallback={player.profiles?.username?.[0] || 'M'}
+                                                            className="w-full h-full border-0 rounded-none bg-transparent"
+                                                        />
                                                     </div>
 
                                                     <div className="flex-1">

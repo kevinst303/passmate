@@ -285,8 +285,20 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                         </div>
                     )}
 
-                    <Button size="lg" className="w-full py-5 text-xl" onClick={() => router.push("/dashboard")} disabled={isSaving}>
-                        {isSaving ? t("saving") : t("returnHome")}
+                    <Button
+                        size="lg"
+                        className="w-full py-5 text-xl relative overflow-hidden"
+                        onClick={() => router.push("/dashboard")}
+                        disabled={isSaving}
+                    >
+                        {isSaving ? (
+                            <div className="flex items-center justify-center gap-3">
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                <span>{t("savingProgress")}</span>
+                            </div>
+                        ) : (
+                            t("returnHome")
+                        )}
                     </Button>
                 </motion.div>
             </div>

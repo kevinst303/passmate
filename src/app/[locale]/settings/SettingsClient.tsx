@@ -20,13 +20,16 @@ import {
     ChevronRight,
     Sparkles,
     Lock,
-    HelpCircle
+    HelpCircle,
+    Upload,
+    Minus
 } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/Button";
+import { Avatar } from "@/components/ui/Avatar";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
-import { updateProfile } from "@/app/actions/profile";
+import { updateProfile, uploadAvatar } from "@/app/actions/profile";
 import { useRouter, usePathname } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
@@ -78,16 +81,25 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
     // Get current locale from pathname
     const currentLocale = pathname.split('/')[1] || 'en';
 
-    const AVATAR_OPTIONS = AVATAR_SEEDS.map((opt, index) => ({
-        url: `https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${opt.seed}&backgroundColor=${opt.color}`,
-        label: t(`avatars.ollie${index + 1}` as "avatars.ollie1"),
-    }));
+    const AVATAR_OPTIONS = [
+        {
+            url: "",
+            label: "Default Koala",
+            isEmoji: true
+        },
+        ...AVATAR_SEEDS.map((opt, index) => ({
+            url: `https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${opt.seed}&backgroundColor=${opt.color}`,
+            label: t(`avatars.ollie${index + 1}` as "avatars.ollie1"),
+            isEmoji: false
+        }))
+    ];
 
     const [fullName, setFullName] = useState(profile.full_name || "");
     const [username, setUsername] = useState(profile.username || "");
     const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url || "");
     const [isSaving, setIsSaving] = useState(false);
     const [status, setStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
+    const [isUploading, setIsUploading] = useState(false);
 
     // UI state
     const [selectedSection, setSelectedSection] = useState<'profile' | 'preferences' | 'security'>('profile');
@@ -132,6 +144,34 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
         setIsSaving(false);
 
         // Clear success message after 3 seconds
+        if (!result.error) {
+            setTimeout(() => setStatus(null), 3000);
+        }
+    };
+
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setIsUploading(true);
+        setStatus(null);
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const result = await uploadAvatar(formData);
+
+        if (result.error) {
+            setStatus({ type: 'error', message: result.error });
+        } else if (result.url) {
+            setAvatarUrl(result.url);
+            // Auto save the new avatar
+            await updateProfile({ avatar_url: result.url });
+            setStatus({ type: 'success', message: t("success") });
+            router.refresh();
+        }
+
+        setIsUploading(false);
         if (!result.error) {
             setTimeout(() => setStatus(null), 3000);
         }
@@ -212,21 +252,26 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
                                     {/* Current Avatar Preview */}
                                     <div className="relative group">
                                         <div className="w-28 h-28 md:w-36 md:h-36 bg-gradient-to-br from-primary/20 to-primary/5 rounded-[2rem] md:rounded-[2.5rem] border-[6px] border-card shadow-2xl flex items-center justify-center overflow-hidden">
-                                            {avatarUrl ? (
-                                                // Using img tag for SVG avatars as Next.js Image has issues with external SVGs
-                                                // eslint-disable-next-line @next/next/no-img-element
-                                                <img
-                                                    src={avatarUrl}
-                                                    alt="Profile Avatar"
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            ) : (
-                                                <span className="text-5xl md:text-6xl">🐨</span>
-                                            )}
+                                            <Avatar
+                                                src={avatarUrl}
+                                                size="2xl"
+                                                className="w-full h-full border-0 rounded-none"
+                                            />
                                         </div>
-                                        <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-lg border-4 border-card">
-                                            <Camera className="w-4 h-4 text-white" />
-                                        </div>
+                                        <label
+                                            htmlFor="avatar-upload"
+                                            className="absolute -bottom-2 -right-2 w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-lg border-4 border-card cursor-pointer hover:scale-110 transition-transform"
+                                        >
+                                            {isUploading ? <Loader2 className="w-4 h-4 text-white animate-spin" /> : <Camera className="w-4 h-4 text-white" />}
+                                            <input
+                                                id="avatar-upload"
+                                                type="file"
+                                                className="hidden"
+                                                accept="image/*"
+                                                onChange={handleFileUpload}
+                                                disabled={isUploading}
+                                            />
+                                        </label>
                                     </div>
 
                                     {/* Avatar Grid */}
@@ -234,24 +279,37 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
                                         <p className="text-sm text-muted-foreground mb-4 text-center lg:text-left">
                                             {t("chooseAvatar")}
                                         </p>
-                                        <div className="grid grid-cols-4 gap-3 md:gap-4">
-                                            {AVATAR_OPTIONS.map((opt) => (
+                                        <div className="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-5 gap-3 md:gap-4">
+                                            {/* Upload Option */}
+                                            <button
+                                                onClick={() => document.getElementById('avatar-upload')?.click()}
+                                                className="aspect-square rounded-2xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-muted/30 transition-all flex flex-col items-center justify-center gap-1 group relative overflow-hidden"
+                                            >
+                                                <Upload className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                                                <span className="text-[10px] font-bold text-muted-foreground group-hover:text-primary">{t("upload")}</span>
+                                            </button>
+
+                                            {AVATAR_OPTIONS.map((opt, idx) => (
                                                 <button
-                                                    key={opt.url}
+                                                    key={idx}
                                                     onClick={() => setAvatarUrl(opt.url)}
                                                     className={cn(
-                                                        "aspect-square rounded-2xl border-4 transition-all overflow-hidden bg-muted/30 group relative hover:scale-105",
+                                                        "aspect-square rounded-2xl border-4 transition-all overflow-hidden bg-muted/30 group relative hover:scale-105 flex items-center justify-center",
                                                         avatarUrl === opt.url
                                                             ? "border-primary scale-105 shadow-lg shadow-primary/30 ring-4 ring-primary/20"
                                                             : "border-transparent hover:border-primary/30"
                                                     )}
                                                 >
-                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                    <img
-                                                        src={opt.url}
-                                                        alt={opt.label}
-                                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                                                    />
+                                                    {opt.isEmoji ? (
+                                                        <span className="text-3xl md:text-4xl">🐨</span>
+                                                    ) : (
+                                                        // eslint-disable-next-line @next/next/no-img-element
+                                                        <img
+                                                            src={opt.url}
+                                                            alt={opt.label}
+                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                                                        />
+                                                    )}
                                                     {avatarUrl === opt.url && (
                                                         <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
                                                             <Check className="w-6 h-6 text-primary" />

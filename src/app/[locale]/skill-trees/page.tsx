@@ -7,13 +7,14 @@ import SkillTreesClient from "./SkillTreesClient";
 
 export default async function SkillTreesPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const data = await getDashboardData();
+    const [data, skillTreeData] = await Promise.all([
+        getDashboardData(),
+        getSkillTreeData()
+    ]);
 
     if (data.error === 'Not authenticated') {
         redirect({ href: '/login', locale });
     }
-
-    const skillTreeData = await getSkillTreeData();
 
     if (data.error || skillTreeData.error) {
         return (

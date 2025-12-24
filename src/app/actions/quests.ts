@@ -66,34 +66,18 @@ const QUEST_DEFINITIONS = [
 export async function seedQuestDefinitions() {
     const supabase = await createClient();
 
-    for (const q of QUEST_DEFINITIONS) {
-        const { data: existing, error: selectError } = await supabase
-            .from('quests')
-            .select('id')
-            .eq('title', q.title)
-            .single();
+    // Fetch all existing quests to minimize queries
+    const { data: existingQuests } = await supabase
+        .from('quests')
+        .select('title');
 
-        // PGRST116 means no rows found, which is fine
-        if (selectError && selectError.code !== 'PGRST116') {
-            console.error('Error checking quest definition:', {
-                message: selectError.message,
-                code: selectError.code,
-                details: selectError.details,
-                hint: selectError.hint
-            });
-            continue;
-        }
+    const existingTitles = new Set(existingQuests?.map(q => q.title) || []);
+    const newQuests = QUEST_DEFINITIONS.filter(q => !existingTitles.has(q.title));
 
-        if (!existing) {
-            const { error: insertError } = await supabase.from('quests').insert(q);
-            if (insertError) {
-                console.error('Error inserting quest definition:', {
-                    message: insertError.message,
-                    code: insertError.code,
-                    details: insertError.details,
-                    hint: insertError.hint
-                });
-            }
+    if (newQuests.length > 0) {
+        const { error: insertError } = await supabase.from('quests').insert(newQuests);
+        if (insertError) {
+            console.error('Error inserting quest definitions:', insertError);
         }
     }
 }
@@ -102,13 +86,10 @@ export async function generateDailyQuests(userId: string) {
     try {
         const supabase = await createClient();
 
-        // 1. Ensure definitions exist
-        await seedQuestDefinitions();
-
         // 2. Check if user already has active quests for today
         const now = new Date();
-        const startOfDay = new Date(now.setHours(0, 0, 0, 0)).toISOString();
-        const endOfDay = new Date(now.setHours(23, 59, 59, 999)).toISOString();
+        const startOfDay = new Date(new Date(now).setHours(0, 0, 0, 0)).toISOString();
+        const endOfDay = new Date(new Date(now).setHours(23, 59, 59, 999)).toISOString();
 
         const { data: existingQuests, error: existingError } = await supabase
             .from('user_quests')
@@ -118,13 +99,7 @@ export async function generateDailyQuests(userId: string) {
             .lte('expires_at', endOfDay);
 
         if (existingError) {
-            console.error('Error checking existing quests:', {
-                message: existingError.message,
-                code: existingError.code,
-                details: existingError.details,
-                hint: existingError.hint
-            });
-            // Continue anyway - table might not exist yet
+            console.error('Error checking existing quests:', existingError);
         }
 
         if (existingQuests && existingQuests.length >= DAILY_QUESTS_COUNT) {
@@ -135,17 +110,16 @@ export async function generateDailyQuests(userId: string) {
         const { data: allQuests, error: questsError } = await supabase.from('quests').select('*');
 
         if (questsError) {
-            console.error('Error fetching quest definitions:', {
-                message: questsError.message,
-                code: questsError.code,
-                details: questsError.details,
-                hint: questsError.hint
-            });
+            console.error('Error fetching quest definitions:', questsError);
             return { error: 'Failed to fetch quest definitions' };
         }
 
         if (!allQuests || allQuests.length === 0) {
-            return { error: 'No quest definitions found' };
+            // If no quests, try to seed once
+            await seedQuestDefinitions();
+            const { data: retryQuests } = await supabase.from('quests').select('*');
+            if (!retryQuests || retryQuests.length === 0) return { error: 'No quest definitions found' };
+            return generateDailyQuests(userId); // Recurse once
         }
 
         const selectedQuests = allQuests
@@ -165,12 +139,7 @@ export async function generateDailyQuests(userId: string) {
             .insert(userQuests);
 
         if (error) {
-            console.error('Error generating daily quests:', {
-                message: error.message,
-                code: error.code,
-                details: error.details,
-                hint: error.hint
-            });
+            console.error('Error generating daily quests:', error);
             return { error: 'Failed to generate quests' };
         }
 
@@ -189,7 +158,7 @@ interface QuestMetadata {
 export async function updateQuestProgress(userId: string, type: string, increment: number = 1, metadata?: QuestMetadata) {
     const supabase = await createClient();
 
-    // Find active quests for this user of this type
+    // Find active quests for this user
     const now = new Date().toISOString();
     const { data: activeQuests } = await supabase
         .from('user_quests')
@@ -198,43 +167,41 @@ export async function updateQuestProgress(userId: string, type: string, incremen
         .eq('is_completed', false)
         .gt('expires_at', now);
 
-    if (!activeQuests) return;
+    if (!activeQuests || activeQuests.length === 0) return;
 
-    for (const uq of activeQuests) {
-        if (uq.quests.type === type) {
-            let shouldUpdate = true;
-
-            // Special handling for topic-specific quests
+    const updates = activeQuests
+        .filter(uq => uq.quests.type === type)
+        .filter(uq => {
             if (type === 'topic_quiz' && metadata?.topic) {
-                if (!uq.quests.description.includes(metadata.topic)) {
-                    shouldUpdate = false;
-                }
+                return uq.quests.description.includes(metadata.topic);
             }
+            return true;
+        })
+        .map(async (uq) => {
+            const newProgress = uq.progress + increment;
+            const isCompleted = newProgress >= uq.quests.requirement_value;
 
-            if (shouldUpdate) {
-                const newProgress = uq.progress + increment;
-                const isCompleted = newProgress >= uq.quests.requirement_value;
+            const { error: updateError } = await supabase
+                .from('user_quests')
+                .update({
+                    progress: newProgress,
+                    is_completed: isCompleted,
+                    completed_at: isCompleted ? new Date().toISOString() : null
+                })
+                .eq('id', uq.id);
 
-                await supabase
-                    .from('user_quests')
-                    .update({
-                        progress: newProgress,
-                        is_completed: isCompleted,
-                        completed_at: isCompleted ? new Date().toISOString() : null
-                    })
-                    .eq('id', uq.id);
-
-                if (isCompleted) {
-                    // Reward XP
-                    await supabase.rpc('increment_xp', { uid: userId, amount: uq.quests.xp_reward });
-                    // Log XP
-                    await supabase.from('xp_logs').insert({
+            if (!updateError && isCompleted) {
+                // Reward XP in parallel
+                await Promise.all([
+                    supabase.rpc('increment_xp', { uid: userId, amount: uq.quests.xp_reward }),
+                    supabase.from('xp_logs').insert({
                         user_id: userId,
                         amount: uq.quests.xp_reward,
                         reason: 'daily_quest'
-                    });
-                }
+                    })
+                ]);
             }
-        }
-    }
+        });
+
+    await Promise.all(updates);
 }

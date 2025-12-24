@@ -3,6 +3,7 @@
 import { Link } from "@/i18n/routing";
 import { Button } from "./ui/Button";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 import { useTranslations } from "next-intl";
 
 export const Navbar = () => {
@@ -15,7 +16,8 @@ export const Navbar = () => {
                     <span className="text-3xl">🐨</span>
                     <span className="text-2xl font-display font-bold text-primary tracking-tight">PassMate</span>
                 </Link>
-                <div className="flex items-center gap-4 sm:gap-6">
+                <div className="flex items-center gap-3 sm:gap-4 md:gap-6">
+                    <ThemeToggle />
                     <LanguageSwitcher />
                     <Link href="/blog" className="text-muted-foreground hover:text-foreground font-medium transition-colors hidden sm:block">
                         {t("blog")}

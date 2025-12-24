@@ -5,6 +5,7 @@ import { seedQuestions } from "@/app/actions/seed";
 import { getAdminStats, togglePremiumStatus, resetHearts } from "@/app/actions/admin";
 import { Button } from "@/components/ui/Button";
 import { Sidebar } from "@/components/Sidebar";
+import { Avatar } from "@/components/ui/Avatar";
 import {
     CheckCircle2,
     AlertCircle,
@@ -396,8 +397,13 @@ export default function AdminClient() {
                                                 return (
                                                     <div key={quiz.id} className="flex items-center justify-between p-4 bg-muted/40 rounded-2xl border border-border/50">
                                                         <div className="flex items-center gap-3">
-                                                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center border border-border text-primary shadow-sm font-black">
-                                                                {initial}
+                                                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center border border-border text-primary shadow-sm font-black overflow-hidden relative">
+                                                                <Avatar
+                                                                    src={null} // We don't have avatar_url in this specific data structure yet, but let's use the component for consistency
+                                                                    size="sm"
+                                                                    fallback={initial}
+                                                                    className="w-full h-full border-0 rounded-none bg-transparent"
+                                                                />
                                                             </div>
                                                             <div>
                                                                 <p className="font-black text-sm">{profileName}</p>
@@ -474,12 +480,13 @@ export default function AdminClient() {
                                             <tr key={user.id} className="hover:bg-slate-50/80 transition-colors group">
                                                 <td className="px-10 py-8">
                                                     <div className="flex items-center gap-4">
-                                                        <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center border-2 border-white shadow-sm overflow-hidden text-2xl font-black text-slate-400">
-                                                            {user.avatar_url ? (
-                                                                <img src={user.avatar_url} className="w-full h-full object-cover" alt="" />
-                                                            ) : (
-                                                                user.username?.[0]?.toUpperCase() || 'U'
-                                                            )}
+                                                        <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center border-2 border-white shadow-sm overflow-hidden text-2xl font-black text-slate-400 relative">
+                                                            <Avatar
+                                                                src={user.avatar_url}
+                                                                size="lg"
+                                                                fallback={user.username?.[0]?.toUpperCase() || 'U'}
+                                                                className="w-full h-full border-0 rounded-none bg-transparent"
+                                                            />
                                                         </div>
                                                         <div>
                                                             <p className="font-black text-slate-900 text-lg leading-tight">{user.username || 'Anonymous User'}</p>
