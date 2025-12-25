@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
     Flame,
     Zap,
@@ -83,237 +83,298 @@ export default function DashboardClient({ data }: DashboardClientProps) {
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 -z-10" />
             {/* Header */}
             <header className="bg-card border-b border-border px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-40">
-                <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2 min-w-0">
-                        <span className="text-xl sm:text-2xl" aria-hidden="true">🐨</span>
-                        <h1 className="text-lg sm:text-xl font-display font-bold text-primary truncate">PassMate</h1>
+                <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3 min-w-0">
+                        <motion.div
+                            whileHover={{ rotate: 15 }}
+                            className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-2xl shadow-inner border border-primary/5"
+                        >
+                            🐨
+                        </motion.div>
+                        <h1 className="text-xl sm:text-2xl font-display font-black text-primary tracking-tight truncate">PassMate</h1>
                     </div>
 
                     {/* Desktop Stats */}
-                    <div className="hidden sm:flex items-center gap-4">
-                        <div className="flex flex-col items-end gap-1">
+                    <div className="hidden md:flex items-center gap-3">
+                        <div className="flex flex-col items-end">
                             <motion.div
-                                whileHover={{ scale: 1.05 }}
+                                whileHover={{ scale: 1.05, y: -2 }}
                                 className={cn(
                                     "flex items-center gap-2 px-4 py-2 rounded-2xl font-black text-sm transition-all shadow-sm border",
                                     profile.is_premium
                                         ? "bg-red-50 text-red-600 border-red-100 shadow-red-50"
-                                        : "bg-red-50 text-red-600 border-red-100"
+                                        : "bg-red-50 text-red-500 border-red-100"
                                 )}
                             >
-                                <Heart className={cn("w-4 h-4 fill-red-600", profile.is_premium && "animate-pulse")} aria-hidden="true" />
+                                <Heart className={cn("w-4 h-4 fill-current", profile.is_premium && "animate-pulse")} aria-hidden="true" />
                                 <span>{profile.is_premium ? "∞" : profile.hearts}</span>
                             </motion.div>
                             {!profile.is_premium && profile.hearts < 5 && nextHeartAt && mounted && (
-                                <div className="flex items-center gap-1.5 text-[9px] font-black text-muted-foreground uppercase tracking-widest px-1">
-                                    <Clock className="w-2.5 h-2.5" />
+                                <div className="flex items-center gap-1 text-[8px] font-black text-muted-foreground/60 uppercase tracking-widest px-1 mt-0.5">
+                                    <Clock className="w-2 h-2" />
                                     <span>{common("nextIn", { time: getNextHeartTime() })}</span>
                                 </div>
                             )}
                         </div>
 
                         <motion.div
-                            whileHover={{ scale: 1.05 }}
+                            whileHover={{ scale: 1.05, y: -2 }}
                             className="flex items-center gap-2 bg-orange-50 text-orange-600 px-4 py-2 rounded-2xl font-black text-sm border border-orange-100 shadow-sm shadow-orange-50"
                         >
-                            <Flame className="w-4 h-4 fill-orange-600" />
+                            <Flame className="w-4 h-4 fill-orange-500" />
                             <span>{profile.daily_streak}</span>
                         </motion.div>
 
                         <motion.div
-                            whileHover={{ scale: 1.05 }}
+                            whileHover={{ scale: 1.05, y: -2 }}
                             className="flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-2xl font-black text-sm border border-blue-100 shadow-sm shadow-blue-50"
                         >
-                            <Zap className="w-4 h-4 fill-blue-600" />
+                            <Zap className="w-4 h-4 fill-blue-500" />
                             <span>{profile.total_xp.toLocaleString()}</span>
                         </motion.div>
                     </div>
 
                     {/* Mobile Stats Toggle */}
                     <button
-                        className="sm:hidden flex items-center gap-2 p-2 rounded-xl bg-muted/50 active:bg-muted transition-colors"
+                        className="md:hidden flex items-center gap-1.5 p-1.5 pr-2.5 rounded-2xl bg-muted/30 border border-border/50 active:scale-95 transition-all"
                         onClick={() => setShowMobileStats(!showMobileStats)}
                         aria-label="Toggle stats"
                         aria-expanded={showMobileStats}
                     >
-                        <div className="flex items-center gap-1 text-orange-600">
-                            <Flame className="w-4 h-4 fill-orange-600" />
-                            <span className="text-xs font-bold">{profile.daily_streak}</span>
+                        <div className="flex items-center gap-1 px-2 py-1 bg-white/50 rounded-xl border border-white/80 shadow-sm">
+                            <Flame className="w-3.5 h-3.5 fill-orange-500 text-orange-500" />
+                            <span className="text-xs font-black text-orange-600">{profile.daily_streak}</span>
                         </div>
-                        <div className="flex items-center gap-1 text-blue-600">
-                            <Zap className="w-4 h-4 fill-blue-600" />
-                            <span className="text-xs font-bold">{profile.total_xp}</span>
+                        <div className="flex items-center gap-1 px-2 py-1 bg-white/50 rounded-xl border border-white/80 shadow-sm">
+                            <Zap className="w-3.5 h-3.5 fill-blue-500 text-blue-500" />
+                            <span className="text-xs font-black text-blue-600">{profile.total_xp}</span>
                         </div>
-                        {showMobileStats ? <X className="w-4 h-4 text-muted-foreground" /> : <Menu className="w-4 h-4 text-muted-foreground" />}
+                        <div className="ml-1 text-muted-foreground/60">
+                            {showMobileStats ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                        </div>
                     </button>
                 </div>
 
                 {/* Mobile Stats Dropdown */}
-                {showMobileStats && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="sm:hidden mt-3 pt-3 border-t border-border flex flex-wrap gap-2"
-                    >
-                        <div className={cn(
-                            "flex items-center gap-1.5 px-3 py-1.5 rounded-full font-bold text-sm",
-                            profile.is_premium ? "bg-red-100 text-red-600 border border-red-200" : "bg-red-100 text-red-600"
-                        )}>
-                            <Heart className={cn("w-4 h-4 fill-red-600", profile.is_premium && "animate-pulse")} />
-                            <span>{common("hearts")}: {profile.is_premium ? common("unlimited") : profile.hearts}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 bg-orange-100 text-orange-600 px-3 py-1.5 rounded-full font-bold text-sm">
-                            <Flame className="w-4 h-4 fill-orange-600" />
-                            <span>{common("streak")}: {profile.daily_streak} {common("days")}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 bg-blue-100 text-blue-600 px-3 py-1.5 rounded-full font-bold text-sm">
-                            <Zap className="w-4 h-4 fill-blue-600" />
-                            <span>{common("xp")}: {profile.total_xp}</span>
-                        </div>
-                        {!profile.is_premium && profile.hearts < 5 && nextHeartAt && mounted && (
-                            <div className="w-full text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                                <Clock className="w-3 h-3" />
-                                {common("nextIn", { time: getNextHeartTime() })}
+                <AnimatePresence>
+                    {showMobileStats && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                            className="md:hidden mt-3 p-4 bg-muted/20 backdrop-blur-md rounded-2xl border border-border/50 flex flex-col gap-3"
+                        >
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">{t("status")}</span>
+                                {!profile.is_premium && profile.hearts < 5 && nextHeartAt && mounted && (
+                                    <div className="text-[10px] text-primary font-black flex items-center gap-1 bg-primary/5 px-2 py-0.5 rounded-full">
+                                        <Clock className="w-3 h-3" />
+                                        {common("nextIn", { time: getNextHeartTime() })}
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </motion.div>
-                )}
+                            <div className="grid grid-cols-3 gap-2">
+                                <div className={cn(
+                                    "flex flex-col items-center gap-1 p-3 rounded-2xl border bg-white shadow-sm",
+                                    profile.is_premium ? "border-red-100/50" : "border-border/50"
+                                )}>
+                                    <Heart className={cn("w-5 h-5 fill-red-500 text-red-500", profile.is_premium && "animate-pulse")} />
+                                    <span className="text-sm font-black text-red-600">{profile.is_premium ? "∞" : profile.hearts}</span>
+                                    <span className="text-[10px] font-bold text-muted-foreground/60 uppercase">{common("hearts")}</span>
+                                </div>
+                                <div className="flex flex-col items-center gap-1 p-3 rounded-2xl border border-orange-100/50 bg-white shadow-sm">
+                                    <Flame className="w-5 h-5 fill-orange-500 text-orange-500" />
+                                    <span className="text-sm font-black text-orange-600">{profile.daily_streak}</span>
+                                    <span className="text-[10px] font-bold text-muted-foreground/60 uppercase">{common("streak")}</span>
+                                </div>
+                                <div className="flex flex-col items-center gap-1 p-3 rounded-2xl border border-blue-100/50 bg-white shadow-sm">
+                                    <Zap className="w-5 h-5 fill-blue-500 text-blue-500" />
+                                    <span className="text-sm font-black text-blue-600">{profile.total_xp}</span>
+                                    <span className="text-[10px] font-bold text-muted-foreground/60 uppercase">{common("xp")}</span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </header>
 
             <main className="max-w-4xl mx-auto p-4 sm:p-6 space-y-6 sm:space-y-8">
                 {/* Welcome Section */}
                 <motion.section
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col gap-6 lg:flex-row lg:items-center bg-white/70 backdrop-blur-xl p-6 sm:p-10 rounded-[3rem] border-2 border-border shadow-2xl relative overflow-hidden group"
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="relative p-6 sm:p-10 rounded-[2.5rem] sm:rounded-[3rem] border-2 border-border/10 shadow-2xl overflow-hidden group"
                 >
-                    <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:rotate-12 transition-transform duration-700">
-                        <Sparkles className="w-32 h-32 text-primary" />
-                    </div>
+                    {/* Dynamic Background */}
+                    <div className="absolute inset-0 bg-white/40 backdrop-blur-3xl transition-colors group-hover:bg-white/60 -z-10" />
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-1000" />
+                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 group-hover:scale-150 transition-transform duration-1000 delay-150" />
 
-                    <div className="flex items-center gap-6 sm:block">
-                        <motion.div
-                            whileHover={{ scale: 1.05, rotate: -5 }}
-                            className="w-20 h-20 sm:w-32 sm:h-32 bg-primary/10 rounded-[2.5rem] flex items-center justify-center text-3xl sm:text-5xl border-4 border-white shadow-2xl shrink-0 overflow-hidden relative"
-                        >
-                            <Avatar
-                                src={profile.avatar_url}
-                                size="2xl"
-                                className="w-full h-full border-0 rounded-none bg-transparent"
-                                fallback={profile.username?.[0] || '🐨'}
-                            />
-                        </motion.div>
-                    </div>
+                    <div className="flex flex-col gap-6 lg:flex-row lg:items-center relative z-10">
+                        <div className="flex items-center gap-5 sm:gap-6">
+                            <motion.div
+                                whileHover={{ scale: 1.05, rotate: -5 }}
+                                className="w-20 h-20 sm:w-32 sm:h-32 bg-white rounded-[2rem] sm:rounded-[2.5rem] flex items-center justify-center border-4 border-white shadow-xl shadow-primary/5 shrink-0 overflow-hidden relative group/avatar"
+                            >
+                                <Avatar
+                                    src={profile.avatar_url}
+                                    size="2xl"
+                                    className="w-full h-full border-0 rounded-none bg-transparent group-hover/avatar:scale-110 transition-transform duration-500"
+                                    fallback={profile.username?.[0] || '🐨'}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
+                            </motion.div>
 
-                    <div className="flex-1 relative z-10">
-                        <div className="flex items-center gap-3 mb-2">
-                            <h2 className="text-2xl sm:text-4xl font-display font-black text-foreground tracking-tight leading-none">
-                                {t("welcome", { name: profile.username || "Mate" })} 👋
-                            </h2>
-                            {profile.is_premium && (
-                                <div className="bg-gradient-to-r from-yellow-400 to-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1.5 shadow-lg shadow-yellow-200">
-                                    <Sparkles className="w-3.5 h-3.5 fill-white" /> {t("pro")}
+                            <div className="lg:hidden flex-1">
+                                <div className="flex items-center flex-wrap gap-2 mb-1">
+                                    <h2 className="text-2xl sm:text-3xl font-display font-black text-foreground tracking-tight leading-none">
+                                        {t("welcome", { name: (profile.username || "Mate").split(' ')[0] })} 👋
+                                    </h2>
+                                    {profile.is_premium && (
+                                        <span className="bg-yellow-400 text-white px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                            <Sparkles className="w-3 h-3 fill-current" /> {t("pro")}
+                                        </span>
+                                    )}
                                 </div>
-                            )}
+                                <p className="text-muted-foreground/80 font-bold text-sm italic">
+                                    {profile.is_premium ? t("proMateDesc") : t("doingGreat")}
+                                </p>
+                            </div>
                         </div>
-                        <p className="text-muted-foreground font-bold text-lg leading-relaxed max-w-md italic">
-                            {profile.is_premium ? t("proMateDesc") : t("doingGreat")}
-                        </p>
-                    </div>
 
-                    <Link href="/dashboard/quiz" className="w-full lg:w-auto relative z-10">
-                        <Button size="lg" className="w-full lg:w-auto px-12 py-8 rounded-[2rem] shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all text-xl font-black gap-3 bg-primary border-b-8 border-primary-dark">
-                            <CirclePlay className="w-8 h-8 fill-white/20" aria-hidden="true" />
-                            <span>{t("startPracticing")}</span>
-                        </Button>
-                    </Link>
+                        <div className="hidden lg:block flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                                <h2 className="text-4xl font-display font-black text-foreground tracking-tight leading-none">
+                                    {t("welcome", { name: profile.username || "Mate" })} 👋
+                                </h2>
+                                {profile.is_premium && (
+                                    <div className="bg-gradient-to-r from-yellow-400 to-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1.5 shadow-lg shadow-yellow-200/50">
+                                        <Sparkles className="w-3.5 h-3.5 fill-white" /> {t("pro")}
+                                    </div>
+                                )}
+                            </div>
+                            <p className="text-muted-foreground font-bold text-lg leading-relaxed max-w-md italic">
+                                {profile.is_premium ? t("proMateDesc") : t("doingGreat")}
+                            </p>
+                        </div>
+
+                        <Link href="/dashboard/quiz" className="w-full lg:w-auto">
+                            <Button
+                                size="lg"
+                                variant="primary"
+                                className="w-full lg:w-auto px-8 py-7 sm:px-12 sm:py-9 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-all text-lg sm:text-xl gap-3"
+                            >
+                                <CirclePlay className="w-6 h-6 sm:w-8 sm:h-8 fill-white/20" aria-hidden="true" />
+                                <span>{t("startPracticing")}</span>
+                            </Button>
+                        </Link>
+                    </div>
                 </motion.section>
 
-                {/* Quick Actions */}
-                <section className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Link href="/dashboard/review" className="block">
                         <motion.div
-                            whileHover={{ scale: 1.02 }}
+                            whileHover={{ y: -4, scale: 1.01 }}
                             whileTap={{ scale: 0.98 }}
-                            className="glass p-4 sm:p-6 rounded-xl sm:rounded-[2.5rem] border border-border flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 group hover:border-primary/50 hover:shadow-md transition-all h-full"
+                            className="bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-border/50 flex items-center gap-4 group hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all h-full"
                         >
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-orange-200 transition-colors shrink-0">
+                            <div className="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shrink-0 shadow-inner">
                                 🧠
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h4 className="font-bold text-sm sm:text-base">{t("review")}</h4>
-                                <p className="text-xs sm:text-sm text-muted-foreground line-clamp-1">{t("reviewDesc")}</p>
+                                <h4 className="font-black text-sm sm:text-base text-foreground tracking-tight">{t("review")}</h4>
+                                <p className="text-xs text-muted-foreground/80 font-medium line-clamp-1">{t("reviewDesc")}</p>
                             </div>
-                            <ChevronRight className="hidden sm:block w-4 h-4 text-primary" aria-hidden="true" />
+                            <div className="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                                <ChevronRight className="w-4 h-4 text-primary" aria-hidden="true" />
+                            </div>
                         </motion.div>
                     </Link>
 
                     <Link href="/ai-tutor" className="block">
                         <motion.div
-                            whileHover={{ scale: 1.02 }}
+                            whileHover={{ y: -4, scale: 1.01 }}
                             whileTap={{ scale: 0.98 }}
-                            className="glass p-4 sm:p-6 rounded-xl sm:rounded-[2.5rem] border border-border flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 group hover:border-primary/50 hover:shadow-md transition-all h-full"
+                            className="bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-border/50 flex items-center gap-4 group hover:border-blue-400/30 hover:shadow-xl hover:shadow-blue-500/5 transition-all h-full"
                         >
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-blue-200 transition-colors shrink-0">
+                            <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shrink-0 shadow-inner">
                                 💬
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h4 className="font-bold text-sm sm:text-base">{t("talkToOllie")}</h4>
-                                <p className="text-xs sm:text-sm text-muted-foreground line-clamp-1">{t("ollieDesc")}</p>
+                                <h4 className="font-black text-sm sm:text-base text-foreground tracking-tight">{t("talkToOllie")}</h4>
+                                <p className="text-xs text-muted-foreground/80 font-medium line-clamp-1">{t("ollieDesc")}</p>
                             </div>
-                            <ChevronRight className="hidden sm:block w-4 h-4 text-primary" aria-hidden="true" />
+                            <div className="w-8 h-8 rounded-full bg-blue-500/5 flex items-center justify-center group-hover:bg-blue-500/10 transition-colors">
+                                <ChevronRight className="w-4 h-4 text-blue-500" aria-hidden="true" />
+                            </div>
                         </motion.div>
                     </Link>
                 </section>
 
                 {/* Course Progress Card */}
                 <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="bg-gradient-to-br from-[#1a1a1a] to-black p-8 sm:p-12 rounded-[3.5rem] text-white shadow-2xl relative overflow-hidden group"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="group relative bg-[#0F172A] p-8 sm:p-12 rounded-[2.5rem] sm:rounded-[4rem] text-white shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] overflow-hidden"
                 >
-                    <div className="absolute top-0 right-0 w-full h-full bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-[80px]" />
+                    {/* Animated Glows */}
+                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/30 transition-colors duration-1000" />
+                    <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 group-hover:bg-blue-500/20 transition-colors duration-1000" />
 
-                    <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12">
+                    {/* Pattern Overlay */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+
+                    <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-8 lg:gap-14">
                         <div className="flex items-center gap-6">
                             <motion.div
-                                whileHover={{ scale: 1.1, rotate: 12 }}
-                                className="w-20 h-20 sm:w-28 sm:h-28 bg-white/5 border-2 border-white/10 rounded-[2.5rem] flex items-center justify-center text-4xl sm:text-6xl shadow-2xl backdrop-blur-md"
+                                whileHover={{ scale: 1.1, rotate: 8 }}
+                                className="w-16 h-16 sm:w-24 sm:h-24 bg-white/5 border border-white/10 rounded-3xl flex items-center justify-center text-3xl sm:text-5xl shadow-2xl backdrop-blur-xl group-hover:border-white/20 transition-all"
                             >
                                 🎓
                             </motion.div>
                             <div>
-                                <h3 className="text-3xl sm:text-5xl font-display font-black leading-none mb-2 tracking-tighter">
+                                <h3 className="text-2xl sm:text-4xl lg:text-5xl font-display font-black leading-none mb-2 tracking-tighter">
                                     {t("course")}
                                 </h3>
-                                <p className="font-bold text-primary text-xl">
-                                    {completedTopics}/{totalTopics} {t("topicsMastered", { completed: completedTopics, total: totalTopics })}
-                                </p>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                                    <p className="font-bold text-primary/90 text-sm sm:text-lg">
+                                        {completedTopics}/{totalTopics} {t("topicsMasteredShort", { completed: completedTopics, total: totalTopics })}
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="flex-1 w-full space-y-6">
-                            <div className="flex items-center justify-between font-black text-2xl tracking-tighter">
-                                <span className="text-white/40 uppercase text-xs tracking-[0.3em]">Overall Mastery</span>
-                                <span className="text-white text-4xl">{Math.round(courseProgress)}%</span>
+                        <div className="flex-1 w-full space-y-4">
+                            <div className="flex items-end justify-between font-black">
+                                <span className="text-white/30 uppercase text-[10px] tracking-[0.2em]">Current Progress</span>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-4xl sm:text-5xl tracking-tighter">{Math.round(courseProgress)}</span>
+                                    <span className="text-lg text-white/40">%</span>
+                                </div>
                             </div>
-                            <div className="h-6 w-full bg-white/5 rounded-full overflow-hidden p-1.5 border border-white/10 relative">
+                            <div className="h-4 sm:h-6 w-full bg-white/5 rounded-full overflow-hidden p-1 sm:p-1.5 border border-white/10 shadow-inner">
                                 <motion.div
                                     initial={{ width: 0 }}
-                                    animate={{ width: courseProgress + "%" }}
-                                    transition={{ duration: 1.5, ease: "circOut" }}
-                                    className="h-full bg-gradient-to-r from-primary to-primary-dark rounded-full relative"
+                                    whileInView={{ width: courseProgress + "%" }}
+                                    transition={{ duration: 1.5, ease: [0.34, 1.56, 0.64, 1] }}
+                                    className="h-full bg-gradient-to-r from-primary via-primary to-emerald-400 rounded-full relative"
                                 >
-                                    <div className="absolute inset-0 bg-white/20 animate-shimmer" style={{ backgroundSize: '200% 100%', backgroundImage: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }} />
+                                    <div className="absolute inset-0 overflow-hidden rounded-full">
+                                        <div className="absolute inset-0 bg-white/20 animate-shimmer" style={{ backgroundSize: '200% 100%', backgroundImage: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)' }} />
+                                    </div>
                                 </motion.div>
                             </div>
                         </div>
 
                         <Link href="/skill-trees" className="w-full md:w-auto">
-                            <Button size="lg" className="w-full md:w-auto bg-white text-black hover:bg-white/90 px-10 py-8 rounded-[2rem] font-black text-lg shadow-2xl shadow-white/5 border-b-8 border-gray-200">
+                            <Button
+                                size="lg"
+                                variant="white"
+                                className="w-full md:w-auto px-8 py-7 sm:px-10 sm:py-8 rounded-[1.5rem] sm:rounded-[2rem] text-base sm:text-lg shadow-2xl shadow-white/10"
+                            >
                                 {t("resumePath")}
                             </Button>
                         </Link>
@@ -344,111 +405,129 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                 {/* Quests & League Grid */}
                 <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
                     {/* Quests */}
-                    <section className="space-y-3 sm:space-y-4">
-                        <div className="flex items-center justify-between px-1 sm:px-2">
+                    <section className="space-y-4">
+                        <div className="flex items-center justify-between px-2">
                             <div className="flex items-center gap-3">
-                                <h3 className="text-lg sm:text-xl font-display font-bold flex items-center gap-2">
-                                    <Target className="w-4 h-4 sm:w-5 sm:h-5 text-accent" aria-hidden="true" />
-                                    <span>{t("dailyQuests")}</span>
-                                </h3>
-                                <span className="bg-muted text-muted-foreground px-2 py-0.5 rounded-full text-xs font-black">
+                                <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+                                    <Target className="w-4 h-4 text-orange-600" aria-hidden="true" />
+                                </div>
+                                <h3 className="text-xl font-display font-black tracking-tight">{t("dailyQuests")}</h3>
+                                <div className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase">
                                     {completedQuests}/{totalQuests}
-                                </span>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <span className="hidden sm:inline text-xs sm:text-sm font-bold text-muted-foreground">{t("resetIn", { time: "8h" })}</span>
-                                <Link href="/quests" className="text-xs sm:text-sm font-bold text-primary hover:underline">{t("viewAll")}</Link>
-                            </div>
+                            <Link href="/quests" className="text-xs font-black text-primary hover:text-primary-dark transition-colors uppercase tracking-widest">{t("viewAll")}</Link>
                         </div>
-                        <div className="space-y-4">
-                            {displayQuests.map((userQuest) => (
+                        <div className="flex sm:flex-col gap-4 overflow-x-auto sm:overflow-x-visible pb-6 sm:pb-0 px-2 -mx-2 snap-x snap-mandatory no-scrollbar">
+                            {displayQuests.map((userQuest, idx) => (
                                 <motion.div
                                     key={userQuest.id}
-                                    whileHover={{ y: -4, scale: 1.01 }}
-                                    className="bg-white/60 backdrop-blur-md p-6 rounded-[2.5rem] border-2 border-border shadow-lg flex items-center gap-6 group hover:border-primary/40 hover:bg-white/80 transition-all"
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: idx * 0.1 }}
+                                    whileHover={{ y: -2 }}
+                                    className="flex-shrink-0 w-[280px] sm:w-full snap-center bg-white/80 backdrop-blur-md p-4 rounded-3xl border border-border/50 shadow-sm flex items-center gap-4 group hover:shadow-md transition-all"
                                 >
                                     <div className={cn(
-                                        "w-16 h-16 rounded-[1.5rem] flex items-center justify-center shrink-0 shadow-lg transition-transform group-hover:rotate-6",
+                                        "w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-sm transition-all duration-500",
                                         userQuest.is_completed
-                                            ? "bg-green-50 text-green-500 border-2 border-green-100"
-                                            : "bg-white text-primary border-2 border-primary/10"
+                                            ? "bg-green-50 text-green-500 border border-green-100 rotate-6"
+                                            : "bg-muted/30 text-muted-foreground border border-transparent group-hover:bg-primary/5 group-hover:text-primary"
                                     )}>
-                                        {userQuest.is_completed ? <Award className="w-8 h-8" /> : <Star className="w-8 h-8 fill-primary/10" />}
+                                        {userQuest.is_completed ? <Award className="w-6 h-6" /> : <Star className="w-6 h-6" />}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <div className="flex items-center justify-between mb-2">
-                                            <p className={cn("font-black text-lg tracking-tight truncate", userQuest.is_completed ? "text-muted-foreground line-through opacity-50" : "text-foreground")}>
+                                        <div className="flex items-center justify-between gap-2 mb-1.5">
+                                            <p className={cn(
+                                                "font-black text-sm tracking-tight truncate transition-colors",
+                                                userQuest.is_completed ? "text-muted-foreground/60" : "text-foreground group-hover:text-primary"
+                                            )}>
                                                 {userQuest.quests?.title || t("dailyQuests")}
                                             </p>
-                                            <span className="text-primary font-black text-sm">+{userQuest.quests?.xp_reward || 0} XP</span>
+                                            <span className="text-[10px] font-black text-primary whitespace-nowrap">+{userQuest.quests?.xp_reward || 0} XP</span>
                                         </div>
-                                        {!userQuest.is_completed && (
-                                            <div className="h-2.5 w-full bg-muted rounded-full overflow-hidden p-0.5 border border-border/50">
-                                                <motion.div
-                                                    initial={{ width: 0 }}
-                                                    animate={{ width: `${(userQuest.progress / (userQuest.requirement_value || 1)) * 100}%` }}
-                                                    className="h-full bg-primary rounded-full"
-                                                />
-                                            </div>
-                                        )}
-                                        {userQuest.is_completed && (
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-green-600">Quest Completed!</span>
-                                        )}
+                                        <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: `${(userQuest.progress / (userQuest.requirement_value || 1)) * 100}%` }}
+                                                transition={{ duration: 1, delay: 0.5 }}
+                                                className={cn(
+                                                    "h-full rounded-full transition-colors",
+                                                    userQuest.is_completed ? "bg-green-400" : "bg-primary"
+                                                )}
+                                            />
+                                        </div>
                                     </div>
                                 </motion.div>
                             ))}
+
+                            {/* View All Card for Mobile */}
+                            <Link href="/quests" className="sm:hidden flex-shrink-0 w-[140px] snap-center">
+                                <motion.div
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="h-full bg-primary/5 border-2 border-dashed border-primary/20 rounded-3xl flex flex-col items-center justify-center gap-2 p-4 text-primary group transition-all"
+                                >
+                                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm group-hover:rotate-12 transition-transform">
+                                        <ChevronRight className="w-5 h-5" />
+                                    </div>
+                                    <span className="text-[10px] font-black uppercase tracking-widest">{t("viewAll")}</span>
+                                </motion.div>
+                            </Link>
                         </div>
                     </section>
 
                     {/* League Standings */}
-                    <section className="space-y-3 sm:space-y-4">
-                        <div className="flex items-center justify-between px-1 sm:px-2">
-                            <h3 className="text-lg sm:text-xl font-display font-bold flex items-center gap-2">
-                                <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" aria-hidden="true" />
-                                <span>{standing?.leagues?.name || 'Bronze'} {nav("leagues")}</span>
-                            </h3>
-                            <Link href="/leagues" className="text-xs sm:text-sm font-bold text-primary hover:underline">{t("viewAll")}</Link>
-                        </div>
-                        <div className="bg-white/70 backdrop-blur-xl p-8 rounded-[3rem] border-2 border-border shadow-xl group overflow-hidden relative">
-                            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform duration-700">
-                                <Trophy className="w-32 h-32 text-yellow-500" />
+                    <section className="space-y-4">
+                        <div className="flex items-center justify-between px-2">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-lg bg-yellow-100 flex items-center justify-center text-lg">
+                                    🏆
+                                </div>
+                                <h3 className="text-xl font-display font-black tracking-tight">{standing?.leagues?.name || 'Bronze'} {nav("leagues")}</h3>
                             </div>
+                            <Link href="/leagues" className="text-xs font-black text-primary hover:text-primary-dark transition-colors uppercase tracking-widest">{t("viewAll")}</Link>
+                        </div>
+                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2.5rem] border border-border/50 shadow-sm overflow-hidden relative group">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700" />
 
-                            <div className="flex items-center gap-6 mb-8 relative z-10">
+                            <div className="flex items-center gap-6 mb-6">
                                 <motion.div
-                                    whileHover={{ scale: 1.1, rotate: -5 }}
-                                    className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-[2rem] flex items-center justify-center text-4xl shadow-2xl shadow-yellow-200"
+                                    whileHover={{ scale: 1.1, rotate: -8 }}
+                                    className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg shadow-yellow-200"
                                 >
                                     🥇
                                 </motion.div>
                                 <div>
-                                    <p className="text-sm font-black text-muted-foreground uppercase tracking-widest mb-1">{t("yourRank")}</p>
-                                    <div className="flex items-center gap-3">
-                                        <p className="text-4xl font-display font-black">#{standing?.current_rank || '-'}</p>
-                                        <div className="flex items-center gap-1 text-green-600 font-black text-xs bg-green-100 px-3 py-1 rounded-full border border-green-200 shadow-sm">
-                                            <TrendingUp className="w-3 h-3" />
-                                            <span>Promotion Zone</span>
+                                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-0.5">{t("yourRank")}</p>
+                                    <div className="flex items-center gap-2">
+                                        <p className="text-3xl font-display font-black tracking-tighter">#{standing?.current_rank || '-'}</p>
+                                        <div className="flex items-center gap-1 text-[9px] font-black text-green-600 bg-green-50 px-2 py-0.5 rounded-lg border border-green-100 uppercase tracking-tighter">
+                                            <TrendingUp className="w-2.5 h-2.5" />
+                                            Promotion
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="space-y-3 relative z-10">
+                            <div className="space-y-2">
                                 {topPlayers.length > 0 ? topPlayers.slice(0, 3).map((player, idx) => (
                                     <motion.div
                                         key={idx}
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: 0 }}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true }}
                                         transition={{ delay: idx * 0.1 }}
                                         className={cn(
-                                            "flex items-center gap-4 p-4 rounded-2xl transition-all",
+                                            "flex items-center gap-3 p-3 rounded-2xl transition-all",
                                             player.user_id === profile.id
-                                                ? "bg-primary/10 ring-2 ring-primary/20 shadow-lg shadow-primary/5"
-                                                : "bg-muted/30 hover:bg-muted/50"
+                                                ? "bg-primary/10 ring-1 ring-primary/20 shadow-sm"
+                                                : "bg-muted/20 hover:bg-muted/40"
                                         )}
                                     >
-                                        <span className="w-8 text-lg font-display font-black text-muted-foreground/50">#{idx + 1}</span>
-                                        <div className="w-10 h-10 bg-white rounded-xl overflow-hidden flex items-center justify-center text-sm font-bold shrink-0 shadow-sm ring-2 ring-white">
+                                        <span className="w-5 text-xs font-black text-muted-foreground/40">#{idx + 1}</span>
+                                        <div className="w-9 h-9 bg-white rounded-xl overflow-hidden flex items-center justify-center border border-white shadow-sm shrink-0">
                                             <Avatar
                                                 src={player.profiles?.avatar_url}
                                                 size="sm"
@@ -456,16 +535,16 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                                                 className="w-full h-full border-0 rounded-none bg-transparent"
                                             />
                                         </div>
-                                        <span className={`flex-1 font-black text-base truncate ${player.user_id === profile.id ? "text-primary" : "text-foreground"}`}>
+                                        <span className={`flex-1 font-black text-sm truncate ${player.user_id === profile.id ? "text-primary" : "text-foreground"}`}>
                                             {player.user_id === profile.id ? t("you") : (player.profiles?.username || t("player"))}
                                         </span>
-                                        <div className="flex items-center gap-1.5 font-black text-sm">
-                                            <Zap className="w-4 h-4 fill-blue-500 text-blue-500" />
+                                        <div className="flex items-center gap-1 font-black text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-lg border border-blue-100/50">
+                                            <Zap className="w-3 h-3 fill-current" />
                                             {player.weekly_xp}
                                         </div>
                                     </motion.div>
                                 )) : (
-                                    <p className="text-center text-muted-foreground py-4 font-medium italic text-sm">{t("noPlayers")}</p>
+                                    <p className="text-center text-muted-foreground py-4 font-medium italic text-xs">{t("noPlayers")}</p>
                                 )}
                             </div>
                         </div>
@@ -474,38 +553,40 @@ export default function DashboardClient({ data }: DashboardClientProps) {
 
                 {/* Mock Test CTA */}
                 <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="bg-gradient-to-br from-[#1a1a1a] via-[#1a1a1a] to-black p-8 sm:p-12 rounded-[4rem] text-white shadow-2xl relative overflow-hidden group"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="relative bg-[#1E293B] p-8 sm:p-12 rounded-[2.5rem] sm:rounded-[4rem] text-white shadow-2xl overflow-hidden group"
                 >
-                    <div className="absolute top-0 right-0 w-full h-full bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700 pointer-events-none">
-                        <span className="text-[160px] sm:text-[220px]">🇦🇺</span>
+                    <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    <div className="absolute -top-10 -right-10 w-64 h-64 bg-accent/10 rounded-full blur-[80px] group-hover:bg-accent/20 transition-all duration-1000" />
+
+                    <div className="absolute top-0 right-0 p-8 sm:p-12 opacity-[0.08] group-hover:opacity-[0.15] group-hover:scale-110 group-hover:-rotate-12 transition-all duration-1000 pointer-events-none">
+                        <span className="text-[140px] sm:text-[200px] leading-none select-none">🇦🇺</span>
                     </div>
 
-                    <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
-                        <div className="max-w-xl text-center lg:text-left space-y-4">
-                            <div className="inline-flex items-center gap-2 bg-accent/20 text-accent px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border border-accent/20">
+                    <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 sm:gap-14">
+                        <div className="max-w-xl text-center lg:text-left space-y-5 sm:space-y-6">
+                            <div className="inline-flex items-center gap-2 bg-accent/20 text-accent px-4 py-2 rounded-2xl text-[10px] sm:text-xs font-black uppercase tracking-widest border border-accent/20 backdrop-blur-md">
+                                <Sparkles className="w-3.5 h-3.5 fill-current" />
                                 Official Simulation
                             </div>
-                            <h3 className="text-4xl sm:text-6xl font-display font-black tracking-tight leading-none">
-                                {t("mockTest")} <span className="inline-block animate-bounce">🇦🇺</span>
+                            <h3 className="text-4xl sm:text-6xl font-display font-black tracking-tight leading-[0.9] sm:leading-none">
+                                {t("mockTest")} <span className="inline-block animate-bounce-slow">🇦🇺</span>
                             </h3>
-                            <p className="font-bold text-white/70 text-lg sm:text-xl leading-relaxed">
+                            <p className="font-bold text-white/60 text-base sm:text-xl leading-relaxed max-w-lg">
                                 {t("mockTestDesc")}
                             </p>
                         </div>
-                        <Link href="/dashboard/mock-test" className="w-full lg:w-auto shrink-0 relative px-2">
-                            <motion.div
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
+                        <Link href="/dashboard/mock-test" className="w-full lg:w-auto shrink-0 group/btn">
+                            <Button
+                                variant="accent"
+                                size="lg"
+                                className="w-full lg:w-auto px-10 py-8 sm:px-14 sm:py-10 rounded-[1.5rem] sm:rounded-[2.5rem] text-xl sm:text-3xl shadow-[0_20px_40px_-10px_rgba(230,126,90,0.3)] flex items-center justify-center gap-4"
                             >
-                                <Button size="lg" className="w-full lg:w-auto bg-accent text-white hover:bg-accent/90 px-16 py-10 rounded-[2.5rem] font-black text-2xl shadow-2xl shadow-accent/20 border-b-8 border-accent-dark group/btn">
-                                    <span>{t("attemptNow")}</span>
-                                    <ChevronRight className="w-6 h-6 group-hover/btn:translate-x-2 transition-transform" />
-                                </Button>
-                            </motion.div>
+                                <span>{t("attemptNowShort")}</span>
+                                <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 group-hover/btn:translate-x-2 transition-transform" />
+                            </Button>
                         </Link>
                     </div>
                 </motion.section>

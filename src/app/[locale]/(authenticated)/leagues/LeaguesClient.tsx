@@ -125,7 +125,7 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                             <h3 className="text-2xl font-display font-black mb-2 relative z-10">{t("boostRank")}</h3>
                             <p className="text-primary-foreground/90 font-bold text-sm mb-8 leading-relaxed relative z-10">{t("boostRankDesc")}</p>
                             <Link href="/dashboard/quiz">
-                                <Button size="lg" variant="secondary" className="w-full bg-white text-primary hover:bg-white/90 h-14 rounded-2xl font-black shadow-xl relative z-10">{t("getMoreXP")}</Button>
+                                <Button size="lg" variant="white" className="w-full h-14 rounded-2xl relative z-10">{t("getMoreXP")}</Button>
                             </Link>
                         </section>
                     </div>

@@ -145,30 +145,46 @@ h6 {
 
 /* Duolingo-style button shadows */
 .btn-primary {
-  @apply relative bg-primary text-white px-6 py-3 rounded-2xl font-bold transition-all active:translate-y-1 active:shadow-none;
-  box-shadow: 0 4px 0 #147a71;
+  @apply relative bg-primary text-white font-black transition-all active:translate-y-1 active:shadow-none;
+  box-shadow: 0 6px 0 #147a71;
+  border-bottom: none;
 }
 
 .dark .btn-primary {
-  box-shadow: 0 4px 0 var(--shadow-primary);
+  box-shadow: 0 6px 0 var(--shadow-primary);
 }
 
 .btn-secondary {
-  @apply relative bg-secondary text-white px-6 py-3 rounded-2xl font-bold transition-all active:translate-y-1 active:shadow-none;
-  box-shadow: 0 4px 0 #b38b61;
+  @apply relative bg-secondary text-white font-black transition-all active:translate-y-1 active:shadow-none;
+  box-shadow: 0 6px 0 #b38b61;
+  border-bottom: none;
 }
 
 .dark .btn-secondary {
-  box-shadow: 0 4px 0 var(--shadow-secondary);
+  box-shadow: 0 6px 0 var(--shadow-secondary);
 }
 
 .btn-accent {
-  @apply relative bg-accent text-white px-6 py-3 rounded-2xl font-bold transition-all active:translate-y-1 active:shadow-none;
-  box-shadow: 0 4px 0 #c26a4c;
+  @apply relative bg-accent text-white font-black transition-all active:translate-y-1 active:shadow-none;
+  box-shadow: 0 6px 0 #c26a4c;
+  border-bottom: none;
 }
 
 .dark .btn-accent {
-  box-shadow: 0 4px 0 var(--shadow-accent);
+  box-shadow: 0 6px 0 var(--shadow-accent);
+}
+
+.btn-white {
+  @apply relative bg-white text-foreground font-black transition-all active:translate-y-1 active:shadow-none border border-border/50;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn-ghost {
+  @apply hover:bg-muted/50 text-muted-foreground font-bold transition-all active:scale-95;
+}
+
+.btn-outline {
+  @apply border-2 border-primary/20 text-primary font-bold hover:bg-primary/5 transition-all active:scale-95;
 }
 
 /* Safe area support for notched devices */
@@ -198,6 +214,16 @@ h6 {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Focus visible styles for accessibility */
@@ -333,4 +359,22 @@ body.modal-open {
 
 .animate-shimmer {
   animation: shimmer 2s infinite linear;
+}
+
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s infinite;
 }

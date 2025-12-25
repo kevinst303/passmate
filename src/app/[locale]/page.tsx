@@ -78,7 +78,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-5">
               <Link href="/login" className="w-full sm:w-auto">
-                <Button size="lg" className="btn-primary w-full h-16 text-xl shadow-[0_6px_0_#147a71] hover:shadow-[0_4px_0_#147a71] hover:translate-y-[2px] active:shadow-none active:translate-y-[6px] transition-all px-8 rounded-2xl group">
+                <Button size="lg" variant="primary" className="w-full h-16 text-xl px-8 rounded-2xl group">
                   {t("hero.cta1")} <ChevronRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
@@ -367,7 +367,7 @@ export default function Home() {
               {t("cta.subtitle")}
             </p>
             <Link href="/login">
-              <Button size="lg" variant="secondary" className="bg-white text-primary border-none text-xl px-12 py-6">
+              <Button size="lg" variant="white" className="text-xl px-12 py-6 rounded-3xl">
                 {t("cta.button")}
               </Button>
             </Link>

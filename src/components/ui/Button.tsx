@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: "primary" | "secondary" | "accent" | "outline" | "ghost";
+    variant?: "primary" | "secondary" | "accent" | "outline" | "ghost" | "white";
     size?: "sm" | "md" | "lg";
 }
 
@@ -16,8 +16,9 @@ export const Button = ({
         primary: "btn-primary",
         secondary: "btn-secondary",
         accent: "btn-accent",
-        outline: "border-2 border-primary text-primary hover:bg-primary/10",
-        ghost: "hover:bg-primary/10 text-primary",
+        outline: "btn-outline",
+        ghost: "btn-ghost",
+        white: "btn-white",
     };
 
     const sizes = {
@@ -29,8 +30,8 @@ export const Button = ({
     return (
         <button
             className={cn(
-                "rounded-2xl font-bold transition-all disabled:opacity-50 disabled:pointer-events-none inline-flex items-center justify-center whitespace-nowrap",
-                variant !== "outline" ? variants[variant] : variants.outline,
+                "rounded-2xl transition-all disabled:opacity-50 disabled:pointer-events-none inline-flex items-center justify-center whitespace-nowrap",
+                variants[variant],
                 sizes[size],
                 className
             )}
