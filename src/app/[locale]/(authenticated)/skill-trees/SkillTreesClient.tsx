@@ -18,24 +18,12 @@ import { Button } from "@/components/ui/Button";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-
+import { SkillTreeData } from "@/types/skills";
 import { DashboardData } from "@/types/dashboard";
-
-interface Topic {
-    id: string;
-    title: string;
-    lessons: number;
-    icon: string;
-    status: string;
-    progress: number;
-    completed: boolean;
-}
 
 interface SkillTreesClientProps {
     data: DashboardData;
-    skillTreeData: {
-        topics: Topic[];
-    };
+    skillTreeData: SkillTreeData;
 }
 
 export default function SkillTreesClient({ data, skillTreeData }: SkillTreesClientProps) {

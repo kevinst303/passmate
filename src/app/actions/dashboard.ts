@@ -39,6 +39,7 @@ export async function getDashboardData(): Promise<DashboardResponse> {
                 username: user.email?.split('@')[0],
                 full_name: user.user_metadata?.full_name || 'New Mate',
                 avatar_url: user.user_metadata?.avatar_url,
+                source: user.user_metadata?.source || null,
                 current_xp: 0,
                 total_xp: 0,
                 level: 1,
@@ -57,6 +58,11 @@ export async function getDashboardData(): Promise<DashboardResponse> {
     }
 
     if (!profile) return { error: 'Profile not found' };
+
+    // 1b. Check for suspension
+    if (profile.is_suspended) {
+        return { error: 'Your account has been suspended by an administrator. Please contact support for assistance.' };
+    }
 
     // Handle standing creation if missing
     if (!standing && (standingRes.error?.code === 'PGRST116' || !standingRes.data)) {
@@ -104,10 +110,9 @@ export async function getDashboardData(): Promise<DashboardResponse> {
         ]) : Promise.resolve([null, null])
     ]);
 
-    const [playersRes, countRes] = leaderboardData as [
-        { data: LeaderboardEntryRaw[] | null },
-        { count: number | null }
-    ];
+    const [playersRes, countRes] = standing
+        ? (leaderboardData as [{ data: LeaderboardEntryRaw[] | null }, { count: number | null }])
+        : [null, null];
 
     // 3. Handle Hearts Regeneration
     let currentHearts = profile.hearts;

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
@@ -16,6 +17,8 @@ export default function AuthPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const referralSource = searchParams.get("ref");
     const supabase = createClient();
 
     const handleAuth = async (e: React.FormEvent) => {
@@ -30,6 +33,7 @@ export default function AuthPage() {
                 password,
                 options: {
                     emailRedirectTo: `${window.location.origin}/auth/callback`,
+                    data: referralSource ? { source: referralSource } : {}
                 }
             });
 

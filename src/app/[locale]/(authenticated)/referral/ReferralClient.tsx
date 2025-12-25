@@ -19,13 +19,12 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/Button";
 
 import { cn } from "@/lib/utils";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import confetti from "canvas-confetti";
+import { Profile } from "@/types/dashboard";
 
-interface Profile {
-    id: string;
-}
+
 
 interface ReferralClientProps {
     data: {
@@ -39,7 +38,15 @@ export default function ReferralClient({ data }: ReferralClientProps) {
     const [copied, setCopied] = useState(false);
 
     const referralCode = profile.id.split('-')[0].toUpperCase();
-    const referralLink = `https://passmate.com.au/signup?ref=${referralCode}`;
+    const [origin, setOrigin] = useState('https://passmate.com.au');
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setOrigin(window.location.origin);
+        }
+    }, []);
+
+    const referralLink = `${origin}/login?ref=${referralCode}`;
 
     const copyToClipboard = useCallback(() => {
         navigator.clipboard.writeText(referralLink);

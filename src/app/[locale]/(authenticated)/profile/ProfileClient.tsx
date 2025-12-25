@@ -27,40 +27,12 @@ import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-
-interface Profile {
-    created_at: string;
-    avatar_url: string | null;
-    full_name: string | null;
-    username: string | null;
-    level: number;
-    daily_streak: number;
-    total_xp: number;
-    current_xp: number;
-    is_premium: boolean;
-    hearts: number;
-    last_heart_regen: string;
-}
-
-interface UserData {
-    email?: string | null;
-}
-
-interface Achievement {
-    id: string;
-    name: string;
-    is_unlocked: boolean;
-    badge_url: string | null;
-}
+import { DashboardData } from "@/types/dashboard";
+import { AchievementsData } from "@/types/achievements";
 
 interface ProfileClientProps {
-    data: {
-        profile: Profile;
-        user: UserData;
-    };
-    achievementsData: {
-        achievements: Achievement[];
-    };
+    data: DashboardData;
+    achievementsData: AchievementsData;
 }
 
 export default function ProfileClient({ data, achievementsData }: ProfileClientProps) {

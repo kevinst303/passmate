@@ -22,15 +22,16 @@ import confetti from "canvas-confetti";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/utils/supabase/client";
 import { updateUserProgress } from "@/app/actions/progress";
-import { getQuestions, logQuizMistake } from "@/app/actions/quiz";
+import { getQuestions, logQuizMistake, saveForReview } from "@/app/actions/quiz";
 import { updateChallengeScore } from "@/app/actions/challenges";
 import { updateTopicProgress } from "@/app/actions/skills";
 import { useTranslations } from "next-intl";
+import { Bookmark, Check, Loader2 } from "lucide-react";
 
 
 import { Suspense } from 'react';
 
-import { Question, Achievement } from '@/app/actions/admin';
+import { Question, AchievementManagement as Achievement } from '@/types/admin';
 import { User } from '@supabase/supabase-js';
 
 // ... (existing imports)
@@ -55,6 +56,11 @@ function QuizContent() {
     const [error, setError] = useState<string | null>(null);
     const [challengeData, setChallengeData] = useState<Record<string, any> | null>(null);
     const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>([]);
+    const [isBookmarking, setIsBookmarking] = useState(false);
+    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [showExitDialog, setShowExitDialog] = useState(false);
+    const [direction, setDirection] = useState(1);
+    const [isHeartLoss, setIsHeartLoss] = useState(false);
 
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -129,6 +135,8 @@ function QuizContent() {
             setScore(s => s + 1);
         } else {
             setLives(l => Math.max(0, l - 1));
+            setIsHeartLoss(true);
+            setTimeout(() => setIsHeartLoss(false), 800);
             // Log mistake
             if (currentQuestion?.id) {
                 logQuizMistake(currentQuestion.id);
@@ -138,12 +146,59 @@ function QuizContent() {
 
     const handleContinue = () => {
         if (currentQuestionIndex < questions.length - 1 && lives > 0) {
+            setDirection(1);
             setCurrentQuestionIndex(i => i + 1);
             setSelectedOption(null);
             setIsAnswered(false);
+            setIsBookmarked(false);
             setProgress(((currentQuestionIndex + 1) / questions.length) * 100);
         } else {
             finishQuiz();
+        }
+    };
+
+    // Keyboard Support
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (currentStep !== 1 || showExitDialog) return;
+
+            if (e.key >= '1' && e.key <= '4' && !isAnswered) {
+                const idx = parseInt(e.key) - 1;
+                if (currentQuestion?.options[idx]) {
+                    setSelectedOption(idx);
+                }
+            }
+
+            if (e.key === 'Enter') {
+                if (!isAnswered && selectedOption !== null) {
+                    handleCheck();
+                } else if (isAnswered) {
+                    handleContinue();
+                }
+            }
+
+            if (e.key === 'Escape') {
+                setShowExitDialog(true);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentStep, isAnswered, selectedOption, currentQuestion, showExitDialog]);
+
+    const handleBookmark = async () => {
+        if (!currentQuestion?.id || isBookmarking) return;
+
+        setIsBookmarking(true);
+        try {
+            const result = await saveForReview(currentQuestion.id);
+            if (result.success) {
+                setIsBookmarked(true);
+            }
+        } catch (err) {
+            console.error("Bookmark error:", err);
+        } finally {
+            setIsBookmarking(false);
         }
     };
 
@@ -388,33 +443,68 @@ function QuizContent() {
     }
 
     return (
-        <div className="min-h-screen bg-background flex flex-col">
-            {/* Top Header */}
-            <header className="max-w-4xl mx-auto w-full px-6 py-6 flex items-center gap-4 sticky top-0 bg-background z-10">
-                <button onClick={() => router.back()} className="text-muted-foreground hover:text-foreground">
-                    <X className="w-8 h-8" />
-                </button>
-                <div className="flex-1 h-4 bg-muted rounded-full overflow-hidden border border-border/50 p-0.5">
+        <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
+            {/* Heart loss splash */}
+            <AnimatePresence>
+                {isHeartLoss && (
                     <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${progress}%` }}
-                        className="h-full bg-primary rounded-full transition-all duration-500"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.2 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-red-500 z-[100] pointer-events-none"
                     />
+                )}
+            </AnimatePresence>
+            {/* Decorative background elements */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 -z-10" />
+
+            {/* Header */}
+            <header className="max-w-4xl mx-auto w-full px-6 py-6 flex items-center justify-between border-b border-border relative z-10 bg-white/50 backdrop-blur-sm">
+                <div className="flex items-center gap-4 flex-1">
+                    <button onClick={() => setShowExitDialog(true)} className="text-muted-foreground hover:text-foreground transition-colors p-2 hover:bg-muted rounded-xl">
+                        <X className="w-8 h-8" />
+                    </button>
+                    <div className="flex-1 max-w-md h-3 bg-muted/50 rounded-full overflow-hidden relative border border-border/50">
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progress}%` }}
+                            className="h-full bg-gradient-to-r from-primary/80 to-primary relative overflow-hidden"
+                        >
+                            <motion.div
+                                animate={{ x: ['100%', '-100%'] }}
+                                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                className="absolute inset-0 w-full h-full bg-white/20 skew-x-[-20deg]"
+                            />
+                        </motion.div>
+                    </div>
                 </div>
-                <div className="flex items-center gap-1.5 text-accent font-black text-xl">
-                    <Heart className={cn("w-6 h-6", lives === 0 ? "text-muted animate-pulse" : "fill-accent")} /> {lives}
+                <div className={cn(
+                    "flex items-center gap-2 font-display font-black text-xl px-4 py-2 bg-muted/50 rounded-2xl border border-border/50 transition-all",
+                    isHeartLoss && "bg-red-100 border-red-200 scale-110"
+                )}>
+                    <Heart className={cn("w-6 h-6 fill-red-500 text-red-500", lives === 0 && "opacity-20", isHeartLoss && "animate-bounce")} />
+                    <span className={cn(lives === 0 ? "text-muted-foreground" : "text-red-600")}>{lives}</span>
                 </div>
             </header>
 
             {/* Question Content */}
-            <main className="flex-1 max-w-2xl mx-auto w-full px-6 py-8 pb-40 flex flex-col">
-                <AnimatePresence mode="wait">
+            <main className="flex-1 max-w-2xl mx-auto w-full px-6 py-8 pb-80 flex flex-col relative z-10">
+                <AnimatePresence mode="wait" custom={direction}>
                     <motion.div
                         key={currentQuestionIndex}
-                        initial={{ x: 50, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -50, opacity: 0 }}
-                        className="flex-1"
+                        custom={direction}
+                        initial={{ opacity: 0, x: direction * 50 }}
+                        animate={{
+                            opacity: 1,
+                            x: 0,
+                            transition: { type: "spring", damping: 25, stiffness: 200 }
+                        }}
+                        exit={{ opacity: 0, x: direction * -50 }}
+                        className={cn(
+                            "flex-1",
+                            isAnswered && !isCorrect && "animate-shake"
+                        )}
                     >
                         <h2 className="text-2xl md:text-3xl font-display font-black mb-8 leading-tight">
                             {currentQuestion.question_text}
@@ -424,10 +514,11 @@ function QuizContent() {
                             {currentQuestion.options.map((option: string, index: number) => {
                                 const isSelected = selectedOption === index;
                                 return (
-                                    <button
+                                    <motion.button
                                         key={index}
                                         disabled={isAnswered}
                                         onClick={() => setSelectedOption(index)}
+                                        whileTap={{ scale: 0.98 }}
                                         className={cn(
                                             "w-full p-5 rounded-2xl border-2 text-left font-bold transition-all text-lg flex items-center gap-4 outline-none",
                                             isSelected
@@ -441,10 +532,10 @@ function QuizContent() {
                                             "w-8 h-8 rounded-lg flex items-center justify-center text-sm border-2",
                                             isSelected ? "border-primary bg-primary text-white" : "border-border"
                                         )}>
-                                            {index + 1}
+                                            {String.fromCharCode(65 + index)}
                                         </span>
                                         {option}
-                                    </button>
+                                    </motion.button>
                                 );
                             })}
                         </div>
@@ -453,70 +544,165 @@ function QuizContent() {
             </main>
 
             {/* Bottom Action / Feedback */}
-            <AnimatePresence>
-                {!isAnswered ? (
-                    <motion.div
-                        initial={{ y: 100 }}
-                        animate={{ y: 0 }}
-                        exit={{ y: 100 }}
-                        className="fixed bottom-0 left-0 right-0 border-t-2 border-border p-6 md:p-10 bg-background/80 backdrop-blur-md z-20"
-                    >
-                        <div className="max-w-4xl mx-auto">
-                            <Button
-                                size="lg"
-                                className="w-full md:w-auto md:px-20 py-5 text-xl float-right"
-                                disabled={selectedOption === null}
-                                onClick={handleCheck}
-                            >
-                                {t("check")}
-                            </Button>
-                        </div>
-                    </motion.div>
-                ) : (
-                    <motion.div
-                        initial={{ y: 100 }}
-                        animate={{ y: 0 }}
-                        className={cn(
-                            "fixed bottom-0 left-0 right-0 p-6 md:p-10 border-t-2 z-20",
-                            isCorrect
-                                ? "bg-green-500/10 border-green-500/20 dark:bg-green-900/20 dark:border-green-800/50 backdrop-blur-xl"
-                                : "bg-red-500/10 border-red-500/20 dark:bg-red-900/20 dark:border-red-800/50 backdrop-blur-xl"
-                        )}
-                    >
-                        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6">
-                            <div className={cn(
-                                "w-16 h-16 rounded-2xl flex items-center justify-center",
-                                isCorrect ? "bg-green-500 text-white" : "bg-red-500 text-white"
-                            )}>
-                                {isCorrect ? <CheckCircle2 className="w-10 h-10" /> : <XCircle className="w-10 h-10" />}
+            <div className="fixed bottom-0 left-0 right-0 z-30 w-full">
+                <AnimatePresence mode="wait">
+                    {!isAnswered ? (
+                        <motion.div
+                            key="check-panel"
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: 20, opacity: 0 }}
+                            className="border-t-2 border-border p-6 md:p-8 bg-white/80 backdrop-blur-xl"
+                        >
+                            <div className="max-w-4xl mx-auto flex justify-end">
+                                <Button
+                                    size="lg"
+                                    className="w-full md:w-auto md:px-24 py-6 text-xl rounded-2xl shadow-lg shadow-primary/20"
+                                    disabled={selectedOption === null}
+                                    onClick={handleCheck}
+                                >
+                                    {t("check")}
+                                </Button>
                             </div>
-                            <div className="flex-1 text-center md:text-left">
-                                <h3 className={cn("text-2xl font-black mb-1", isCorrect ? "text-green-800 dark:text-green-400" : "text-red-800 dark:text-red-400")}>
-                                    {isCorrect ? t("correct") : t("incorrect")}
-                                </h3>
-                                <div className={cn("font-medium", isCorrect ? "text-green-700 dark:text-green-500/80" : "text-red-700 dark:text-red-500/80")}>
-                                    {isAnswered && !isCorrect && (
-                                        <p className="block font-bold mb-1 underline underline-offset-4">{t("correctAnswer", { answer: currentQuestion.options[currentQuestion.correct_index] })}</p>
-                                    )}
-                                    <p>{currentQuestion.explanation}</p>
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key="feedback-panel"
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "100%" }}
+                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                            className={cn(
+                                "p-6 md:p-10 border-t-2 backdrop-blur-2xl shadow-[0_-20px_50px_rgba(0,0,0,0.1)]",
+                                isCorrect
+                                    ? "bg-green-50/95 border-green-200"
+                                    : "bg-red-50/95 border-red-200"
+                            )}
+                        >
+                            <div className="max-w-4xl mx-auto">
+                                <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+                                    <div className={cn(
+                                        "w-20 h-20 rounded-[2.5rem] flex items-center justify-center shadow-xl shrink-0 scale-110 md:scale-125 mb-4 md:mb-0",
+                                        isCorrect ? "bg-green-500 text-white" : "bg-red-500 text-white"
+                                    )}>
+                                        {isCorrect ? <CheckCircle2 className="w-12 h-12" /> : <XCircle className="w-12 h-12" />}
+                                    </div>
+                                    <div className="flex-1 text-center md:text-left space-y-2 relative">
+                                        {isCorrect && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 0 }}
+                                                animate={{ opacity: 1, y: -40 }}
+                                                className="absolute -top-10 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0 font-display font-black text-primary text-xl"
+                                            >
+                                                +10 XP
+                                            </motion.div>
+                                        )}
+                                        <h3 className={cn("text-3xl font-black", isCorrect ? "text-green-800" : "text-red-800")}>
+                                            {isCorrect ? t("correct") : t("incorrect")}
+                                        </h3>
+                                        <div className={cn("text-lg font-bold leading-relaxed", isCorrect ? "text-green-700/80" : "text-red-700/80")}>
+                                            {isAnswered && !isCorrect && (
+                                                <p className="mb-2 text-red-900 bg-red-100/50 p-3 rounded-2xl border border-red-200 inline-block">
+                                                    <span className="opacity-60 mr-2">{t("correctAnswerLabel") || "Correct choice:"}</span>
+                                                    {currentQuestion.options[currentQuestion.correct_index]}
+                                                </p>
+                                            )}
+                                            <p className="line-clamp-3 hover:line-clamp-none transition-all">{currentQuestion.explanation}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full md:w-auto">
+                                        <Button
+                                            variant="outline"
+                                            size="lg"
+                                            className={cn(
+                                                "py-6 px-8 rounded-2xl border-2 font-black transition-all group",
+                                                isBookmarked ? "bg-primary/10 border-primary text-primary" : "border-border hover:border-primary/50"
+                                            )}
+                                            onClick={handleBookmark}
+                                            disabled={isBookmarking}
+                                        >
+                                            {isBookmarking ? (
+                                                <Loader2 className="w-5 h-5 animate-spin" />
+                                            ) : isBookmarked ? (
+                                                <>
+                                                    <Check className="w-5 h-5 mr-2" />
+                                                    {t("saved") || "Saved"}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Bookmark className="w-5 h-5 mr-2 group-hover:fill-primary transition-all" />
+                                                    {t("remindMe") || "Remind me"}
+                                                </>
+                                            )}
+                                        </Button>
+                                        <Button
+                                            size="lg"
+                                            variant={isCorrect ? "primary" : "accent"}
+                                            className={cn(
+                                                "md:px-16 py-6 text-xl rounded-2xl shadow-xl transition-all active:scale-95",
+                                                isCorrect ? "bg-green-600 hover:bg-green-700" : ""
+                                            )}
+                                            onClick={handleContinue}
+                                        >
+                                            {lives === 0 && !isCorrect ? t("finish") : t("continue")}
+                                            <ChevronRight className="ml-2 w-6 h-6" />
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
-                            <Button
-                                size="lg"
-                                variant={isCorrect ? "primary" : "accent"}
-                                className={cn(
-                                    "w-full md:w-auto md:px-20 py-5 text-xl",
-                                    isCorrect ? "bg-green-600 hover:bg-green-700 shadow-[0_4px_0_#156158]" : ""
-                                )}
-                                onClick={handleContinue}
-                            >
-                                {lives === 0 && !isCorrect ? t("finish") : t("continue")}
-                            </Button>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            {/* Exit Confirmation Dialog */}
+            <AnimatePresence>
+                {showExitDialog && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowExitDialog(false)}
+                            className="absolute inset-0 bg-background/80 backdrop-blur-xl"
+                        />
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            className="relative w-full max-w-lg bg-white p-10 rounded-[3rem] border-2 border-border shadow-2xl text-center"
+                        >
+                            <div className="w-24 h-24 bg-red-100 rounded-[2rem] flex items-center justify-center mx-auto mb-8">
+                                <AlertCircle className="w-12 h-12 text-red-600" />
+                            </div>
+                            <h2 className="text-4xl font-display font-black mb-4">Wait, mate!</h2>
+                            <p className="text-muted-foreground text-xl mb-10 font-bold leading-relaxed px-4">
+                                If you leave now, you'll lose your progress and might break your streak.
+                            </p>
+                            <div className="grid grid-cols-2 gap-4">
+                                <Button
+                                    variant="outline"
+                                    size="lg"
+                                    className="py-6 rounded-2xl font-black text-lg border-2"
+                                    onClick={() => setShowExitDialog(false)}
+                                >
+                                    Keep Learning
+                                </Button>
+                                <Button
+                                    variant="accent"
+                                    size="lg"
+                                    className="py-6 rounded-2xl font-black text-lg bg-red-600 hover:bg-red-700 shadow-lg shadow-red-200"
+                                    onClick={() => router.back()}
+                                >
+                                    Exit Quiz
+                                </Button>
+                            </div>
+                        </motion.div>
+                    </div>
                 )}
             </AnimatePresence>
         </div>
+
     );
 }
 

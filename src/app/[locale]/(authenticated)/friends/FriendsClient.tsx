@@ -27,63 +27,12 @@ import { sendFriendRequest, acceptFriendRequest, rejectFriendRequest, removeFrie
 import { createChallenge } from "@/app/actions/challenges";
 import { useRouter } from "@/i18n/routing";
 import { useEffect } from "react";
-
-export interface FriendProfile {
-    id: string;
-    username: string;
-    full_name: string | null;
-    avatar_url: string | null;
-    is_premium: boolean;
-    level: number;
-    daily_streak: number;
-    total_xp: number;
-    status: 'online' | 'offline';
-    friendship_id: string;
-}
-
-export interface User {
-    id: string;
-    username: string;
-    avatar_url: string | null;
-    is_premium: boolean;
-    level: number;
-}
-
-export interface Challenge {
-    id: string;
-    challenger_id: string;
-    challenged_id: string;
-    challenger_score: number | null;
-    challenged_score: number | null;
-    challenger_played: boolean;
-    challenged_played: boolean;
-    winner_id: string | null;
-    challenger?: { username: string; avatar_url: string | null };
-    challenged?: { username: string; avatar_url: string | null };
-}
-
-export interface FriendRequest {
-    id: string;
-    user: {
-        username: string;
-        avatar_url: string | null;
-    };
-}
+import { FriendProfile, Challenge, FriendRequest, FriendsCombinedData, UserSummary } from "@/types/friends";
+import { Profile } from "@/types/dashboard";
 
 interface FriendsClientProps {
-    initialData: {
-        friends: FriendProfile[];
-        pendingReceived: Challenge[];
-        pendingSent: Challenge[];
-        completed: Challenge[];
-        pendingRequests: FriendRequest[];
-        error?: string;
-    };
-    profile: {
-        daily_streak: number;
-        total_xp: number;
-        id: string;
-    };
+    initialData: FriendsCombinedData;
+    profile: Profile;
 }
 
 export default function FriendsClient({ initialData, profile }: FriendsClientProps) {
@@ -99,7 +48,7 @@ export default function FriendsClient({ initialData, profile }: FriendsClientPro
     } = initialData;
 
     const [searchQuery, setSearchQuery] = useState("");
-    const [searchResults, setSearchResults] = useState<User[]>([]);
+    const [searchResults, setSearchResults] = useState<UserSummary[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [isActionLoading, setIsActionLoading] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(initialData.error || null);

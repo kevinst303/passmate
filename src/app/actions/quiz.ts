@@ -87,6 +87,27 @@ export async function logQuizMistake(questionId: string) {
     }
 }
 
+export async function saveForReview(questionId: string) {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) return { error: 'Not authenticated' };
+
+    // Use upsert to mark as needing review
+    const { error } = await supabase
+        .from('user_mistakes')
+        .upsert({
+            user_id: user.id,
+            question_id: questionId,
+            is_resolved: false,
+            last_mistake_at: new Date().toISOString()
+        }, {
+            onConflict: 'user_id, question_id'
+        });
+
+    return { success: !error };
+}
+
 export async function getMistakes() {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();

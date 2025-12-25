@@ -5,6 +5,8 @@ import { getAchievementsData } from "@/app/actions/achievements";
 import { getDashboardData } from "@/app/actions/dashboard";
 import { redirect } from "@/i18n/routing";
 import AchievementsClient from "./AchievementsClient";
+import { DashboardData } from "@/types/dashboard";
+import { AchievementsData } from "@/types/achievements";
 
 export default async function AchievementsPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -19,12 +21,12 @@ export default async function AchievementsPage({ params }: { params: Promise<{ l
         }
     }
 
-    if (('error' in dashboardData && dashboardData.error) || achievementsData.error) {
+    if (('error' in dashboardData) || ('error' in achievementsData)) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-muted/30 p-6">
                 <div className="bg-white p-8 rounded-[2rem] border border-border shadow-sm text-center max-w-md">
                     <h2 className="text-2xl font-bold text-accent mb-4">Something went wrong</h2>
-                    <p className="text-muted-foreground">{('error' in dashboardData ? dashboardData.error : '') || achievementsData.error}</p>
+                    <p className="text-muted-foreground">{('error' in dashboardData ? dashboardData.error : '') || ('error' in achievementsData ? (achievementsData as { error: string }).error : '')}</p>
                 </div>
             </div>
         );
@@ -32,8 +34,8 @@ export default async function AchievementsPage({ params }: { params: Promise<{ l
 
     return (
         <AchievementsClient
-            achievementsData={achievementsData as any}
-            profile={(dashboardData as any).profile}
+            achievementsData={achievementsData as AchievementsData}
+            profile={(dashboardData as DashboardData).profile}
         />
     );
 }

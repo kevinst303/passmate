@@ -173,8 +173,11 @@
         "correct": "Correct!",
         "incorrect": "Incorrect",
         "correctAnswer": "Correct answer: {answer}",
+        "correctAnswerLabel": "Correct choice:",
         "finish": "Finish",
-        "continue": "Continue"
+        "continue": "Continue",
+        "remindMe": "Remind me",
+        "saved": "Saved"
     },
     "Auth": {
         "backHome": "Back to Home",
@@ -363,7 +366,10 @@
         "checkAnswer": "Check Answer",
         "correct": "Correct!",
         "incorrect": "Incorrect",
-        "correctAnswer": "Correct answer: {answer}"
+        "correctAnswer": "Correct answer: {answer}",
+        "correctAnswerLabel": "Correct choice:",
+        "remindMe": "Remind me",
+        "saved": "Saved"
     },
     "Billing": {
         "backProfile": "Back to Profile",

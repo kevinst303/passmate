@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { Question, AchievementManagement as Achievement, QuestManagement as Quest } from "@/types/admin";
 
 export async function getAdminStats() {
     const supabase = await createClient();
@@ -65,6 +66,20 @@ export async function getAdminStats() {
         .order("created_at", { ascending: false })
         .limit(50);
 
+    // Referral Users
+    const { count: referralUsers } = await supabase
+        .from("profiles")
+        .select("*", { count: "exact", head: true })
+        .not("source", "is", null);
+
+    // Recent Referrals
+    const { data: recentReferrals } = await supabase
+        .from("profiles")
+        .select("id, username, full_name, avatar_url, source, created_at")
+        .not("source", "is", null)
+        .order("created_at", { ascending: false })
+        .limit(5);
+
     return {
         stats: {
             totalUsers: totalUsers || 0,
@@ -73,8 +88,10 @@ export async function getAdminStats() {
             totalQuestions: totalQuestions || 0,
             totalAchievements: totalAchievements || 0,
             newUsers24h: newUsers24h || 0,
+            referralUsers: referralUsers || 0,
         },
         recentQuizzes: recentQuizzes || [],
+        recentReferrals: recentReferrals || [],
         activeQuests: activeQuests || [],
         allUsers: allUsers || [],
     };
@@ -108,6 +125,45 @@ export async function resetHearts(userId: string) {
     return { success: true };
 }
 
+export async function manageUser(userId: string, updates: any) {
+    const supabase = await createClient();
+
+    // Check for super_admin
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    if (currentUser?.user_metadata?.role !== 'super_admin') {
+        throw new Error("Super Admin access required");
+    }
+
+    const { error } = await supabase
+        .from("profiles")
+        .update(updates)
+        .eq("id", userId);
+
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+}
+
+export async function deleteUser(userId: string) {
+    const supabase = await createClient();
+
+    // Check for super_admin
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    if (currentUser?.user_metadata?.role !== 'super_admin') {
+        throw new Error("Super Admin access required");
+    }
+
+    // Since we don't have service role for Auth deletion, 
+    // we mark as deleted or just delete from profile if possible.
+    // In a real app, you'd use the admin auth API.
+    const { error } = await supabase
+        .from("profiles")
+        .delete()
+        .eq("id", userId);
+
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+}
+
 export async function getAllQuestions(topic?: string) {
     const supabase = await createClient();
     let query = supabase.from("questions").select("*").order("created_at", { ascending: false });
@@ -121,37 +177,7 @@ export async function getAllQuestions(topic?: string) {
     return { success: true, data };
 }
 
-export interface Question {
-    id?: string;
-    topic: string;
-    subtopic?: string;
-    question_text: string;
-    options: string[];
-    correct_index: number;
-    explanation?: string;
-    difficulty?: string;
-    is_premium?: boolean;
-}
 
-export interface Achievement {
-    id?: string;
-    name: string;
-    description: string;
-    badge_url?: string;
-    xp_reward: number;
-    secret?: boolean;
-}
-
-export interface Quest {
-    id?: string;
-    title: string;
-    description?: string;
-    objective?: string;
-    xp_reward: number;
-    type: string;
-    requirement: number;
-    target_value?: number; // Alias for requirement if needed or removed
-}
 
 export async function upsertQuestion(question: Question) {
     const supabase = await createClient();

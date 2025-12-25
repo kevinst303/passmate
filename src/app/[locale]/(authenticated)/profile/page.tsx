@@ -4,6 +4,8 @@ import { getDashboardData } from "@/app/actions/dashboard";
 import { getAchievementsData } from "@/app/actions/achievements";
 import { redirect } from "@/i18n/routing";
 import ProfileClient from "./ProfileClient";
+import { DashboardData } from "@/types/dashboard";
+import { AchievementsData } from "@/types/achievements";
 
 export default async function ProfilePage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -27,7 +29,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
         );
     }
 
-    return <ProfileClient data={data} achievementsData={achievementsData as any} />;
+    return <ProfileClient data={data as DashboardData} achievementsData={achievementsData as AchievementsData} />;
 }
 
 

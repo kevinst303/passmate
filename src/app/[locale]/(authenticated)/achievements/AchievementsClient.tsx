@@ -16,30 +16,8 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-
-interface Profile {
-    daily_streak: number;
-    total_xp: number;
-}
-
-interface AchievementWithStatus {
-    id: string;
-    name: string;
-    description: string;
-    badge_url?: string;
-    xp_reward: number;
-    is_unlocked: boolean;
-    unlocked_at?: string;
-}
-
-interface AchievementsData {
-    achievements: AchievementWithStatus[];
-    stats: {
-        unlocked: number;
-        total: number;
-        progress: number;
-    };
-}
+import { AchievementsData, AchievementWithStatus } from "@/types/achievements";
+import { Profile } from "@/types/dashboard";
 
 interface AchievementsClientProps {
     achievementsData: AchievementsData;

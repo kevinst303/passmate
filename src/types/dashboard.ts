@@ -1,3 +1,5 @@
+import { User } from '@supabase/supabase-js';
+
 export interface Profile {
     id: string;
     username: string | null;
@@ -74,7 +76,7 @@ export interface DashboardData {
     topicProgress: TopicProgress[];
     activity: ActivityItem[];
     nextHeartAt: string | null;
-    user: any; // Supabase user
+    user: User; // Supabase user
 }
 
 export type DashboardResponse = DashboardData | { error: string };

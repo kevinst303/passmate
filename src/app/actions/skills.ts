@@ -1,8 +1,9 @@
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
+import { SkillTreeData, TopicMetadata, Topic } from '@/types/skills';
 
-const TOPICS_METADATA = [
+const TOPICS_METADATA: TopicMetadata[] = [
     {
         id: "1",
         title: "Australia and its people",
@@ -40,7 +41,7 @@ const TOPICS_METADATA = [
     }
 ];
 
-export async function getSkillTreeData() {
+export async function getSkillTreeData(): Promise<SkillTreeData | { error: string }> {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 

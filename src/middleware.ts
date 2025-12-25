@@ -64,7 +64,7 @@ export async function middleware(request: NextRequest) {
 
     // Redirect if the path contains a nested locale (e.g. /en/zh)
     const pathSegments = pathWithoutLocale.split('/').filter(Boolean);
-    if (pathSegments.length > 0 && routing.locales.includes(pathSegments[0] as any) && currentLocale) {
+    if (pathSegments.length > 0 && routing.locales.includes(pathSegments[0] as typeof routing.locales[number]) && currentLocale) {
         return NextResponse.redirect(new URL(`/${currentLocale}`, request.url));
     }
 
