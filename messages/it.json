@@ -359,7 +359,10 @@
         "rulesTip": "Prenditi il tuo tempo, amico. Si applicano le regole dell'esame ufficiale.",
         "finishTest": "Finisci Test",
         "nextQuestion": "Prossima Domanda",
-        "checkAnswer": "Verifica Risposta"
+        "checkAnswer": "Verifica Risposta",
+        "correct": "Corretto!",
+        "incorrect": "Non corretto",
+        "correctAnswer": "Risposta corretta: {answer}"
     },
     "Profile": {
         "title": "Profilo",

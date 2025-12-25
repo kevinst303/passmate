@@ -358,7 +358,10 @@
         "rulesTip": "خذ وقتك يا صديقي. تطبق قواعد الاختبار الرسمي.",
         "finishTest": "إنهاء الاختبار",
         "nextQuestion": "السؤال التالي",
-        "checkAnswer": "التحقق من الإجابة"
+        "checkAnswer": "التحقق من الإجابة",
+        "correct": "صحيح!",
+        "incorrect": "غير صحيح",
+        "correctAnswer": "الإجابة الصحيحة: {answer}"
     },
     "Profile": {
         "title": "الملف الشخصي",

@@ -359,7 +359,10 @@
         "rulesTip": "Cứ bình tĩnh nhé. Các quy tắc thi chính thức được áp dụng.",
         "finishTest": "Kết thúc bài thi",
         "nextQuestion": "Câu tiếp theo",
-        "checkAnswer": "Kiểm tra đáp án"
+        "checkAnswer": "Kiểm tra đáp án",
+        "correct": "Chính xác!",
+        "incorrect": "Chưa chính xác",
+        "correctAnswer": "Câu trả lời đúng: {answer}"
     },
     "Profile": {
         "title": "Hồ sơ",

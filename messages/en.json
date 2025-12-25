@@ -360,7 +360,10 @@
         "rulesTip": "Take your time, mate. Official test rules apply.",
         "finishTest": "Finish Test",
         "nextQuestion": "Next Question",
-        "checkAnswer": "Check Answer"
+        "checkAnswer": "Check Answer",
+        "correct": "Correct!",
+        "incorrect": "Incorrect",
+        "correctAnswer": "Correct answer: {answer}"
     },
     "Billing": {
         "backProfile": "Back to Profile",

@@ -359,7 +359,10 @@
         "rulesTip": "अपना समय लें, साथी। आधिकारिक परीक्षा नियम लागू होते हैं।",
         "finishTest": "परीक्षा समाप्त करें",
         "nextQuestion": "अगला प्रश्न",
-        "checkAnswer": "उत्तर जांचें"
+        "checkAnswer": "उत्तर जांचें",
+        "correct": "सही!",
+        "incorrect": "ग़लत",
+        "correctAnswer": "सही उत्तर: {answer}"
     },
     "Profile": {
         "title": "प्रोफ़ाइल",

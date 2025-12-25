@@ -3,8 +3,16 @@
 import { createClient } from '@/utils/supabase/server';
 import { generateDailyQuests } from './quests';
 import { getGlobalActivity } from './activity';
+import { DashboardResponse, DashboardProfile } from '@/types/dashboard';
 
-export async function getDashboardData() {
+interface LeaderboardEntryRaw {
+    user_id: string;
+    weekly_xp: number;
+    profiles: DashboardProfile | DashboardProfile[] | null;
+}
+
+export async function getDashboardData(): Promise<DashboardResponse> {
+
     const supabase = await createClient();
 
     const { data: { user } } = await supabase.auth.getUser();
@@ -73,7 +81,7 @@ export async function getDashboardData() {
     }
 
     // 2. Fetch all other data in parallel
-    const [questsRes, topicProgressRes, activity] = await Promise.all([
+    const [questsRes, topicProgressRes, activity, _questsSeed, leaderboardData] = await Promise.all([
         supabase.from('user_quests')
             .select('*, quests(*)')
             .eq('user_id', user.id)
@@ -82,8 +90,24 @@ export async function getDashboardData() {
             .select('*')
             .eq('user_id', user.id),
         getGlobalActivity(),
-        generateDailyQuests(user.id) // Fire and forget or await? Let's await to be safe but it's parallelized
+        generateDailyQuests(user.id),
+        standing ? Promise.all([
+            supabase.from('league_standings')
+                .select('user_id, weekly_xp, profiles(username, avatar_url)')
+                .eq('league_id', standing.league_id)
+                .order('weekly_xp', { ascending: false })
+                .limit(10),
+            supabase.from('league_standings')
+                .select('*', { count: 'exact', head: true })
+                .eq('league_id', standing.league_id)
+                .gt('weekly_xp', standing.weekly_xp)
+        ]) : Promise.resolve([null, null])
     ]);
+
+    const [playersRes, countRes] = leaderboardData as [
+        { data: LeaderboardEntryRaw[] | null },
+        { count: number | null }
+    ];
 
     // 3. Handle Hearts Regeneration
     let currentHearts = profile.hearts;
@@ -121,23 +145,14 @@ export async function getDashboardData() {
         }
     }
 
-    // 4. Fetch Top Players (if standing exists)
-    let topPlayers: any[] = [];
-    if (standing) {
-        const { data: players } = await supabase
-            .from('league_standings')
-            .select('user_id, weekly_xp, profiles(username, avatar_url)')
-            .eq('league_id', standing.league_id)
-            .order('weekly_xp', { ascending: false })
-            .limit(10);
-
-        if (players) {
-            topPlayers = players.map(p => ({
-                user_id: p.user_id,
-                weekly_xp: p.weekly_xp,
-                profiles: Array.isArray(p.profiles) ? p.profiles[0] : p.profiles
-            }));
-        }
+    // 4. Process Leaderboard Data
+    let topPlayers: { user_id: string; weekly_xp: number; profiles: DashboardProfile | null }[] = [];
+    if (playersRes?.data) {
+        topPlayers = playersRes.data.map((p) => ({
+            user_id: p.user_id,
+            weekly_xp: p.weekly_xp,
+            profiles: Array.isArray(p.profiles) ? p.profiles[0] : p.profiles
+        }));
 
         // Add mocks if needed
         if (topPlayers.length < 6) {
@@ -152,14 +167,13 @@ export async function getDashboardData() {
         }
 
         // Rank calculation
-        const { count } = await supabase
-            .from('league_standings')
-            .select('*', { count: 'exact', head: true })
-            .eq('league_id', standing.league_id)
-            .gt('weekly_xp', standing.weekly_xp);
-
-        const mockCountAbove = [450, 320, 280, 150, 90].filter(xp => xp > standing.weekly_xp).length;
-        standing.current_rank = (count || 0) + mockCountAbove + 1;
+        const count = countRes?.count || 0;
+        // Check if standing.weekly_xp is defined, else 0
+        const userWeeklyXp = standing?.weekly_xp || 0;
+        const mockCountAbove = [450, 320, 280, 150, 90].filter(xp => xp > userWeeklyXp).length;
+        if (standing) {
+            standing.current_rank = count + mockCountAbove + 1;
+        }
     }
 
     return {

@@ -359,7 +359,10 @@
         "rulesTip": "Dahan-dahan lang, mate. Nalalapat ang mga opisyal na panuntunan sa test.",
         "finishTest": "Tapusin ang Test",
         "nextQuestion": "Susunod na Tanong",
-        "checkAnswer": "I-check ang Sagot"
+        "checkAnswer": "I-check ang Sagot",
+        "correct": "Tama!",
+        "incorrect": "Mali",
+        "correctAnswer": "Tamang sagot: {answer}"
     },
     "Profile": {
         "title": "Profile",

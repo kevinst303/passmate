@@ -27,19 +27,33 @@ export async function getQuestions(topic?: string, limit: number = 5) {
 export async function getRandomQuestions(limit: number = 20) {
     const supabase = await createClient();
 
-    // supabase doesn't have a built-in random, so we fetch all IDs and pick random ones 
-    // or just fetch all and shuffle (fine for small amount of questions)
+    // To be efficient, we fetch IDs first, shuffle them, and then fetch the full data for selected IDs
+    // This is much faster than fetching all columns for all rows
+    const { data: allIds, error: idError } = await supabase
+        .from('questions')
+        .select('id');
+
+    if (idError || !allIds) {
+        console.error('Error fetching question IDs:', idError);
+        return [];
+    }
+
+    const shuffledIds = allIds
+        .sort(() => Math.random() - 0.5)
+        .slice(0, limit)
+        .map(q => q.id);
+
     const { data, error } = await supabase
         .from('questions')
-        .select('*');
+        .select('*')
+        .in('id', shuffledIds);
 
     if (error) {
         console.error('Error fetching questions:', error);
         return [];
     }
 
-    // Shuffle and slice
-    return data.sort(() => Math.random() - 0.5).slice(0, limit);
+    return data;
 }
 
 export async function logQuizMistake(questionId: string) {

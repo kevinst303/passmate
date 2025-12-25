@@ -359,7 +359,10 @@
         "rulesTip": "别着急，伙计。适用正式考试规则。",
         "finishTest": "结束测试",
         "nextQuestion": "下一题",
-        "checkAnswer": "检查答案"
+        "checkAnswer": "检查答案",
+        "correct": "正确！",
+        "incorrect": "不正确",
+        "correctAnswer": "正确答案：{answer}"
     },
     "Profile": {
         "title": "个人资料",
