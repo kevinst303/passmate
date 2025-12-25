@@ -39,45 +39,61 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
     const currentLeagueName = standing?.leagues?.name || "Bronze";
     const currentLeague = LEAGUES.find(l => l.id === currentLeagueName) || LEAGUES[0];
 
+    const currentStanding = topPlayers.findIndex(p => p.user_id === profile.id) + 1;
+    const isTop3 = currentStanding > 0 && currentStanding <= 3;
+
     return (
-        <div className="min-h-screen bg-background pb-24 md:pb-8 md:pl-28 md:pr-8 font-sans">
+        <div className="min-h-screen bg-[#FEFEF8] pb-24 md:pb-8 md:pl-28 md:pr-8 font-sans relative overflow-hidden">
+            {/* Immersive Background Elements */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 -z-10 animate-pulse" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 -z-10" />
+
             {/* Header */}
-            <header className="max-w-4xl mx-auto pt-8 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <Link href="/dashboard" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-all font-bold group mb-4 text-sm">
-                        <div className="bg-card glass p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
+            <header className="max-w-5xl mx-auto pt-8 pb-4 px-6 md:px-0 flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                <div className="space-y-4">
+                    <Link href="/dashboard" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-all font-bold group text-sm">
+                        <div className="bg-white/80 backdrop-blur-md p-2 rounded-xl border-2 border-border group-hover:border-primary/30 group-hover:bg-primary/5 transition-all shadow-sm">
                             <ArrowLeft className="w-4 h-4" />
                         </div>
                         <span>{t("backDashboard")}</span>
                     </Link>
-                    <div className="flex items-center gap-4">
-                        <div className={cn("w-20 h-20 bg-gradient-to-br rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl", currentLeague.color, currentLeague.shadow)}>
-                            <Trophy className="w-10 h-10 fill-white" />
-                        </div>
+                    <div className="flex items-center gap-6">
+                        <motion.div
+                            whileHover={{ scale: 1.05, rotate: 5 }}
+                            className={cn("w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl relative group", currentLeague.color, currentLeague.shadow)}
+                        >
+                            <Trophy className="w-10 h-10 sm:w-12 sm:h-12 fill-white filter drop-shadow-lg" />
+                            <div className="absolute inset-0 bg-white/20 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </motion.div>
                         <div>
-                            <h1 className="text-4xl font-display font-black text-foreground tracking-tight">{currentLeague.name} {nav("leagues")}</h1>
-                            <p className="text-muted-foreground font-bold italic">{t("competingDesc")}</p>
+                            <div className="flex items-center gap-2">
+                                <span className="bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border border-primary/20">Season 1</span>
+                                <h1 className="text-3xl sm:text-5xl font-display font-black text-foreground tracking-tight">{currentLeague.name} {nav("leagues")}</h1>
+                            </div>
+                            <p className="text-muted-foreground font-bold italic mt-1">{t("competingDesc")}</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-2xl border-2 border-orange-200 dark:border-orange-800 font-black text-sm">
-                        <Flame className="w-4 h-4 fill-orange-600 dark:fill-orange-400" /> {profile.daily_streak}
-                    </div>
-                    <div className="flex items-center gap-1.5 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-2xl border-2 border-blue-200 dark:border-blue-800 font-black text-sm">
-                        <Zap className="w-4 h-4 fill-blue-600 dark:fill-blue-400" /> {profile.total_xp}
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-5 py-3 rounded-[2rem] border-2 border-border shadow-xl">
+                        <div className="flex items-center gap-1.5 text-orange-600 font-black border-r border-border pr-4 mr-2">
+                            <Flame className="w-5 h-5 fill-orange-600" /> {profile.daily_streak}
+                        </div>
+                        <div className="flex items-center gap-1.5 text-blue-600 font-black">
+                            <Zap className="w-5 h-5 fill-blue-600" /> {profile.total_xp.toLocaleString()}
+                        </div>
                     </div>
                 </div>
             </header>
 
-            <main className="max-w-4xl mx-auto py-8">
-                <div className="grid md:grid-cols-3 gap-8">
-                    {/* Left Column: Player Status */}
-                    <div className="space-y-6">
-                        <section className="bg-card glass p-8 rounded-[3rem] border-2 border-border shadow-xl text-center relative overflow-hidden">
-                            <div className="absolute top-0 right-0 p-4 opacity-20">
-                                <Target className="w-24 h-24" />
+            <main className="max-w-5xl mx-auto py-8 px-6 md:px-0 relative z-10">
+                <div className="grid lg:grid-cols-12 gap-8 items-start">
+                    {/* Left Column: Player Status (4 cols) */}
+                    <div className="lg:col-span-4 space-y-6">
+                        <section className="bg-white/70 backdrop-blur-xl p-8 rounded-[3.5rem] border-2 border-border shadow-2xl text-center relative overflow-hidden group">
+                            <div className="absolute -top-10 -right-10 opacity-5 group-hover:opacity-10 transition-opacity rotate-12">
+                                <Target className="w-48 h-48" />
                             </div>
 
                             <div className="relative z-10">
@@ -104,25 +120,31 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                             </div>
                         </section>
 
-                        <section className="bg-gradient-to-br from-primary to-primary-light p-8 rounded-[3rem] text-white shadow-xl shadow-primary/20">
-                            <h3 className="text-xl font-display font-black mb-2">{t("boostRank")}</h3>
-                            <p className="text-primary-foreground/80 font-bold text-sm mb-6">{t("boostRankDesc")}</p>
+                        <section className="bg-gradient-to-br from-primary to-primary-dark p-8 rounded-[3.5rem] text-white shadow-2xl shadow-primary/30 relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700" />
+                            <h3 className="text-2xl font-display font-black mb-2 relative z-10">{t("boostRank")}</h3>
+                            <p className="text-primary-foreground/90 font-bold text-sm mb-8 leading-relaxed relative z-10">{t("boostRankDesc")}</p>
                             <Link href="/dashboard/quiz">
-                                <Button variant="secondary" className="w-full bg-white text-primary hover:bg-white/90">{t("getMoreXP")}</Button>
+                                <Button size="lg" variant="secondary" className="w-full bg-white text-primary hover:bg-white/90 h-14 rounded-2xl font-black shadow-xl relative z-10">{t("getMoreXP")}</Button>
                             </Link>
                         </section>
                     </div>
 
-                    {/* Right Column: Leaderboard */}
-                    <div className="md:col-span-2">
-                        <section className="bg-card glass rounded-[3.5rem] border-2 border-border shadow-2xl overflow-hidden flex flex-col h-full">
-                            <div className="p-8 border-b-2 border-border flex justify-between items-center bg-muted/5">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                                    <h3 className="text-2xl font-display font-black">{t("topPerformers")}</h3>
+                    {/* Right Column: Leaderboard (8 cols) */}
+                    <div className="lg:col-span-8">
+                        <section className="bg-white/80 backdrop-blur-xl rounded-[4rem] border-2 border-border shadow-2xl overflow-hidden flex flex-col">
+                            <div className="px-10 py-8 border-b-2 border-border flex justify-between items-center bg-muted/5 relative">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 bg-primary/10 rounded-2xl flex items-center justify-center">
+                                        <TrendingUp className="w-6 h-6 text-primary" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-display font-black">{t("topPerformers")}</h3>
+                                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t("weeklyStandings")}</p>
+                                    </div>
                                 </div>
-                                <div className="flex items-center gap-1.5 bg-blue-100 text-blue-700 font-black text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">
-                                    <Zap className="w-3 h-3 fill-blue-700" /> {t("weeklyStandings")}
+                                <div className="hidden sm:flex items-center gap-1.5 bg-blue-100 text-blue-700 font-black text-xs px-4 py-2 rounded-full border border-blue-200">
+                                    <Zap className="w-4 h-4 fill-blue-700" /> {t("weeklyStandings")}
                                 </div>
                             </div>
 
@@ -135,24 +157,41 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                                             return (
                                                 <motion.div
                                                     key={player.user_id}
-                                                    initial={{ opacity: 0, x: -10 }}
+                                                    initial={{ opacity: 0, x: -20 }}
                                                     animate={{ opacity: 1, x: 0 }}
                                                     transition={{ delay: idx * 0.05 }}
                                                     className={cn(
-                                                        "flex items-center gap-4 px-8 py-6 transition-all group",
-                                                        isUser ? "bg-primary/5 sticky top-0 z-10" : "hover:bg-muted/30"
+                                                        "flex items-center gap-6 px-10 py-7 transition-all group relative",
+                                                        isUser ? "bg-primary/5 sticky top-0 z-10" : "hover:bg-muted/40",
+                                                        pos <= 3 && "bg-gradient-to-r from-transparent via-transparent to-transparent"
                                                     )}
                                                 >
-                                                    <div className="w-10 flex justify-center shrink-0">
-                                                        {pos === 1 && <span className="text-3xl filter drop-shadow-sm">🥇</span>}
-                                                        {pos === 2 && <span className="text-3xl filter drop-shadow-sm">🥈</span>}
-                                                        {pos === 3 && <span className="text-3xl filter drop-shadow-sm">🥉</span>}
-                                                        {pos > 3 && <span className="font-display font-black text-muted-foreground group-hover:text-foreground transition-colors">#{pos}</span>}
+                                                    {isUser && (
+                                                        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-primary" />
+                                                    )}
+
+                                                    <div className="w-12 flex justify-center shrink-0">
+                                                        {pos === 1 && (
+                                                            <div className="relative">
+                                                                <span className="text-4xl filter drop-shadow-lg scale-125 block transform group-hover:rotate-12 transition-transform">🥇</span>
+                                                                <motion.div
+                                                                    animate={{ opacity: [0, 1, 0], scale: [0.8, 1.2, 0.8] }}
+                                                                    transition={{ repeat: Infinity, duration: 2 }}
+                                                                    className="absolute inset-0 bg-yellow-400/20 blur-xl rounded-full"
+                                                                />
+                                                            </div>
+                                                        )}
+                                                        {pos === 2 && <span className="text-4xl filter drop-shadow-lg scale-110 block transform group-hover:-rotate-12 transition-transform">🥈</span>}
+                                                        {pos === 3 && <span className="text-4xl filter drop-shadow-lg block transform group-hover:rotate-6 transition-transform">🥉</span>}
+                                                        {pos > 3 && <span className="font-display font-black text-2xl text-muted-foreground/40 group-hover:text-primary/40 transition-colors">#{pos}</span>}
                                                     </div>
 
                                                     <div className={cn(
-                                                        "w-14 h-14 rounded-2xl flex items-center justify-center font-black text-xl text-white shadow-xl transition-transform group-hover:rotate-3 relative overflow-hidden",
-                                                        isUser ? "bg-primary shadow-primary/20 ring-4 ring-background" : "bg-muted border-4 border-background"
+                                                        "w-16 h-16 rounded-[1.5rem] flex items-center justify-center font-black text-xl text-white shadow-xl transition-all relative overflow-hidden ring-4",
+                                                        isUser ? "bg-primary shadow-primary/30 ring-white" : "bg-white ring-gray-50 border-2 border-border group-hover:border-primary/20",
+                                                        pos === 1 && "ring-yellow-400/30",
+                                                        pos === 2 && "ring-slate-400/30",
+                                                        pos === 3 && "ring-amber-400/30"
                                                     )}>
                                                         <Avatar
                                                             src={player.profiles?.avatar_url}
@@ -162,22 +201,27 @@ export default function LeaguesClient({ data }: LeaguesClientProps) {
                                                         />
                                                     </div>
 
-                                                    <div className="flex-1">
-                                                        <div className="flex items-center gap-2">
-                                                            <p className={cn("font-black text-lg", isUser ? "text-primary" : "text-foreground")}>
+                                                    <div className="flex-1 min-w-0">
+                                                        <div className="flex items-center gap-3">
+                                                            <p className={cn("font-black text-xl tracking-tight truncate", isUser ? "text-primary" : "text-foreground")}>
                                                                 {isUser ? t("you") : (player.profiles?.username || "Anonymous")}
                                                             </p>
-                                                            {isUser && <span className="bg-primary/10 text-primary text-[10px] uppercase font-black px-2 py-0.5 rounded-full ring-1 ring-primary/20">Mate</span>}
+                                                            {isUser && <span className="bg-primary text-white text-[10px] sm:text-[11px] font-black px-3 py-1 rounded-full shadow-lg shadow-primary/20">Mate</span>}
                                                         </div>
-                                                        <div className="flex items-center gap-2 mt-0.5">
+                                                        <div className="flex items-center gap-2 mt-1">
                                                             {pos <= 3 && (
-                                                                <span className="flex items-center gap-1 text-[8px] uppercase font-black text-green-600 bg-green-50 px-2 py-0.5 rounded-full border border-green-100">
-                                                                    <TrendingUp className="w-2.5 h-2.5" /> {t("promotion")}
+                                                                <span className="flex items-center gap-1.5 text-[10px] font-black text-green-600 bg-green-100/50 px-3 py-1 rounded-full border border-green-200 shadow-sm shadow-green-100">
+                                                                    <TrendingUp className="w-3 h-3" /> {t("promotion")}
                                                                 </span>
                                                             )}
-                                                            {pos > 7 && (
-                                                                <span className="flex items-center gap-1 text-[8px] uppercase font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-100">
-                                                                    <TrendingDown className="w-2.5 h-2.5" /> {t("relegation")}
+                                                            {pos >= 8 && (
+                                                                <span className="flex items-center gap-1.5 text-[10px] font-black text-red-600 bg-red-100/50 px-3 py-1 rounded-full border border-red-200 shadow-sm shadow-red-100">
+                                                                    <TrendingDown className="w-3 h-3" /> {t("relegation")}
+                                                                </span>
+                                                            )}
+                                                            {pos > 3 && pos < 8 && (
+                                                                <span className="flex items-center gap-1.5 text-[10px] font-black text-blue-600 bg-blue-100/50 px-3 py-1 rounded-full border border-blue-200">
+                                                                    <Target className="w-3 h-3" /> Safe Zone
                                                                 </span>
                                                             )}
                                                         </div>

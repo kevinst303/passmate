@@ -378,8 +378,10 @@
         "streak": "连胜",
         "quizzes": "测验",
         "badges": "徽章",
+        "unlockedCount": "您已解锁 {total} 个中的 {unlocked} 个",
         "recentBadges": "最近徽章",
         "viewCollection": "查看收藏",
+        "noAchievementsYet": "准备好脱颖而出了吗？",
         "startLearning": "开始学习以开启您的旅程！",
         "legendTitle": "您是 PassMate 传奇",
         "goldTitle": "PassMate Gold 等着您",
@@ -405,6 +407,7 @@
         "securitySection": "安全",
         "profilePicture": "个人资料图片",
         "chooseAvatar": "从下方选项中选择您的头像",
+        "upload": "上传",
         "personalDetails": "个人详情",
         "fullName": "全名",
         "username": "用户名",
@@ -443,7 +446,13 @@
             "ollie6": "Nova 机器人",
             "ollie7": "Sage 机器人",
             "ollie8": "Ruby 机器人"
-        }
+        },
+        "dangerZone": "危险区域",
+        "deleteAccount": "删除账户",
+        "deleteAccountDesc": "永久移除您的账户和所有学习数据。此操作无法撤销。",
+        "privacyPolicy": "隐私政策",
+        "termsOfService": "服务条款",
+        "shuffle": "随机换一组"
     },
     "Security": {
         "title": "隐私与安全",

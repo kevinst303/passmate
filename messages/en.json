@@ -177,7 +177,11 @@
         "finish": "Finish",
         "continue": "Continue",
         "remindMe": "Remind me",
-        "saved": "Saved"
+        "saved": "Saved",
+        "exitTitle": "Wait, mate!",
+        "exitDesc": "If you leave now, you'll lose your practice progress.",
+        "keepLearning": "Keep Learning",
+        "exitQuiz": "Exit Quiz"
     },
     "Auth": {
         "backHome": "Back to Home",
@@ -261,7 +265,12 @@
             "trialTest": "Trial Test",
             "aussieSlang": "Aussie Slang",
             "oath": "Citizenship Oath"
-        }
+        },
+        "voiceMode": "Voice Mode",
+        "textMode": "Text Mode",
+        "ollieThinking": "Ollie is thinking...",
+        "ollieSpeaking": "Ollie is speaking...",
+        "stopListening": "Stop Listening"
     },
     "Masterclass": {
         "backDashboard": "Back to Dashboard",
@@ -329,9 +338,13 @@
         "trickyQuestion": "Tricky Question",
         "wellDone": "Well done!",
         "notQuite": "Not quite, mate",
-        "check": "Check",
-        "next": "Next",
-        "finish": "Finish"
+        "next": "Next Question",
+        "finish": "Finish Review",
+        "exitTitle": "Wait, mate!",
+        "exitDesc": "If you leave now, you'll lose your review progress.",
+        "keepPractising": "Keep Practising",
+        "exitReview": "Exit Review",
+        "check": "Check"
     },
     "MockTest": {
         "preparing": "Preparing official mock test...",
@@ -369,7 +382,11 @@
         "correctAnswer": "Correct answer: {answer}",
         "correctAnswerLabel": "Correct choice:",
         "remindMe": "Remind me",
-        "saved": "Saved"
+        "saved": "Saved",
+        "exitTitle": "Wait, mate!",
+        "exitDesc": "You're in the middle of an official mock test. If you leave now, your progress will be lost.",
+        "keepGoing": "Keep Going",
+        "exitTest": "Exit Test"
     },
     "Billing": {
         "backProfile": "Back to Profile",
@@ -509,8 +526,10 @@
         "streak": "Streak",
         "quizzes": "Quizzes",
         "badges": "Badges",
+        "unlockedCount": "You've unlocked {unlocked} out of {total}",
         "recentBadges": "Recent Badges",
         "viewCollection": "View Collection",
+        "noAchievementsYet": "Ready to excel?",
         "startLearning": "Start learning to earn your first badge!",
         "legendTitle": "PassMate Legend",
         "goldTitle": "PassMate Gold",
@@ -534,6 +553,7 @@
         "securitySection": "Security",
         "profilePicture": "Profile Picture",
         "chooseAvatar": "Choose your avatar from the options below",
+        "upload": "Upload",
         "personalDetails": "Personal Details",
         "fullName": "Full Name",
         "username": "Username",
@@ -572,7 +592,13 @@
             "ollie6": "Nova Bot",
             "ollie7": "Sage Bot",
             "ollie8": "Ruby Bot"
-        }
+        },
+        "dangerZone": "Danger Zone",
+        "deleteAccount": "Delete Account",
+        "deleteAccountDesc": "Permanently remove your account and all study data. This cannot be undone.",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service",
+        "shuffle": "Shuffle"
     },
     "Security": {
         "backProfile": "Back to Profile",

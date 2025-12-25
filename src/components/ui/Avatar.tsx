@@ -29,6 +29,9 @@ export function Avatar({
         "2xl": "w-40 h-40 text-7xl rounded-[3.5rem]",
     };
 
+    // Simplified check for emoji - if it's not a URL or path, treat as emoji
+    const isEmoji = src && !src.startsWith('http') && !src.startsWith('blob:') && !src.startsWith('/');
+
     return (
         <div
             className={cn(
@@ -37,7 +40,7 @@ export function Avatar({
                 className
             )}
         >
-            {src && !error ? (
+            {src && !error && !isEmoji ? (
                 <Image
                     src={src}
                     alt={alt}
@@ -47,8 +50,15 @@ export function Avatar({
                     unoptimized={src.endsWith(".svg")}
                 />
             ) : (
-                <span role="img" aria-label="avatar fallback">
-                    {fallback}
+                <span role="img" aria-label="avatar" className={cn(
+                    "select-none leading-none",
+                    size === "sm" && "text-lg",
+                    size === "md" && "text-3xl",
+                    size === "lg" && "text-4xl",
+                    size === "xl" && "text-6xl",
+                    size === "2xl" && "text-8xl"
+                )}>
+                    {isEmoji ? src : fallback}
                 </span>
             )}
         </div>

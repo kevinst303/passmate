@@ -135,6 +135,10 @@ export const Sidebar = () => {
         }
     }, [showMoreMenu]);
 
+    const isTestPage = pathname.includes("/mock-test") || pathname.includes("/quiz") || pathname.includes("/review");
+
+    if (isTestPage) return null;
+
     return (
         <>
             {/* Desktop Sidebar - Expandable */}

@@ -124,25 +124,28 @@ export default function ReviewClient({ mistakes }: ReviewClientProps) {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [currentStep, isAnswered, selectedOption, currentQuestion, showExitDialog]);
-
     if (currentStep === 0) {
         return (
-            <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
+            <div className="min-h-screen bg-[#FEFEF8] flex flex-col items-center justify-center p-4 sm:p-6 overflow-hidden relative">
+                {/* Decorative background elements */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10" />
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 -z-10" />
+
                 <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    className="max-w-md w-full"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    className="max-w-md w-full bg-white/80 backdrop-blur-xl p-8 sm:p-12 rounded-[3.5rem] border-2 border-border shadow-2xl text-center relative z-10"
                 >
-                    <div className="w-24 h-24 bg-orange-100 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-8">🧠</div>
-                    <h1 className="text-4xl font-display font-black mb-4">{t("title")}</h1>
-                    <p className="text-muted-foreground text-lg mb-10">
+                    <div className="w-24 h-24 bg-orange-100 rounded-[2.5rem] flex items-center justify-center text-5xl mx-auto mb-8 shadow-inner border border-orange-200">🧠</div>
+                    <h1 className="text-4xl font-display font-black mb-4 tracking-tight">{t("title")}</h1>
+                    <p className="text-muted-foreground text-xl mb-10 font-medium leading-relaxed">
                         {t("introDesc", { count: mistakes.length })}
                     </p>
                     <div className="space-y-4">
-                        <Button size="lg" className="w-full py-6 text-xl" onClick={() => setCurrentStep(1)}>
+                        <Button size="lg" className="w-full py-7 text-xl rounded-3xl shadow-xl shadow-primary/10 hover:scale-[1.02] active:scale-[0.98] transition-all" onClick={() => setCurrentStep(1)}>
                             {t("startReview")}
                         </Button>
-                        <Button variant="outline" size="lg" className="w-full" onClick={() => router.back()}>
+                        <Button variant="outline" size="lg" className="w-full py-4 rounded-2xl border-2 font-bold hover:bg-muted/50 transition-colors" onClick={() => router.back()}>
                             {t("maybeLater")}
                         </Button>
                     </div>
@@ -320,7 +323,7 @@ export default function ReviewClient({ mistakes }: ReviewClientProps) {
                                 <Button
                                     size="lg"
                                     className={cn(
-                                        "w-full md:w-auto md:px-20 py-6 text-xl rounded-2xl shadow-xl active:scale-95",
+                                        "w-full md:w-auto md:px-20 py-7 text-xl rounded-2xl shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all",
                                         isCorrect ? "bg-green-600 hover:bg-green-700 shadow-green-200" : "bg-red-600 hover:bg-red-700 shadow-red-200"
                                     )}
                                     onClick={handleContinue}
@@ -354,26 +357,26 @@ export default function ReviewClient({ mistakes }: ReviewClientProps) {
                             <div className="w-24 h-24 bg-red-100 rounded-[2rem] flex items-center justify-center mx-auto mb-8">
                                 <AlertCircle className="w-12 h-12 text-red-600" />
                             </div>
-                            <h2 className="text-4xl font-display font-black mb-4">Wait, mate!</h2>
+                            <h2 className="text-4xl font-display font-black mb-4">{t("exitTitle")}</h2>
                             <p className="text-muted-foreground text-xl mb-10 font-bold leading-relaxed px-4">
-                                If you leave now, you'll lose your practice progress.
+                                {t("exitDesc")}
                             </p>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="flex flex-col sm:flex-row gap-4">
                                 <Button
                                     variant="outline"
                                     size="lg"
-                                    className="py-6 rounded-2xl font-black text-lg border-2"
+                                    className="flex-1 py-8 rounded-3xl font-black text-xl border-2 hover:scale-[1.02] active:scale-[0.98] transition-all"
                                     onClick={() => setShowExitDialog(false)}
                                 >
-                                    Keep Practising
+                                    {t("keepPractising")}
                                 </Button>
                                 <Button
                                     variant="accent"
                                     size="lg"
-                                    className="py-6 rounded-2xl font-black text-lg bg-red-600 hover:bg-red-700 shadow-lg shadow-red-200"
-                                    onClick={() => router.back()}
+                                    className="flex-1 py-8 rounded-3xl font-black text-xl bg-red-600 hover:bg-red-700 shadow-xl shadow-red-200 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                                    onClick={() => router.push("/dashboard")}
                                 >
-                                    Exit Review
+                                    {t("exitReview")}
                                 </Button>
                             </div>
                         </motion.div>

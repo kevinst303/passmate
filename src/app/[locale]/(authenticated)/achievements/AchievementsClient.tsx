@@ -137,14 +137,18 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                                         : "bg-muted border-[6px] border-card"
                                 )}>
                                     {achievement.badge_url ? (
-                                        <div className="relative w-full h-full overflow-hidden rounded-full">
-                                            <Image
-                                                src={achievement.badge_url}
-                                                alt={achievement.name}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </div>
+                                        achievement.badge_url.startsWith('http') || achievement.badge_url.startsWith('/') ? (
+                                            <div className="relative w-full h-full overflow-hidden rounded-full p-4">
+                                                <Image
+                                                    src={achievement.badge_url}
+                                                    alt={achievement.name}
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <span role="img" aria-label={achievement.name}>{achievement.badge_url}</span>
+                                        )
                                     ) : (
                                         "🏆"
                                     )}

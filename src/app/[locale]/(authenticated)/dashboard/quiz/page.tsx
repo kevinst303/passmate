@@ -557,7 +557,7 @@ function QuizContent() {
                             <div className="max-w-4xl mx-auto flex justify-end">
                                 <Button
                                     size="lg"
-                                    className="w-full md:w-auto md:px-24 py-6 text-xl rounded-2xl shadow-lg shadow-primary/20"
+                                    className="w-full md:w-auto md:px-24 py-6 text-xl rounded-2xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                                     disabled={selectedOption === null}
                                     onClick={handleCheck}
                                 >
@@ -637,10 +637,9 @@ function QuizContent() {
                                         </Button>
                                         <Button
                                             size="lg"
-                                            variant={isCorrect ? "primary" : "accent"}
                                             className={cn(
-                                                "md:px-16 py-6 text-xl rounded-2xl shadow-xl transition-all active:scale-95",
-                                                isCorrect ? "bg-green-600 hover:bg-green-700" : ""
+                                                "w-full md:w-auto md:px-20 py-7 text-xl rounded-2xl shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all",
+                                                isCorrect ? "bg-green-600 hover:bg-green-700 shadow-green-200" : "bg-red-600 hover:bg-red-700 shadow-red-200"
                                             )}
                                             onClick={handleContinue}
                                         >
@@ -675,26 +674,26 @@ function QuizContent() {
                             <div className="w-24 h-24 bg-red-100 rounded-[2rem] flex items-center justify-center mx-auto mb-8">
                                 <AlertCircle className="w-12 h-12 text-red-600" />
                             </div>
-                            <h2 className="text-4xl font-display font-black mb-4">Wait, mate!</h2>
+                            <h2 className="text-4xl font-display font-black mb-4">{t("exitTitle")}</h2>
                             <p className="text-muted-foreground text-xl mb-10 font-bold leading-relaxed px-4">
-                                If you leave now, you'll lose your progress and might break your streak.
+                                {t("exitDesc")}
                             </p>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="flex flex-col sm:flex-row gap-4">
                                 <Button
                                     variant="outline"
                                     size="lg"
-                                    className="py-6 rounded-2xl font-black text-lg border-2"
+                                    className="flex-1 py-8 rounded-3xl font-black text-xl border-2 hover:scale-[1.02] active:scale-[0.98] transition-all"
                                     onClick={() => setShowExitDialog(false)}
                                 >
-                                    Keep Learning
+                                    {t("keepLearning")}
                                 </Button>
                                 <Button
                                     variant="accent"
                                     size="lg"
-                                    className="py-6 rounded-2xl font-black text-lg bg-red-600 hover:bg-red-700 shadow-lg shadow-red-200"
-                                    onClick={() => router.back()}
+                                    className="flex-1 py-8 rounded-3xl font-black text-xl bg-red-600 hover:bg-red-700 shadow-xl shadow-red-200 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                                    onClick={() => router.push("/dashboard")}
                                 >
-                                    Exit Quiz
+                                    {t("exitQuiz")}
                                 </Button>
                             </div>
                         </motion.div>

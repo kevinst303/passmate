@@ -378,8 +378,10 @@
         "streak": "Serie",
         "quizzes": "Quiz",
         "badges": "Distintivi",
+        "unlockedCount": "{unlocked} su {total}",
         "recentBadges": "Distintivi recenti",
         "viewCollection": "Vedi Collezione",
+        "noAchievementsYet": "Pronto a eccellere?",
         "startLearning": "Inizia a imparare per avviare il tuo viaggio!",
         "legendTitle": "Sei una Leggenda di PassMate",
         "goldTitle": "PassMate Gold ti aspetta",
@@ -405,6 +407,7 @@
         "securitySection": "Sicurezza",
         "profilePicture": "Immagine del Profilo",
         "chooseAvatar": "Scegli il tuo avatar dalle opzioni qui sotto",
+        "upload": "Carica",
         "personalDetails": "Dettagli Personali",
         "fullName": "Nome Completo",
         "username": "Nome Utente",
@@ -443,7 +446,13 @@
             "ollie6": "Ollie Yoga",
             "ollie7": "Ollie Saggio",
             "ollie8": "Ollie Rubino"
-        }
+        },
+        "dangerZone": "Zona Pericolosa",
+        "deleteAccount": "Elimina Account",
+        "deleteAccountDesc": "Rimuovi permanentemente il tuo account e tutti i dati di studio. Questa azione non può essere annullata.",
+        "privacyPolicy": "Informativa sulla Privacy",
+        "termsOfService": "Termini di Servizio",
+        "shuffle": "Mischia"
     },
     "Security": {
         "title": "Privacy e Sicurezza",

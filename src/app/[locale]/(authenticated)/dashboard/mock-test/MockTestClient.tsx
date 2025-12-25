@@ -242,44 +242,75 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
 
     if (currentStep === 0) {
         return (
-            <div className="min-h-screen bg-[#FEFEF8] flex flex-col items-center justify-center p-6">
-                <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    className="max-w-2xl w-full bg-white p-10 rounded-[4rem] border-2 border-border shadow-xl text-center"
-                >
-                    <div className="w-24 h-24 bg-primary/10 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-8">🇦🇺</div>
-                    <h1 className="text-4xl font-display font-black mb-6">{t("title")}</h1>
+            <div className="min-h-screen bg-[#FEFEF8] flex flex-col items-center justify-center p-4 sm:p-6 overflow-hidden relative">
+                {/* Decorative background elements */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 -z-10" />
+                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 -z-10" />
 
-                    <div className="grid grid-cols-2 gap-6 mb-10 text-left">
-                        <div className="bg-muted/50 p-6 rounded-3xl border border-border">
-                            <div className="flex items-center gap-3 mb-2">
-                                <Shield className="w-5 h-5 text-primary" />
-                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">{t("requirements")}</p>
+                <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    className="max-w-2xl w-full bg-white/80 backdrop-blur-xl p-6 sm:p-12 rounded-[3.5rem] border-2 border-border shadow-2xl text-center relative z-10"
+                >
+                    <div className="w-20 h-20 sm:w-28 sm:h-28 bg-primary/10 rounded-[2.5rem] flex items-center justify-center text-4xl sm:text-6xl mx-auto mb-6 sm:mb-8 shadow-inner border border-primary/20">🇦🇺</div>
+                    <h1 className="text-3xl sm:text-5xl font-display font-black mb-4 sm:mb-8 tracking-tight">{t("title")}</h1>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-10 text-left">
+                        <motion.div
+                            whileHover={{ y: -5 }}
+                            className="bg-card p-6 rounded-[2.5rem] border-2 border-border shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
+                        >
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform" />
+                            <div className="flex items-center gap-3 mb-3 relative">
+                                <div className="w-10 h-10 bg-primary/10 rounded-2xl flex items-center justify-center">
+                                    <Shield className="w-5 h-5 text-primary" />
+                                </div>
+                                <p className="font-extrabold text-xs uppercase tracking-widest text-muted-foreground">{t("requirements")}</p>
                             </div>
-                            <p className="font-bold">{t("passMark")}</p>
-                        </div>
-                        <div className="bg-muted/50 p-6 rounded-3xl border border-border">
-                            <div className="flex items-center gap-3 mb-2">
-                                <AlertTriangle className="w-5 h-5 text-accent" />
-                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">{t("mandatory")}</p>
+                            <p className="font-display font-bold text-lg leading-snug relative">{t("passMark")}</p>
+                        </motion.div>
+
+                        <motion.div
+                            whileHover={{ y: -5 }}
+                            className="bg-card p-6 rounded-[2.5rem] border-2 border-border shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
+                        >
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform" />
+                            <div className="flex items-center gap-3 mb-3 relative">
+                                <div className="w-10 h-10 bg-accent/10 rounded-2xl flex items-center justify-center">
+                                    <AlertTriangle className="w-5 h-5 text-accent" />
+                                </div>
+                                <p className="font-extrabold text-xs uppercase tracking-widest text-muted-foreground">{t("mandatory")}</p>
                             </div>
-                            <p className="font-bold text-accent">{t("mandatoryDesc")}</p>
-                        </div>
-                        <div className="bg-muted/50 p-6 rounded-3xl border border-border">
-                            <div className="flex items-center gap-3 mb-2">
-                                <Timer className="w-5 h-5 text-blue-500" />
-                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">{t("timer")}</p>
+                            <p className="font-display font-bold text-lg leading-snug text-accent relative">{t("mandatoryDesc")}</p>
+                        </motion.div>
+
+                        <motion.div
+                            whileHover={{ y: -5 }}
+                            className="bg-card p-6 rounded-[2.5rem] border-2 border-border shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
+                        >
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform" />
+                            <div className="flex items-center gap-3 mb-3 relative">
+                                <div className="w-10 h-10 bg-blue-100 rounded-2xl flex items-center justify-center">
+                                    <Timer className="w-5 h-5 text-blue-600" />
+                                </div>
+                                <p className="font-extrabold text-xs uppercase tracking-widest text-muted-foreground">{t("timer")}</p>
                             </div>
-                            <p className="font-bold">{t("duration")}</p>
-                        </div>
-                        <div className="bg-muted/50 p-6 rounded-3xl border border-border">
-                            <div className="flex items-center gap-3 mb-2">
-                                <Zap className="w-5 h-5 text-yellow-500" />
-                                <p className="font-extrabold text-sm uppercase tracking-wider text-muted-foreground">{t("reward")}</p>
+                            <p className="font-display font-bold text-lg leading-snug relative">{t("duration")}</p>
+                        </motion.div>
+
+                        <motion.div
+                            whileHover={{ y: -5 }}
+                            className="bg-card p-6 rounded-[2.5rem] border-2 border-border shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
+                        >
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-yellow-500/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform" />
+                            <div className="flex items-center gap-3 mb-3 relative">
+                                <div className="w-10 h-10 bg-yellow-100 rounded-2xl flex items-center justify-center">
+                                    <Zap className="w-5 h-5 text-yellow-600" />
+                                </div>
+                                <p className="font-extrabold text-xs uppercase tracking-widest text-muted-foreground">{t("reward")}</p>
                             </div>
-                            <p className="font-bold">{t("rewardDesc")}</p>
-                        </div>
+                            <p className="font-display font-bold text-lg leading-snug relative">{t("rewardDesc")}</p>
+                        </motion.div>
                     </div>
 
                     <div className="space-y-4">
@@ -632,7 +663,7 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                                         <Button
                                             size="lg"
                                             className={cn(
-                                                "md:px-16 py-6 text-xl rounded-2xl shadow-xl transition-all active:scale-95",
+                                                "md:px-20 py-7 text-xl rounded-2xl shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all",
                                                 isCorrect
                                                     ? "bg-green-600 hover:bg-green-700 shadow-green-600/20"
                                                     : "bg-red-600 hover:bg-red-700 shadow-red-600/20"
@@ -674,11 +705,11 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                             <p className="text-muted-foreground text-xl mb-10 font-bold leading-relaxed px-4">
                                 {t("exitDesc") || "You're in the middle of an official mock test. If you leave now, your progress will be lost."}
                             </p>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="flex flex-col sm:flex-row gap-4">
                                 <Button
                                     variant="outline"
                                     size="lg"
-                                    className="py-6 rounded-2xl font-black text-lg border-2"
+                                    className="flex-1 py-8 rounded-3xl font-black text-xl border-2 hover:scale-[1.02] active:scale-[0.98] transition-all"
                                     onClick={() => setShowExitDialog(false)}
                                 >
                                     {t("keepGoing") || "Keep Going"}
@@ -686,8 +717,8 @@ export default function MockTestClient({ profile }: MockTestClientProps) {
                                 <Button
                                     variant="accent"
                                     size="lg"
-                                    className="py-6 rounded-2xl font-black text-lg bg-red-600 hover:bg-red-700 shadow-lg shadow-red-200"
-                                    onClick={() => router.back()}
+                                    className="flex-1 py-8 rounded-3xl font-black text-xl bg-red-600 hover:bg-red-700 shadow-xl shadow-red-200 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                                    onClick={() => router.push("/dashboard")}
                                 >
                                     {t("exitTest") || "Exit Test"}
                                 </Button>

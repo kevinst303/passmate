@@ -93,3 +93,38 @@ export async function uploadAvatar(formData: FormData) {
     return { success: true, url: publicUrl };
 }
 
+export async function deleteAccount() {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return { error: 'Not authenticated' };
+    }
+
+    // Since we're using Supabase, deleting the user from auth.users 
+    // needs to be done via service role or the user deleting themselves
+    // If using the standard client, we can use supabase.auth.admin.deleteUser
+    // but that requires service role. 
+    // For now, we'll delete the profile and sign out.
+    // In a real production app, you might have an edge function for this.
+
+    const { error: profileError } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('id', user.id);
+
+    if (profileError) {
+        console.error('Error deleting profile:', profileError);
+        return { error: 'Failed to delete account data' };
+    }
+
+    const { error: authError } = await supabase.auth.signOut();
+
+    if (authError) {
+        console.error('Error signing out:', authError);
+        return { error: 'Failed to sign out' };
+    }
+
+    revalidatePath('/');
+    return { success: true };
+}

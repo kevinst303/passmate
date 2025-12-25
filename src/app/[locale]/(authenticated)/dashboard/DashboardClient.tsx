@@ -77,7 +77,10 @@ export default function DashboardClient({ data }: DashboardClientProps) {
     };
 
     return (
-        <div className="min-h-screen bg-muted/30 pb-28 md:pb-8 md:pl-20">
+        <div className="min-h-screen bg-[#FEFEF8] pb-28 md:pb-8 md:pl-20 relative overflow-hidden">
+            {/* Immersive Background Elements */}
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2 -z-10 animate-pulse" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 -z-10" />
             {/* Header */}
             <header className="bg-card border-b border-border px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-40">
                 <div className="flex items-center justify-between gap-2">
@@ -87,33 +90,43 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                     </div>
 
                     {/* Desktop Stats */}
-                    <div className="hidden sm:flex items-center gap-2 sm:gap-4">
-                        <div className="flex flex-col items-end gap-0.5">
-                            <div className={cn(
-                                "flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full font-bold text-xs sm:text-sm transition-all",
-                                profile.is_premium
-                                    ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800"
-                                    : "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400"
-                            )}>
-                                <Heart className={cn("w-3.5 h-3.5 sm:w-4 sm:h-4 fill-red-600", profile.is_premium && "animate-pulse")} aria-hidden="true" />
+                    <div className="hidden sm:flex items-center gap-4">
+                        <div className="flex flex-col items-end gap-1">
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                className={cn(
+                                    "flex items-center gap-2 px-4 py-2 rounded-2xl font-black text-sm transition-all shadow-sm border",
+                                    profile.is_premium
+                                        ? "bg-red-50 text-red-600 border-red-100 shadow-red-50"
+                                        : "bg-red-50 text-red-600 border-red-100"
+                                )}
+                            >
+                                <Heart className={cn("w-4 h-4 fill-red-600", profile.is_premium && "animate-pulse")} aria-hidden="true" />
                                 <span>{profile.is_premium ? "∞" : profile.hearts}</span>
-                            </div>
+                            </motion.div>
                             {!profile.is_premium && profile.hearts < 5 && nextHeartAt && mounted && (
-                                <div className="flex items-center gap-1 text-[8px] font-black text-muted-foreground uppercase tracking-tighter">
-                                    <Clock className="w-2.5 h-2.5" aria-hidden="true" />
+                                <div className="flex items-center gap-1.5 text-[9px] font-black text-muted-foreground uppercase tracking-widest px-1">
+                                    <Clock className="w-2.5 h-2.5" />
                                     <span>{common("nextIn", { time: getNextHeartTime() })}</span>
                                 </div>
                             )}
+                        </div>
 
-                        </div>
-                        <div className="flex items-center gap-1.5 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-2.5 sm:px-3 py-1 rounded-full font-bold text-xs sm:text-sm">
-                            <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-orange-600 dark:fill-orange-400" aria-hidden="true" />
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="flex items-center gap-2 bg-orange-50 text-orange-600 px-4 py-2 rounded-2xl font-black text-sm border border-orange-100 shadow-sm shadow-orange-50"
+                        >
+                            <Flame className="w-4 h-4 fill-orange-600" />
                             <span>{profile.daily_streak}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2.5 sm:px-3 py-1 rounded-full font-bold text-xs sm:text-sm">
-                            <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-blue-600 dark:fill-blue-400" aria-hidden="true" />
-                            <span>{profile.total_xp}</span>
-                        </div>
+                        </motion.div>
+
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-2xl font-black text-sm border border-blue-100 shadow-sm shadow-blue-50"
+                        >
+                            <Zap className="w-4 h-4 fill-blue-600" />
+                            <span>{profile.total_xp.toLocaleString()}</span>
+                        </motion.div>
                     </div>
 
                     {/* Mobile Stats Toggle */}
@@ -173,50 +186,45 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                 <motion.section
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col gap-4 sm:gap-6 sm:flex-row sm:items-center glass p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-border shadow-sm dark:shadow-[0_0_30px_rgba(20,184,166,0.05)]"
+                    className="flex flex-col gap-6 lg:flex-row lg:items-center bg-white/70 backdrop-blur-xl p-6 sm:p-10 rounded-[3rem] border-2 border-border shadow-2xl relative overflow-hidden group"
                 >
-                    <div className="flex items-center gap-4 sm:block">
-                        <div className="w-16 h-16 sm:w-24 sm:h-24 bg-primary/10 rounded-full flex items-center justify-center text-2xl sm:text-4xl border-4 border-card shadow-lg shrink-0 overflow-hidden relative">
+                    <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:rotate-12 transition-transform duration-700">
+                        <Sparkles className="w-32 h-32 text-primary" />
+                    </div>
+
+                    <div className="flex items-center gap-6 sm:block">
+                        <motion.div
+                            whileHover={{ scale: 1.05, rotate: -5 }}
+                            className="w-20 h-20 sm:w-32 sm:h-32 bg-primary/10 rounded-[2.5rem] flex items-center justify-center text-3xl sm:text-5xl border-4 border-white shadow-2xl shrink-0 overflow-hidden relative"
+                        >
                             <Avatar
                                 src={profile.avatar_url}
-                                size="xl"
+                                size="2xl"
                                 className="w-full h-full border-0 rounded-none bg-transparent"
+                                fallback={profile.username?.[0] || '🐨'}
                             />
-                        </div>
-                        <div className="sm:hidden flex-1">
-                            <div className="flex items-center gap-2 flex-wrap">
-                                <h2 className="text-lg font-display font-extrabold text-foreground">
-                                    {t("welcome", { name: profile.full_name?.split(' ')[0] || profile.username || "Mate" })}
-                                </h2>
-                                {profile.is_premium && (
-                                    <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-lg text-[10px] font-black uppercase flex items-center gap-1 border border-yellow-200">
-                                        <Sparkles className="w-3 h-3 fill-yellow-600" /> {t("pro")}
-                                    </span>
-                                )}
-                            </div>
-                            <p className="text-sm text-muted-foreground font-medium mt-0.5 line-clamp-2">
-                                {profile.is_premium ? t("proDesc") : t("streakDesc")}
-                            </p>
-                        </div>
+                        </motion.div>
                     </div>
-                    <div className="hidden sm:block flex-1 text-center md:text-left">
-                        <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-                            <h2 className="text-xl sm:text-2xl font-display font-extrabold text-foreground">
-                                {t("welcome", { name: profile.full_name || profile.username || "Mate" })} 👋
+
+                    <div className="flex-1 relative z-10">
+                        <div className="flex items-center gap-3 mb-2">
+                            <h2 className="text-2xl sm:text-4xl font-display font-black text-foreground tracking-tight leading-none">
+                                {t("welcome", { name: profile.username || "Mate" })} 👋
                             </h2>
                             {profile.is_premium && (
-                                <div className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-lg text-[10px] font-black uppercase flex items-center gap-1 border border-yellow-200">
-                                    <Sparkles className="w-3 h-3 fill-yellow-600" /> {t("pro")}
+                                <div className="bg-gradient-to-r from-yellow-400 to-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1.5 shadow-lg shadow-yellow-200">
+                                    <Sparkles className="w-3.5 h-3.5 fill-white" /> {t("pro")}
                                 </div>
                             )}
                         </div>
-                        <p className="text-muted-foreground font-medium text-sm sm:text-base">
+                        <p className="text-muted-foreground font-bold text-lg leading-relaxed max-w-md italic">
                             {profile.is_premium ? t("proMateDesc") : t("doingGreat")}
                         </p>
                     </div>
-                    <Link href="/dashboard/quiz" className="w-full sm:w-auto">
-                        <Button size="lg" className="w-full sm:w-auto px-6 sm:px-10 py-4 sm:py-5 rounded-xl sm:rounded-2xl shadow-lg hover:scale-105 transition-transform flex items-center justify-center gap-2">
-                            <CirclePlay className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
+
+                    <Link href="/dashboard/quiz" className="w-full lg:w-auto relative z-10">
+                        <Button size="lg" className="w-full lg:w-auto px-12 py-8 rounded-[2rem] shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all text-xl font-black gap-3 bg-primary border-b-8 border-primary-dark">
+                            <CirclePlay className="w-8 h-8 fill-white/20" aria-hidden="true" />
                             <span>{t("startPracticing")}</span>
                         </Button>
                     </Link>
@@ -264,40 +272,48 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="bg-gradient-to-br from-primary via-primary to-primary/80 dark:from-primary/90 dark:to-primary/70 p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] text-white shadow-xl shadow-primary/20 dark:shadow-[0_8px_30px_rgba(20,184,166,0.2)]"
+                    className="bg-gradient-to-br from-[#1a1a1a] to-black p-8 sm:p-12 rounded-[3.5rem] text-white shadow-2xl relative overflow-hidden group"
                 >
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
-                        <div className="flex items-center gap-4 w-full sm:w-auto">
-                            <div className="w-14 h-14 sm:w-20 sm:h-20 bg-white/20 rounded-xl sm:rounded-[2rem] flex items-center justify-center text-2xl sm:text-4xl shadow-inner border border-white/10 shrink-0">
-                                🎓
-                            </div>
-                            <div className="flex-1 sm:hidden">
-                                <h3 className="text-lg font-display font-black leading-tight">{t("course")}</h3>
-                                <p className="font-bold opacity-80 text-xs">{completedTopics}/{totalTopics} {t("topicsMastered", { completed: completedTopics, total: totalTopics })}</p>
-                            </div>
-                            <span className="sm:hidden text-2xl font-display font-black">{Math.round(courseProgress)}%</span>
-                        </div>
-                        <div className="hidden sm:block flex-1">
-                            <div className="flex items-center justify-between mb-4">
-                                <div>
-                                    <h3 className="text-xl sm:text-2xl font-display font-black leading-tight">{t("course")}</h3>
-                                    <p className="font-bold opacity-80 text-sm">{t("topicsMastered", { completed: completedTopics, total: totalTopics })}</p>
-                                </div>
-                                <span className="text-2xl sm:text-3xl font-display font-black">{Math.round(courseProgress)}%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mt-4 sm:mt-0 sm:flex sm:items-center sm:gap-6">
-                        <div className="flex-1 h-2.5 sm:h-3 w-full bg-black/10 rounded-full overflow-hidden p-0.5 border border-white/10">
+                    <div className="absolute top-0 right-0 w-full h-full bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-[80px]" />
+
+                    <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12">
+                        <div className="flex items-center gap-6">
                             <motion.div
-                                initial={{ width: 0 }}
-                                animate={{ width: courseProgress + "%" }}
-                                transition={{ duration: 1, ease: "easeOut" }}
-                                className="h-full bg-white rounded-full"
-                            />
+                                whileHover={{ scale: 1.1, rotate: 12 }}
+                                className="w-20 h-20 sm:w-28 sm:h-28 bg-white/5 border-2 border-white/10 rounded-[2.5rem] flex items-center justify-center text-4xl sm:text-6xl shadow-2xl backdrop-blur-md"
+                            >
+                                🎓
+                            </motion.div>
+                            <div>
+                                <h3 className="text-3xl sm:text-5xl font-display font-black leading-none mb-2 tracking-tighter">
+                                    {t("course")}
+                                </h3>
+                                <p className="font-bold text-primary text-xl">
+                                    {completedTopics}/{totalTopics} {t("topicsMastered", { completed: completedTopics, total: totalTopics })}
+                                </p>
+                            </div>
                         </div>
-                        <Link href="/skill-trees" className="block mt-4 sm:mt-0">
-                            <Button variant="secondary" className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 px-6 sm:px-8 h-12 sm:h-14 rounded-xl sm:rounded-2xl font-black">
+
+                        <div className="flex-1 w-full space-y-6">
+                            <div className="flex items-center justify-between font-black text-2xl tracking-tighter">
+                                <span className="text-white/40 uppercase text-xs tracking-[0.3em]">Overall Mastery</span>
+                                <span className="text-white text-4xl">{Math.round(courseProgress)}%</span>
+                            </div>
+                            <div className="h-6 w-full bg-white/5 rounded-full overflow-hidden p-1.5 border border-white/10 relative">
+                                <motion.div
+                                    initial={{ width: 0 }}
+                                    animate={{ width: courseProgress + "%" }}
+                                    transition={{ duration: 1.5, ease: "circOut" }}
+                                    className="h-full bg-gradient-to-r from-primary to-primary-dark rounded-full relative"
+                                >
+                                    <div className="absolute inset-0 bg-white/20 animate-shimmer" style={{ backgroundSize: '200% 100%', backgroundImage: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }} />
+                                </motion.div>
+                            </div>
+                        </div>
+
+                        <Link href="/skill-trees" className="w-full md:w-auto">
+                            <Button size="lg" className="w-full md:w-auto bg-white text-black hover:bg-white/90 px-10 py-8 rounded-[2rem] font-black text-lg shadow-2xl shadow-white/5 border-b-8 border-gray-200">
                                 {t("resumePath")}
                             </Button>
                         </Link>
@@ -344,31 +360,40 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                                 <Link href="/quests" className="text-xs sm:text-sm font-bold text-primary hover:underline">{t("viewAll")}</Link>
                             </div>
                         </div>
-                        <div className="space-y-2 sm:space-y-3 max-h-64 sm:max-h-72 overflow-y-auto pr-1 [mask-image:linear-gradient(to_bottom,transparent,black_20px,black_calc(100%_-_20px),transparent)]">
+                        <div className="space-y-4">
                             {displayQuests.map((userQuest) => (
                                 <motion.div
                                     key={userQuest.id}
-                                    whileHover={{ scale: 1.01 }}
-                                    className="glass p-4 sm:p-5 rounded-xl sm:rounded-3xl border border-border shadow-sm flex items-center gap-3 sm:gap-4 group hover:border-primary/30 transition-all"
+                                    whileHover={{ y: -4, scale: 1.01 }}
+                                    className="bg-white/60 backdrop-blur-md p-6 rounded-[2.5rem] border-2 border-border shadow-lg flex items-center gap-6 group hover:border-primary/40 hover:bg-white/80 transition-all"
                                 >
-                                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 ${userQuest.is_completed ? "bg-green-100 text-green-600" : "bg-muted text-muted-foreground"}`}>
-                                        {userQuest.is_completed ? <Award className="w-5 h-5 sm:w-6 sm:h-6" /> : <Star className="w-5 h-5 sm:w-6 sm:h-6" />}
+                                    <div className={cn(
+                                        "w-16 h-16 rounded-[1.5rem] flex items-center justify-center shrink-0 shadow-lg transition-transform group-hover:rotate-6",
+                                        userQuest.is_completed
+                                            ? "bg-green-50 text-green-500 border-2 border-green-100"
+                                            : "bg-white text-primary border-2 border-primary/10"
+                                    )}>
+                                        {userQuest.is_completed ? <Award className="w-8 h-8" /> : <Star className="w-8 h-8 fill-primary/10" />}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <p className={`font-bold text-sm sm:text-base truncate ${userQuest.is_completed ? "text-muted-foreground line-through" : ""}`}>
-                                            {userQuest.quests?.title || t("dailyQuests")}
-                                        </p>
+                                        <div className="flex items-center justify-between mb-2">
+                                            <p className={cn("font-black text-lg tracking-tight truncate", userQuest.is_completed ? "text-muted-foreground line-through opacity-50" : "text-foreground")}>
+                                                {userQuest.quests?.title || t("dailyQuests")}
+                                            </p>
+                                            <span className="text-primary font-black text-sm">+{userQuest.quests?.xp_reward || 0} XP</span>
+                                        </div>
                                         {!userQuest.is_completed && (
-                                            <div className="mt-1.5 sm:mt-2 h-1.5 w-full bg-muted rounded-full overflow-hidden">
-                                                <div
-                                                    className="h-full bg-accent transition-all"
-                                                    style={{ width: `${(userQuest.progress / (userQuest.requirement_value || 1)) * 100}%` }}
+                                            <div className="h-2.5 w-full bg-muted rounded-full overflow-hidden p-0.5 border border-border/50">
+                                                <motion.div
+                                                    initial={{ width: 0 }}
+                                                    animate={{ width: `${(userQuest.progress / (userQuest.requirement_value || 1)) * 100}%` }}
+                                                    className="h-full bg-primary rounded-full"
                                                 />
                                             </div>
                                         )}
-                                    </div>
-                                    <div className="text-right shrink-0">
-                                        <p className="text-xs sm:text-sm font-extrabold text-primary">+{userQuest.quests?.xp_reward || 0} XP</p>
+                                        {userQuest.is_completed && (
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-green-600">Quest Completed!</span>
+                                        )}
                                     </div>
                                 </motion.div>
                             ))}
@@ -384,24 +409,46 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                             </h3>
                             <Link href="/leagues" className="text-xs sm:text-sm font-bold text-primary hover:underline">{t("viewAll")}</Link>
                         </div>
-                        <div className="bg-card glass p-4 sm:p-6 rounded-2xl sm:rounded-[2.5rem] border border-border shadow-sm">
-                            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-border/50">
-                                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-yellow-100 rounded-2xl sm:rounded-3xl flex items-center justify-center text-2xl sm:text-3xl">🥇</div>
+                        <div className="bg-white/70 backdrop-blur-xl p-8 rounded-[3rem] border-2 border-border shadow-xl group overflow-hidden relative">
+                            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform duration-700">
+                                <Trophy className="w-32 h-32 text-yellow-500" />
+                            </div>
+
+                            <div className="flex items-center gap-6 mb-8 relative z-10">
+                                <motion.div
+                                    whileHover={{ scale: 1.1, rotate: -5 }}
+                                    className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-[2rem] flex items-center justify-center text-4xl shadow-2xl shadow-yellow-200"
+                                >
+                                    🥇
+                                </motion.div>
                                 <div>
-                                    <p className="text-xs sm:text-sm font-bold text-muted-foreground">{t("yourRank")}</p>
-                                    <p className="text-xl sm:text-2xl font-display font-extrabold">#{standing?.current_rank || '-'}</p>
-                                </div>
-                                <div className="ml-auto flex items-center gap-1 sm:gap-1.5 text-green-600 font-bold text-xs sm:text-sm bg-green-50 px-2 sm:px-3 py-1 rounded-full">
-                                    <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" aria-hidden="true" />
-                                    <span className="hidden xs:inline">{t("keepItUp")}</span>
-                                    <span className="xs:hidden">+</span>
+                                    <p className="text-sm font-black text-muted-foreground uppercase tracking-widest mb-1">{t("yourRank")}</p>
+                                    <div className="flex items-center gap-3">
+                                        <p className="text-4xl font-display font-black">#{standing?.current_rank || '-'}</p>
+                                        <div className="flex items-center gap-1 text-green-600 font-black text-xs bg-green-100 px-3 py-1 rounded-full border border-green-200 shadow-sm">
+                                            <TrendingUp className="w-3 h-3" />
+                                            <span>Promotion Zone</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="space-y-2 sm:space-y-4 max-h-64 overflow-y-auto">
-                                {topPlayers.length > 0 ? topPlayers.slice(0, 5).map((player, idx) => (
-                                    <div key={idx} className={`flex items-center gap-2 sm:gap-4 p-2 sm:p-3 rounded-xl sm:rounded-2xl ${player.user_id === profile.id ? "bg-primary/10 ring-1 ring-primary/20" : ""}`}>
-                                        <span className="w-5 sm:w-6 text-xs sm:text-sm font-extrabold text-muted-foreground">#{idx + 1}</span>
-                                        <div className="w-7 h-7 sm:w-8 sm:h-8 bg-muted rounded-full overflow-hidden flex items-center justify-center text-xs font-bold shrink-0 relative">
+
+                            <div className="space-y-3 relative z-10">
+                                {topPlayers.length > 0 ? topPlayers.slice(0, 3).map((player, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className={cn(
+                                            "flex items-center gap-4 p-4 rounded-2xl transition-all",
+                                            player.user_id === profile.id
+                                                ? "bg-primary/10 ring-2 ring-primary/20 shadow-lg shadow-primary/5"
+                                                : "bg-muted/30 hover:bg-muted/50"
+                                        )}
+                                    >
+                                        <span className="w-8 text-lg font-display font-black text-muted-foreground/50">#{idx + 1}</span>
+                                        <div className="w-10 h-10 bg-white rounded-xl overflow-hidden flex items-center justify-center text-sm font-bold shrink-0 shadow-sm ring-2 ring-white">
                                             <Avatar
                                                 src={player.profiles?.avatar_url}
                                                 size="sm"
@@ -409,11 +456,14 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                                                 className="w-full h-full border-0 rounded-none bg-transparent"
                                             />
                                         </div>
-                                        <span className={`flex-1 font-bold text-sm truncate ${player.user_id === profile.id ? "text-primary" : ""}`}>
+                                        <span className={`flex-1 font-black text-base truncate ${player.user_id === profile.id ? "text-primary" : "text-foreground"}`}>
                                             {player.user_id === profile.id ? t("you") : (player.profiles?.username || t("player"))}
                                         </span>
-                                        <span className="font-extrabold text-xs sm:text-sm shrink-0">{player.weekly_xp} XP</span>
-                                    </div>
+                                        <div className="flex items-center gap-1.5 font-black text-sm">
+                                            <Zap className="w-4 h-4 fill-blue-500 text-blue-500" />
+                                            {player.weekly_xp}
+                                        </div>
+                                    </motion.div>
                                 )) : (
                                     <p className="text-center text-muted-foreground py-4 font-medium italic text-sm">{t("noPlayers")}</p>
                                 )}
@@ -427,25 +477,36 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-gradient-to-r from-accent to-accent/80 p-5 sm:p-8 rounded-2xl sm:rounded-[3rem] text-white shadow-xl relative overflow-hidden"
+                    className="bg-gradient-to-br from-[#1a1a1a] via-[#1a1a1a] to-black p-8 sm:p-12 rounded-[4rem] text-white shadow-2xl relative overflow-hidden group"
                 >
-                    <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
-                        <div>
-                            <h3 className="text-xl sm:text-2xl font-display font-black mb-1 sm:mb-2 flex items-center gap-2">
-                                {t("mockTest")} <span aria-label="Australian flag">🇦🇺</span>
+                    <div className="absolute top-0 right-0 w-full h-full bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700 pointer-events-none">
+                        <span className="text-[160px] sm:text-[220px]">🇦🇺</span>
+                    </div>
+
+                    <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+                        <div className="max-w-xl text-center lg:text-left space-y-4">
+                            <div className="inline-flex items-center gap-2 bg-accent/20 text-accent px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border border-accent/20">
+                                Official Simulation
+                            </div>
+                            <h3 className="text-4xl sm:text-6xl font-display font-black tracking-tight leading-none">
+                                {t("mockTest")} <span className="inline-block animate-bounce">🇦🇺</span>
                             </h3>
-                            <p className="font-bold opacity-90 text-sm sm:text-base max-w-sm">
+                            <p className="font-bold text-white/70 text-lg sm:text-xl leading-relaxed">
                                 {t("mockTestDesc")}
                             </p>
                         </div>
-                        <Link href="/dashboard/mock-test" className="w-full sm:w-auto shrink-0">
-                            <Button variant="secondary" className="w-full sm:w-auto bg-white text-accent hover:bg-white/90 px-8 sm:px-10 py-3 sm:py-4 h-auto text-base sm:text-lg shadow-2xl">
-                                {t("attemptNow")}
-                            </Button>
+                        <Link href="/dashboard/mock-test" className="w-full lg:w-auto shrink-0 relative px-2">
+                            <motion.div
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <Button size="lg" className="w-full lg:w-auto bg-accent text-white hover:bg-accent/90 px-16 py-10 rounded-[2.5rem] font-black text-2xl shadow-2xl shadow-accent/20 border-b-8 border-accent-dark group/btn">
+                                    <span>{t("attemptNow")}</span>
+                                    <ChevronRight className="w-6 h-6 group-hover/btn:translate-x-2 transition-transform" />
+                                </Button>
+                            </motion.div>
                         </Link>
-                    </div>
-                    <div className="absolute right-0 top-0 opacity-10 translate-x-1/4 -translate-y-1/4 scale-100 sm:scale-150 pointer-events-none" aria-hidden="true">
-                        <span className="text-[120px] sm:text-[200px]">🇦🇺</span>
                     </div>
                 </motion.section>
 

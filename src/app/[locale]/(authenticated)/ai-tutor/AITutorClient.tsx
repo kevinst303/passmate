@@ -64,6 +64,10 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [isSpeaking, setIsSpeaking] = useState(false);
+    const [isVoiceMode, setIsVoiceMode] = useState(false);
+    const [isOllieSpeaking, setIsOllieSpeaking] = useState(false);
+    const recognitionRef = useRef<any>(null);
+    const chatEndRef = useRef<HTMLDivElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -72,15 +76,75 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
         }
     }, [messages, isTyping]);
 
-    const handleSend = async (e?: React.FormEvent) => {
-        e?.preventDefault();
-        if (!input.trim() || isTyping) return;
+    // Speech Synthesis (Ollie Speaking)
+    const speak = (text: string) => {
+        if (!isVoiceMode || typeof window === 'undefined') return;
 
-        const userMsg = { role: "user" as const, content: input };
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+
+        // Try to find a nice Australian voice if available
+        const voices = window.speechSynthesis.getVoices();
+        const aussieVoice = voices.find(v => v.lang === 'en-AU' || v.name.includes('Australia'));
+        if (aussieVoice) utterance.voice = aussieVoice;
+
+        utterance.pitch = 1.1; // Make Ollie sound a bit more "koala-like"/friendly
+        utterance.rate = 1.0;
+
+        utterance.onstart = () => setIsOllieSpeaking(true);
+        utterance.onend = () => {
+            setIsOllieSpeaking(false);
+            if (isVoiceMode) startListening();
+        };
+
+        window.speechSynthesis.speak(utterance);
+    };
+
+    // Speech Recognition (Ollie Hearing)
+    const startListening = () => {
+        if (typeof window === 'undefined') return;
+
+        const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+        if (!SpeechRecognition) return;
+
+        if (recognitionRef.current) recognitionRef.current.stop();
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-AU';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = () => setIsSpeaking(true);
+        recognition.onresult = (event: any) => {
+            const transcript = event.results[0][0].transcript;
+            setInput(transcript);
+            handleSend(undefined, transcript);
+        };
+        recognition.onerror = () => setIsSpeaking(false);
+        recognition.onend = () => setIsSpeaking(false);
+
+        recognitionRef.current = recognition;
+        recognition.start();
+    };
+
+    const stopListening = () => {
+        if (recognitionRef.current) recognitionRef.current.stop();
+        setIsSpeaking(false);
+    };
+
+    const handleSend = async (e?: React.FormEvent, overrideInput?: string) => {
+        e?.preventDefault();
+        const messageText = overrideInput || input;
+        if (!messageText.trim() || isTyping) return;
+
+        const userMsg = { role: "user" as const, content: messageText };
         const newMessages = [...messages, userMsg];
         setMessages(newMessages);
         setInput("");
         setIsTyping(true);
+        if (isVoiceMode) window.speechSynthesis.cancel(); // Stop talking if user sends text
 
         try {
             const response = await fetch("/api/chat", {
@@ -89,23 +153,14 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                 body: JSON.stringify({ messages: newMessages })
             });
 
-            const contentType = response.headers.get("content-type");
-            if (!contentType || !contentType.includes("application/json")) {
-                const text = await response.text();
-                console.error("Non-JSON response received:", text.slice(0, 100));
-                throw new Error("Received non-JSON response from server");
-            }
-
             const data = await response.json();
-
             if (data.content) {
-                setMessages(prev => [...prev, { role: "assistant", content: data.content }]);
-            } else {
-                throw new Error(data.error || "Something went wrong");
+                const assistantMsg = { role: "assistant" as const, content: data.content };
+                setMessages(prev => [...prev, assistantMsg]);
+                if (isVoiceMode) speak(data.content);
             }
-        } catch (error: unknown) {
+        } catch (error) {
             console.error("Chat Error:", error);
-            setMessages(prev => [...prev, { role: "assistant" as const, content: t("errorConnecting") }]);
         } finally {
             setIsTyping(false);
         }
@@ -139,7 +194,7 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <div className="hidden sm:flex items-center gap-4 mr-4">
+                    <div className="hidden lg:flex items-center gap-4 mr-4">
                         <div className="flex items-center gap-1.5 bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-2xl border border-orange-200 dark:border-orange-800 font-black text-xs">
                             <Flame className="w-4 h-4 fill-orange-600 dark:fill-orange-400" /> {profile.daily_streak} {t("dayStreak")}
                         </div>
@@ -147,9 +202,26 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                             <Zap className="w-4 h-4 fill-blue-600 dark:fill-blue-400" /> {profile.total_xp.toLocaleString()} XP
                         </div>
                     </div>
-                    <Button variant="ghost" className="rounded-2xl w-11 h-11 border-2 border-border/50 p-0">
-                        <Volume2 className="w-5 h-5" />
-                    </Button>
+
+                    <button
+                        onClick={() => {
+                            const newMode = !isVoiceMode;
+                            setIsVoiceMode(newMode);
+                            if (!newMode) {
+                                window.speechSynthesis.cancel();
+                                stopListening();
+                            }
+                        }}
+                        className={cn(
+                            "flex items-center gap-3 px-5 py-2.5 rounded-2xl border-2 transition-all font-black text-sm active:scale-95 shadow-lg",
+                            isVoiceMode
+                                ? "bg-primary border-primary text-white shadow-primary/20"
+                                : "bg-card border-border text-muted-foreground hover:border-primary/50"
+                        )}
+                    >
+                        {isVoiceMode ? <Volume2 className="w-5 h-5 animate-pulse" /> : <Mic className="w-5 h-5" />}
+                        <span className="hidden sm:inline">{isVoiceMode ? t("voiceMode") : t("textMode")}</span>
+                    </button>
                 </div>
             </header>
 
@@ -170,17 +242,24 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                             )}
                         >
                             <div className={cn(
-                                "w-10 h-10 rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-sm",
-                                msg.role === "assistant" ? "bg-primary text-white shadow-primary/20" : "bg-muted border border-border/50"
+                                "w-10 h-10 rounded-2xl flex items-center justify-center text-xl shrink-0 shadow-md border-2",
+                                msg.role === "assistant"
+                                    ? "bg-white border-primary/20 text-primary"
+                                    : "bg-primary border-primary text-white"
                             )}>
                                 {msg.role === "assistant" ? "🐨" : "👤"}
                             </div>
                             <div className={cn(
-                                "max-w-[75%] p-6 rounded-[2.5rem] shadow-xl font-medium leading-relaxed tracking-tight text-lg relative",
+                                "max-w-[85%] sm:max-w-[75%] p-5 sm:p-7 rounded-[2.5rem] shadow-xl font-bold leading-relaxed tracking-tight text-base sm:text-lg relative",
                                 msg.role === "assistant"
-                                    ? "bg-card glass text-foreground rounded-bl-none border-2 border-border/10"
-                                    : "bg-primary text-white rounded-br-none"
+                                    ? "bg-white/80 backdrop-blur-xl text-foreground rounded-bl-none border border-border shadow-gray-200/50"
+                                    : "bg-gradient-to-br from-primary to-primary-dark text-white rounded-br-none shadow-primary/20"
                             )}>
+                                {msg.role === "assistant" && (
+                                    <div className="absolute -top-3 -left-3">
+                                        <Sparkles className="w-6 h-6 text-primary/40" />
+                                    </div>
+                                )}
                                 {msg.content}
                             </div>
                         </motion.div>
@@ -221,10 +300,15 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                     <div className="bg-card glass p-3 rounded-[3.5rem] shadow-2xl border-2 border-border/10 flex items-center gap-3">
                         <button
                             type="button"
-                            onClick={() => setIsSpeaking(true)}
-                            className="w-16 h-16 bg-muted rounded-[2.5rem] flex items-center justify-center text-muted-foreground hover:bg-primary/10 hover:text-primary transition-all group"
+                            onClick={isSpeaking ? stopListening : startListening}
+                            className={cn(
+                                "w-16 h-16 rounded-[2.5rem] flex items-center justify-center transition-all group shadow-lg",
+                                isSpeaking
+                                    ? "bg-red-500 text-white animate-pulse"
+                                    : "bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                            )}
                         >
-                            <Mic className="w-7 h-7 group-hover:scale-110 transition-transform" />
+                            <Mic className={cn("w-7 h-7 transition-transform", isSpeaking ? "scale-110" : "group-hover:scale-110")} />
                         </button>
 
                         <form onSubmit={handleSend} className="flex-1 flex items-center gap-3 pr-2">
@@ -247,62 +331,95 @@ export default function AITutorClient({ initialMistakes, profile }: AITutorClien
                 </div>
             </main>
 
-            {/* Immersive Voice Mode */}
+            {/* Immersive Voice Mode Overlay */}
             <AnimatePresence>
-                {isSpeaking && (
+                {isVoiceMode && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center text-white"
+                        className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center text-white p-6"
                     >
+                        <div className="absolute top-10 left-10 flex items-center gap-3">
+                            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
+                            <span className="text-xs font-black uppercase tracking-widest text-white/60">Live Conversation</span>
+                        </div>
+
                         <button
-                            onClick={() => setIsSpeaking(false)}
-                            className="absolute top-10 right-10 w-16 h-16 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+                            onClick={() => setIsVoiceMode(false)}
+                            className="absolute top-10 right-10 w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-all active:scale-95 border border-white/10"
                         >
-                            <X className="w-8 h-8" />
+                            <X className="w-6 h-6" />
                         </button>
 
-                        <div className="relative mb-20">
+                        <div className="relative mb-16">
                             <motion.div
-                                animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
-                                transition={{ repeat: Infinity, duration: 4 }}
+                                animate={{
+                                    scale: isSpeaking || isOllieSpeaking ? [1, 1.2, 1] : 1,
+                                    opacity: isSpeaking || isOllieSpeaking ? [0.1, 0.4, 0.1] : 0.1
+                                }}
+                                transition={{ repeat: Infinity, duration: 2 }}
                                 className="absolute inset-0 bg-primary rounded-full blur-[100px] -z-10"
                             />
-                            <div className="text-[180px] filter drop-shadow-[0_0_50px_rgba(255,255,255,0.3)]">🐨</div>
+                            <motion.div
+                                animate={isOllieSpeaking ? {
+                                    y: [0, -10, 0],
+                                    rotate: [0, -5, 5, 0]
+                                } : {}}
+                                transition={{ repeat: Infinity, duration: 2 }}
+                                className="text-[160px] sm:text-[200px] filter drop-shadow-[0_0_50px_rgba(255,255,255,0.2)]"
+                            >
+                                🐨
+                            </motion.div>
                         </div>
 
-                        <div className="text-center space-y-6">
-                            <h2 className="text-5xl font-display font-black italic tracking-tight">{t("ollieHearing")}</h2>
-                            <p className="text-xl font-bold text-primary animate-pulse">{t("speakNaturally")}</p>
+                        <div className="text-center space-y-4 max-w-sm">
+                            <h2 className="text-4xl sm:text-5xl font-display font-black italic tracking-tight">
+                                {isOllieSpeaking ? t("ollieSpeaking") : isSpeaking ? t("ollieHearing") : "Ollie is waiting..."}
+                            </h2>
+                            <p className="text-lg sm:text-xl font-bold text-primary/80 leading-relaxed">
+                                {isOllieSpeaking ? "Listening to Ollie's wisdom..." : isSpeaking ? t("speakNaturally") : "Tap the mic or just start talking!"}
+                            </p>
                         </div>
 
-                        <div className="mt-24 flex gap-3 h-20 items-center">
-                            {[...Array(12)].map((_, i) => (
+                        {/* Visualizer */}
+                        <div className="mt-20 flex gap-2 sm:gap-4 h-24 items-center justify-center w-full max-w-md">
+                            {[...Array(16)].map((_, i) => (
                                 <motion.div
                                     key={i}
-                                    animate={{ height: [30, 80, 30], opacity: [0.4, 0.9, 0.4] }}
-                                    transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.08 }}
-                                    className="w-3 bg-gradient-to-t from-primary to-white/40 rounded-full"
+                                    animate={{
+                                        height: (isSpeaking || isOllieSpeaking) ? [20, Math.random() * 80 + 20, 20] : 10,
+                                        opacity: (isSpeaking || isOllieSpeaking) ? [0.4, 1, 0.4] : 0.2
+                                    }}
+                                    transition={{
+                                        repeat: Infinity,
+                                        duration: 0.5,
+                                        delay: i * 0.05
+                                    }}
+                                    className={cn(
+                                        "w-2 sm:w-3 rounded-full transition-colors duration-500",
+                                        isOllieSpeaking ? "bg-primary" : "bg-white"
+                                    )}
                                 />
                             ))}
                         </div>
 
-                        <div className="absolute bottom-16 flex gap-6">
-                            <div className="flex flex-col items-center gap-2">
-                                <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10">
-                                    <Ear className="w-6 h-6" />
-                                </div>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white/40">{t("listening")}</span>
-                            </div>
-                            <div className="flex flex-col items-center gap-2">
+                        <div className="absolute bottom-16 flex items-center gap-8">
+                            <div className="flex flex-col items-center gap-3">
                                 <button
-                                    onClick={() => setIsSpeaking(false)}
-                                    className="w-14 h-14 bg-red-500/20 rounded-2xl flex items-center justify-center border border-red-500/30 group"
+                                    onClick={isSpeaking ? stopListening : startListening}
+                                    className={cn(
+                                        "w-20 h-20 rounded-full flex items-center justify-center transition-all border-2 shadow-2xl active:scale-90",
+                                        isSpeaking
+                                            ? "bg-red-500 border-red-400 text-white animate-pulse"
+                                            : "bg-white border-white text-black hover:scale-105"
+                                    )}
                                 >
-                                    <X className="w-6 h-6 text-red-400 group-hover:scale-110 transition-transform" />
+                                    {isSpeaking ? <Mic className="w-8 h-8" /> : <Mic className="w-8 h-8" />}
                                 </button>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-red-400">{t("cancel")}</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">
+                                    {isSpeaking ? t("listening") : "Tap to Speak"}
+                                </span>
                             </div>
                         </div>
                     </motion.div>
