@@ -799,6 +799,26 @@
         "noFriends": "Wala pang mga kaibigan? Magdagdag sa itaas! 🐨",
         "inviteTitle": "Imbitahan ang iyong mga kaibigan!",
         "inviteDesc": "Mas masaya ang pag-aaral kasama ang mga kaibigan. Mag-imbita sa PassMate at maglaban-laban!",
-        "sendInvites": "Magpadala ng mga Imbitasyon"
+        "sendInvites": "Magpadala ng mga Imbitasyon",
+        "linkCopied": "Ang link ng imbitasyon ay nakopya sa clipboard! 🐨"
+    },
+    "About": {
+        "title": "Tungkol sa PassMate",
+        "subtitle": "Pagpapalakas sa mga magiging Australyano sa pamamagitan ng teknolohiya at komunidad.",
+        "mission": "Ang Aming Misyon",
+        "missionText": "Ang PassMate ay isinilang mula sa isang simpleng obserbasyon: ang paglalakbay patungo sa pagkamamamayan ng Australia ay maaaring nakakatakot. Ang aming misyon ay gawing accessible, nakakaengganyo, at matagumpay ang paglalakbay na ito para sa bawat nagnanais maging Australyano. Naniniwala kami na ang teknolohiya ay dapat maglingkod sa mga tao, lalo na kapag gumagawa sila ng mga pagbabago sa buhay para sa kanilang bagong tahanan.",
+        "story": "Ang Kwento ng PassMate",
+        "storyText": "Sinimulan ng isang koponan ng mga imigrante at mahilig sa teknolohiya sa Melbourne, pinagsasama ng PassMate ang advanced AI na may malalim na paggalang sa mga pagpapahalagang Australyano. Napansin namin na ang mga umiiral na tool sa pag-aaral ay madalas na luma na o kulang sa personal na ugnayan na kailangan upang tunay na maunawaan ang diwa ng 'Fair Go'.",
+        "ollie": "Kilalanin si Ollie",
+        "ollieText": "Si Ollie ay hindi lang isang mascot; siya ang iyong kasama sa pag-aaral. Dinisenyo upang maging palakaibigan, nakapagpapalakas ng loob, at napakaraming alam, kinakatawan ni Ollie ang mapagpatuloy na diwa ng Australia. Nandito siya para makipagkwentuhan tungkol sa kasaysayan, ipaliwanag ang batas, at i-cheer ka habang pinag-aaralan mo ang pamumuhay ng mga Aussie.",
+        "whyTitle": "Bakit piliin ang PassMate?",
+        "why1": "Pag-aaral na Pinapagana ng AI",
+        "why1Desc": "Magtanong kay Ollie kahit ano, anumang oras. Ang personalized na feedback ay tumutulong sa iyo na matuto mula sa mga pagkakamali.",
+        "why2": "Napapanahong Nilalaman",
+        "why2Desc": "Ang aming bank ng mga tanong ay patuloy na ina-update upang ipakita ang pinakabagong pamantayan ng pagsusulit sa 2024/2025.",
+        "why3": "Garantiyang Pagpasa",
+        "why3Desc": "Lubos kaming nagtitiwala sa aming platform na nag-aalok kami ng buong refund kung hindi ka pumasa.",
+        "join": "Handa na bang sumali sa pamilya?",
+        "getStarted": "Magsimula Ngayon"
     }
 }

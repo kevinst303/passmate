@@ -799,6 +799,26 @@
         "noFriends": "Non hai ancora amici? Aggiungine alcuni sopra! 🐨",
         "inviteTitle": "Invita i tuoi amici!",
         "inviteDesc": "Imparare è meglio con gli amici. Invita qualcuno a unirsi a PassMate e competete insieme!",
-        "sendInvites": "Invia inviti"
+        "sendInvites": "Invia inviti",
+        "linkCopied": "Link di invito copiato negli appunti! 🐨"
+    },
+    "About": {
+        "title": "Chi siamo",
+        "subtitle": "Diamo potere ai futuri australiani attraverso la tecnologia e la comunità.",
+        "mission": "La Nostra Missione",
+        "missionText": "PassMate è nato da una semplice osservazione: il viaggio verso la cittadinanza australiana può essere scoraggiante. La nostra missione è rendere questo viaggio accessibile, coinvolgente e di successo per ogni aspirante australiano. Crediamo che la tecnologia debba servire le persone, specialmente quando stanno prendendo impegni che cambiano la vita verso la loro nuova casa.",
+        "story": "La Storia di PassMate",
+        "storyText": "Fondato da un team di immigrati e appassionati di tecnologia a Melbourne, PassMate combina un'IA avanzata con un profondo rispetto per i valori australiani. Abbiamo notato che gli strumenti di studio esistenti erano spesso obsoleti o mancavano del tocco personale necessario per comprendere veramente lo spirito del 'Fair Go'.",
+        "ollie": "Incontra Ollie",
+        "ollieText": "Ollie non è solo una mascotte; è il tuo compagno di studio. Progettato per essere amichevole, incoraggiante e incredibilmente ben informato, Ollie rappresenta lo spirito accogliente dell'Australia. È qui per chiacchierare di storia, spiegare lo stato di diritto e fare il tifo per te mentre impari lo stile di vita australiano.",
+        "whyTitle": "Perché scegliere PassMate?",
+        "why1": "Apprendimento Potenziato dall'IA",
+        "why1Desc": "Chiedi qualsiasi cosa a Ollie, in qualsiasi momento. Feedback personalizzato che ti aiuta a imparare dagli errori.",
+        "why2": "Contenuto Aggiornato",
+        "why2Desc": "La nostra banca dati di domande è costantemente aggiornata per riflettere l'ultimo standard del test 2024/2025.",
+        "why3": "Garanzia di Superamento",
+        "why3Desc": "Siamo così sicuri della nostra piattaforma che offriamo un rimborso completo se non superi il test.",
+        "join": "Pronto a unirti alla famiglia?",
+        "getStarted": "Inizia Oggi"
     }
 }

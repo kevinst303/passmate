@@ -14,6 +14,7 @@ import {
     Loader2,
     X
 } from "lucide-react";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
 import { Link } from "@/i18n/routing";
@@ -129,10 +130,11 @@ export default function MasterclassClient({ profile, initialCompleted = [] }: { 
             <main className="max-w-5xl mx-auto py-8 space-y-12 px-4 md:px-0">
                 {/* Hero Feature */}
                 <section className="relative h-[300px] md:h-[400px] rounded-[3rem] md:rounded-[4rem] overflow-hidden group shadow-2xl border-4 border-card">
-                    <img
+                    <Image
                         src="https://images.unsplash.com/photo-1523438097201-512ae7d59c44?auto=format&fit=crop&w=1200&q=80"
                         alt="Sydney Opera House"
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                        fill
+                        className="object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
                     <div className="absolute bottom-8 left-8 right-8 md:bottom-12 md:left-12 md:right-12 flex flex-col md:flex-row items-end justify-between gap-6">

@@ -11,6 +11,7 @@ import {
     Flame,
     Award
 } from "lucide-react";
+import Image from "next/image";
 
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
@@ -157,9 +158,20 @@ export default function AchievementsClient({ achievementsData, profile }: Achiev
                                         ? "bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border-[6px] border-card shadow-inner"
                                         : "bg-muted border-[6px] border-card"
                                 )}>
-                                    {achievement.badge_url || "🏆"}
+                                    {achievement.badge_url ? (
+                                        <div className="relative w-full h-full overflow-hidden rounded-full">
+                                            <Image
+                                                src={achievement.badge_url}
+                                                alt={achievement.name}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                    ) : (
+                                        "🏆"
+                                    )}
                                     {achievement.is_unlocked && (
-                                        <div className="absolute -bottom-2 -right-2 bg-green-500 p-1.5 rounded-full border-4 border-card">
+                                        <div className="absolute -bottom-2 -right-2 bg-green-500 p-1.5 rounded-full border-4 border-card z-20">
                                             <Unlock className="w-3 h-3 text-white" />
                                         </div>
                                     )}

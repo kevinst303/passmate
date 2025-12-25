@@ -37,6 +37,7 @@ import {
     CreditCard,
     Bell
 } from "lucide-react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     getAllQuestions,
@@ -690,7 +691,7 @@ export default function AdminClient() {
 
                                         <div className="w-24 h-24 mb-6 rounded-[2rem] bg-gradient-to-br from-purple-100 to-indigo-50 border-4 border-white shadow-xl flex items-center justify-center relative z-10">
                                             {a.badge_url ? (
-                                                <img src={a.badge_url} alt={a.name} className="w-full h-full object-cover" />
+                                                <Image src={a.badge_url} alt={a.name} fill className="object-cover" />
                                             ) : (
                                                 <Trophy className="w-10 h-10 text-purple-600" />
                                             )}

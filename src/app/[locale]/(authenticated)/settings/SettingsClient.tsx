@@ -304,10 +304,11 @@ export default function SettingsClient({ profile, user }: SettingsClientProps) {
                                                         <span className="text-3xl md:text-4xl">🐨</span>
                                                     ) : (
                                                         // eslint-disable-next-line @next/next/no-img-element
-                                                        <img
+                                                        <Image
                                                             src={opt.url}
                                                             alt={opt.label}
-                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                                                            fill
+                                                            className="object-cover group-hover:scale-110 transition-transform"
                                                         />
                                                     )}
                                                     {avatarUrl === opt.url && (
