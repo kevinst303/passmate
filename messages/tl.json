@@ -116,7 +116,8 @@
         "defaultQuests": {
             "q1": "Kumpletuhin ang 3 Quiz",
             "q2": "Perpektong iskor sa Kasaysayan"
-        }
+        },
+        "you": "Ikaw"
     },
     "Common": {
         "koalaName": "Ollie the Koala",

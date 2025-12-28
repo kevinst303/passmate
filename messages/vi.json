@@ -116,7 +116,8 @@
         "defaultQuests": {
             "q1": "Hoàn thành 3 bài kiểm tra",
             "q2": "Điểm tuyệt đối môn Lịch sử"
-        }
+        },
+        "you": "Bạn"
     },
     "Common": {
         "koalaName": "Gấu Koala Ollie",

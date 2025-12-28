@@ -119,7 +119,8 @@
         "defaultQuests": {
             "q1": "完成3个测验",
             "q2": "历史获得满分"
-        }
+        },
+        "you": "您"
     },
     "Common": {
         "koalaName": "考拉奥利",

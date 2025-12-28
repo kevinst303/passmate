@@ -116,7 +116,8 @@
         "defaultQuests": {
             "q1": "Completa 3 quiz",
             "q2": "Punteggio perfetto in Storia"
-        }
+        },
+        "you": "Tu"
     },
     "Common": {
         "koalaName": "Ollie il Koala",

@@ -120,7 +120,8 @@
         "defaultQuests": {
             "q1": "Complete 3 Quizzes",
             "q2": "Perfect Score in History"
-        }
+        },
+        "you": "You"
     },
     "Common": {
         "koalaName": "Ollie the Koala",

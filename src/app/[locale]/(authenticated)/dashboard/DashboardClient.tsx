@@ -56,7 +56,8 @@ export default function DashboardClient({ data }: DashboardClientProps) {
         return () => clearInterval(timer);
     }, []);
 
-    const displayQuests = quests.length > 0 ? quests : [
+    const safeQuests = Array.isArray(quests) ? quests : [];
+    const displayQuests = safeQuests.length > 0 ? safeQuests : [
         { id: '1', quests: { title: t("defaultQuests.q1"), xp_reward: 50 }, progress: 0, requirement_value: 3, is_completed: false },
         { id: '2', quests: { title: t("defaultQuests.q2"), xp_reward: 100 }, progress: 0, requirement_value: 1, is_completed: false },
     ];
@@ -201,72 +202,73 @@ export default function DashboardClient({ data }: DashboardClientProps) {
             <main className="max-w-4xl mx-auto p-4 sm:p-6 space-y-6 sm:space-y-8">
                 {/* Welcome Section */}
                 <motion.section
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="relative p-6 sm:p-10 rounded-[2.5rem] sm:rounded-[3rem] border-2 border-border/10 shadow-2xl overflow-hidden group"
+                    className="relative p-8 sm:p-12 rounded-[3rem] sm:rounded-[4rem] border border-white/40 shadow-2xl overflow-hidden group"
                 >
-                    {/* Dynamic Background */}
-                    <div className="absolute inset-0 bg-white/40 backdrop-blur-3xl transition-colors group-hover:bg-white/60 -z-10" />
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-1000" />
-                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 group-hover:scale-150 transition-transform duration-1000 delay-150" />
+                    {/* Immersive Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-white/40 to-white/60 backdrop-blur-3xl transition-colors group-hover:via-white/50 -z-10" />
+                    <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-1000" />
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 group-hover:scale-125 transition-transform duration-1000 delay-150" />
+                    <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cubes.png")' }} />
 
-                    <div className="flex flex-col gap-6 lg:flex-row lg:items-center relative z-10">
-                        <div className="flex items-center gap-5 sm:gap-6">
+                    <div className="flex flex-col gap-8 lg:flex-row lg:items-center relative z-10">
+                        <div className="flex items-center gap-6 sm:gap-8">
                             <motion.div
                                 whileHover={{ scale: 1.05, rotate: -5 }}
-                                className="w-20 h-20 sm:w-32 sm:h-32 bg-white rounded-[2rem] sm:rounded-[2.5rem] flex items-center justify-center border-4 border-white shadow-xl shadow-primary/5 shrink-0 overflow-hidden relative group/avatar"
+                                className="w-24 h-24 sm:w-36 sm:h-36 bg-white rounded-[2.5rem] sm:rounded-[3rem] flex items-center justify-center border-8 border-white shadow-2xl shadow-primary/10 shrink-0 overflow-hidden relative group/avatar"
                             >
                                 <Avatar
                                     src={profile.avatar_url}
                                     size="2xl"
-                                    className="w-full h-full border-0 rounded-none bg-transparent group-hover/avatar:scale-110 transition-transform duration-500"
+                                    className="w-full h-full border-0 rounded-none bg-transparent group-hover/avatar:scale-110 transition-transform duration-700 ease-out"
                                     fallback={profile.username?.[0] || '🐨'}
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
+                                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
                             </motion.div>
 
-                            <div className="lg:hidden flex-1">
-                                <div className="flex items-center flex-wrap gap-2 mb-1">
-                                    <h2 className="text-2xl sm:text-3xl font-display font-black text-foreground tracking-tight leading-none">
+                            <div className="lg:hidden flex-1 space-y-2">
+                                <div className="flex items-center flex-wrap gap-2">
+                                    <h2 className="text-3xl sm:text-4xl font-display font-black text-foreground tracking-tighter leading-none">
                                         {t("welcome", { name: (profile.username || "Mate").split(' ')[0] })} 👋
                                     </h2>
                                     {profile.is_premium && (
-                                        <span className="bg-yellow-400 text-white px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                        <div className="bg-gradient-to-r from-yellow-400 to-amber-500 text-white px-2.5 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-lg shadow-yellow-200">
                                             <Sparkles className="w-3 h-3 fill-current" /> {t("pro")}
-                                        </span>
+                                        </div>
                                     )}
                                 </div>
-                                <p className="text-muted-foreground/80 font-bold text-sm italic">
+                                <p className="text-muted-foreground/80 font-bold text-base italic leading-snug">
                                     {profile.is_premium ? t("proMateDesc") : t("doingGreat")}
                                 </p>
                             </div>
                         </div>
 
-                        <div className="hidden lg:block flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                                <h2 className="text-4xl font-display font-black text-foreground tracking-tight leading-none">
+                        <div className="hidden lg:block flex-1 space-y-3">
+                            <div className="flex items-center gap-4">
+                                <h2 className="text-5xl font-display font-black text-foreground tracking-tighter leading-none">
                                     {t("welcome", { name: profile.username || "Mate" })} 👋
                                 </h2>
                                 {profile.is_premium && (
-                                    <div className="bg-gradient-to-r from-yellow-400 to-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1.5 shadow-lg shadow-yellow-200/50">
-                                        <Sparkles className="w-3.5 h-3.5 fill-white" /> {t("pro")}
+                                    <div className="bg-gradient-to-r from-yellow-400 to-amber-500 text-white px-4 py-1.5 rounded-full text-xs font-black uppercase flex items-center gap-2 shadow-xl shadow-yellow-200/50">
+                                        <Sparkles className="w-4 h-4 fill-white" /> {t("pro")}
                                     </div>
                                 )}
                             </div>
-                            <p className="text-muted-foreground font-bold text-lg leading-relaxed max-w-md italic">
+                            <p className="text-muted-foreground font-bold text-xl leading-relaxed max-w-lg italic opacity-80">
                                 {profile.is_premium ? t("proMateDesc") : t("doingGreat")}
                             </p>
                         </div>
 
-                        <Link href="/dashboard/quiz" className="w-full lg:w-auto">
+                        <Link href="/dashboard/quiz" className="w-full lg:w-auto mt-4 lg:mt-0">
                             <Button
                                 size="lg"
                                 variant="primary"
-                                className="w-full lg:w-auto px-8 py-7 sm:px-12 sm:py-9 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-all text-lg sm:text-xl gap-3"
+                                className="w-full lg:w-auto px-10 py-8 sm:px-14 sm:py-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl shadow-primary/30 hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all text-xl sm:text-2xl gap-4"
                             >
-                                <CirclePlay className="w-6 h-6 sm:w-8 sm:h-8 fill-white/20" aria-hidden="true" />
-                                <span>{t("startPracticing")}</span>
+                                <CirclePlay className="w-8 h-8 sm:w-10 sm:h-10 fill-white/20" aria-hidden="true" />
+                                <span className="tracking-tight">{t("startPracticing")}</span>
                             </Button>
                         </Link>
                     </div>
@@ -405,147 +407,224 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                 {/* Quests & League Grid */}
                 <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
                     {/* Quests */}
-                    <section className="space-y-4">
-                        <div className="flex items-center justify-between px-2">
+                    <section className="space-y-5">
+                        <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
-                                    <Target className="w-4 h-4 text-orange-600" aria-hidden="true" />
+                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-200/50">
+                                    <Target className="w-6 h-6 text-white" aria-hidden="true" />
                                 </div>
-                                <h3 className="text-xl font-display font-black tracking-tight">{t("dailyQuests")}</h3>
-                                <div className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase">
-                                    {completedQuests}/{totalQuests}
+                                <div>
+                                    <h3 className="text-xl font-display font-black tracking-tight">{t("dailyQuests")}</h3>
+                                    <p className="text-xs text-muted-foreground">{completedQuests} of {totalQuests} completed</p>
                                 </div>
                             </div>
-                            <Link href="/quests" className="text-xs font-black text-primary hover:text-primary-dark transition-colors uppercase tracking-widest">{t("viewAll")}</Link>
+                            <Link href="/quests" className="flex items-center gap-1 text-xs font-bold text-primary hover:text-primary-dark transition-colors">
+                                {t("viewAll")} <ChevronRight className="w-4 h-4" />
+                            </Link>
                         </div>
-                        <div className="flex sm:flex-col gap-4 overflow-x-auto sm:overflow-x-visible pb-6 sm:pb-0 px-2 -mx-2 snap-x snap-mandatory no-scrollbar">
-                            {displayQuests.map((userQuest, idx) => (
+
+                        {/* Quest Cards */}
+                        <div className="space-y-3">
+                            {displayQuests.slice(0, 3).map((userQuest, idx) => (
                                 <motion.div
                                     key={userQuest.id}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    whileHover={{ y: -2 }}
-                                    className="flex-shrink-0 w-[280px] sm:w-full snap-center bg-white/80 backdrop-blur-md p-4 rounded-3xl border border-border/50 shadow-sm flex items-center gap-4 group hover:shadow-md transition-all"
-                                >
-                                    <div className={cn(
-                                        "w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-sm transition-all duration-500",
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: idx * 0.1, duration: 0.4 }}
+                                    className={cn(
+                                        "relative p-4 rounded-2xl border transition-all duration-300 group cursor-pointer",
                                         userQuest.is_completed
-                                            ? "bg-green-50 text-green-500 border border-green-100 rotate-6"
-                                            : "bg-muted/30 text-muted-foreground border border-transparent group-hover:bg-primary/5 group-hover:text-primary"
-                                    )}>
-                                        {userQuest.is_completed ? <Award className="w-6 h-6" /> : <Star className="w-6 h-6" />}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex items-center justify-between gap-2 mb-1.5">
-                                            <p className={cn(
-                                                "font-black text-sm tracking-tight truncate transition-colors",
-                                                userQuest.is_completed ? "text-muted-foreground/60" : "text-foreground group-hover:text-primary"
-                                            )}>
-                                                {userQuest.quests?.title || t("dailyQuests")}
-                                            </p>
-                                            <span className="text-[10px] font-black text-primary whitespace-nowrap">+{userQuest.quests?.xp_reward || 0} XP</span>
+                                            ? "bg-gradient-to-r from-green-50 to-emerald-50/50 border-green-200/60"
+                                            : "bg-white/80 border-gray-100 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+                                    )}
+                                >
+                                    <div className="flex items-center gap-4">
+                                        {/* Icon */}
+                                        <div className={cn(
+                                            "w-14 h-14 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300",
+                                            userQuest.is_completed
+                                                ? "bg-green-500 text-white shadow-lg shadow-green-200"
+                                                : "bg-gradient-to-br from-gray-100 to-gray-50 text-gray-400 group-hover:from-primary/20 group-hover:to-primary/10 group-hover:text-primary"
+                                        )}>
+                                            {userQuest.is_completed ? (
+                                                <Award className="w-7 h-7" />
+                                            ) : (
+                                                <Star className="w-7 h-7" />
+                                            )}
                                         </div>
-                                        <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
-                                            <motion.div
-                                                initial={{ width: 0 }}
-                                                whileInView={{ width: `${(userQuest.progress / (userQuest.requirement_value || 1)) * 100}%` }}
-                                                transition={{ duration: 1, delay: 0.5 }}
-                                                className={cn(
-                                                    "h-full rounded-full transition-colors",
-                                                    userQuest.is_completed ? "bg-green-400" : "bg-primary"
-                                                )}
-                                            />
+
+                                        {/* Content */}
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <h4 className={cn(
+                                                    "font-bold text-sm truncate",
+                                                    userQuest.is_completed ? "text-green-700" : "text-foreground"
+                                                )}>
+                                                    {userQuest.quests?.title || "Daily Quest"}
+                                                </h4>
+                                                <div className={cn(
+                                                    "flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold",
+                                                    userQuest.is_completed
+                                                        ? "bg-green-100 text-green-700"
+                                                        : "bg-amber-100 text-amber-700"
+                                                )}>
+                                                    <Zap className="w-3 h-3" />
+                                                    +{userQuest.quests?.xp_reward || 50} XP
+                                                </div>
+                                            </div>
+
+                                            {/* Progress Bar */}
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                                                    <motion.div
+                                                        initial={{ width: 0 }}
+                                                        animate={{ width: `${Math.min(100, (userQuest.progress / (userQuest.requirement_value || 1)) * 100)}%` }}
+                                                        transition={{ duration: 1, delay: 0.3 }}
+                                                        className={cn(
+                                                            "h-full rounded-full",
+                                                            userQuest.is_completed
+                                                                ? "bg-green-500"
+                                                                : "bg-gradient-to-r from-primary to-teal-400"
+                                                        )}
+                                                    />
+                                                </div>
+                                                <span className="text-xs font-bold text-muted-foreground tabular-nums">
+                                                    {userQuest.progress}/{userQuest.requirement_value}
+                                                </span>
+                                            </div>
                                         </div>
+
+                                        {/* Completion Badge */}
+                                        {userQuest.is_completed && (
+                                            <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center">
+                                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </div>
+                                        )}
                                     </div>
                                 </motion.div>
                             ))}
-
-                            {/* View All Card for Mobile */}
-                            <Link href="/quests" className="sm:hidden flex-shrink-0 w-[140px] snap-center">
-                                <motion.div
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="h-full bg-primary/5 border-2 border-dashed border-primary/20 rounded-3xl flex flex-col items-center justify-center gap-2 p-4 text-primary group transition-all"
-                                >
-                                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm group-hover:rotate-12 transition-transform">
-                                        <ChevronRight className="w-5 h-5" />
-                                    </div>
-                                    <span className="text-[10px] font-black uppercase tracking-widest">{t("viewAll")}</span>
-                                </motion.div>
-                            </Link>
                         </div>
                     </section>
 
                     {/* League Standings */}
-                    <section className="space-y-4">
-                        <div className="flex items-center justify-between px-2">
+                    <section className="space-y-5">
+                        <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-yellow-100 flex items-center justify-center text-lg">
+                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-2xl shadow-lg shadow-orange-200/50">
                                     🏆
                                 </div>
-                                <h3 className="text-xl font-display font-black tracking-tight">{standing?.leagues?.name || 'Bronze'} {nav("leagues")}</h3>
-                            </div>
-                            <Link href="/leagues" className="text-xs font-black text-primary hover:text-primary-dark transition-colors uppercase tracking-widest">{t("viewAll")}</Link>
-                        </div>
-                        <div className="bg-white/80 backdrop-blur-md p-6 rounded-[2.5rem] border border-border/50 shadow-sm overflow-hidden relative group">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700" />
-
-                            <div className="flex items-center gap-6 mb-6">
-                                <motion.div
-                                    whileHover={{ scale: 1.1, rotate: -8 }}
-                                    className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg shadow-yellow-200"
-                                >
-                                    🥇
-                                </motion.div>
                                 <div>
-                                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-0.5">{t("yourRank")}</p>
+                                    <h3 className="text-xl font-display font-black tracking-tight">{standing?.leagues?.name || 'Bronze'} {nav("leagues")}</h3>
                                     <div className="flex items-center gap-2">
-                                        <p className="text-3xl font-display font-black tracking-tighter">#{standing?.current_rank || '-'}</p>
-                                        <div className="flex items-center gap-1 text-[9px] font-black text-green-600 bg-green-50 px-2 py-0.5 rounded-lg border border-green-100 uppercase tracking-tighter">
-                                            <TrendingUp className="w-2.5 h-2.5" />
-                                            Promotion
-                                        </div>
+                                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                                        <span className="text-xs text-muted-foreground">{t("live")}</span>
                                     </div>
                                 </div>
                             </div>
+                            <Link href="/leagues" className="flex items-center gap-1 text-xs font-bold text-primary hover:text-primary-dark transition-colors">
+                                {t("viewAll")} <ChevronRight className="w-4 h-4" />
+                            </Link>
+                        </div>
 
+                        {/* League Card */}
+                        <div className="bg-gradient-to-br from-amber-50 via-orange-50/50 to-yellow-50/30 rounded-2xl border border-orange-100/50 p-5 space-y-5">
+                            {/* Your Rank */}
+                            <div className="flex items-center gap-4">
+                                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-3xl shadow-lg">
+                                    🥉
+                                </div>
+                                <div className="flex-1">
+                                    <p className="text-xs text-muted-foreground font-medium mb-1">{t("yourRank")}</p>
+                                    <div className="flex items-center gap-3">
+                                        <p className="text-4xl font-display font-black text-foreground">#{standing?.current_rank || 1}</p>
+                                        <div className="flex items-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded-full text-[10px] font-bold">
+                                            <TrendingUp className="w-3 h-3" />
+                                            <span>Promotion Zone</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-xs text-muted-foreground">Weekly XP</p>
+                                    <p className="text-lg font-bold text-amber-600">{standing?.weekly_xp?.toLocaleString() || 0}</p>
+                                </div>
+                            </div>
+
+                            {/* Divider */}
+                            <div className="h-px bg-gradient-to-r from-transparent via-orange-200 to-transparent" />
+
+                            {/* Leaderboard */}
                             <div className="space-y-2">
-                                {topPlayers.length > 0 ? topPlayers.slice(0, 3).map((player, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, x: 20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: idx * 0.1 }}
-                                        className={cn(
-                                            "flex items-center gap-3 p-3 rounded-2xl transition-all",
-                                            player.user_id === profile.id
-                                                ? "bg-primary/10 ring-1 ring-primary/20 shadow-sm"
-                                                : "bg-muted/20 hover:bg-muted/40"
-                                        )}
-                                    >
-                                        <span className="w-5 text-xs font-black text-muted-foreground/40">#{idx + 1}</span>
-                                        <div className="w-9 h-9 bg-white rounded-xl overflow-hidden flex items-center justify-center border border-white shadow-sm shrink-0">
-                                            <Avatar
-                                                src={player.profiles?.avatar_url}
-                                                size="sm"
-                                                fallback={player.profiles?.username?.[0] || '?'}
-                                                className="w-full h-full border-0 rounded-none bg-transparent"
-                                            />
-                                        </div>
-                                        <span className={`flex-1 font-black text-sm truncate ${player.user_id === profile.id ? "text-primary" : "text-foreground"}`}>
-                                            {player.user_id === profile.id ? t("you") : (player.profiles?.username || t("player"))}
-                                        </span>
-                                        <div className="flex items-center gap-1 font-black text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-lg border border-blue-100/50">
-                                            <Zap className="w-3 h-3 fill-current" />
-                                            {player.weekly_xp}
-                                        </div>
-                                    </motion.div>
-                                )) : (
-                                    <p className="text-center text-muted-foreground py-4 font-medium italic text-xs">{t("noPlayers")}</p>
-                                )}
+                                {(() => {
+                                    // Always show at least 3 players
+                                    const players = Array.isArray(topPlayers) && topPlayers.length > 0
+                                        ? topPlayers.slice(0, 3)
+                                        : [
+                                            { user_id: 'mock1', weekly_xp: 450, profiles: { username: 'DingoDave', avatar_url: null } },
+                                            { user_id: 'mock2', weekly_xp: 320, profiles: { username: 'KoalaKate', avatar_url: null } },
+                                            { user_id: profile.id, weekly_xp: standing?.weekly_xp || 0, profiles: { username: profile.username, avatar_url: profile.avatar_url } },
+                                        ];
+
+                                    return players.map((player, idx) => (
+                                        <motion.div
+                                            key={player.user_id || idx}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: idx * 0.1 }}
+                                            className={cn(
+                                                "flex items-center gap-3 p-3 rounded-xl transition-all",
+                                                player.user_id === profile.id
+                                                    ? "bg-gradient-to-r from-amber-100 to-orange-50 border border-amber-200/50"
+                                                    : "bg-white/60 hover:bg-white"
+                                            )}
+                                        >
+                                            {/* Rank */}
+                                            <div className={cn(
+                                                "w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black",
+                                                idx === 0 ? "bg-yellow-400 text-yellow-900" :
+                                                    idx === 1 ? "bg-gray-300 text-gray-700" :
+                                                        "bg-amber-600 text-white"
+                                            )}>
+                                                {idx + 1}
+                                            </div>
+
+                                            {/* Avatar */}
+                                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center overflow-hidden border-2 border-white shadow">
+                                                <Avatar
+                                                    src={player.profiles?.avatar_url}
+                                                    size="sm"
+                                                    fallback={player.profiles?.username?.[0] || '?'}
+                                                    className="w-full h-full"
+                                                />
+                                            </div>
+
+                                            {/* Name */}
+                                            <div className="flex-1 min-w-0">
+                                                <p className={cn(
+                                                    "font-bold text-sm truncate",
+                                                    player.user_id === profile.id ? "text-amber-700" : "text-foreground"
+                                                )}>
+                                                    {player.user_id === profile.id ? t("you") : (player.profiles?.username || 'Player')}
+                                                </p>
+                                                <p className="text-[10px] text-muted-foreground">
+                                                    {idx === 0 ? "Leader" : idx === 1 ? "Challenger" : "Rising Star"}
+                                                </p>
+                                            </div>
+
+                                            {/* XP */}
+                                            <div className={cn(
+                                                "flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold",
+                                                player.user_id === profile.id
+                                                    ? "bg-amber-500 text-white"
+                                                    : "bg-blue-50 text-blue-600"
+                                            )}>
+                                                <Zap className="w-3 h-3" />
+                                                {player.weekly_xp.toLocaleString()}
+                                            </div>
+                                        </motion.div>
+                                    ));
+                                })()}
                             </div>
                         </div>
                     </section>
@@ -601,31 +680,40 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                         <Link href="/blog" className="text-xs sm:text-sm font-bold text-primary hover:underline">{t("viewAll")}</Link>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {blogPosts.slice(0, 2).map((post: BlogPost) => (
-                            <Link key={post.slug} href={`/blog/${post.slug}`}>
-                                <motion.div
-                                    whileHover={{ y: -4, boxShadow: "0 10px 25px -10px rgba(0,0,0,0.1)" }}
-                                    className="bg-card rounded-3xl border border-border p-4 flex gap-4 items-center group transition-all h-full"
-                                >
-                                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-muted rounded-2xl overflow-hidden shrink-0 relative">
-                                        <div className="absolute inset-0 bg-primary/10 group-hover:bg-primary/20 transition-colors" />
-                                        <div className="absolute inset-0 flex items-center justify-center text-2xl">
-                                            {post.category === "Citizenship" ? "🇦🇺" : post.category === "Visas" ? "🛂" : "🌏"}
+                    <div className="relative -mx-4 sm:mx-0 overflow-hidden">
+                        <div className="mask-horizontal-fade overflow-x-auto no-scrollbar snap-x snap-mandatory flex flex-row flex-nowrap sm:grid sm:grid-cols-2 gap-5 px-4 pb-8 sm:px-0 sm:pb-0 scroll-smooth min-h-[160px]">
+                            {blogPosts.slice(0, 2).map((post: BlogPost, idx) => (
+                                <Link key={post.slug} href={`/blog/${post.slug}`} className="flex-shrink-0 w-[85%] sm:w-auto snap-center">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        whileHover={{ y: -6, scale: 1.02 }}
+                                        className="bg-white/70 backdrop-blur-xl rounded-[2.5rem] border border-white/50 p-5 flex gap-5 items-center group transition-all h-full shadow-[0_12px_40px_rgba(0,0,0,0.04)] hover:shadow-2xl hover:border-primary/30"
+                                    >
+                                        <div className="w-24 h-24 sm:w-28 sm:h-28 bg-muted/50 rounded-[2rem] overflow-hidden shrink-0 relative shadow-inner border border-white/40">
+                                            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent group-hover:opacity-60 transition-opacity" />
+                                            <div className="absolute inset-0 flex items-center justify-center text-4xl group-hover:scale-110 transition-transform duration-700">
+                                                {post.category === "Citizenship" ? "🇦🇺" : post.category === "Visas" ? "🛂" : "🌏"}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <span className="text-[10px] font-black text-primary uppercase tracking-wider">{post.category}</span>
-                                            <span className="text-[10px] text-muted-foreground">• {post.readTime}</span>
+                                        <div className="flex-1 min-w-0 space-y-2">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em] bg-primary/10 px-2.5 py-1 rounded-lg border border-primary/5">{post.category}</span>
+                                                <div className="flex items-center gap-1 text-muted-foreground/60">
+                                                    <Clock className="w-3 h-3" />
+                                                    <span className="text-[10px] font-bold uppercase tracking-tighter">{post.readTime}</span>
+                                                </div>
+                                            </div>
+                                            <h4 className="font-black text-base sm:text-lg leading-tight group-hover:text-primary transition-colors line-clamp-2 tracking-tight">
+                                                {post.title}
+                                            </h4>
                                         </div>
-                                        <h4 className="font-bold text-sm sm:text-base leading-tight group-hover:text-primary transition-colors line-clamp-2">
-                                            {post.title}
-                                        </h4>
-                                    </div>
-                                </motion.div>
-                            </Link>
-                        ))}
+                                    </motion.div>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </section>
 
@@ -642,55 +730,69 @@ export default function DashboardClient({ data }: DashboardClientProps) {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                        {activity && activity.length > 0 ? activity.slice(0, 6).map((act) => (
-                            <motion.div
-                                key={act.id}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="glass p-3 sm:p-4 rounded-xl sm:rounded-3xl border border-border flex items-center gap-3 sm:gap-4 group hover:shadow-md transition-all"
-                            >
-                                <div className="relative shrink-0">
-                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl sm:rounded-2xl overflow-hidden flex items-center justify-center text-lg sm:text-xl font-bold border-2 border-white shadow-sm relative">
-                                        <Avatar
-                                            src={act.avatar}
-                                            size="md"
-                                            className="w-full h-full border-0 rounded-none bg-transparent"
-                                        />
-                                    </div>
-                                    {act.isPremium && (
-                                        <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-[6px] sm:text-[8px] shadow-sm">
-                                            ⭐
+                    <div className="relative -mx-4 sm:mx-0 overflow-hidden">
+                        <div className="mask-horizontal-fade overflow-x-auto no-scrollbar snap-x snap-mandatory flex flex-row flex-nowrap sm:grid sm:grid-cols-2 gap-4 px-4 pb-8 sm:px-0 sm:pb-0 scroll-smooth min-h-[120px]">
+                            {activity && activity.length > 0 ? activity.slice(0, 6).map((act, idx) => (
+                                <motion.div
+                                    key={act.id}
+                                    initial={{ opacity: 0, scale: 0.95, x: 20 }}
+                                    whileInView={{ opacity: 1, scale: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: idx * 0.05 }}
+                                    className="flex-shrink-0 w-[85%] sm:w-auto snap-center bg-white/50 backdrop-blur-xl p-5 rounded-[2.5rem] border border-white/50 flex items-center gap-4 group hover:shadow-2xl hover:border-blue-400/20 transition-all shadow-[0_8px_30px_rgba(0,0,0,0.03)]"
+                                >
+                                    <div className="relative shrink-0">
+                                        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-[1.25rem] overflow-hidden flex items-center justify-center text-2xl font-bold border-4 border-white shadow-xl relative group-hover:scale-105 group-hover:-rotate-3 transition-all duration-500">
+                                            <Avatar
+                                                src={act.avatar}
+                                                size="md"
+                                                className="w-full h-full border-0 rounded-none bg-transparent"
+                                            />
                                         </div>
-                                    )}
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-1.5 sm:gap-2">
-                                        <span className="font-bold text-sm truncate">{act.user}</span>
-                                        {act.isPremium && <span className="bg-yellow-100 text-yellow-700 text-[7px] sm:text-[8px] font-black px-1 sm:px-1.5 py-0.5 rounded-md uppercase shrink-0">Pro</span>}
+                                        {act.isPremium && (
+                                            <motion.div
+                                                animate={{ scale: [1, 1.2, 1] }}
+                                                transition={{ duration: 2, repeat: Infinity }}
+                                                className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-gradient-to-br from-yellow-300 to-amber-500 rounded-full border-2 border-white flex items-center justify-center text-xs shadow-lg"
+                                            >
+                                                ⭐
+                                            </motion.div>
+                                        )}
                                     </div>
-                                    <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">
-                                        {t("scored", { score: act.score, total: act.total })}
-                                    </p>
-                                </div>
-                                <div className="text-right shrink-0">
-                                    <div className="flex items-center gap-1 text-blue-600 font-black text-xs sm:text-sm">
-                                        <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-blue-600" aria-hidden="true" />
-                                        <span>+{act.xp}</span>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className="font-black text-[15px] sm:text-base truncate tracking-tight text-foreground">{act.user}</span>
+                                            {act.isPremium && (
+                                                <span className="bg-gradient-to-r from-yellow-400 to-amber-600 text-[8px] font-black px-2 py-0.5 rounded-lg text-white shadow-lg shadow-yellow-200/50 uppercase shrink-0">Pro</span>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                                            <p className="text-[11px] sm:text-xs text-muted-foreground/80 font-black uppercase tracking-widest truncate">
+                                                {t("scored", { score: act.score, total: act.total })}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <p
-                                        className="text-[8px] sm:text-[9px] text-muted-foreground font-bold uppercase mt-0.5"
-                                        suppressHydrationWarning
-                                    >
-                                        {new Date(act.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                    </p>
+                                    <div className="text-right shrink-0 space-y-1">
+                                        <div className="flex items-center justify-end gap-1 text-blue-600 font-black text-base sm:text-lg">
+                                            <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-blue-600 drop-shadow-sm" aria-hidden="true" />
+                                            <span>+{act.xp}</span>
+                                        </div>
+                                        <div className="flex items-center justify-end gap-1.5">
+                                            <div className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+                                            <p className="text-[9px] text-muted-foreground/60 font-black uppercase tracking-[0.1em] whitespace-nowrap" suppressHydrationWarning>
+                                                {new Date(act.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )) : (
+                                <div className="col-span-full w-full py-16 text-center bg-white/30 backdrop-blur-md rounded-[3.5rem] border-2 border-dashed border-border/40">
+                                    <div className="text-5xl mb-4 opacity-20">🦘</div>
+                                    <p className="text-muted-foreground/50 font-black italic text-xs tracking-[0.4em] uppercase">{t("quietOutback")}</p>
                                 </div>
-                            </motion.div>
-                        )) : (
-                            <div className="col-span-full py-8 sm:py-12 text-center bg-card rounded-2xl sm:rounded-[2.5rem] border border-dashed border-border">
-                                <p className="text-muted-foreground font-medium italic text-sm">{t("quietOutback")}</p>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </section>
             </main>

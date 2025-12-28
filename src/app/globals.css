@@ -194,8 +194,8 @@ h6 {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -204,11 +204,15 @@ h6 {
 
 ::-webkit-scrollbar-thumb {
   background: var(--border);
-  border-radius: 3px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--muted-foreground);
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 /* Smooth scrolling */
@@ -224,6 +228,17 @@ html {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Premium horizontal scroll mask */
+.mask-horizontal-fade {
+  mask-image: linear-gradient(to right, transparent, black 40px, black calc(100% - 40px), transparent);
+}
+
+@media (min-width: 640px) {
+  .mask-horizontal-fade {
+    mask-image: none;
+  }
 }
 
 /* Focus visible styles for accessibility */
